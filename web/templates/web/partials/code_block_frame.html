@@ -17,6 +17,8 @@
     </button>
   </div>
   <pre
-    class="{% if pre_class %}{{ pre_class }}{% else %}code-block m-0 overflow-x-auto p-4 text-xs leading-relaxed text-slate-200/95 sm:text-sm{% endif %}"
-  ><code class="whitespace-pre-wrap font-mono ds-codeblock-source">{% include code_template %}</code></pre>
+    class="ds-codeblock-pre {% if pre_class %}{{ pre_class }}{% else %}code-block m-0 overflow-x-auto p-4 text-[0.8125rem] leading-[1.55] sm:text-sm{% endif %}"
+  ><code
+      class="whitespace-pre-wrap font-mono ds-codeblock-source language-{{ language }}"
+    >{% include code_template %}</code></pre>
 </div>

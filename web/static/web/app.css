@@ -29,9 +29,21 @@
   -webkit-backdrop-filter: blur(32px);
 }
 
-/* Syntax-ish code (no Prism) */
+/* Code areas: shared max size; syntax colors from Prism in base.html */
 pre.code-block,
 .code-block {
   max-height: min(70vh, 36rem);
   overflow: auto;
+}
+.ds-codeblock pre.code-block,
+.ds-codeblock pre.ds-codeblock-pre {
+  /* Align with React CodeBlock / SyntaxHighlighter (one dark, slate-950) */
+  background: rgb(2 6 23 / 0.92);
+  font-family: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+}
+.ds-codeblock pre code[class*="language-"] {
+  /* Prism keeps tokens inside <code> */
+  font-size: inherit;
+  line-height: inherit;
+  background: transparent;
 }

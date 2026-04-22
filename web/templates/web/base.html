@@ -37,6 +37,11 @@
       };
     </script>
     <link rel="stylesheet" href="{% static 'web/app.css' %}" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/prism-themes/1.9.0/prism-one-dark.min.css"
+      crossorigin="anonymous"
+    />
   </head>
   <body class="min-h-screen antialiased bg-slate-950 text-slate-100 font-sans">
     {% with z=layout|default:"default" %}
@@ -149,6 +154,34 @@
         });
         links.forEach((a) => a.addEventListener("click", function () { setOpen(false); }));
         window.addEventListener("keydown", (e) => e.key === "Escape" && setOpen(false));
+      })();
+    </script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-core.min.js"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-clike.min.js"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-javascript.min.js"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-python.min.js"
+      crossorigin="anonymous"
+    ></script>
+    <script>
+      (function () {
+        if (typeof Prism === "undefined") return;
+        document.querySelectorAll("pre code.ds-codeblock-source").forEach(function (el) {
+          if (typeof el.className === "string" && el.className.indexOf("language-") !== -1) {
+            try {
+              Prism.highlightElement(el);
+            } catch (e) {}
+          }
+        });
       })();
     </script>
     <script>
