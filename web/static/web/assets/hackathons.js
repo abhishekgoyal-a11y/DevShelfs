@@ -1,0 +1,1 @@
+const t=[{id:"h1",platform:"DevPost",type:"online",link:"https://devpost.com"},{id:"h2",platform:"MLH",type:"offline",link:"https://mlh.io"},{id:"h3",platform:"ETHGlobal",type:"online",link:"https://ethglobal.com"},{id:"h4",platform:"Campus Build Week",type:"offline",link:"https://example.com"}];export{t as default};

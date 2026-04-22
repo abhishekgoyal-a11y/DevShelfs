@@ -1,0 +1,1 @@
+const t=[{id:"c1",platform:"Codeforces",starts_at:"2026-04-22T14:35:00Z",duration_minutes:120},{id:"c2",platform:"LeetCode",starts_at:"2026-04-24T01:30:00Z",duration_minutes:90},{id:"c3",platform:"AtCoder",starts_at:"2026-04-26T12:00:00Z",duration_minutes:100},{id:"c4",platform:"CodeChef",starts_at:"2026-04-28T15:00:00Z",duration_minutes:150}];export{t as default};

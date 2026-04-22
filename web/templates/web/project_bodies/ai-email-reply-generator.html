@@ -1,0 +1,42 @@
+{% load static %}
+<div class="glass space-y-8 rounded-3xl p-5 sm:p-8">
+  <div class="space-y-4 text-sm leading-relaxed text-slate-200/85 sm:text-base">
+    <p>
+      Express server exposes <code class="text-sky-200/90">POST /generate-reply</code> with a Groq chat completion; the
+      vanilla HTML/JS client sends the pasted email plus tone and renders the model reply. No build step in the
+      client bundle.
+    </p>
+    <p>
+      <strong class="text-slate-100">Tones</strong> — <span class="font-mono">formal</span>,
+      <span class="font-mono">friendly</span>, <span class="font-mono">short</span>; server validates the payload and
+      caps size.
+    </p>
+  </div>
+  <div class="space-y-3">
+    <h2 class="text-lg font-semibold tracking-tight text-white">Demo</h2>
+    <div
+      class="mx-auto max-w-3xl overflow-hidden rounded-2xl border border-white/10 bg-black shadow-lg shadow-black/40"
+    >
+      <video
+        class="block w-full"
+        controls
+        playsinline
+        preload="metadata"
+        aria-label="AI email reply generator demo"
+      >
+        <source src="{% static 'web/AiEmailReplyGenerator.webm' %}" type="video/webm" />
+        <p class="p-4 text-sm text-slate-400">Your browser does not support embedded WebM video.</p>
+      </video>
+    </div>
+  </div>
+  <p class="text-sm text-slate-200/80">
+    Server and client code are in
+    <a
+      class="font-medium text-sky-200/90 hover:underline"
+      href="{{ project.repoUrl }}"
+      target="_blank"
+      rel="noreferrer"
+      >the GitHub tree for this project</a
+    >.
+  </p>
+</div>

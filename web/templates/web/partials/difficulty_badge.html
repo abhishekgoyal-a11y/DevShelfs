@@ -1,0 +1,16 @@
+{% with lv=level|default:''|lower %}
+  <span
+    class="inline-flex shrink-0 items-center rounded-full border px-2.5 py-1 text-xs font-semibold capitalize
+    {% if lv == 'beginner' %}
+      border-emerald-400/50 bg-emerald-500/15 text-emerald-100 shadow-[0_0_20px_-8px_rgba(16,185,129,0.35)]
+    {% elif lv == 'intermediate' %}
+      border-amber-400/50 bg-amber-500/15 text-amber-100 shadow-[0_0_20px_-8px_rgba(245,158,11,0.3)]
+    {% elif lv == 'advanced' %}
+      border-rose-400/50 bg-rose-500/15 text-rose-100 shadow-[0_0_20px_-8px_rgba(244,63,94,0.28)]
+    {% else %}
+      border-white/20 bg-white/10 text-slate-100
+    {% endif %}"
+  >
+    {% if lv == "beginner" %}Beginner{% elif lv == "intermediate" %}Intermediate{% elif lv == "advanced" %}Advanced{% else %}{{ level }}{% endif %}
+  </span>
+{% endwith %}

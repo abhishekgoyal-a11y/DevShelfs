@@ -1,0 +1,81 @@
+{% load static %}
+<div class="glass space-y-10 rounded-3xl p-5 sm:p-8">
+  <div class="space-y-4">
+    <p class="text-sm leading-relaxed text-slate-200/85 sm:text-base">
+      This is a small browser app built with Streamlit. You paste notes or a short reading, click one button, and an AI
+      model turns that text into study material: a short summary, key points, and practice-style questions you can read
+      on the same page.
+    </p>
+    <p class="text-sm leading-relaxed text-slate-200/85 sm:text-base">
+      <strong class="text-slate-100">Purpose:</strong> help you study faster than rereading long notes from start to
+      finish.
+    </p>
+  </div>
+
+  <div class="space-y-3">
+    <h2 class="text-lg font-semibold tracking-tight text-white">Overall flow</h2>
+    <pre
+      class="code-block overflow-x-auto rounded-2xl border border-white/10 bg-slate-950/60 p-4 text-sm leading-relaxed text-slate-200/90 sm:text-base"
+    ><code class="whitespace-pre-wrap font-mono">User enters notes
+      ↓
+Clicks button
+      ↓
+App sends notes to AI
+      ↓
+AI generates:
+  - Summary
+  - Key points
+  - Quiz
+      ↓
+Displayed on screen</code></pre>
+  </div>
+
+  <hr class="border-0 border-t border-white/10" />
+
+  <div class="space-y-4">
+    <h2 class="text-lg font-semibold tracking-tight text-white">Code implementation</h2>
+    <div
+      class="overflow-hidden rounded-2xl border border-white/10 bg-slate-950/90"
+    >
+      <div
+        class="flex items-center justify-between gap-3 border-b border-white/10 px-3 py-2"
+      >
+        <span class="font-mono text-[11px] font-medium uppercase tracking-wide text-slate-400">python</span>
+      </div>
+      <pre
+        class="code-block m-0 overflow-x-auto p-4 text-xs leading-relaxed text-slate-200/95 sm:text-sm"
+      ><code class="whitespace-pre-wrap font-mono">{% include "web/code/smart_study_app.html" %}</code></pre>
+    </div>
+    <p class="text-sm text-slate-200/80">
+      <span class="font-semibold text-slate-100">Complete project</span>
+      — see the
+      <a
+        href="{{ project.repoUrl }}"
+        class="font-medium text-sky-200/90 hover:text-white hover:underline"
+        target="_blank"
+        rel="noreferrer"
+        >repository on GitHub</a
+      >.
+    </p>
+  </div>
+
+  <hr class="border-0 border-t border-white/10" />
+
+  <div class="space-y-4">
+    <h2 class="text-lg font-semibold tracking-tight text-white">Demo</h2>
+    <div
+      class="mx-auto max-w-3xl overflow-hidden rounded-2xl border border-white/10 bg-black shadow-lg shadow-black/40"
+    >
+      <video
+        class="block w-full"
+        controls
+        playsinline
+        preload="metadata"
+        aria-label="Smart Study Assistant Streamlit demo"
+      >
+        <source src="{% static 'web/SmartStudyAssistant.webm' %}" type="video/webm" />
+        <p class="p-4 text-sm text-slate-400">Your browser does not support embedded WebM video.</p>
+      </video>
+    </div>
+  </div>
+</div>

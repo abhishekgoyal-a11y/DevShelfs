@@ -1,0 +1,8 @@
+{% extends "web/base.html" %}
+{% block title %}{{ project.title }} — DevShelf{% endblock %}
+{% block content %}
+  <article class="space-y-8">
+    {% include "web/partials/project_chrome.html" %}
+    {% include body_template %}
+  </article>
+{% endblock %}

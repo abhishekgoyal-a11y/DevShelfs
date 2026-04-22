@@ -1,0 +1,155 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="color-scheme" content="dark" />
+    <title>{% block title %}DevShelf{% endblock %}</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700&family=JetBrains+Mono:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            fontFamily: {
+              sans: ['"DM Sans"', "system-ui", "sans-serif"],
+              mono: ['"JetBrains Mono"', "ui-monospace", "monospace"],
+            },
+            boxShadow: {
+              glass: "0 8px 32px rgba(0, 0, 0, 0.35)",
+              glow: "0 0 0 1px rgba(255,255,255,0.06), 0 24px 80px rgba(99, 102, 241, 0.15)",
+            },
+            keyframes: {
+              floaty: {
+                "0%, 100%": { transform: "translateY(0px)" },
+                "50%": { transform: "translateY(-6px)" },
+              },
+            },
+            animation: { floaty: "floaty 6s ease-in-out infinite" },
+          },
+        },
+      };
+    </script>
+    <link rel="stylesheet" href="{% static 'web/app.css' %}" />
+  </head>
+  <body class="min-h-screen antialiased bg-slate-950 text-slate-100 font-sans">
+    {% with z=layout|default:"default" %}
+    <div
+      class="pointer-events-none fixed inset-0 -z-20 bg-slate-950"
+      style="background-image: {% if z == "ai_tools" %}
+          radial-gradient(1000px 700px at 0% 0%, rgba(16, 185, 129, 0.28), transparent 52%),
+          radial-gradient(900px 650px at 100% 15%, rgba(245, 158, 11, 0.16), transparent 55%),
+          radial-gradient(850px 600px at 45% 100%, rgba(6, 182, 212, 0.14), transparent 52%)
+        {% elif z == "hackathons" %}
+          radial-gradient(1100px 650px at 12% -5%, rgba(139, 92, 246, 0.32), transparent 55%),
+          radial-gradient(880px 580px at 88% 8%, rgba(249, 115, 22, 0.2), transparent 52%),
+          radial-gradient(720px 500px at 50% 105%, rgba(251, 146, 60, 0.1), transparent 50%)
+        {% elif z == "contests" %}
+          radial-gradient(1000px 620px at 8% 0%, rgba(236, 72, 153, 0.24), transparent 52%),
+          radial-gradient(920px 600px at 92% 25%, rgba(34, 211, 238, 0.18), transparent 55%),
+          radial-gradient(780px 520px at 50% 110%, rgba(167, 139, 250, 0.12), transparent 50%)
+        {% else %}
+          radial-gradient(1200px 600px at 10% -10%, rgba(99, 102, 241, 0.35), transparent 55%),
+          radial-gradient(900px 500px at 90% 0%, rgba(14, 165, 233, 0.22), transparent 50%),
+          radial-gradient(800px 500px at 50% 110%, rgba(244, 63, 94, 0.12), transparent 55%)
+        {% endif %};
+      "
+    ></div>
+    <div
+      class="pointer-events-none fixed inset-0 -z-10"
+      style="opacity: {% if z == "ai_tools" %}0.045{% else %}0.06{% endif %};
+        background-image: url('data:image/svg+xml,%3Csvg xmlns%3D%22http%3A//www.w3.org/2000/svg%22 width%3D%22120%22 height%3D%22120%22 viewBox%3D%220 0 120 120%22%3E%3Cfilter id%3D%22n%22%3E%3CfeTurbulence type%3D%22fractalNoise%22 baseFrequency%3D%220.9%22 numOctaves%3D%223%22 stitchTiles%3D%22stitch%22/%3E%3C/filter%3E%3Crect width%3D%22120%22 height%3D%22120%22 filter%3D%22url%28%23n%29%22 opacity%3D%220.55%22/%3E%3C/svg%3E');"
+    ></div>
+    {% endwith %}
+
+    <header class="sticky top-0 z-50 border-b border-white/10 bg-slate-950/55 backdrop-blur-xl">
+      <div class="mx-auto flex max-w-6xl items-center justify-between gap-4 px-4 py-4 sm:px-6 lg:px-8">
+        <a
+          href="{% url 'home' %}"
+          class="group inline-flex items-center gap-3 transition-transform duration-300 hover:scale-[1.01]"
+        >
+          <span
+            class="relative grid h-10 w-10 place-items-center rounded-2xl bg-gradient-to-br from-indigo-400 via-sky-400 to-fuchsia-400 p-px shadow-glow"
+          >
+            <span
+              class="grid h-full w-full place-items-center rounded-2xl bg-slate-950/80 text-sm font-bold tracking-tight text-white"
+              >DS</span
+            >
+          </span>
+          <span class="leading-tight">
+            <span class="block text-base font-semibold tracking-tight text-white">DevShelf</span>
+            <span class="block text-xs text-slate-300/70">Projects · AI tools</span>
+          </span>
+        </a>
+        <nav class="hidden items-center gap-1 md:flex" aria-label="Main">
+          <a
+            href="{% url 'projects' %}"
+            class="rounded-xl px-3 py-2 text-sm font-medium transition-all duration-300 {% if active_nav == "projects" %}glass-strong text-white shadow-glow{% else %}text-slate-200/80 hover:bg-white/5 hover:text-white{% endif %}"
+            >Projects</a
+          >
+          <a
+            href="{% url 'ai_tools' %}"
+            class="rounded-xl px-3 py-2 text-sm font-medium transition-all duration-300 {% if active_nav == "ai" %}glass-strong text-white shadow-glow{% else %}text-slate-200/80 hover:bg-white/5 hover:text-white{% endif %}"
+            >AI Tools</a
+          >
+        </nav>
+        <button
+          type="button"
+          class="inline-flex items-center justify-center rounded-xl border border-white/10 bg-white/5 px-3 py-2 text-sm font-semibold text-white shadow-sm transition hover:bg-white/10 md:hidden"
+          data-mobile-nav
+          aria-expanded="false"
+          aria-controls="mobile-nav"
+        >
+          Menu
+        </button>
+      </div>
+      <div
+        id="mobile-nav"
+        class="hidden border-t border-white/10 bg-slate-950/70 backdrop-blur-xl md:hidden"
+        data-mobile-panel
+      >
+        <div class="mx-auto flex max-w-6xl flex-col gap-1 px-4 py-3 sm:px-6">
+          <a
+            href="{% url 'projects' %}"
+            class="rounded-xl px-3 py-2 text-sm font-medium text-slate-200/80 hover:bg-white/5"
+            data-mobile-link
+            >Projects</a
+          >
+          <a
+            href="{% url 'ai_tools' %}"
+            class="rounded-xl px-3 py-2 text-sm font-medium text-slate-200/80 hover:bg-white/5"
+            data-mobile-link
+            >AI Tools</a
+          >
+        </div>
+      </div>
+    </header>
+    <main class="relative mx-auto w-full max-w-6xl px-4 pb-16 pt-6 sm:px-6 lg:px-8 lg:pt-10">
+      <div class="transition-all duration-500 ease-out motion-reduce:transition-none">{% block content %}{% endblock %}</div>
+    </main>
+    <script>
+      (function () {
+        const btn = document.querySelector("[data-mobile-nav]");
+        const panel = document.querySelector("[data-mobile-panel]");
+        if (!btn || !panel) return;
+        const links = panel.querySelectorAll("[data-mobile-link]");
+        function setOpen(v) {
+          panel.classList.toggle("hidden", !v);
+          btn.setAttribute("aria-expanded", v ? "true" : "false");
+        }
+        setOpen(false);
+        btn.addEventListener("click", function () {
+          setOpen(panel.classList.contains("hidden"));
+        });
+        links.forEach((a) => a.addEventListener("click", function () { setOpen(false); }));
+        window.addEventListener("keydown", (e) => e.key === "Escape" && setOpen(false));
+      })();
+    </script>
+  </body>
+</html>

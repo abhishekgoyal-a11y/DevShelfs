@@ -1,0 +1,61 @@
+{% verbatim %}
+# Smart Study Assistant — minimal Streamlit + OpenAI example.
+# Save as app.py, add OPENAI_API_KEY to .streamlit/secrets.toml, then run: streamlit run app.py
+
+import ssl
+import httpx
+import streamlit as st
+import truststore
+from openai import OpenAI
+
+# Browser tab title and layout
+st.set_page_config(page_title="Smart Study Assistant", layout="centered")
+st.title("Smart Study Assistant")
+st.caption("Paste notes below. You will get a summary, key points, and a short quiz.")
+
+# On some macOS/Python setups, default cert verification fails; use the OS trust store.
+_ssl_ctx = truststore.SSLContext(ssl.PROTOCOL_TLS_CLIENT)
+_http = httpx.Client(timeout=120.0, verify=_ssl_ctx)
+
+# Create the OpenAI client using a secret key (never paste keys into this file).
+client = OpenAI(
+    api_key=st.secrets["OPENAI_API_KEY"],
+    http_client=_http
+    )
+_chat_model = "gpt-4o-mini"
+
+# Large text box where the student pastes notes
+notes = st.text_area(
+    "Your notes",
+    height=220,
+    placeholder="Example: paste a paragraph from a textbook or lecture…",
+)
+
+# Main action button
+if st.button("Generate study pack", type="primary"):
+    # Guard: empty notes should not call the API
+    if not notes.strip():
+        st.warning("Please paste some text first.")
+    else:
+        # Show a spinner while the network request runs
+        with st.spinner("Calling the model…"):
+            try:
+                response = client.chat.completions.create(
+                    model=_chat_model,
+                    messages=[
+                        {
+                            "role": "system",
+                            "content": (
+                                "You help students study. Reply with exactly three sections. "
+                                "Use these headings on their own lines: Summary, Key points, Quiz. "
+                                "Under Quiz, write a few questions and then a line starting with Answers:."
+                            ),
+                        },
+                        {"role": "user", "content": notes},
+                    ],
+                )
+                text = (response.choices[0].message.content or "").strip()
+                st.markdown(text)
+            except Exception as err:
+                st.error(f"Something went wrong: {err}")
+{% endverbatim %}

@@ -1,0 +1,37 @@
+@keyframes ds-fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+.ds-fade {
+  animation: ds-fade-in 520ms ease-out both;
+  animation-delay: var(--ds-delay, 0ms);
+}
+
+.glass,
+.glass-panel {
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 0.05);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.35);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+}
+.glass-strong {
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  background: rgba(255, 255, 255, 0.1);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.35);
+  backdrop-filter: blur(32px);
+  -webkit-backdrop-filter: blur(32px);
+}
+
+/* Syntax-ish code (no Prism) */
+pre.code-block,
+.code-block {
+  max-height: min(70vh, 36rem);
+  overflow: auto;
+}

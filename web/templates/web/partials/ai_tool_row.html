@@ -1,0 +1,42 @@
+{% load shelf %}
+{% if tool.detailPath %}
+  <a
+    href="{{ tool.detailPath }}"
+    class="group block rounded-2xl border border-emerald-500/10 bg-white/[0.04] p-4 text-inherit no-underline transition duration-500 hover:border-emerald-400/25 hover:bg-white/[0.07] hover:shadow-[0_0_40px_-12px_rgba(16,185,129,0.22)]"
+  >
+{% else %}
+  <div
+    class="group rounded-2xl border border-emerald-500/10 bg-white/[0.04] p-4 transition duration-500 hover:border-emerald-400/25 hover:bg-white/[0.07]"
+  >
+{% endif %}
+    <div class="flex flex-col gap-4 sm:flex-row sm:items-start sm:gap-5">
+      <div
+        class="relative h-12 w-12 shrink-0 overflow-hidden rounded-2xl border border-white/10 bg-gradient-to-br from-emerald-500/45 via-lime-400/22 to-amber-400/28 shadow-inner"
+      >
+        <div
+          class="absolute inset-0 bg-[radial-gradient(circle_at_30%_20%,rgba(255,255,255,0.35),transparent_55%)]"
+        ></div>
+        <div
+          class="relative grid h-full w-full place-items-center text-xs font-bold tracking-wide text-white"
+        >
+          {{ tool.name|initials }}
+        </div>
+      </div>
+      <div class="min-w-0 flex-1">
+        <div class="flex flex-wrap items-center justify-between gap-3">
+          <h3 class="text-lg font-semibold tracking-tight text-white transition-colors group-hover:text-emerald-50/95">
+            {{ tool.name }}
+          </h3>
+          <span
+            class="rounded-full border border-emerald-500/25 bg-emerald-500/10 px-2.5 py-1 text-xs font-mono text-emerald-200/85"
+            >{{ tool.id }}</span
+          >
+        </div>
+        <p class="mt-2 text-sm leading-relaxed text-slate-300/90">{{ tool.description }}</p>
+      </div>
+    </div>
+{% if tool.detailPath %}
+  </a>
+{% else %}
+  </div>
+{% endif %}

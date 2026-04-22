@@ -1,0 +1,1 @@
+const a=[{id:"pomelli-ai",name:"Pomelli AI",category:"Marketing & ads",description:"On-brand multi-format ad creatives—static, video, and HTML5—optimized for major social and display networks.",detailPath:"/ai-tools/pomelli-ai",featured:!0,featured_order:1}];export{a as default};

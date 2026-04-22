@@ -1,0 +1,35 @@
+[
+  {
+    "id": "p1",
+    "slug": "smart-study-assistant",
+    "title": "Smart Study Assistant",
+    "description": "Summarize pasted notes or textbook text, surface key points, and generate practice quiz questions with an LLM-backed Streamlit UI.",
+    "repoUrl": "https://github.com/abhishekgoyal-a11y/Projects/tree/main/smart-study-assistant",
+    "tech": ["Python", "Streamlit", "OpenAI API"],
+    "difficulty": "beginner",
+    "featured": true,
+    "featured_order": 1
+  },
+  {
+    "id": "p2",
+    "slug": "notes-qa-bot",
+    "title": "Smart Q&A Bot for Your Notes",
+    "description": "Upload or paste notes, embed them locally (Hugging Face), index vectors in Chroma, and ask grounded questions with LangChain RAG—Groq powers the chat model.",
+    "repoUrl": "https://github.com/abhishekgoyal-a11y/Projects/tree/main/notes-qa-bot",
+    "tech": ["Python", "Streamlit", "LangChain", "Chroma", "Groq", "Hugging Face", "RAG"],
+    "difficulty": "intermediate",
+    "featured": true,
+    "featured_order": 2
+  },
+  {
+    "id": "p3",
+    "slug": "ai-email-reply-generator",
+    "title": "AI Email Reply Generator",
+    "description": "Paste an email, pick a tone (Formal, Friendly, Short), and get a Groq-powered draft reply—Express API plus vanilla HTML/CSS/JS, no frontend build.",
+    "repoUrl": "https://github.com/abhishekgoyal-a11y/Projects/tree/main/ai-email-reply-generator",
+    "tech": ["Node.js", "Express", "JavaScript", "Groq API"],
+    "difficulty": "beginner",
+    "featured": true,
+    "featured_order": 3
+  }
+]
