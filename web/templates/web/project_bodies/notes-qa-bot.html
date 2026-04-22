@@ -173,14 +173,7 @@ Answer (+ optional source chunks) on screen</code></pre>
       >
       and your <code class="text-sky-200/90">requirements.txt</code>.
     </p>
-    <div class="overflow-hidden rounded-2xl border border-white/10 bg-slate-950/90">
-      <div class="flex items-center justify-between gap-3 border-b border-white/10 px-3 py-2">
-        <span class="font-mono text-[11px] font-medium uppercase tracking-wide text-slate-400">python</span>
-      </div>
-      <pre
-        class="code-block m-0 max-h-[min(70vh,36rem)] overflow-x-auto overflow-y-auto p-4 text-xs leading-relaxed text-slate-200/95 sm:text-sm"
-      ><code class="whitespace-pre-wrap font-mono">{% include "web/code/notes_qa_app.html" %}</code></pre>
-    </div>
+    {% include "web/partials/code_block_frame.html" with language="python" code_template="web/code/notes_qa_app.html" pre_class="code-block m-0 max-h-[min(70vh,36rem)] overflow-x-auto overflow-y-auto p-4 text-xs leading-relaxed text-slate-200/95 sm:text-sm" only %}
     <div class="rounded-xl border border-white/10 bg-slate-950/45 px-4 py-3 text-sm leading-relaxed text-slate-200/90">
       <p>
         <span class="font-semibold text-slate-100">Complete code</span>

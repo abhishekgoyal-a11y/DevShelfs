@@ -151,5 +151,39 @@
         window.addEventListener("keydown", (e) => e.key === "Escape" && setOpen(false));
       })();
     </script>
+    <script>
+      (function () {
+        document.querySelectorAll(".ds-codeblock-copy").forEach(function (btn) {
+          btn.addEventListener("click", function () {
+            var root = btn.closest(".ds-codeblock");
+            if (!root) return;
+            var codeEl = root.querySelector("pre code.ds-codeblock-source");
+            if (!codeEl) return;
+            var text = (codeEl.textContent || "").replace(/\n$/, "");
+            var copyLabel = btn.getAttribute("data-copy-label") || "Copy";
+            var copiedLabel = btn.getAttribute("data-copied-label") || "Copied";
+            function setState(copied) {
+              btn.textContent = copied ? copiedLabel : copyLabel;
+              btn.setAttribute("aria-label", copied ? "Copied" : "Copy code to clipboard");
+            }
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+              navigator.clipboard.writeText(text).then(
+                function () {
+                  setState(true);
+                  window.setTimeout(function () {
+                    setState(false);
+                  }, 2000);
+                },
+                function () {
+                  setState(false);
+                }
+              );
+            } else {
+              setState(false);
+            }
+          });
+        });
+      })();
+    </script>
   </body>
 </html>
