@@ -1,0 +1,95 @@
+{% verbatim %}
+/**
+ * AI Email Reply Generator — frontend logic (vanilla JS)
+ *
+ * Sends the email text and tone to POST /generate-reply on the same origin
+ * (when you open the app via the Express server).
+ */
+
+const MAX_CHARS = 8000;
+
+const emailInput = document.getElementById("email-input");
+const toneSelect = document.getElementById("tone-select");
+const generateBtn = document.getElementById("generate-btn");
+const statusMessage = document.getElementById("status-message");
+const replyOutput = document.getElementById("reply-output");
+const copyBtn = document.getElementById("copy-btn");
+const charCount = document.getElementById("char-count");
+
+function setStatus(text, isError = false) {
+  statusMessage.textContent = text || "";
+  statusMessage.classList.toggle("error", isError);
+}
+
+function updateCharCount() {
+  const len = emailInput.value.length;
+  charCount.textContent = `${len} / ${MAX_CHARS}`;
+}
+
+emailInput.addEventListener("input", updateCharCount);
+updateCharCount();
+
+generateBtn.addEventListener("click", async () => {
+  const email = emailInput.value.trim();
+  const tone = toneSelect.value;
+
+  if (!email) {
+    setStatus("Please paste the email you want to reply to.", true);
+    replyOutput.textContent = "";
+    copyBtn.disabled = true;
+    return;
+  }
+
+  setStatus("Generating reply…");
+  replyOutput.textContent = "";
+  copyBtn.disabled = true;
+  generateBtn.disabled = true;
+
+  try {
+    const res = await fetch("/generate-reply", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ email, tone }),
+    });
+
+    const data = await res.json().catch(() => ({}));
+
+    if (!res.ok) {
+      const msg =
+        data.error ||
+        `Something went wrong (${res.status}). Please try again.`;
+      setStatus(msg, true);
+      return;
+    }
+
+    if (!data.reply) {
+      setStatus("No reply was returned. Please try again.", true);
+      return;
+    }
+
+    replyOutput.textContent = data.reply;
+    copyBtn.disabled = false;
+    setStatus("Done! Review and edit before sending.");
+  } catch (err) {
+    console.error(err);
+    setStatus(
+      "Could not reach the server. Make sure it is running and refresh the page.",
+      true
+    );
+  } finally {
+    generateBtn.disabled = false;
+  }
+});
+
+copyBtn.addEventListener("click", async () => {
+  const text = replyOutput.textContent;
+  if (!text) return;
+
+  try {
+    await navigator.clipboard.writeText(text);
+    setStatus("Copied to clipboard.");
+  } catch {
+    setStatus("Copy failed. You can select the text and copy manually.", true);
+  }
+});
+{% endverbatim %}

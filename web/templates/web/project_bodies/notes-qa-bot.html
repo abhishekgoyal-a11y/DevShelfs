@@ -1,34 +1,383 @@
 {% load static %}
-<div class="glass space-y-8 rounded-3xl p-5 sm:p-8">
-  <div class="space-y-4 text-sm leading-relaxed text-slate-200/85 sm:text-base">
-    <p>
-      A Streamlit RAG app: you upload or paste notes, embed them with a local Hugging Face model, store vectors in
-      Chroma, and ask grounded questions using LangChain. Groq powers the chat model.
+<div class="glass space-y-10 rounded-3xl p-5 sm:p-8">
+  <div class="space-y-4">
+    <p class="text-sm leading-relaxed text-slate-200/85 sm:text-base">
+      This intermediate project is a small <strong class="text-slate-100">Streamlit</strong> app: you give it your own
+      notes (paste or a <code class="text-sky-200/90">.txt</code> file), split them into chunks, embed each chunk
+      <strong class="text-slate-100">locally</strong> with Hugging Face sentence-transformers (no embedding API key),
+      store vectors in <strong class="text-slate-100">Chroma</strong>, then answer questions with
+      <strong class="text-slate-100">Groq</strong> over LangChain—retrieve the top chunks and generate a reply grounded in
+      your notes (classic <strong class="text-slate-100">RAG</strong>).
     </p>
-    <p>
-      <strong class="text-slate-100">Flow:</strong> chunk notes → local embeddings → Chroma index → retriever + QA
-      chain for answers with optional source expanders.
+    <p class="text-sm leading-relaxed text-slate-200/85 sm:text-base">
+      <strong class="text-slate-100">Purpose:</strong> practice &ldquo;ask my notes&rdquo; without training your own
+      model—local embeddings, a vector store, and a fast chat API (Groq) for generation.
+    </p>
+    <p class="text-sm leading-relaxed text-slate-200/85 sm:text-base">
+      <strong class="text-slate-100">Typical use:</strong> one chapter of reading, a meeting transcript export, or lab
+      instructions saved as text—then question-by-question review before an exam.
+    </p>
+    <p class="text-sm font-medium text-slate-200/90">Key ideas you will touch:</p>
+    <ul class="list-inside list-disc space-y-2 text-sm leading-relaxed text-slate-200/85 sm:text-base">
+      <li>
+        <strong class="text-slate-100">Chunking</strong> — break long notes into overlapping pieces the model can
+        retrieve selectively.
+      </li>
+      <li>
+        <strong class="text-slate-100">Embeddings + vector store</strong> — dense vectors from a small local model
+        (<code class="text-sky-200/90">sentence-transformers/all-MiniLM-L6-v2</code>), stored in Chroma for similarity
+        search.
+      </li>
+      <li>
+        <strong class="text-slate-100">Retriever + QA chain</strong> — LangChain pulls top chunks, then the LLM writes an
+        answer grounded in those chunks.
+      </li>
+      <li>
+        <strong class="text-slate-100">Next steps</strong> — PDF loaders, metadata filters, evaluation, persistence for
+        Chroma, or swapping Groq/chat and embedding models once the happy path works.
+      </li>
+    </ul>
+    <p class="text-sm leading-relaxed text-slate-200/85 sm:text-base">
+      <strong class="text-slate-100">Example prompts:</strong> &ldquo;What definition does the note give for X?&rdquo; or
+      &ldquo;List the three action items mentioned in the second half.&rdquo;
     </p>
   </div>
+
   <div class="space-y-3">
+    <h2 class="text-lg font-semibold tracking-tight text-white">Overall flow</h2>
+    <pre
+      class="overflow-x-auto rounded-2xl border border-white/10 bg-slate-950/60 p-4 text-sm leading-relaxed text-slate-200/90 sm:text-base"
+    ><code class="font-mono whitespace-pre-wrap">User pastes text or uploads .txt
+      ↓
+Clicks "Build / refresh index"
+      ↓
+Split into chunks → embed locally (sentence-transformers) → store in Chroma
+      ↓
+User types a question → clicks "Answer from my notes"
+      ↓
+Retriever finds top-k similar chunks
+      ↓
+LLM answers using those chunks (RAG)
+      ↓
+Answer (+ optional source chunks) on screen</code></pre>
+  </div>
+
+  <hr class="border-0 border-t border-white/10" />
+
+  <div class="space-y-4">
+    <h2 class="text-lg font-semibold tracking-tight text-white">Step-by-Step Implementation</h2>
+    <p class="text-sm leading-relaxed text-slate-200/85 sm:text-base">Follow these steps in order:</p>
+    <ol class="list-decimal list-outside space-y-5 pl-6 text-sm leading-relaxed text-slate-200/85 sm:text-base">
+      <li>
+        <span class="font-medium text-slate-100">Set up the project</span>
+        <ul class="mt-2 list-disc space-y-1.5 pl-5">
+          <li>Install Python 3.10+</li>
+          <li>Create a folder and a virtual environment</li>
+        </ul>
+      </li>
+      <li>
+        <span class="font-medium text-slate-100">Install dependencies</span>
+        <ul class="mt-2 list-disc space-y-1.5 pl-5">
+          <li>
+            <code class="text-sky-200/90">streamlit</code>, <code class="text-sky-200/90">httpx</code>,
+            <code class="text-sky-200/90">truststore</code>, <code class="text-sky-200/90">groq</code>,
+            <code class="text-sky-200/90">langchain</code>, <code class="text-sky-200/90">langchain-core</code>,
+            <code class="text-sky-200/90">langchain-community</code>, <code class="text-sky-200/90">langchain-text-splitters</code>,
+            <code class="text-sky-200/90">langchain-groq</code>, <code class="text-sky-200/90">langchain-huggingface</code>,
+            <code class="text-sky-200/90">langchain-classic</code> (for <code class="text-sky-200/90">RetrievalQA</code>),
+            <code class="text-sky-200/90">chromadb</code>, <code class="text-sky-200/90">sentence-transformers</code> (pulls
+            in torch)—align pins with the repo&rsquo;s <code class="text-sky-200/90">requirements.txt</code>
+          </li>
+          <li>Pin versions in <code class="text-sky-200/90">requirements.txt</code> once you have a working set</li>
+        </ul>
+      </li>
+      <li>
+        <span class="font-medium text-slate-100">Streamlit UI</span>
+        <ul class="mt-2 list-disc space-y-1.5 pl-5">
+          <li>Text area + <code class="text-sky-200/90">.txt</code> uploader for source notes</li>
+          <li>Button to build the vector index</li>
+          <li>Question field + button to run RAG</li>
+          <li>Optional expander to show retrieved chunks (builds trust, helps debug)</li>
+        </ul>
+      </li>
+      <li>
+        <span class="font-medium text-slate-100">Secrets</span>
+        <ul class="mt-2 list-disc space-y-1.5 pl-5">
+          <li>
+            Put <code class="text-sky-200/90">GROQ_API_KEY</code> in
+            <code class="text-sky-200/90">.streamlit/secrets.toml</code> for chat. Embeddings run on-device; the first
+            index may download model weights.
+          </li>
+        </ul>
+      </li>
+      <li>
+        <span class="font-medium text-slate-100">Chunk and embed</span>
+        <ul class="mt-2 list-disc space-y-1.5 pl-5">
+          <li>
+            Use <code class="text-sky-200/90">RecursiveCharacterTextSplitter</code> with sane chunk size/overlap
+          </li>
+          <li>
+            <code class="text-sky-200/90">HuggingFaceEmbeddings</code> with
+            <code class="text-sky-200/90">sentence-transformers/all-MiniLM-L6-v2</code> (local; no embedding API)
+          </li>
+          <li>
+            <code class="text-sky-200/90">Chroma.from_documents</code> to build an in-memory store for the session
+          </li>
+        </ul>
+      </li>
+      <li>
+        <span class="font-medium text-slate-100">Ask with RAG</span>
+        <ul class="mt-2 list-disc space-y-1.5 pl-5">
+          <li>
+            <code class="text-sky-200/90">as_retriever(search_kwargs={&quot;k&quot;: 4})</code> for top chunks
+          </li>
+          <li>
+            <code class="text-sky-200/90">RetrievalQA.from_chain_type(..., chain_type=&quot;stuff&quot;)</code> with
+            <code class="text-sky-200/90">ChatGroq</code> (default chat model
+            <code class="text-sky-200/90">llama-3.3-70b-versatile</code> in <code class="text-sky-200/90">app.py</code>);
+            shared Groq httpx clients use <code class="text-sky-200/90">truststore</code> for TLS on macOS
+          </li>
+        </ul>
+      </li>
+      <li>
+        <span class="font-medium text-slate-100">Guardrails</span>
+        <ul class="mt-2 list-disc space-y-1.5 pl-5">
+          <li>Warn on empty notes, missing index, empty question, or missing <code class="text-sky-200/90">GROQ_API_KEY</code></li>
+          <li>
+            Wrap index and QA in <code class="text-sky-200/90">try</code>/<code class="text-sky-200/90">except</code>; QA
+            errors add hints for TLS, proxy, auth, and rate limits, plus an expander with tracebacks
+          </li>
+          <li>
+            Cap pasted/uploaded text length (see <code class="text-sky-200/90">MAX_NOTES_CHARS</code> in
+            <code class="text-sky-200/90">app.py</code>) so you do not send huge blobs by accident
+          </li>
+        </ul>
+      </li>
+    </ol>
+  </div>
+
+  <hr class="border-0 border-t border-white/10" />
+
+  <div class="space-y-4">
+    <h2 class="text-lg font-semibold tracking-tight text-white">Code implementation</h2>
+    <p class="text-sm leading-relaxed text-slate-200/85 sm:text-base">
+      The snippet below matches <code class="text-sky-200/90">app.py</code> in the project repo (requirements, README, and
+      <code class="text-sky-200/90">.streamlit</code> live next to it). LangChain&rsquo;s package layout changes between
+      releases—if imports fail, align pins with the
+      <a
+        class="font-medium text-sky-200/90 hover:underline"
+        href="https://python.langchain.com/"
+        target="_blank"
+        rel="noopener noreferrer"
+        >LangChain docs</a
+      >
+      and your <code class="text-sky-200/90">requirements.txt</code>.
+    </p>
+    <div class="overflow-hidden rounded-2xl border border-white/10 bg-slate-950/90">
+      <div class="flex items-center justify-between gap-3 border-b border-white/10 px-3 py-2">
+        <span class="font-mono text-[11px] font-medium uppercase tracking-wide text-slate-400">python</span>
+      </div>
+      <pre
+        class="code-block m-0 max-h-[min(70vh,36rem)] overflow-x-auto overflow-y-auto p-4 text-xs leading-relaxed text-slate-200/95 sm:text-sm"
+      ><code class="whitespace-pre-wrap font-mono">{% include "web/code/notes_qa_app.html" %}</code></pre>
+    </div>
+    <div class="rounded-xl border border-white/10 bg-slate-950/45 px-4 py-3 text-sm leading-relaxed text-slate-200/90">
+      <p>
+        <span class="font-semibold text-slate-100">Complete code</span>
+        <span class="mx-2 text-slate-500">—</span>
+        <a
+          href="{{ project.repoUrl }}"
+          class="font-medium text-sky-200/90 underline-offset-2 hover:text-white hover:underline"
+          target="_blank"
+          rel="noreferrer"
+          >Project link (GitHub)</a
+        >
+      </p>
+    </div>
+  </div>
+
+  <hr class="border-0 border-t border-white/10" />
+
+  <div class="space-y-4">
     <h2 class="text-lg font-semibold tracking-tight text-white">Demo</h2>
+    <p class="text-sm leading-relaxed text-slate-200/85 sm:text-base">
+      Screen recording: index notes, ask a question, and open <strong class="text-slate-100">Sources</strong> to see
+      retrieved chunks.
+    </p>
     <div
       class="mx-auto max-w-3xl overflow-hidden rounded-2xl border border-white/10 bg-black shadow-lg shadow-black/40"
     >
-      <video class="block w-full" controls playsinline preload="metadata" aria-label="Notes Q and A bot demo">
+      <video
+        class="block w-full"
+        controls
+        playsinline
+        preload="metadata"
+        aria-label="Smart Q&amp;A Bot for Your Notes Streamlit demo"
+      >
         <source src="{% static 'web/NotesQaBot.webm' %}" type="video/webm" />
         <p class="p-4 text-sm text-slate-400">Your browser does not support embedded WebM video.</p>
       </video>
     </div>
   </div>
-  <p class="text-sm text-slate-200/80">
-    Full <span class="font-mono">app.py</span> (LangChain, Chroma, Groq HTTP clients, TLS) lives in
-    <a
-      class="font-medium text-sky-200/90 hover:underline"
-      href="{{ project.repoUrl }}"
-      target="_blank"
-      rel="noreferrer"
-      >the project repository</a
-    >.
-  </p>
+
+  <hr class="border-0 border-t border-white/10" />
+
+  <div class="space-y-5">
+    <h2 class="text-lg font-semibold tracking-tight text-white">📖 How the Code Works (Step-by-Step)</h2>
+    <p class="text-sm leading-relaxed text-slate-200/85 sm:text-base">
+      This section explains the implementation in simple terms, from top to bottom.
+    </p>
+
+    <hr class="border-0 border-t border-white/10" />
+
+    <section class="space-y-3">
+      <h3 class="text-base font-semibold tracking-tight text-white">1. Streamlit shell</h3>
+      <ul class="list-disc space-y-1.5 pl-5 text-sm leading-relaxed text-slate-200/85 sm:text-base">
+        <li>
+          <code class="text-sky-200/90">st.set_page_config</code>, <code class="text-sky-200/90">st.title</code>, and
+          <code class="text-sky-200/90">st.caption</code> frame the app.
+        </li>
+        <li>
+          <code class="text-sky-200/90">st.session_state</code> keeps the Chroma vector store between clicks so you do
+          not rebuild on every rerun unless the user presses &ldquo;Build / refresh index&rdquo;.
+        </li>
+        <li>
+          Groq HTTP clients are cached in <code class="text-sky-200/90">session_state</code> too, with TLS verification
+          wired through <code class="text-sky-200/90">truststore</code> for fewer macOS certificate surprises.
+        </li>
+      </ul>
+    </section>
+
+    <hr class="border-0 border-t border-white/10" />
+
+    <section class="space-y-3">
+      <h3 class="text-base font-semibold tracking-tight text-white">2. Ingest notes</h3>
+      <ul class="list-disc space-y-1.5 pl-5 text-sm leading-relaxed text-slate-200/85 sm:text-base">
+        <li>
+          Decode uploaded <code class="text-sky-200/90">.txt</code> bytes as UTF-8 (with replacement for odd characters).
+        </li>
+        <li>If there is no upload, fall back to the pasted text area.</li>
+        <li>
+          Wrap the raw string in a <code class="text-sky-200/90">Document</code> so LangChain can track metadata later if
+          you extend the app.
+        </li>
+      </ul>
+    </section>
+
+    <hr class="border-0 border-t border-white/10" />
+
+    <section class="space-y-3">
+      <h3 class="text-base font-semibold tracking-tight text-white">3. Chunking</h3>
+      <ul class="list-disc space-y-1.5 pl-5 text-sm leading-relaxed text-slate-200/85 sm:text-base">
+        <li>
+          <code class="text-sky-200/90">RecursiveCharacterTextSplitter</code> breaks text into overlapping windows so a
+          fact split across two paragraphs can still appear whole inside one chunk.
+        </li>
+        <li>
+          Smaller chunks &rarr; more precise retrieval; larger chunks &rarr; more context per hit. Tune for your note
+          style.
+        </li>
+      </ul>
+    </section>
+
+    <hr class="border-0 border-t border-white/10" />
+
+    <section class="space-y-3">
+      <h3 class="text-base font-semibold tracking-tight text-white">4. Embeddings and Chroma</h3>
+      <ul class="list-disc space-y-1.5 pl-5 text-sm leading-relaxed text-slate-200/85 sm:text-base">
+        <li>
+          <code class="text-sky-200/90">HuggingFaceEmbeddings</code> turns each chunk into a vector on-device via
+          sentence-transformers.
+        </li>
+        <li>
+          <code class="text-sky-200/90">Chroma.from_documents</code> stores vectors and text for similarity search.
+        </li>
+      </ul>
+    </section>
+
+    <hr class="border-0 border-t border-white/10" />
+
+    <section class="space-y-3">
+      <h3 class="text-base font-semibold tracking-tight text-white">5. Retrieval QA</h3>
+      <ul class="list-disc space-y-1.5 pl-5 text-sm leading-relaxed text-slate-200/85 sm:text-base">
+        <li>
+          The retriever returns the top-<code class="text-sky-200/90">k</code> chunks whose embeddings are closest to the
+          question embedding.
+        </li>
+        <li>
+          <code class="text-sky-200/90">RetrievalQA</code> with
+          <code class="text-sky-200/90">chain_type=&quot;stuff&quot;</code> concatenates those chunks into the prompt
+          for <code class="text-sky-200/90">ChatGroq</code>.
+        </li>
+        <li>
+          <code class="text-sky-200/90">return_source_documents=True</code> lets you show evidence in an expander.
+        </li>
+      </ul>
+    </section>
+
+    <hr class="border-0 border-t border-white/10" />
+
+    <section class="space-y-3">
+      <h3 class="text-base font-semibold tracking-tight text-white">6. Errors and limits</h3>
+      <ul class="list-disc space-y-1.5 pl-5 text-sm leading-relaxed text-slate-200/85 sm:text-base">
+        <li>User-facing checks avoid empty queries and missing indexes.</li>
+        <li>
+          <code class="text-sky-200/90">try</code>/<code class="text-sky-200/90">except</code> catches embedding failures,
+          Groq errors (TLS, proxy, auth, rate limits), and surfaces optional technical details—without crashing
+          Streamlit.
+        </li>
+      </ul>
+    </section>
+  </div>
+
+  <nav class="border-t border-white/10 pt-6" aria-label="Related links">
+    <p class="text-sm font-medium text-slate-200/90">Useful links</p>
+    <ul class="mt-2 space-y-2 text-sm">
+      <li>
+        <a
+          class="font-medium text-sky-200/90 underline-offset-2 hover:text-white hover:underline"
+          href="https://docs.streamlit.io"
+          target="_blank"
+          rel="noopener noreferrer"
+          >Streamlit docs</a
+        >
+      </li>
+      <li>
+        <a
+          class="font-medium text-sky-200/90 underline-offset-2 hover:text-white hover:underline"
+          href="https://python.langchain.com/docs/tutorials/rag/"
+          target="_blank"
+          rel="noopener noreferrer"
+          >LangChain RAG tutorial</a
+        >
+      </li>
+      <li>
+        <a
+          class="font-medium text-sky-200/90 underline-offset-2 hover:text-white hover:underline"
+          href="https://docs.trychroma.com/"
+          target="_blank"
+          rel="noopener noreferrer"
+          >Chroma docs</a
+        >
+      </li>
+      <li>
+        <a
+          class="font-medium text-sky-200/90 underline-offset-2 hover:text-white hover:underline"
+          href="https://console.groq.com/docs/overview"
+          target="_blank"
+          rel="noopener noreferrer"
+          >Groq API docs</a
+        >
+      </li>
+      <li>
+        <a
+          class="font-medium text-sky-200/90 underline-offset-2 hover:text-white hover:underline"
+          href="https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2"
+          target="_blank"
+          rel="noopener noreferrer"
+          >Sentence Transformers model card (embeddings)</a
+        >
+      </li>
+    </ul>
+  </nav>
 </div>

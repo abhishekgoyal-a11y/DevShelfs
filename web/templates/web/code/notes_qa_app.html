@@ -1,0 +1,174 @@
+{% verbatim %}
+"""Smart Q&A Bot for Your Notes — Streamlit + LangChain + Chroma + Groq LLM (RAG app).
+
+Run from this directory: streamlit run app.py
+Set GROQ_API_KEY in .streamlit/secrets.toml (see README).
+Embeddings use a small local Hugging Face model (no embedding API key).
+"""
+
+import ssl
+import traceback
+
+import httpx
+import streamlit as st
+import truststore
+from groq import DefaultAsyncHttpxClient, DefaultHttpxClient
+from langchain_classic.chains import RetrievalQA
+from langchain_community.vectorstores import Chroma
+from langchain_groq import ChatGroq
+from langchain_huggingface import HuggingFaceEmbeddings
+from langchain_core.documents import Document
+from langchain_text_splitters import RecursiveCharacterTextSplitter
+
+
+def _groq_tls_verify_bundle():
+    """TLS trust for Groq HTTPS.
+
+    Homebrew Python on macOS often fails with ``certifi`` alone (issuer chain differs from
+    the OS). :mod:`truststore` uses the **native** trust store (Keychain on macOS),
+    aligning with Safari and fixing many ``CERTIFICATE_VERIFY_FAILED`` cases.
+
+    Fallback: ``certifi`` if ``truststore`` cannot build a context.
+    """
+    try:
+        return truststore.SSLContext(ssl.PROTOCOL_TLS_CLIENT)
+    except Exception:
+        import certifi
+
+        return certifi.where()
+
+
+def groq_httpx_clients() -> tuple[httpx.Client, httpx.AsyncClient]:
+    """Shared httpx clients for the official Groq SDK.
+
+    Uses Groq's ``DefaultHttpxClient`` / ``DefaultAsyncHttpxClient`` so limits, timeouts,
+    and redirects match what the SDK expects (plain ``httpx.Client`` drops those defaults).
+
+    ``verify`` uses the OS trust store via ``truststore`` (see ``_groq_tls_verify_bundle``).
+
+    ``trust_env=False`` ignores ``HTTP(S)_PROXY`` so a broken shell proxy cannot break
+    Python while ``curl`` omits it.
+    """
+    cache = "groq_httpx_clients_truststore_v1"
+    if cache not in st.session_state:
+        timeout = httpx.Timeout(120.0, connect=45.0, pool=30.0)
+        common: dict = {
+            "timeout": timeout,
+            "trust_env": False,
+            "verify": _groq_tls_verify_bundle(),
+        }
+        st.session_state[cache] = (
+            DefaultHttpxClient(**common),
+            DefaultAsyncHttpxClient(**common),
+        )
+    return st.session_state[cache]
+
+
+st.set_page_config(page_title="Notes Q&A", layout="centered")
+st.title("Smart Q&A Bot for Your Notes")
+st.caption("Index a small .txt file or pasted notes, then ask questions grounded in that text (RAG).")
+
+GROQ_API_KEY = str(st.secrets["GROQ_API_KEY"]).strip()
+# Groq chat models: https://console.groq.com/docs/models
+CHAT_MODEL = "llama-3.3-70b-versatile"
+# Local embeddings — this app uses sentence-transformers on-device; Groq is chat-only here.
+EMBED_MODEL = "sentence-transformers/all-MiniLM-L6-v2"
+MAX_NOTES_CHARS = 80_000
+
+if "vectorstore" not in st.session_state:
+    st.session_state.vectorstore = None
+
+notes = st.text_area("Or paste notes here", height=160, placeholder="Lecture bullets, reading summary…")
+upload = st.file_uploader("Upload a plain-text file (.txt)", type=["txt"])
+
+if st.button("Build / refresh index", type="primary"):
+    raw = ""
+    if upload is not None:
+        raw = upload.read().decode("utf-8", errors="replace")
+    elif notes.strip():
+        raw = notes.strip()
+    if not raw.strip():
+        st.warning("Add a .txt upload or paste some text before indexing.")
+    elif len(raw) > MAX_NOTES_CHARS:
+        st.warning(f"Notes are too long for this demo (max {MAX_NOTES_CHARS:,} characters). Trim and try again.")
+    else:
+        with st.spinner("Chunking, embedding, storing in Chroma…"):
+            try:
+                docs = [Document(page_content=raw)]
+                splitter = RecursiveCharacterTextSplitter(chunk_size=800, chunk_overlap=120)
+                chunks = splitter.split_documents(docs)
+                emb = HuggingFaceEmbeddings(model_name=EMBED_MODEL)
+                st.session_state.vectorstore = Chroma.from_documents(chunks, embedding=emb)
+                st.success(f"Indexed {len(chunks)} chunks.")
+            except Exception as err:
+                st.session_state.vectorstore = None
+                st.error(f"Index failed: {err}")
+
+question = st.text_input("Your question", placeholder="What does the text say about…?")
+
+if st.button("Answer from my notes"):
+    if st.session_state.vectorstore is None:
+        st.warning("Build an index first.")
+    elif not question.strip():
+        st.warning("Please enter a question.")
+    elif not GROQ_API_KEY:
+        st.error("Add `GROQ_API_KEY` to `.streamlit/secrets.toml` (see README).")
+    else:
+        with st.spinner("Retrieving chunks and calling the model…"):
+            try:
+                hx, hx_async = groq_httpx_clients()
+                llm = ChatGroq(
+                    model=CHAT_MODEL,
+                    api_key=GROQ_API_KEY,
+                    temperature=0,
+                    timeout=120.0,
+                    max_retries=3,
+                    http_client=hx,
+                    http_async_client=hx_async,
+                )
+                retriever = st.session_state.vectorstore.as_retriever(search_kwargs={"k": 4})
+                qa = RetrievalQA.from_chain_type(
+                    llm=llm,
+                    chain_type="stuff",
+                    retriever=retriever,
+                    return_source_documents=True,
+                )
+                out = qa.invoke({"query": question})
+                st.markdown(out["result"])
+                with st.expander("Sources (retrieved chunks)"):
+                    for i, doc in enumerate(out["source_documents"], start=1):
+                        preview = doc.page_content[:700]
+                        suffix = "…" if len(doc.page_content) > 700 else ""
+                        st.markdown(f"**Chunk {i}**")
+                        st.write(preview + suffix)
+            except Exception as err:
+                hint = ""
+                low = str(err).lower()
+                tb = traceback.format_exc()
+                if "certificate" in low or "ssl" in low or "CERTIFICATE_VERIFY" in tb:
+                    hint = (
+                        " TLS verification failed. Ensure `truststore` is installed (`pip install -r "
+                        "requirements.txt`), restart Streamlit, refresh the browser. Corporate networks: "
+                        "set `SSL_CERT_FILE` / `REQUESTS_CA_BUNDLE` to your root CA PEM. See README."
+                    )
+                elif "connection" in low or "connect" in low:
+                    hint = (
+                        " If `curl` to Groq works but the app fails, unset broken proxy env vars "
+                        "(`HTTPS_PROXY`, `HTTP_PROXY`) in the terminal before `streamlit run`, or fix "
+                        "VPN/firewall — see README. Status: https://status.groq.com/"
+                    )
+                elif "401" in low or "unauthorized" in low or "invalid" in low and "api" in low:
+                    hint = " Check that `GROQ_API_KEY` in `.streamlit/secrets.toml` is valid."
+                elif "429" in low or "rate" in low:
+                    hint = " Rate limited — wait a moment and try again."
+                st.error(f"**{type(err).__name__}:** {err}{hint}")
+                with st.expander("Technical details"):
+                    chain = str(err)
+                    c = err.__cause__
+                    while c is not None:
+                        chain += f"\n\nCaused by: {type(c).__name__}: {c}"
+                        c = c.__cause__
+                    chain += "\n\n" + traceback.format_exc()
+                    st.code(chain, language="text")
+
+{% endverbatim %}

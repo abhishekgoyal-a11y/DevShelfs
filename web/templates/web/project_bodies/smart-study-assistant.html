@@ -10,12 +10,28 @@
       <strong class="text-slate-100">Purpose:</strong> help you study faster than rereading long notes from start to
       finish.
     </p>
+    <p class="text-sm leading-relaxed text-slate-200/85 sm:text-base">
+      <strong class="text-slate-100">Typical use:</strong> before a quiz, paste one dense paragraph and skim the
+      summary and questions the model writes for you.
+    </p>
+    <p class="text-sm font-medium text-slate-200/90">Key features:</p>
+    <ul class="list-inside list-disc space-y-2 text-sm leading-relaxed text-slate-200/85 sm:text-base">
+      <li>One text box for your source notes.</li>
+      <li>One button to ask for a study pack.</li>
+      <li>Answer split into clear parts: summary, key points, quiz.</li>
+      <li>A simple warning if the box is empty, and an error line if the API fails.</li>
+    </ul>
+    <p class="text-sm leading-relaxed text-slate-200/85 sm:text-base">
+      <strong class="text-slate-100">Quick example:</strong> if you paste two sentences about photosynthesis, you might
+      get a short summary, a few bullet facts, and quiz questions about chloroplasts and light reactions—with suggested
+      answers.
+    </p>
   </div>
 
   <div class="space-y-3">
     <h2 class="text-lg font-semibold tracking-tight text-white">Overall flow</h2>
     <pre
-      class="code-block overflow-x-auto rounded-2xl border border-white/10 bg-slate-950/60 p-4 text-sm leading-relaxed text-slate-200/90 sm:text-base"
+      class="overflow-x-auto rounded-2xl border border-white/10 bg-slate-950/60 p-4 text-sm leading-relaxed text-slate-200/90 sm:text-base"
     ><code class="whitespace-pre-wrap font-mono">User enters notes
       ↓
 Clicks button
@@ -33,10 +49,87 @@ Displayed on screen</code></pre>
   <hr class="border-0 border-t border-white/10" />
 
   <div class="space-y-4">
-    <h2 class="text-lg font-semibold tracking-tight text-white">Code implementation</h2>
-    <div
-      class="overflow-hidden rounded-2xl border border-white/10 bg-slate-950/90"
-    >
+    <h2 class="text-lg font-semibold tracking-tight text-white">Step-by-Step Implementation</h2>
+    <ol class="list-decimal list-outside space-y-5 pl-6 text-sm leading-relaxed text-slate-200/85 sm:text-base">
+      <li>
+        <span class="font-medium text-slate-100">Set up the project</span>
+        <ul class="mt-2 list-disc space-y-1.5 pl-5">
+          <li>Install Python</li>
+          <li>Create a new project folder</li>
+          <li>Create and activate a virtual environment</li>
+        </ul>
+      </li>
+      <li>
+        <span class="font-medium text-slate-100">Install dependencies</span>
+        <ul class="mt-2 list-disc space-y-1.5 pl-5">
+          <li>
+            Install required packages:
+            <ul class="mt-1.5 list-disc space-y-1.5 pl-5">
+              <li>Streamlit</li>
+              <li>OpenAI Python SDK</li>
+              <li><code class="text-sky-200/90">httpx</code></li>
+              <li>
+                <code class="text-sky-200/90">truststore</code> (helps fix SSL issues on some systems, especially
+                macOS)
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </li>
+      <li>
+        <span class="font-medium text-slate-100">Build the UI</span>
+        <ul class="mt-2 list-disc space-y-1.5 pl-5">
+          <li>
+            Create a simple Streamlit page with:
+            <ul class="mt-1.5 list-disc space-y-1.5 pl-5">
+              <li>A title</li>
+              <li>A text area for notes</li>
+              <li>A button to trigger processing</li>
+            </ul>
+          </li>
+        </ul>
+      </li>
+      <li>
+        <span class="font-medium text-slate-100">Secure your API key</span>
+        <ul class="mt-2 list-disc space-y-1.5 pl-5">
+          <li>Store your OpenAI API key in <code class="text-sky-200/90">.streamlit/secrets.toml</code></li>
+          <li>Never hardcode the API key in your script</li>
+        </ul>
+      </li>
+      <li>
+        <span class="font-medium text-slate-100">Handle user interaction</span>
+        <ul class="mt-2 list-disc space-y-1.5 pl-5">
+          <li>
+            On button click:
+            <ul class="mt-1.5 list-disc space-y-1.5 pl-5">
+              <li>Read the input text</li>
+              <li>Send it to the OpenAI model with a clear system prompt</li>
+            </ul>
+          </li>
+        </ul>
+      </li>
+      <li>
+        <span class="font-medium text-slate-100">Display results</span>
+        <ul class="mt-2 list-disc space-y-1.5 pl-5">
+          <li>Show the AI-generated response using <code class="text-sky-200/90">st.markdown()</code></li>
+          <li>Ensure the output is structured (Summary, Key Points, Quiz)</li>
+        </ul>
+      </li>
+      <li>
+        <span class="font-medium text-slate-100">Add error handling</span>
+        <ul class="mt-2 list-disc space-y-1.5 pl-5">
+          <li>Show a warning if the input box is empty</li>
+          <li>Use try/except to handle API or network errors gracefully</li>
+        </ul>
+      </li>
+    </ol>
+  </div>
+
+  <hr class="border-0 border-t border-white/10" />
+
+  <div class="space-y-4">
+    <h2 class="text-lg font-semibold tracking-tight text-white">Code Implementation</h2>
+    <div class="overflow-hidden rounded-2xl border border-white/10 bg-slate-950/90">
       <div
         class="flex items-center justify-between gap-3 border-b border-white/10 px-3 py-2"
       >
@@ -46,17 +139,21 @@ Displayed on screen</code></pre>
         class="code-block m-0 overflow-x-auto p-4 text-xs leading-relaxed text-slate-200/95 sm:text-sm"
       ><code class="whitespace-pre-wrap font-mono">{% include "web/code/smart_study_app.html" %}</code></pre>
     </div>
-    <p class="text-sm text-slate-200/80">
-      <span class="font-semibold text-slate-100">Complete project</span>
-      — see the
-      <a
-        href="{{ project.repoUrl }}"
-        class="font-medium text-sky-200/90 hover:text-white hover:underline"
-        target="_blank"
-        rel="noreferrer"
-        >repository on GitHub</a
-      >.
-    </p>
+    <div
+      class="rounded-xl border border-white/10 bg-slate-950/45 px-4 py-3 text-sm leading-relaxed text-slate-200/90"
+    >
+      <p>
+        <span class="font-semibold text-slate-100">Complete code</span>
+        <span class="mx-2 text-slate-500">—</span>
+        <a
+          href="{{ project.repoUrl }}"
+          class="font-medium text-sky-200/90 underline-offset-2 hover:text-white hover:underline"
+          target="_blank"
+          rel="noreferrer"
+          >Project link (GitHub)</a
+        >
+      </p>
+    </div>
   </div>
 
   <hr class="border-0 border-t border-white/10" />
@@ -78,4 +175,143 @@ Displayed on screen</code></pre>
       </video>
     </div>
   </div>
+
+  <hr class="border-0 border-t border-white/10" />
+
+  <div class="space-y-5">
+    <h2 class="text-lg font-semibold tracking-tight text-white">📖 How the Code Works (Step-by-Step)</h2>
+    <hr class="border-0 border-t border-white/10" />
+    <section class="space-y-3">
+      <h3 class="text-base font-semibold tracking-tight text-white">1. Page Setup (UI Basics)</h3>
+      <ul class="list-disc space-y-1.5 pl-5 text-sm leading-relaxed text-slate-200/85 sm:text-base">
+        <li>
+          <code class="text-sky-200/90">st.set_page_config()</code> sets the browser tab title and layout
+        </li>
+        <li><code class="text-sky-200/90">st.title()</code> displays the main heading</li>
+        <li><code class="text-sky-200/90">st.caption()</code> adds a short subtitle below the title</li>
+      </ul>
+    </section>
+    <hr class="border-0 border-t border-white/10" />
+    <section class="space-y-3">
+      <h3 class="text-base font-semibold tracking-tight text-white">2. Secure HTTP Client (Fix SSL Issues)</h3>
+      <ul class="list-disc space-y-1.5 pl-5 text-sm leading-relaxed text-slate-200/85 sm:text-base">
+        <li>
+          <code class="text-sky-200/90">truststore</code> is used to ensure SSL certificates match your operating
+          system
+        </li>
+        <li>
+          <code class="text-sky-200/90">httpx.Client(..., verify=_ssl_ctx)</code> creates a secure HTTP client
+        </li>
+        <li>This helps avoid TLS/SSL errors, especially on macOS</li>
+        <li>
+          The OpenAI client is initialized using:
+          <ul class="mt-2 list-disc space-y-1.5 pl-5">
+            <li>
+              API key from <code class="text-sky-200/90">st.secrets["OPENAI_API_KEY"]</code> (kept secure)
+            </li>
+            <li>Custom HTTP client for reliable requests</li>
+          </ul>
+        </li>
+        <li>
+          <code class="text-sky-200/90">_chat_model</code> is stored in a variable so you can easily change the model
+          later
+        </li>
+      </ul>
+    </section>
+    <hr class="border-0 border-t border-white/10" />
+    <section class="space-y-3">
+      <h3 class="text-base font-semibold tracking-tight text-white">3. User Input Handling</h3>
+      <ul class="list-disc space-y-1.5 pl-5 text-sm leading-relaxed text-slate-200/85 sm:text-base">
+        <li><code class="text-sky-200/90">st.text_area()</code> creates a large input box for notes</li>
+        <li>The entered text is stored in the notes variable</li>
+        <li>
+          <code class="text-sky-200/90">st.button()</code> ensures:
+          <ul class="mt-2 list-disc space-y-1.5 pl-5">
+            <li>The API call runs only when clicked</li>
+            <li>Prevents unnecessary API usage on page reload</li>
+          </ul>
+        </li>
+      </ul>
+    </section>
+    <hr class="border-0 border-t border-white/10" />
+    <section class="space-y-3">
+      <h3 class="text-base font-semibold tracking-tight text-white">4. Calling the OpenAI API</h3>
+      <ul class="list-disc space-y-1.5 pl-5 text-sm leading-relaxed text-slate-200/85 sm:text-base">
+        <li>
+          <code class="text-sky-200/90">chat.completions.create()</code> sends:
+          <ul class="mt-2 list-disc space-y-1.5 pl-5">
+            <li>
+              A <strong class="text-slate-100">system</strong> message → defines output format (Summary, Key Points,
+              Quiz)
+            </li>
+            <li>A <strong class="text-slate-100">user</strong> message → contains the pasted notes</li>
+          </ul>
+        </li>
+        <li>
+          The response is extracted using:
+          <code class="mt-1 block font-mono text-xs text-sky-200/90 sm:text-sm"
+            >response.choices[0].message.content</code
+          >
+        </li>
+      </ul>
+    </section>
+    <hr class="border-0 border-t border-white/10" />
+    <section class="space-y-3">
+      <h3 class="text-base font-semibold tracking-tight text-white">5. Displaying Output</h3>
+      <ul class="list-disc space-y-1.5 pl-5 text-sm leading-relaxed text-slate-200/85 sm:text-base">
+        <li>
+          The generated response is shown using:
+          <code class="mt-1 block font-mono text-xs text-sky-200/90 sm:text-sm">st.markdown()</code>
+        </li>
+        <li>This allows formatted output (headings, bullets, etc.)</li>
+      </ul>
+    </section>
+    <hr class="border-0 border-t border-white/10" />
+    <section class="space-y-3">
+      <h3 class="text-base font-semibold tracking-tight text-white">6. Error Handling &amp; Validation</h3>
+      <ul class="list-disc space-y-1.5 pl-5 text-sm leading-relaxed text-slate-200/85 sm:text-base">
+        <li>
+          If the input box is empty:
+          <ul class="mt-2 list-disc space-y-1.5 pl-5">
+            <li>
+              <code class="text-sky-200/90">st.warning()</code> prompts the user to enter text
+            </li>
+          </ul>
+        </li>
+        <li>
+          The API call is wrapped in try/except:
+          <ul class="mt-2 list-disc space-y-1.5 pl-5">
+            <li>Prevents the app from crashing</li>
+            <li>
+              Displays errors using <code class="text-sky-200/90">st.error()</code> (e.g., invalid key, network issues)
+            </li>
+          </ul>
+        </li>
+      </ul>
+    </section>
+  </div>
+
+  <nav class="border-t border-white/10 pt-6" aria-label="Related links">
+    <p class="text-sm font-medium text-slate-200/90">Useful links</p>
+    <ul class="mt-2 space-y-2 text-sm">
+      <li>
+        <a
+          class="font-medium text-sky-200/90 underline-offset-2 hover:text-white hover:underline"
+          href="https://docs.streamlit.io"
+          target="_blank"
+          rel="noreferrer"
+          >Streamlit docs</a
+        >
+      </li>
+      <li>
+        <a
+          class="font-medium text-sky-200/90 underline-offset-2 hover:text-white hover:underline"
+          href="https://platform.openai.com/docs/api-reference"
+          target="_blank"
+          rel="noreferrer"
+          >OpenAI API reference</a
+        >
+      </li>
+    </ul>
+  </nav>
 </div>

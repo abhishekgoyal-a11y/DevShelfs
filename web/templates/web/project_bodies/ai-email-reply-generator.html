@@ -1,19 +1,197 @@
 {% load static %}
-<div class="glass space-y-8 rounded-3xl p-5 sm:p-8">
-  <div class="space-y-4 text-sm leading-relaxed text-slate-200/85 sm:text-base">
-    <p>
-      Express server exposes <code class="text-sky-200/90">POST /generate-reply</code> with a Groq chat completion; the
-      vanilla HTML/JS client sends the pasted email plus tone and renders the model reply. No build step in the
-      client bundle.
+<div class="glass space-y-10 rounded-3xl p-5 sm:p-8">
+  <div class="space-y-4">
+    <p class="text-sm leading-relaxed text-slate-200/85 sm:text-base">
+      This is a small full-stack demo with no frontend build step: a static page (HTML, CSS, and vanilla JavaScript) talks
+      to a <strong class="text-slate-100">Node.js + Express</strong> server. You paste an email, pick a tone (Formal,
+      Friendly, or Short), and the server calls the <strong class="text-slate-100">Groq</strong> chat API
+      (OpenAI-compatible) to draft a reply you can copy into your mail client.
     </p>
-    <p>
-      <strong class="text-slate-100">Tones</strong> — <span class="font-mono">formal</span>,
-      <span class="font-mono">friendly</span>, <span class="font-mono">short</span>; server validates the payload and
-      caps size.
+    <p class="text-sm leading-relaxed text-slate-200/85 sm:text-base">
+      <strong class="text-slate-100">Purpose:</strong> practice wiring a real HTTP API, keeping secrets on the server, and
+      returning JSON the browser can render—without React, Vite, or Streamlit in the loop.
+    </p>
+    <p class="text-sm leading-relaxed text-slate-200/85 sm:text-base">
+      <strong class="text-slate-100">Typical use:</strong> draft a first-pass reply to routine messages, then edit tone
+      or facts before you send anything.
+    </p>
+    <p class="text-sm font-medium text-slate-200/90">Key features:</p>
+    <ul class="list-inside list-disc space-y-2 text-sm leading-relaxed text-slate-200/85 sm:text-base">
+      <li>
+        Express serves the <code class="text-sky-200/90">client/</code> folder and exposes
+        <code class="text-sky-200/90">POST /generate-reply</code>.
+      </li>
+      <li>
+        Groq API key lives only in <code class="text-sky-200/90">server/.env</code> (never shipped to the browser).
+      </li>
+      <li>Validation on empty input, tone whitelist, and an 8000-character cap on both client and server.</li>
+      <li>Copy-to-clipboard for the generated reply; clear status and error messages on failure.</li>
+    </ul>
+    <p class="text-sm leading-relaxed text-slate-200/85 sm:text-base">
+      <strong class="text-slate-100">Privacy note:</strong> pasted email leaves your machine for the model provider. Do
+      not use confidential content unless your policy allows it.
     </p>
   </div>
+
   <div class="space-y-3">
+    <h2 class="text-lg font-semibold tracking-tight text-white">Overall flow</h2>
+    <pre
+      class="overflow-x-auto rounded-2xl border border-white/10 bg-slate-950/60 p-4 text-sm leading-relaxed text-slate-200/90 sm:text-base"
+    ><code class="whitespace-pre-wrap font-mono">User pastes email + picks tone
+      ↓
+Browser POST /generate-reply { email, tone }
+      ↓
+Express validates input
+      ↓
+Server calls Groq chat/completions (Bearer key from .env)
+      ↓
+JSON { reply } returned
+      ↓
+UI shows reply; user can copy</code></pre>
+  </div>
+
+  <hr class="border-0 border-t border-white/10" />
+
+  <div class="space-y-4">
+    <h2 class="text-lg font-semibold tracking-tight text-white">Step-by-step implementation</h2>
+    <ol class="list-decimal list-outside space-y-5 pl-6 text-sm leading-relaxed text-slate-200/85 sm:text-base">
+      <li>
+        <span class="font-medium text-slate-100">Set up the project</span>
+        <ul class="mt-2 list-disc space-y-1.5 pl-5">
+          <li>Install Node.js 18 or newer</li>
+          <li>Create <code class="text-sky-200/90">server/</code> and <code class="text-sky-200/90">client/</code> folders</li>
+          <li>
+            In <code class="text-sky-200/90">server/</code>, run <code class="text-sky-200/90">npm init</code> and add
+            dependencies
+          </li>
+        </ul>
+      </li>
+      <li>
+        <span class="font-medium text-slate-100">Install server dependencies</span>
+        <ul class="mt-2 list-disc space-y-1.5 pl-5">
+          <li><code class="text-sky-200/90">express</code> for HTTP and static files</li>
+          <li>
+            <code class="text-sky-200/90">dotenv</code> to load
+            <code class="text-sky-200/90">GROQ_API_KEY</code>
+          </li>
+          <li>
+            <code class="text-sky-200/90">cors</code> if you later split frontend origin from API (optional for
+            same-origin)
+          </li>
+        </ul>
+      </li>
+      <li>
+        <span class="font-medium text-slate-100">Build the static UI</span>
+        <ul class="mt-2 list-disc space-y-1.5 pl-5">
+          <li>
+            <code class="text-sky-200/90">index.html</code>: textarea, tone
+            <code class="text-sky-200/90">&lt;select&gt;</code>, generate button, status line, reply output, copy button
+          </li>
+          <li><code class="text-sky-200/90">styles.css</code>: layout and readable typography</li>
+          <li>
+            <code class="text-sky-200/90">app.js</code>: <code class="text-sky-200/90">fetch</code> to
+            <code class="text-sky-200/90">/generate-reply</code>
+          </li>
+        </ul>
+      </li>
+      <li>
+        <span class="font-medium text-slate-100">Secure the API key</span>
+        <ul class="mt-2 list-disc space-y-1.5 pl-5">
+          <li>
+            Copy <code class="text-sky-200/90">.env.example</code> to <code class="text-sky-200/90">.env</code> under
+            <code class="text-sky-200/90">server/</code>
+          </li>
+          <li>
+            Set <code class="text-sky-200/90">GROQ_API_KEY</code>; optionally
+            <code class="text-sky-200/90">GROQ_MODEL</code> and <code class="text-sky-200/90">PORT</code>
+          </li>
+          <li>Keep <code class="text-sky-200/90">.env</code> out of version control</li>
+        </ul>
+      </li>
+      <li>
+        <span class="font-medium text-slate-100">Implement the API route</span>
+        <ul class="mt-2 list-disc space-y-1.5 pl-5">
+          <li>Parse JSON body, validate email string and tone</li>
+          <li>Map tone to a natural-language instruction for the model</li>
+          <li>
+            <code class="text-sky-200/90">fetch</code> Groq’s OpenAI-compatible endpoint with system + user messages
+          </li>
+          <li>
+            Return <code class="text-sky-200/90">{ "reply": "..." }</code> or
+            <code class="text-sky-200/90">{ "error": "..." }</code> with appropriate HTTP status
+          </li>
+        </ul>
+      </li>
+      <li>
+        <span class="font-medium text-slate-100">Wire the client</span>
+        <ul class="mt-2 list-disc space-y-1.5 pl-5">
+          <li>Disable duplicate submits while a request is in flight</li>
+          <li>Surface server error messages in the status line</li>
+          <li>Enable copy only when a non-empty reply exists</li>
+        </ul>
+      </li>
+    </ol>
+  </div>
+
+  <hr class="border-0 border-t border-white/10" />
+
+  <div class="space-y-4">
+    <h2 class="text-lg font-semibold tracking-tight text-white">Code implementation</h2>
+    <p class="text-sm leading-relaxed text-slate-200/85 sm:text-base">
+      The repo splits responsibilities: Express owns secrets and the Groq call; the browser only sends the email text and
+      tone.
+    </p>
+    <h3 class="text-base font-semibold tracking-tight text-white">
+      Server (<code class="text-sky-200/90">server/index.js</code>)
+    </h3>
+    <div class="overflow-hidden rounded-2xl border border-white/10 bg-slate-950/90">
+      <div
+        class="flex items-center justify-between gap-3 border-b border-white/10 px-3 py-2"
+      >
+        <span class="font-mono text-[11px] font-medium uppercase tracking-wide text-slate-400">javascript</span>
+      </div>
+      <pre
+        class="code-block m-0 overflow-x-auto p-4 text-xs leading-relaxed text-slate-200/95 sm:text-sm"
+      ><code class="whitespace-pre-wrap font-mono">{% include "web/code/ai_email_server.html" %}</code></pre>
+    </div>
+    <h3 class="text-base font-semibold tracking-tight text-white">
+      Client (<code class="text-sky-200/90">client/app.js</code>)
+    </h3>
+    <div class="overflow-hidden rounded-2xl border border-white/10 bg-slate-950/90">
+      <div
+        class="flex items-center justify-between gap-3 border-b border-white/10 px-3 py-2"
+      >
+        <span class="font-mono text-[11px] font-medium uppercase tracking-wide text-slate-400">javascript</span>
+      </div>
+      <pre
+        class="code-block m-0 overflow-x-auto p-4 text-xs leading-relaxed text-slate-200/95 sm:text-sm"
+      ><code class="whitespace-pre-wrap font-mono">{% include "web/code/ai_email_client.html" %}</code></pre>
+    </div>
+    <div
+      class="rounded-xl border border-white/10 bg-slate-950/45 px-4 py-3 text-sm leading-relaxed text-slate-200/90"
+    >
+      <p>
+        <span class="font-semibold text-slate-100">Complete code</span>
+        <span class="mx-2 text-slate-500">—</span>
+        <a
+          href="{{ project.repoUrl }}"
+          class="font-medium text-sky-200/90 underline-offset-2 hover:text-white hover:underline"
+          target="_blank"
+          rel="noreferrer"
+          >Project link (GitHub)</a
+        >
+      </p>
+    </div>
+  </div>
+
+  <hr class="border-0 border-t border-white/10" />
+
+  <div class="space-y-4">
     <h2 class="text-lg font-semibold tracking-tight text-white">Demo</h2>
+    <p class="text-sm leading-relaxed text-slate-200/85 sm:text-base">
+      Screen recording of the app: paste an email, pick a tone (Formal, Friendly, or Short), generate a reply, and copy
+      it to the clipboard.
+    </p>
     <div
       class="mx-auto max-w-3xl overflow-hidden rounded-2xl border border-white/10 bg-black shadow-lg shadow-black/40"
     >
@@ -29,14 +207,127 @@
       </video>
     </div>
   </div>
-  <p class="text-sm text-slate-200/80">
-    Server and client code are in
-    <a
-      class="font-medium text-sky-200/90 hover:underline"
-      href="{{ project.repoUrl }}"
-      target="_blank"
-      rel="noreferrer"
-      >the GitHub tree for this project</a
-    >.
-  </p>
+
+  <hr class="border-0 border-t border-white/10" />
+
+  <div class="space-y-4">
+    <h2 class="text-lg font-semibold tracking-tight text-white">Run it locally</h2>
+    <div
+      class="space-y-3 rounded-2xl border border-white/10 bg-slate-950/40 p-4 text-sm leading-relaxed text-slate-200/90"
+    >
+      <ul class="list-disc space-y-2 pl-5">
+        <li>
+          From <code class="text-sky-200/90">server/</code>, run <code class="text-sky-200/90">npm install</code>.
+        </li>
+        <li>
+          Copy <code class="text-sky-200/90">.env.example</code> to <code class="text-sky-200/90">.env</code> (same
+          folder) and set <code class="text-sky-200/90">GROQ_API_KEY</code>.
+        </li>
+        <li>
+          Start the app with <code class="text-sky-200/90">npm start</code>, then open
+          <code class="text-sky-200/90">http://localhost:3000</code> (or whatever
+          <code class="text-sky-200/90">PORT</code> you set in <code class="text-sky-200/90">.env</code>).
+        </li>
+        <li>
+          For auto-restart while editing, use <code class="text-sky-200/90">npm run dev</code> (
+          <code class="text-sky-200/90">node --watch</code>).
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <hr class="border-0 border-t border-white/10" />
+
+  <div class="space-y-5">
+    <h2 class="text-lg font-semibold tracking-tight text-white">How the code works (step-by-step)</h2>
+    <hr class="border-0 border-t border-white/10" />
+    <section class="space-y-3">
+      <h3 class="text-base font-semibold tracking-tight text-white">1. Static hosting + JSON body</h3>
+      <ul class="list-disc space-y-1.5 pl-5 text-sm leading-relaxed text-slate-200/85 sm:text-base">
+        <li>
+          <code class="text-sky-200/90">express.static</code> serves
+          <code class="text-sky-200/90">client/</code> so the UI loads from the same origin as the API
+        </li>
+        <li>
+          <code class="text-sky-200/90">express.json({ limit: "256kb" })</code> parses JSON bodies safely under a size cap
+        </li>
+      </ul>
+    </section>
+    <hr class="border-0 border-t border-white/10" />
+    <section class="space-y-3">
+      <h3 class="text-base font-semibold tracking-tight text-white">2. Validation before any external call</h3>
+      <ul class="list-disc space-y-1.5 pl-5 text-sm leading-relaxed text-slate-200/85 sm:text-base">
+        <li>Missing or blank <code class="text-sky-200/90">email</code> → 400 with a clear message</li>
+        <li>
+          Length over 8000 characters → 400 (matches <code class="text-sky-200/90">maxlength</code> in the HTML)
+        </li>
+        <li>
+          <code class="text-sky-200/90">tone</code> normalized to lowercase and checked against
+          <code class="text-sky-200/90">formal</code>, <code class="text-sky-200/90">friendly</code>,
+          <code class="text-sky-200/90">short</code>
+        </li>
+      </ul>
+    </section>
+    <hr class="border-0 border-t border-white/10" />
+    <section class="space-y-3">
+      <h3 class="text-base font-semibold tracking-tight text-white">3. Prompting Groq</h3>
+      <ul class="list-disc space-y-1.5 pl-5 text-sm leading-relaxed text-slate-200/85 sm:text-base">
+        <li>
+          A <strong class="text-slate-100">system</strong> message constrains output to sendable reply text only (no meta
+          commentary)
+        </li>
+        <li>
+          A <strong class="text-slate-100">user</strong> message combines the tone phrase with the pasted email
+        </li>
+        <li>
+          Model name comes from <code class="text-sky-200/90">GROQ_MODEL</code> or defaults to
+          <code class="text-sky-200/90">llama-3.3-70b-versatile</code>
+        </li>
+      </ul>
+    </section>
+    <hr class="border-0 border-t border-white/10" />
+    <section class="space-y-3">
+      <h3 class="text-base font-semibold tracking-tight text-white">4. Client UX details</h3>
+      <ul class="list-disc space-y-1.5 pl-5 text-sm leading-relaxed text-slate-200/85 sm:text-base">
+        <li>Character counter updates on every input event</li>
+        <li>
+          <code class="text-sky-200/90">finally</code> re-enables the generate button even when the request errors
+        </li>
+        <li>Clipboard API with a fallback message if the browser blocks copy without permission</li>
+      </ul>
+    </section>
+  </div>
+
+  <nav class="border-t border-white/10 pt-6" aria-label="Related links">
+    <p class="text-sm font-medium text-slate-200/90">Useful links</p>
+    <ul class="mt-2 space-y-2 text-sm">
+      <li>
+        <a
+          class="font-medium text-sky-200/90 underline-offset-2 hover:text-white hover:underline"
+          href="https://console.groq.com/docs"
+          target="_blank"
+          rel="noreferrer"
+          >Groq API documentation</a
+        >
+      </li>
+      <li>
+        <a
+          class="font-medium text-sky-200/90 underline-offset-2 hover:text-white hover:underline"
+          href="https://expressjs.com/"
+          target="_blank"
+          rel="noreferrer"
+          >Express.js</a
+        >
+      </li>
+      <li>
+        <a
+          class="font-medium text-sky-200/90 underline-offset-2 hover:text-white hover:underline"
+          href="https://nodejs.org/api/esm.html#fetch"
+          target="_blank"
+          rel="noreferrer"
+          >Node.js fetch (global)</a
+        >
+      </li>
+    </ul>
+  </nav>
 </div>

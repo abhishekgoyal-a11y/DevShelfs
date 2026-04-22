@@ -1,0 +1,135 @@
+{% verbatim %}
+/**
+ * AI Email Reply Generator — Express server
+ *
+ * Serves the static frontend from ../client and exposes POST /generate-reply
+ * which forwards requests to the Groq API (OpenAI-compatible chat format).
+ */
+
+require("dotenv").config({ path: require("path").join(__dirname, ".env") });
+
+const path = require("path");
+const express = require("express");
+const cors = require("cors");
+
+const app = express();
+const PORT = process.env.PORT || 3000;
+
+// Groq uses the OpenAI-compatible Chat Completions API
+const GROQ_API_URL = "https://api.groq.com/openai/v1/chat/completions";
+// Fast, capable model; change via GROQ_MODEL in .env if you prefer another
+const DEFAULT_MODEL = "llama-3.3-70b-versatile";
+
+/** Maximum characters accepted for the pasted email (matches client limit) */
+const MAX_EMAIL_LENGTH = 8000;
+
+app.use(cors());
+app.use(express.json({ limit: "256kb" }));
+
+// Serve HTML, CSS, and JS from the client folder
+app.use(express.static(path.join(__dirname, "..", "client")));
+
+/**
+ * POST /generate-reply
+ * Body: { "email": string, "tone": "formal" | "friendly" | "short" }
+ * Returns: { "reply": string } or { "error": string }
+ */
+app.post("/generate-reply", async (req, res) => {
+  const apiKey = process.env.GROQ_API_KEY;
+  if (!apiKey) {
+    return res.status(500).json({
+      error:
+        "Server is missing GROQ_API_KEY. Add it to server/.env and restart.",
+    });
+  }
+
+  const { email, tone } = req.body || {};
+
+  if (typeof email !== "string" || !email.trim()) {
+    return res.status(400).json({
+      error: "Please paste the email you want to reply to.",
+    });
+  }
+
+  const trimmed = email.trim();
+  if (trimmed.length > MAX_EMAIL_LENGTH) {
+    return res.status(400).json({
+      error: `Email is too long. Please use at most ${MAX_EMAIL_LENGTH} characters.`,
+    });
+  }
+
+  const allowedTones = ["formal", "friendly", "short"];
+  const normalizedTone =
+    typeof tone === "string" ? tone.toLowerCase().trim() : "";
+  if (!allowedTones.includes(normalizedTone)) {
+    return res.status(400).json({
+      error: 'Tone must be one of: "formal", "friendly", or "short".',
+    });
+  }
+
+  // Human-readable tone label for the model
+  const toneLabel =
+    normalizedTone === "formal"
+      ? "formal and professional"
+      : normalizedTone === "friendly"
+        ? "warm and friendly"
+        : "brief and to the point (keep the reply short)";
+
+  const userPrompt = `Write a ${toneLabel} reply to the following email:\n\n${trimmed}`;
+
+  const model = process.env.GROQ_MODEL || DEFAULT_MODEL;
+
+  try {
+    const groqResponse = await fetch(GROQ_API_URL, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${apiKey}`,
+      },
+      body: JSON.stringify({
+        model,
+        messages: [
+          {
+            role: "system",
+            content:
+              "You are a helpful assistant that writes clear, natural email replies. Output only the reply text the user can send—no subject line unless the user explicitly asked for one, and no explanations or quotes.",
+          },
+          { role: "user", content: userPrompt },
+        ],
+        temperature: 0.7,
+      }),
+    });
+
+    const data = await groqResponse.json().catch(() => ({}));
+
+    if (!groqResponse.ok) {
+      const message =
+        data?.error?.message ||
+        `Groq API error (${groqResponse.status}). Try again in a moment.`;
+      return res.status(502).json({ error: message });
+    }
+
+    const reply =
+      data?.choices?.[0]?.message?.content?.trim() || "";
+
+    if (!reply) {
+      return res.status(502).json({
+        error: "The AI returned an empty reply. Please try again.",
+      });
+    }
+
+    return res.json({ reply });
+  } catch (err) {
+    console.error("generate-reply error:", err);
+    return res.status(502).json({
+      error:
+        "Could not reach the AI service. Check your internet connection and try again.",
+    });
+  }
+});
+
+app.listen(PORT, () => {
+  console.log(`Server running at http://localhost:${PORT}`);
+  console.log(`Open that URL in your browser to use the app.`);
+});
+{% endverbatim %}
