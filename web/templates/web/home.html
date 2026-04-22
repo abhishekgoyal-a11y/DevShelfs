@@ -25,22 +25,9 @@
         </div>
       </div>
       <div
-        class="relative min-h-[220px] overflow-hidden rounded-3xl border border-white/10 bg-slate-950 shadow-[0_0_0_1px_rgba(255,255,255,0.04)] sm:min-h-[280px] lg:min-h-[320px] animate-floaty"
+        class="relative min-h-[220px] overflow-hidden rounded-3xl border border-white/10 bg-slate-950 shadow-[0_0_0_1px_rgba(255,255,255,0.04)] sm:min-h-[280px] lg:min-h-[320px]"
       >
-        <div class="absolute inset-0 bg-gradient-to-br from-indigo-500/25 via-slate-900 to-sky-500/20"></div>
-        <div
-          class="absolute -left-16 -top-10 h-40 w-40 rounded-full bg-indigo-500/20 blur-3xl"
-        ></div>
-        <div
-          class="absolute -bottom-10 -right-10 h-48 w-48 rounded-full bg-fuchsia-500/10 blur-3xl"
-        ></div>
-        <div
-          class="absolute inset-6 rounded-2xl border border-white/10 bg-white/5 p-4 text-sm text-slate-200/80 shadow-inner"
-        >
-          <p class="text-xs font-semibold uppercase tracking-wider text-indigo-200/80">Snapshot</p>
-          <p class="mt-3 text-base font-semibold text-white">Live catalog</p>
-          <p class="mt-2 text-sm leading-relaxed">Projects, tools, and events—served from Django.</p>
-        </div>
+        {% include "web/partials/home_hero_art.html" %}
       </div>
     </section>
 

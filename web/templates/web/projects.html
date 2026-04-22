@@ -27,13 +27,17 @@
             class="w-full rounded-full border border-white/10 bg-white/[0.06] px-4 py-2.5 text-sm text-white placeholder:text-slate-500 outline-none transition focus:border-sky-400/40 focus:ring-2 focus:ring-sky-400/25"
           />
         </div>
-        <div class="flex flex-wrap items-center gap-2">
+        <div
+          class="flex flex-wrap gap-2"
+          role="group"
+          aria-label="Filter by difficulty"
+        >
           <button
             type="submit"
             name="difficulty"
             value="all"
-            class="rounded-xl px-3 py-2 text-sm font-semibold transition duration-300
-              {% if difficulty == "all" %}glass-strong text-white shadow-glow{% else %}border border-white/10 bg-white/5 text-slate-100/85 hover:bg-white/10{% endif %}"
+            class="rounded-full px-4 py-2 text-sm font-medium transition duration-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-sky-400/60
+              {% if difficulty == "all" %}border border-sky-400/80 bg-sky-500/15 text-white shadow-[0_0_0_1px_rgba(56,189,248,0.35),0_0_28px_rgba(56,189,248,0.22)]{% else %}border border-white/10 bg-white/[0.06] text-slate-400 hover:border-white/15 hover:bg-white/[0.09] hover:text-slate-200{% endif %}"
           >
             All
           </button>
@@ -41,8 +45,8 @@
             type="submit"
             name="difficulty"
             value="beginner"
-            class="rounded-xl px-3 py-2 text-sm font-semibold transition duration-300
-              {% if difficulty == "beginner" %}glass-strong text-white shadow-glow{% else %}border border-white/10 bg-white/5 text-slate-100/85 hover:bg-white/10{% endif %}"
+            class="rounded-full px-4 py-2 text-sm font-medium transition duration-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-sky-400/60
+              {% if difficulty == "beginner" %}border border-sky-400/80 bg-sky-500/15 text-white shadow-[0_0_0_1px_rgba(56,189,248,0.35),0_0_28px_rgba(56,189,248,0.22)]{% else %}border border-white/10 bg-white/[0.06] text-slate-400 hover:border-white/15 hover:bg-white/[0.09] hover:text-slate-200{% endif %}"
           >
             Beginner
           </button>
@@ -50,8 +54,8 @@
             type="submit"
             name="difficulty"
             value="intermediate"
-            class="rounded-xl px-3 py-2 text-sm font-semibold transition duration-300
-              {% if difficulty == "intermediate" %}glass-strong text-white shadow-glow{% else %}border border-white/10 bg-white/5 text-slate-100/85 hover:bg-white/10{% endif %}"
+            class="rounded-full px-4 py-2 text-sm font-medium transition duration-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-sky-400/60
+              {% if difficulty == "intermediate" %}border border-sky-400/80 bg-sky-500/15 text-white shadow-[0_0_0_1px_rgba(56,189,248,0.35),0_0_28px_rgba(56,189,248,0.22)]{% else %}border border-white/10 bg-white/[0.06] text-slate-400 hover:border-white/15 hover:bg-white/[0.09] hover:text-slate-200{% endif %}"
           >
             Intermediate
           </button>
@@ -59,8 +63,8 @@
             type="submit"
             name="difficulty"
             value="advanced"
-            class="rounded-xl px-3 py-2 text-sm font-semibold transition duration-300
-              {% if difficulty == "advanced" %}glass-strong text-white shadow-glow{% else %}border border-white/10 bg-white/5 text-slate-100/85 hover:bg-white/10{% endif %}"
+            class="rounded-full px-4 py-2 text-sm font-medium transition duration-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-sky-400/60
+              {% if difficulty == "advanced" %}border border-sky-400/80 bg-sky-500/15 text-white shadow-[0_0_0_1px_rgba(56,189,248,0.35),0_0_28px_rgba(56,189,248,0.22)]{% else %}border border-white/10 bg-white/[0.06] text-slate-400 hover:border-white/15 hover:bg-white/[0.09] hover:text-slate-200{% endif %}"
           >
             Advanced
           </button>
