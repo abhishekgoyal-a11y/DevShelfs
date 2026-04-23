@@ -1,0 +1,353 @@
+{% extends "web/base.html" %}
+{% block title %}Perplexity AI — DevShelf{% endblock %}
+{% block content %}
+  <div class="space-y-10">
+    <div class="flex flex-wrap items-center gap-2 text-sm text-slate-400/90">
+      <a href="{% url 'ai_tools' %}" class="font-medium text-emerald-300/90 transition hover:text-emerald-200">AI tools</a>
+      <span aria-hidden class="text-slate-600">/</span>
+      <span class="text-slate-200/90">Perplexity AI</span>
+    </div>
+
+    <section
+      class="relative overflow-hidden rounded-3xl border border-emerald-400/20 bg-white/[0.06] p-6 shadow-[0_0_0_1px_rgba(255,255,255,0.04)] backdrop-blur-2xl sm:p-8"
+    >
+      <div class="pointer-events-none absolute -right-24 top-0 h-72 w-72 rounded-full bg-emerald-500/15 blur-3xl"></div>
+      <div class="pointer-events-none absolute -left-20 bottom-0 h-56 w-56 rounded-full bg-cyan-500/10 blur-3xl"></div>
+      <div class="relative">
+        <p class="text-xs font-semibold uppercase tracking-[0.22em] text-emerald-300/90">AI tool</p>
+        <h1 class="mt-3 text-3xl font-semibold tracking-tight text-white sm:text-4xl lg:text-[2.5rem] lg:leading-tight">
+          Perplexity AI: The Smarter Way to Search the Internet
+        </h1>
+        <p class="mt-4 text-sm leading-relaxed text-slate-200/80 sm:text-base">
+          Perplexity AI is an AI-powered search engine that doesn't just find pages — it reads them for you and gives you
+          a clear, direct answer with cited sources, no ads, and no link-hopping required.
+        </p>
+        <p class="mt-6 flex flex-wrap items-center gap-3">
+          <a
+            href="https://www.perplexity.ai"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="inline-flex items-center gap-2 rounded-full border border-emerald-400/35 bg-emerald-500/10 px-4 py-2 text-sm font-medium text-emerald-200 transition hover:border-emerald-300/50 hover:bg-emerald-500/15 hover:text-white"
+          >
+            Try Perplexity <span aria-hidden class="text-emerald-300/80">↗</span>
+          </a>
+          <a
+            href="https://www.perplexity.ai/pro"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/[0.04] px-4 py-2 text-sm font-medium text-slate-200/90 transition hover:border-white/25 hover:bg-white/[0.07] hover:text-white"
+          >
+            Pricing <span aria-hidden class="text-slate-400">↗</span>
+          </a>
+        </p>
+      </div>
+    </section>
+
+    <div class="glass rounded-3xl border border-white/10 p-5 sm:p-8">
+      <article class="mx-auto space-y-12 text-base leading-relaxed text-slate-300/95">
+
+        <section class="space-y-4" aria-labelledby="what-heading">
+          <h2 id="what-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">What is Perplexity AI?</h2>
+          <p>
+            Remember the last time you Googled something and got ten blue links, but none of them actually answered your
+            question directly? You had to click around, skim through ads, and piece things together yourself. Frustrating, right?
+          </p>
+          <p>
+            That's exactly the problem Perplexity AI was built to solve. It's an AI-powered search engine that doesn't just
+            find pages — it <em>reads</em> them for you and gives you a clear, direct answer. Think of it like having a really
+            smart friend who can search the entire internet in seconds and then explain what they found in plain English.
+          </p>
+          <p>
+            Launched in 2022 and built by a team of ex-Google and ex-OpenAI engineers, Perplexity has quickly become one of
+            the most talked-about AI tools for people who want fast, reliable, cited answers — without the clutter. It's not
+            trying to replace Google entirely. It's trying to make searching actually <em>useful</em> again.
+          </p>
+        </section>
+
+        <section class="space-y-6" aria-labelledby="features-heading">
+          <h2 id="features-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">
+            Key features of Perplexity AI
+          </h2>
+          <p>Here's what makes Perplexity stand out from the crowd:</p>
+          <div class="space-y-3 rounded-2xl border border-white/10 bg-white/[0.03] p-5 sm:p-6">
+            <h3 class="text-lg font-semibold text-white">Real-time web search</h3>
+            <p class="text-slate-300/95">
+              Unlike ChatGPT (which has a knowledge cutoff date), Perplexity searches the live internet every time you
+              ask a question. So if you ask about today's news or a product that launched last week, it'll actually know.
+            </p>
+          </div>
+          <div class="space-y-3 rounded-2xl border border-white/10 bg-white/[0.03] p-5 sm:p-6">
+            <h3 class="text-lg font-semibold text-white">Cited sources</h3>
+            <p class="text-slate-300/95">
+              Every answer comes with numbered citations — little footnotes that link back to the original sources. You
+              can actually verify what it's telling you. That's a big deal when accuracy matters.
+            </p>
+          </div>
+          <div class="space-y-3 rounded-2xl border border-white/10 bg-white/[0.03] p-5 sm:p-6">
+            <h3 class="text-lg font-semibold text-white">Follow-up questions</h3>
+            <p class="text-slate-300/95">
+              After getting an answer, you can ask follow-up questions right in the same thread, like a conversation.
+              It remembers the context so you don't have to repeat yourself.
+            </p>
+          </div>
+          <div class="space-y-3 rounded-2xl border border-white/10 bg-white/[0.03] p-5 sm:p-6">
+            <h3 class="text-lg font-semibold text-white">Focus modes</h3>
+            <p class="text-slate-300/95">
+              You can tell Perplexity <em>where</em> to search — the whole web, just academic papers, Reddit discussions,
+              YouTube videos, or even your own uploaded files. Super handy when you need a specific type of answer.
+            </p>
+          </div>
+          <div class="space-y-3 rounded-2xl border border-white/10 bg-white/[0.03] p-5 sm:p-6">
+            <h3 class="text-lg font-semibold text-white">Perplexity Pro Search</h3>
+            <p class="text-slate-300/95">
+              A deeper, multi-step research mode that breaks your question into parts, searches more broadly, and
+              synthesizes a richer answer. Think of it as the "think harder" button.
+            </p>
+          </div>
+          <div class="space-y-3 rounded-2xl border border-white/10 bg-white/[0.03] p-5 sm:p-6">
+            <h3 class="text-lg font-semibold text-white">Perplexity Pages</h3>
+            <p class="text-slate-300/95">
+              Turn your research into a shareable, well-structured document — great for students and content creators
+              who want to publish their findings in a clean format.
+            </p>
+          </div>
+          <div class="space-y-3 rounded-2xl border border-white/10 bg-white/[0.03] p-5 sm:p-6">
+            <h3 class="text-lg font-semibold text-white">Mobile app</h3>
+            <p class="text-slate-300/95">
+              Available on both iOS and Android, so you can ask questions on the go with voice or text.
+            </p>
+          </div>
+        </section>
+
+        <section class="space-y-6" aria-labelledby="how-heading">
+          <h2 id="how-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">
+            How Perplexity AI works
+          </h2>
+          <p>Here's the simple version — when you type a question into Perplexity, it does three things almost simultaneously:</p>
+          <ul class="list-disc space-y-2 pl-5 marker:text-emerald-400/80">
+            <li><strong class="text-slate-200">It searches the web</strong> — pulling in fresh, relevant pages and sources related to your question.</li>
+            <li><strong class="text-slate-200">It reads and processes those pages</strong> — using large language models (the same kind of AI that powers ChatGPT) to understand and summarize the content.</li>
+            <li><strong class="text-slate-200">It writes you a clear answer</strong> — in plain language, stitching together the most accurate and useful bits of information, then citing exactly where each piece came from.</li>
+          </ul>
+          <p class="rounded-xl border border-white/10 bg-white/[0.02] px-4 py-3 text-slate-300/95">
+            So instead of getting a list of 10 links and doing all the reading yourself, Perplexity does the reading
+            <em>for</em> you and hands you the key takeaways. It's like the difference between being handed a stack of
+            books and being handed a perfectly written summary with page references.
+          </p>
+        </section>
+
+        <section class="space-y-6" aria-labelledby="usecases-heading">
+          <h2 id="usecases-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">
+            Real-life use cases of Perplexity AI
+          </h2>
+          <div class="space-y-3 rounded-2xl border border-white/10 bg-white/[0.03] p-5 sm:p-6">
+            <h3 class="text-lg font-semibold text-white">Students</h3>
+            <ul class="list-disc space-y-2 pl-5 marker:text-emerald-400/80">
+              <li>Researching a history topic without bouncing between Wikipedia and three other tabs</li>
+              <li>Getting a clear summary with sources you can actually cite in your paper</li>
+              <li>Searching academic papers directly with the Academic focus mode</li>
+            </ul>
+          </div>
+          <div class="space-y-3 rounded-2xl border border-white/10 bg-white/[0.03] p-5 sm:p-6">
+            <h3 class="text-lg font-semibold text-white">Professionals</h3>
+            <ul class="list-disc space-y-2 pl-5 marker:text-emerald-400/80">
+              <li>Getting a quick market overview before a client call</li>
+              <li>Understanding a legal or technical concept simply, with sources to back it up</li>
+              <li>Staying current on industry news without information overload</li>
+            </ul>
+          </div>
+          <div class="space-y-3 rounded-2xl border border-white/10 bg-white/[0.03] p-5 sm:p-6">
+            <h3 class="text-lg font-semibold text-white">Content creators & writers</h3>
+            <ul class="list-disc space-y-2 pl-5 marker:text-emerald-400/80">
+              <li>Quickly researching topics, finding stats, and identifying trends</li>
+              <li>Discovering what people are asking about a subject via Reddit focus mode</li>
+              <li>Fact-checking content before publishing</li>
+            </ul>
+          </div>
+          <div class="space-y-3 rounded-2xl border border-white/10 bg-white/[0.03] p-5 sm:p-6">
+            <h3 class="text-lg font-semibold text-white">Developers & tech folks</h3>
+            <ul class="list-disc space-y-2 pl-5 marker:text-emerald-400/80">
+              <li>Explaining coding concepts with links to current documentation</li>
+              <li>Finding answers that are more up-to-date than static tutorials</li>
+              <li>Breaking down what a new technology does in plain terms</li>
+            </ul>
+          </div>
+          <div class="space-y-3 rounded-2xl border border-white/10 bg-white/[0.03] p-5 sm:p-6">
+            <h3 class="text-lg font-semibold text-white">Shoppers & curious people</h3>
+            <ul class="list-disc space-y-2 pl-5 marker:text-emerald-400/80">
+              <li>Finding the best product recommendations based on recent reviews</li>
+              <li>Getting quick, no-nonsense answers to everyday curiosity questions</li>
+            </ul>
+          </div>
+        </section>
+
+        <section class="space-y-6" aria-labelledby="proscons-heading">
+          <h2 id="proscons-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">Pros and cons of Perplexity AI</h2>
+          <div class="grid gap-6 lg:grid-cols-2">
+            <div class="rounded-2xl border border-emerald-500/20 bg-emerald-500/5 p-5 sm:p-6">
+              <h3 class="mb-4 text-lg font-semibold text-emerald-100">Pros</h3>
+              <ul class="list-disc space-y-2 pl-5 text-slate-300/95 marker:text-emerald-400/80">
+                <li>Real-time information — no outdated knowledge like some AI tools</li>
+                <li>Cites sources so you can verify answers</li>
+                <li>Clean, ad-free interface with no distractions</li>
+                <li>Conversational follow-ups without starting over</li>
+                <li>Multiple focus modes to tailor where it searches</li>
+                <li>Free tier is genuinely useful — no paywall to get value</li>
+                <li>Works on mobile with voice or text</li>
+              </ul>
+            </div>
+            <div class="rounded-2xl border border-amber-500/20 bg-amber-500/5 p-5 sm:p-6">
+              <h3 class="mb-4 text-lg font-semibold text-amber-100">Cons</h3>
+              <ul class="list-disc space-y-2 pl-5 text-slate-300/95 marker:text-amber-400/80">
+                <li>Can still hallucinate — always double-check important facts</li>
+                <li>Not great for highly creative tasks like writing or brainstorming</li>
+                <li>Deeper search and file uploads are behind a paywall</li>
+                <li>Can oversimplify complex or nuanced topics</li>
+                <li>No memory between sessions — it won't remember past conversations</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        <section class="space-y-6" aria-labelledby="pricing-heading">
+          <h2 id="pricing-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">Perplexity AI pricing</h2>
+          <ul class="list-disc space-y-3 pl-5 marker:text-emerald-400/80">
+            <li>
+              <strong class="text-slate-200">Free</strong> — unlimited basic searches, access to standard AI models, limited
+              Pro Searches per day (around 5), and the mobile app. Genuinely useful without paying a cent.
+            </li>
+            <li>
+              <strong class="text-slate-200">Perplexity Pro — $20/month</strong> (or ~$200/year billed annually) — unlimited
+              Pro Searches, access to advanced AI models including GPT-4o and Claude, file and image uploads, Perplexity Pages,
+              and richer answers for complex research.
+            </li>
+          </ul>
+          <p class="rounded-xl border border-white/10 bg-white/[0.02] px-4 py-3 text-slate-300/95">
+            <span class="mr-1.5 font-medium text-emerald-200" aria-hidden>Tip:</span>
+            For most casual users the free plan is solid. If you rely on it daily for research or work, Pro is worth it —
+            especially since it gives you access to multiple AI models in one place. Check
+            <a
+              class="font-medium text-emerald-300/95 underline decoration-emerald-500/40 underline-offset-4 hover:text-emerald-200"
+              href="https://www.perplexity.ai/pro"
+              target="_blank"
+              rel="noopener noreferrer"
+              >perplexity.ai</a
+            > for the latest pricing.
+          </p>
+        </section>
+
+        <section class="space-y-6" aria-labelledby="alternatives-heading">
+          <h2 id="alternatives-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">
+            Alternatives to Perplexity AI
+          </h2>
+          <p>Perplexity isn't the only player in this space. Here's how it compares:</p>
+          <ul class="list-disc space-y-3 pl-5 marker:text-emerald-400/80">
+            <li>
+              <strong class="text-slate-200">ChatGPT</strong> — great for writing, coding, and conversation. Its free version
+              has a knowledge cutoff; GPT-4o with browsing is a closer competitor, but Perplexity's citation model is cleaner.
+            </li>
+            <li>
+              <strong class="text-slate-200">Google Gemini</strong> — powerful and integrated into Google's ecosystem, but
+              designed as a general assistant rather than a focused research tool.
+            </li>
+            <li>
+              <strong class="text-slate-200">Microsoft Copilot</strong> — does real-time web search with citations too and
+              is free. A solid alternative if you're already in the Microsoft world.
+            </li>
+            <li>
+              <strong class="text-slate-200">Claude</strong> — excellent for long-form writing and nuanced analysis. Less
+              focused on web search, but very capable when real-time data isn't needed.
+            </li>
+            <li>
+              <strong class="text-slate-200">You.com</strong> — another AI search engine with a similar approach. Slightly
+              less polished but worth exploring.
+            </li>
+          </ul>
+          <p>
+            Perplexity is the best <em>pure</em> AI search tool. If you want an AI assistant that also handles creative
+            writing or coding, ChatGPT or Claude might serve you better.
+          </p>
+        </section>
+
+        <section class="space-y-4" aria-labelledby="who-heading">
+          <h2 id="who-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">Who should use Perplexity AI?</h2>
+          <p>Perplexity is a great fit if you:</p>
+          <ul class="list-disc space-y-2 pl-5 marker:text-emerald-400/80">
+            <li>Are tired of sifting through search results and want direct answers</li>
+            <li>Are a student or researcher who needs cited, reliable information</li>
+            <li>Are a professional who needs quick, up-to-date information without wading through content farms</li>
+            <li>Are genuinely curious and ask a lot of questions throughout your day</li>
+            <li>Are a content creator looking for a fast research assistant</li>
+            <li>Want AI that tells you where it got its information</li>
+          </ul>
+          <p class="rounded-xl border border-white/10 bg-white/[0.02] px-4 py-3 text-slate-300/95">
+            It's probably <em>not</em> the right tool if you need help with creative writing, coding projects, or want an AI
+            that remembers who you are across sessions. For those, ChatGPT or Claude might feel more at home.
+          </p>
+        </section>
+
+        <section class="space-y-6" aria-labelledby="bonus-heading">
+          <h2 id="bonus-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">Bonus section</h2>
+
+          <div class="space-y-3 rounded-2xl border border-white/10 bg-white/[0.03] p-5 sm:p-6">
+            <h3 class="text-lg font-semibold text-white">Practical tips for beginners</h3>
+            <ul class="list-disc space-y-2 pl-5 text-slate-300/95 marker:text-emerald-400/80">
+              <li>
+                <strong class="text-slate-200">Be specific with your questions.</strong> "Best laptops 2024" is decent,
+                but "best laptops under $700 for college students in 2024" is great.
+              </li>
+              <li>
+                <strong class="text-slate-200">Use Focus Modes.</strong> For medical questions, switch to Academic to pull
+                from scholarly sources instead of random blogs.
+              </li>
+              <li>
+                <strong class="text-slate-200">Follow up naturally.</strong> Just ask "can you give more detail on the
+                third point?" — it remembers your thread.
+              </li>
+              <li>
+                <strong class="text-slate-200">Check the citations.</strong> Always click through at least one or two
+                sources for anything important. Perplexity is good, but not infallible.
+              </li>
+              <li>
+                <strong class="text-slate-200">Try voice search on mobile.</strong> Surprisingly good and very natural
+                for quick questions while you're out and about.
+              </li>
+            </ul>
+          </div>
+
+          <div class="space-y-3 rounded-2xl border border-white/10 bg-white/[0.03] p-5 sm:p-6">
+            <h3 class="text-lg font-semibold text-white">Common mistakes to avoid</h3>
+            <ul class="list-disc space-y-2 pl-5 text-slate-300/95 marker:text-amber-400/80">
+              <li>
+                <strong class="text-slate-200">Treating every answer as 100% fact.</strong> For medical, legal, or
+                financial questions especially, verify with a professional.
+              </li>
+              <li>
+                <strong class="text-slate-200">Asking vague questions.</strong> "Tell me about AI" is too broad.
+                "How is AI changing healthcare in 2024?" gets you something useful.
+              </li>
+              <li>
+                <strong class="text-slate-200">Ignoring the source panel.</strong> The citations on the side of the
+                screen are gold — don't skip them.
+              </li>
+              <li>
+                <strong class="text-slate-200">Not exploring Focus Modes.</strong> Most beginners never discover that
+                Academic or Reddit modes exist. Experiment!
+              </li>
+              <li>
+                <strong class="text-slate-200">Expecting it to remember you.</strong> Perplexity doesn't have persistent
+                memory across sessions, so start fresh each time.
+              </li>
+            </ul>
+          </div>
+        </section>
+
+        <p class="text-lg text-slate-200/95">
+          Perplexity AI won't replace your curiosity — but it'll make sure your curiosity gets better answers, faster.
+          Give it a try the next time you have a question you'd normally Google. Chances are, you won't go back.
+        </p>
+
+      </article>
+    </div>
+  </div>
+{% endblock %}

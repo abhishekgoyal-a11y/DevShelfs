@@ -78,5 +78,13 @@
     "description": "Google's multimodal AI assistant—chat, write, research, and get coding help, with deep integration across Docs, Gmail, and the wider Google ecosystem.",
     "detailPath": "/ai-tools/google-gemini",
     "featured": false
+  },
+  {
+    "id": "perplexity",
+    "name": "Perplexity AI",
+    "category": "AI assistants",
+    "description": "AI-powered search engine that answers questions directly with cited sources—real-time web results, no ads, and conversational follow-ups built in.",
+    "detailPath": "/ai-tools/perplexity",
+    "featured": false
   }
 ]
