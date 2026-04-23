@@ -34,5 +34,14 @@
     "detailPath": "/ai-tools/runwayml",
     "featured": true,
     "featured_order": 4
+  },
+  {
+    "id": "cursor",
+    "name": "Cursor",
+    "category": "Developer tools",
+    "description": "AI-native code editor (VS Code–based): chat with your repo, inline edits from natural language, and strong completions across languages.",
+    "detailPath": "/ai-tools/cursor",
+    "featured": true,
+    "featured_order": 5
   }
 ]

@@ -1,0 +1,309 @@
+{% extends "web/base.html" %}
+{% block title %}Cursor — DevShelf{% endblock %}
+{% block content %}
+  <div class="space-y-10">
+    <div class="flex flex-wrap items-center gap-2 text-sm text-slate-400/90">
+      <a href="{% url 'ai_tools' %}" class="font-medium text-emerald-300/90 transition hover:text-emerald-200">AI tools</a>
+      <span aria-hidden class="text-slate-600">/</span>
+      <span class="text-slate-200/90">Cursor</span>
+    </div>
+
+    <section
+      class="relative overflow-hidden rounded-3xl border border-emerald-400/20 bg-white/[0.06] p-6 shadow-[0_0_0_1px_rgba(255,255,255,0.04)] backdrop-blur-2xl sm:p-8"
+    >
+      <div class="pointer-events-none absolute -right-24 top-0 h-72 w-72 rounded-full bg-emerald-500/15 blur-3xl"></div>
+      <div class="pointer-events-none absolute -left-20 bottom-0 h-56 w-56 rounded-full bg-cyan-500/10 blur-3xl"></div>
+      <div class="relative">
+        <p class="text-xs font-semibold uppercase tracking-[0.22em] text-emerald-300/90">AI tool</p>
+        <h1 class="mt-3 text-3xl font-semibold tracking-tight text-white sm:text-4xl lg:text-[2.5rem] lg:leading-tight">
+          Cursor: An AI Code Editor That Stays in Flow
+        </h1>
+        <p class="mt-4 text-sm leading-relaxed text-slate-200/80 sm:text-base">
+          Cursor is an AI-powered editor built for shipping code faster: completions, chat grounded in your project, and
+          edits from plain-English instructions—without living in ten browser tabs.
+        </p>
+        <p class="mt-6 flex flex-wrap items-center gap-3">
+          <a
+            href="https://cursor.com/home"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="inline-flex items-center gap-2 rounded-full border border-emerald-400/35 bg-emerald-500/10 px-4 py-2 text-sm font-medium text-emerald-200 transition hover:border-emerald-300/50 hover:bg-emerald-500/15 hover:text-white"
+          >
+            Get Cursor <span aria-hidden class="text-emerald-300/80">↗</span>
+          </a>
+          <a
+            href="https://cursor.com/pricing"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/[0.04] px-4 py-2 text-sm font-medium text-slate-200/90 transition hover:border-white/25 hover:bg-white/[0.07] hover:text-white"
+          >
+            Pricing <span aria-hidden class="text-slate-400">↗</span>
+          </a>
+          <a
+            href="https://cursor.com/agents"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/[0.04] px-4 py-2 text-sm font-medium text-slate-200/90 transition hover:border-white/25 hover:bg-white/[0.07] hover:text-white"
+          >
+            Agents <span aria-hidden class="text-slate-400">↗</span>
+          </a>
+        </p>
+      </div>
+    </section>
+
+    <div class="glass rounded-3xl border border-white/10 p-5 sm:p-8">
+      <article class="mx-auto space-y-12 text-base leading-relaxed text-slate-300/95">
+        <section class="space-y-4" aria-labelledby="what-heading">
+          <h2 id="what-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">What is Cursor AI?</h2>
+          <p>
+            Cursor AI is an AI-powered code editor designed to make programming faster, easier, and less frustrating—especially
+            for beginners. Think of it as a smart assistant built right into your coding environment. Instead of switching
+            between your editor and search engines or forums, Cursor helps you write, edit, and understand code in one place.
+          </p>
+          <p>
+            If you have ever felt stuck staring at confusing code, Cursor AI is like having a helpful teammate sitting beside
+            you, ready to explain things or suggest improvements.
+          </p>
+        </section>
+
+        <section class="space-y-6" aria-labelledby="features-heading">
+          <h2 id="features-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">
+            Key features of Cursor AI
+          </h2>
+          <p>Here are some of the most useful things Cursor AI can do:</p>
+          <div class="space-y-3 rounded-2xl border border-white/10 bg-white/[0.03] p-5 sm:p-6">
+            <h3 class="text-lg font-semibold text-white">1. AI code completion</h3>
+            <p class="text-slate-300/95">
+              It predicts what you are trying to write and completes code for you—often better than traditional autocomplete.
+            </p>
+          </div>
+          <div class="space-y-3 rounded-2xl border border-white/10 bg-white/[0.03] p-5 sm:p-6">
+            <h3 class="text-lg font-semibold text-white">2. Chat with your code</h3>
+            <p class="text-slate-300/95">
+              You can ask questions like “What does this function do?” or “Fix this bug,” and it responds in plain English.
+            </p>
+          </div>
+          <div class="space-y-3 rounded-2xl border border-white/10 bg-white/[0.03] p-5 sm:p-6">
+            <h3 class="text-lg font-semibold text-white">3. Edit code with instructions</h3>
+            <p class="text-slate-300/95">
+              Instead of manually changing code, you can say something like “Make this faster” or “Convert this to Python,”
+              and it will handle it.
+            </p>
+          </div>
+          <div class="space-y-3 rounded-2xl border border-white/10 bg-white/[0.03] p-5 sm:p-6">
+            <h3 class="text-lg font-semibold text-white">4. Understand entire projects</h3>
+            <p class="text-slate-300/95">
+              Unlike basic tools, Cursor can look at your whole project, not just one file, and give smarter suggestions.
+            </p>
+          </div>
+          <div class="space-y-3 rounded-2xl border border-white/10 bg-white/[0.03] p-5 sm:p-6">
+            <h3 class="text-lg font-semibold text-white">5. Built on familiar tools</h3>
+            <p class="text-slate-300/95">
+              It is based on Visual Studio Code, so if you have used VS Code before, it will feel very familiar.
+            </p>
+          </div>
+          <div class="space-y-3 rounded-2xl border border-white/10 bg-white/[0.03] p-5 sm:p-6">
+            <h3 class="text-lg font-semibold text-white">6. Cursor Agents</h3>
+            <p class="text-slate-300/95">
+              For longer, multi-step work, Cursor also pushes agent-style workflows that can plan, edit, and run tasks across
+              your repo—see what is available on
+              <a
+                class="font-medium text-emerald-300/95 underline decoration-emerald-500/40 underline-offset-4 hover:text-emerald-200"
+                href="https://cursor.com/agents"
+                target="_blank"
+                rel="noopener noreferrer"
+                >cursor.com/agents</a
+              >.
+            </p>
+          </div>
+        </section>
+
+        <section class="space-y-6" aria-labelledby="how-heading">
+          <h2 id="how-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">
+            How Cursor AI works
+          </h2>
+          <p>
+            Cursor AI uses advanced AI models (similar to those behind tools like ChatGPT) to understand code and human
+            language.
+          </p>
+          <p>Here is a simple way to think about it:</p>
+          <ul class="list-disc space-y-2 pl-5 marker:text-emerald-400/80">
+            <li>You write code (or even just describe what you want)</li>
+            <li>Cursor reads it and understands your intent</li>
+            <li>It suggests code, fixes errors, or explains things</li>
+          </ul>
+          <p class="rounded-xl border border-white/10 bg-white/[0.02] px-4 py-3 text-slate-300/95">
+            It is like: <strong class="text-slate-200">you explain your problem → Cursor understands → Cursor helps solve
+            it</strong>. No need to know complex commands—you can just type naturally.
+          </p>
+        </section>
+
+        <section class="space-y-6" aria-labelledby="usecases-heading">
+          <h2 id="usecases-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">
+            Real-life use cases of Cursor AI
+          </h2>
+
+          <div class="space-y-3 rounded-2xl border border-white/10 bg-white/[0.03] p-5 sm:p-6">
+            <h3 class="text-lg font-semibold text-white">For beginners learning to code</h3>
+            <ul class="list-disc space-y-2 pl-5 marker:text-emerald-400/80">
+              <li>Ask: “Explain this loop”</li>
+              <li>Get simple explanations instead of confusing documentation</li>
+            </ul>
+          </div>
+          <div class="space-y-3 rounded-2xl border border-white/10 bg-white/[0.03] p-5 sm:p-6">
+            <h3 class="text-lg font-semibold text-white">For developers building apps</h3>
+            <ul class="list-disc space-y-2 pl-5 marker:text-emerald-400/80">
+              <li>Generate boilerplate code quickly</li>
+              <li>Refactor messy code into cleaner versions</li>
+            </ul>
+          </div>
+          <div class="space-y-3 rounded-2xl border border-white/10 bg-white/[0.03] p-5 sm:p-6">
+            <h3 class="text-lg font-semibold text-white">For debugging</h3>
+            <ul class="list-disc space-y-2 pl-5 marker:text-emerald-400/80">
+              <li>Paste an error and ask: “Why is this happening?”</li>
+              <li>Cursor suggests fixes instantly</li>
+            </ul>
+          </div>
+          <div class="space-y-3 rounded-2xl border border-white/10 bg-white/[0.03] p-5 sm:p-6">
+            <h3 class="text-lg font-semibold text-white">For students</h3>
+            <ul class="list-disc space-y-2 pl-5 marker:text-emerald-400/80">
+              <li>Understand assignments faster</li>
+              <li>Learn concepts step by step</li>
+            </ul>
+          </div>
+          <div class="space-y-3 rounded-2xl border border-white/10 bg-white/[0.03] p-5 sm:p-6">
+            <h3 class="text-lg font-semibold text-white">For freelancers</h3>
+            <ul class="list-disc space-y-2 pl-5 marker:text-emerald-400/80">
+              <li>Save time on repetitive tasks</li>
+              <li>Deliver projects faster</li>
+            </ul>
+          </div>
+        </section>
+
+        <section class="space-y-6" aria-labelledby="proscons-heading">
+          <h2 id="proscons-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">Pros and cons of Cursor AI</h2>
+          <div class="grid gap-6 lg:grid-cols-2">
+            <div class="rounded-2xl border border-emerald-500/20 bg-emerald-500/5 p-5 sm:p-6">
+              <h3 class="mb-4 text-lg font-semibold text-emerald-100">Pros</h3>
+              <ul class="list-disc space-y-2 pl-5 text-slate-300/95 marker:text-emerald-400/80">
+                <li>Easy to use—even for beginners</li>
+                <li>Saves a lot of time</li>
+                <li>Helps you learn while coding</li>
+                <li>Reduces the need to Google everything</li>
+                <li>Works across multiple programming languages</li>
+              </ul>
+            </div>
+            <div class="rounded-2xl border border-amber-500/20 bg-amber-500/5 p-5 sm:p-6">
+              <h3 class="mb-4 text-lg font-semibold text-amber-100">Cons</h3>
+              <ul class="list-disc space-y-2 pl-5 text-slate-300/95 marker:text-amber-400/80">
+                <li>Not always 100% accurate (you still need to review code)</li>
+                <li>Requires internet connection</li>
+                <li>Can make beginners rely too much on AI</li>
+                <li>Some advanced features are paid</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        <section class="space-y-6" aria-labelledby="pricing-heading">
+          <h2 id="pricing-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">Cursor AI pricing</h2>
+          <p>Cursor keeps its pricing pretty straightforward:</p>
+          <h3 class="text-lg font-semibold text-white">Individual plans</h3>
+          <ul class="list-disc space-y-2 pl-5 marker:text-emerald-400/80">
+            <li><strong class="text-slate-200">Free (Hobby)</strong> — basic access with limited AI usage</li>
+            <li><strong class="text-slate-200">Pro ($20/month)</strong> — higher limits + access to advanced AI models</li>
+            <li><strong class="text-slate-200">Pro+ ($60/month)</strong> — roughly 3× more usage than Pro</li>
+            <li><strong class="text-slate-200">Ultra ($200/month)</strong> — roughly 20× usage + priority access to new features</li>
+          </ul>
+          <h3 class="pt-2 text-lg font-semibold text-white">Business plans</h3>
+          <ul class="list-disc space-y-2 pl-5 marker:text-emerald-400/80">
+            <li><strong class="text-slate-200">Teams ($40/user/month)</strong> — collaboration tools, shared chats, and admin controls</li>
+            <li><strong class="text-slate-200">Enterprise (custom pricing)</strong> — advanced security, analytics, and dedicated support</li>
+          </ul>
+          <p class="rounded-xl border border-white/10 bg-white/[0.02] px-4 py-3 text-slate-300/95">
+            <span class="mr-1.5 font-medium text-emerald-200" aria-hidden>Tip:</span>
+            Check the latest numbers on
+            <a
+              class="font-medium text-emerald-300/95 underline decoration-emerald-500/40 underline-offset-4 hover:text-emerald-200"
+              href="https://cursor.com/pricing"
+              target="_blank"
+              rel="noopener noreferrer"
+              >cursor.com/pricing</a
+            >—plans and limits change over time.
+          </p>
+        </section>
+
+        <section class="space-y-6" aria-labelledby="alternatives-heading">
+          <h2 id="alternatives-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">
+            Alternatives to Cursor AI
+          </h2>
+          <p>If you want to explore similar tools, here are a few:</p>
+          <ul class="list-disc space-y-2 pl-5 marker:text-emerald-400/80">
+            <li><strong class="text-slate-200">GitHub Copilot</strong> — great for autocomplete and suggestions</li>
+            <li><strong class="text-slate-200">Replit Ghostwriter</strong> — works directly in the browser</li>
+            <li><strong class="text-slate-200">Codeium</strong> — a free alternative with solid features</li>
+            <li><strong class="text-slate-200">Tabnine</strong> — focused on privacy and speed</li>
+          </ul>
+          <p>Each has its strengths, but Cursor stands out for its “chat with your code” experience.</p>
+        </section>
+
+        <section class="space-y-4" aria-labelledby="who-heading">
+          <h2 id="who-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">Who should use Cursor AI?</h2>
+          <p>Cursor AI is a great fit for:</p>
+          <ul class="list-disc space-y-2 pl-5 marker:text-emerald-400/80">
+            <li>Beginners learning programming</li>
+            <li>Students working on assignments</li>
+            <li>Developers who want to save time</li>
+            <li>Freelancers building projects quickly</li>
+            <li>Anyone tired of switching between coding and searching online</li>
+          </ul>
+          <p>If you like the idea of “learning while doing,” Cursor is especially helpful.</p>
+        </section>
+
+        <section class="space-y-6" aria-labelledby="bonus-heading">
+          <h2 id="bonus-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">Bonus section</h2>
+
+          <div class="space-y-3 rounded-2xl border border-white/10 bg-white/[0.03] p-5 sm:p-6">
+            <h3 class="text-lg font-semibold text-white">Practical tips for beginners</h3>
+            <ul class="list-disc space-y-2 pl-5 text-slate-300/95 marker:text-emerald-400/80">
+              <li><strong class="text-slate-200">Start simple:</strong> ask basic questions like “Explain this code”</li>
+              <li><strong class="text-slate-200">Use natural language:</strong> do not worry about perfect wording</li>
+              <li><strong class="text-slate-200">Experiment freely:</strong> try prompts like “Improve this code” or “Make it faster”</li>
+              <li><strong class="text-slate-200">Double-check results:</strong> always review AI suggestions before using them</li>
+            </ul>
+          </div>
+
+          <div class="space-y-3 rounded-2xl border border-white/10 bg-white/[0.03] p-5 sm:p-6">
+            <h3 class="text-lg font-semibold text-white">Common mistakes to avoid</h3>
+            <ul class="list-disc space-y-2 pl-5 text-slate-300/95 marker:text-emerald-400/80">
+              <li>
+                <strong class="text-slate-200">Blindly trusting AI output</strong> — always test and understand what it gives
+                you.
+              </li>
+              <li><strong class="text-slate-200">Over-relying on AI</strong> — use it as a helper, not a replacement for learning.</li>
+              <li><strong class="text-slate-200">Ignoring errors</strong> — if something breaks, ask Cursor why, not just fix it.</li>
+            </ul>
+          </div>
+
+          <div class="space-y-3 rounded-2xl border border-white/10 bg-white/[0.03] p-5 sm:p-6">
+            <h3 class="text-lg font-semibold text-white">What extra value to add when publishing</h3>
+            <p class="text-slate-300/95">If you are turning this into a blog or guide, here is how to make it stand out:</p>
+            <ul class="list-disc space-y-2 pl-5 text-slate-300/95 marker:text-emerald-400/80">
+              <li>Add screenshots of Cursor AI in action</li>
+              <li>Include real prompts (e.g., “Fix this JavaScript error”)</li>
+              <li>Show before-and-after code examples</li>
+              <li>Embed short tutorials or GIFs</li>
+              <li>Share personal experiences or results</li>
+            </ul>
+            <p class="text-slate-300/95">These small additions make your content more practical and trustworthy.</p>
+          </div>
+        </section>
+
+        <p class="text-lg text-slate-200/95">
+          Cursor shines when you treat it as a pair programmer: steer with clear intent, verify changes, and keep learning
+          from the explanations—not only the diffs.
+        </p>
+      </article>
+    </div>
+  </div>
+{% endblock %}
