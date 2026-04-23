@@ -43,5 +43,14 @@
     "detailPath": "/ai-tools/cursor",
     "featured": true,
     "featured_order": 5
+  },
+  {
+    "id": "github-copilot",
+    "name": "GitHub Copilot",
+    "category": "Developer tools",
+    "description": "Inline AI pair programmer for VS Code and other editors—completions, whole functions from comments, and Copilot Chat for explanations and fixes.",
+    "detailPath": "/ai-tools/github-copilot",
+    "featured": true,
+    "featured_order": 6
   }
 ]

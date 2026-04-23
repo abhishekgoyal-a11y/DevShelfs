@@ -59,7 +59,7 @@ def home(request):
             "project_count": len(projects),
             "ai_tool_count": len(tools),
             "featured_projects": pick_featured_list(projects, 3),
-            "featured_tools": pick_featured_list(tools, 6),
+            "featured_tools": pick_featured_list(tools, 8),
             "site_about": SITE_ABOUT,
         },
     )
@@ -205,6 +205,14 @@ def cursor_ai(request):
     return render(
         request,
         "web/cursor.html",
+        {"layout": _layout(request.path), "active_nav": "ai"},
+    )
+
+
+def github_copilot(request):
+    return render(
+        request,
+        "web/github_copilot.html",
         {"layout": _layout(request.path), "active_nav": "ai"},
     )
 
