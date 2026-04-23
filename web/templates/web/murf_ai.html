@@ -1,0 +1,245 @@
+{% extends "web/base.html" %}
+{% block title %}Murf AI — DevShelf{% endblock %}
+{% block content %}
+  <div class="space-y-10">
+    <div class="flex flex-wrap items-center gap-2 text-sm text-slate-400/90">
+      <a href="{% url 'ai_tools' %}" class="font-medium text-emerald-300/90 transition hover:text-emerald-200">AI tools</a>
+      <span aria-hidden class="text-slate-600">/</span>
+      <span class="text-slate-200/90">Murf AI</span>
+    </div>
+
+    <section
+      class="relative overflow-hidden rounded-3xl border border-emerald-400/20 bg-white/[0.06] p-6 shadow-[0_0_0_1px_rgba(255,255,255,0.04)] backdrop-blur-2xl sm:p-8"
+    >
+      <div class="pointer-events-none absolute -right-24 top-0 h-72 w-72 rounded-full bg-emerald-500/15 blur-3xl"></div>
+      <div class="pointer-events-none absolute -left-20 bottom-0 h-56 w-56 rounded-full bg-cyan-500/10 blur-3xl"></div>
+      <div class="relative">
+        <p class="text-xs font-semibold uppercase tracking-[0.22em] text-emerald-300/90">AI tool</p>
+        <h1 class="mt-3 text-3xl font-semibold tracking-tight text-white sm:text-4xl lg:text-[2.5rem] lg:leading-tight">
+          Murf AI: Professional Voiceovers Without a Recording Studio
+        </h1>
+        <p class="mt-4 text-sm leading-relaxed text-slate-200/80 sm:text-base">
+          Murf AI is an AI voice generator built for professionals — create studio-quality voiceovers for explainer
+          videos, e-learning courses, presentations, and podcasts using 200+ lifelike AI voices.
+        </p>
+        <p class="mt-6 flex flex-wrap items-center gap-3">
+          <a
+            href="https://murf.ai"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="inline-flex items-center gap-2 rounded-full border border-emerald-400/35 bg-emerald-500/10 px-4 py-2 text-sm font-medium text-emerald-200 transition hover:border-emerald-300/50 hover:bg-emerald-500/15 hover:text-white"
+          >
+            Try Murf AI <span aria-hidden class="text-emerald-300/80">↗</span>
+          </a>
+          <a
+            href="https://murf.ai/pricing"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/[0.04] px-4 py-2 text-sm font-medium text-slate-200/90 transition hover:border-white/25 hover:bg-white/[0.07] hover:text-white"
+          >
+            Pricing <span aria-hidden class="text-slate-400">↗</span>
+          </a>
+        </p>
+      </div>
+    </section>
+
+    <div class="glass rounded-3xl border border-white/10 p-5 sm:p-8">
+      <article class="mx-auto space-y-12 text-base leading-relaxed text-slate-300/95">
+
+        <section class="space-y-4" aria-labelledby="what-heading">
+          <h2 id="what-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">What is Murf AI?</h2>
+          <p>
+            Murf AI is a text-to-speech and voiceover studio built specifically for professionals who need high-quality
+            narration without the hassle of booking a recording studio or hiring a voice actor. You type your script,
+            pick a voice, and Murf generates polished audio that you can use in your videos, courses, and presentations.
+          </p>
+          <p>
+            What makes Murf stand out from generic TTS tools is its focus on professional workflow. The platform
+            includes a built-in studio editor where you can time your audio to slide transitions, adjust pitch and
+            speed per sentence, and export everything together. It's designed to fit into how instructional designers,
+            marketing teams, and video producers actually work.
+          </p>
+          <p>
+            With over 200 voices across 20+ languages, Murf covers a wide range of use cases — from a warm, friendly
+            tone for onboarding videos to a crisp, authoritative voice for product demos.
+          </p>
+        </section>
+
+        <section class="space-y-6" aria-labelledby="features-heading">
+          <h2 id="features-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">Key features of Murf AI</h2>
+          <div class="space-y-3 rounded-2xl border border-white/10 bg-white/[0.03] p-5 sm:p-6">
+            <h3 class="text-lg font-semibold text-white">200+ AI voices</h3>
+            <p class="text-slate-300/95">Choose from a large library of voices covering multiple languages, accents, genders, and age groups. Each voice is optimised for clarity and naturalness.</p>
+          </div>
+          <div class="space-y-3 rounded-2xl border border-white/10 bg-white/[0.03] p-5 sm:p-6">
+            <h3 class="text-lg font-semibold text-white">Studio editor</h3>
+            <p class="text-slate-300/95">A built-in editor that lets you sync audio to slide timing, add background music, adjust pauses, and fine-tune pacing — all without leaving the platform.</p>
+          </div>
+          <div class="space-y-3 rounded-2xl border border-white/10 bg-white/[0.03] p-5 sm:p-6">
+            <h3 class="text-lg font-semibold text-white">Voice customisation</h3>
+            <p class="text-slate-300/95">Adjust pitch, speed, and emphasis on individual words or sentences. Add pronunciation fixes for technical terms, names, or brand-specific language.</p>
+          </div>
+          <div class="space-y-3 rounded-2xl border border-white/10 bg-white/[0.03] p-5 sm:p-6">
+            <h3 class="text-lg font-semibold text-white">Media sync</h3>
+            <p class="text-slate-300/95">Upload your video, presentation slides, or images directly into Murf and sync the voiceover to them in one place — no external video editor required for basic projects.</p>
+          </div>
+          <div class="space-y-3 rounded-2xl border border-white/10 bg-white/[0.03] p-5 sm:p-6">
+            <h3 class="text-lg font-semibold text-white">Team collaboration</h3>
+            <p class="text-slate-300/95">Share projects with teammates, leave comments, and manage versions. Useful for e-learning teams and agencies where multiple people review before sign-off.</p>
+          </div>
+          <div class="space-y-3 rounded-2xl border border-white/10 bg-white/[0.03] p-5 sm:p-6">
+            <h3 class="text-lg font-semibold text-white">API access</h3>
+            <p class="text-slate-300/95">Integrate Murf's voice generation into your own product or pipeline for automated narration at scale.</p>
+          </div>
+        </section>
+
+        <section class="space-y-6" aria-labelledby="how-heading">
+          <h2 id="how-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">How Murf AI works</h2>
+          <p>
+            Murf uses neural text-to-speech — AI models trained on recordings from professional voice actors to learn
+            the precise qualities that make speech sound natural. Here's the workflow:
+          </p>
+          <ul class="list-disc space-y-2 pl-5 marker:text-emerald-400/80">
+            <li><strong class="text-slate-200">Type or paste your script</strong> — or import from an existing document.</li>
+            <li><strong class="text-slate-200">Choose a voice and adjust settings</strong> — speed, pitch, emphasis, and pauses can all be tweaked per line.</li>
+            <li><strong class="text-slate-200">Generate and refine</strong> — preview the audio, make changes, then export as MP3 or WAV when ready.</li>
+          </ul>
+          <p class="rounded-xl border border-white/10 bg-white/[0.02] px-4 py-3 text-slate-300/95">
+            The studio editor is what makes Murf more than just a TTS tool. You can upload your slides or video and
+            see your voiceover play in sync — so you know the timing works before you export. No juggling between
+            five different apps.
+          </p>
+        </section>
+
+        <section class="space-y-6" aria-labelledby="usecases-heading">
+          <h2 id="usecases-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">Real-life use cases of Murf AI</h2>
+          <div class="space-y-3 rounded-2xl border border-white/10 bg-white/[0.03] p-5 sm:p-6">
+            <h3 class="text-lg font-semibold text-white">Instructional designers & e-learning teams</h3>
+            <ul class="list-disc space-y-2 pl-5 marker:text-emerald-400/80">
+              <li>Adding professional narration to courses without recording studios</li>
+              <li>Updating course audio quickly when content changes — no re-recording session needed</li>
+              <li>Producing multilingual versions of training materials</li>
+            </ul>
+          </div>
+          <div class="space-y-3 rounded-2xl border border-white/10 bg-white/[0.03] p-5 sm:p-6">
+            <h3 class="text-lg font-semibold text-white">YouTubers & video creators</h3>
+            <ul class="list-disc space-y-2 pl-5 marker:text-emerald-400/80">
+              <li>Faceless YouTube channels that need consistent narration</li>
+              <li>Explainer and tutorial videos with clear, professional voiceovers</li>
+            </ul>
+          </div>
+          <div class="space-y-3 rounded-2xl border border-white/10 bg-white/[0.03] p-5 sm:p-6">
+            <h3 class="text-lg font-semibold text-white">Marketing & sales teams</h3>
+            <ul class="list-disc space-y-2 pl-5 marker:text-emerald-400/80">
+              <li>Product demo videos with polished narration</li>
+              <li>Promotional video content without the budget for a voice actor</li>
+            </ul>
+          </div>
+          <div class="space-y-3 rounded-2xl border border-white/10 bg-white/[0.03] p-5 sm:p-6">
+            <h3 class="text-lg font-semibold text-white">Podcast & content creators</h3>
+            <ul class="list-disc space-y-2 pl-5 marker:text-emerald-400/80">
+              <li>Turning written articles into audio content for audio platforms</li>
+              <li>Narrated newsletters or email content</li>
+            </ul>
+          </div>
+        </section>
+
+        <section class="space-y-6" aria-labelledby="proscons-heading">
+          <h2 id="proscons-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">Pros and cons of Murf AI</h2>
+          <div class="grid gap-6 lg:grid-cols-2">
+            <div class="rounded-2xl border border-emerald-500/20 bg-emerald-500/5 p-5 sm:p-6">
+              <h3 class="mb-4 text-lg font-semibold text-emerald-100">Pros</h3>
+              <ul class="list-disc space-y-2 pl-5 text-slate-300/95 marker:text-emerald-400/80">
+                <li>Clean, professional studio editor built for workflow</li>
+                <li>200+ voices across 20+ languages</li>
+                <li>Sync audio to slides and video in-platform</li>
+                <li>Per-sentence customisation of speed, pitch, and emphasis</li>
+                <li>Team collaboration and version management</li>
+              </ul>
+            </div>
+            <div class="rounded-2xl border border-amber-500/20 bg-amber-500/5 p-5 sm:p-6">
+              <h3 class="mb-4 text-lg font-semibold text-amber-100">Cons</h3>
+              <ul class="list-disc space-y-2 pl-5 text-slate-300/95 marker:text-amber-400/80">
+                <li>Voice realism slightly below ElevenLabs at the top end</li>
+                <li>Free plan is limited and watermarked</li>
+                <li>No voice cloning from custom audio samples on standard plans</li>
+                <li>Can get expensive for high-volume or enterprise use</li>
+                <li>Limited in-platform video editing compared to a full editor like Descript</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        <section class="space-y-6" aria-labelledby="pricing-heading">
+          <h2 id="pricing-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">Murf AI pricing</h2>
+          <ul class="list-disc space-y-3 pl-5 marker:text-emerald-400/80">
+            <li><strong class="text-slate-200">Free</strong> — limited minutes, access to some voices, watermarked audio. Good for trying the product before committing.</li>
+            <li><strong class="text-slate-200">Creator — ~$29/month</strong> — 2 hours of voice generation per month, all voices, commercial licence, and no watermark.</li>
+            <li><strong class="text-slate-200">Business — ~$99/month</strong> — up to 3 users, 4 hours of voice generation, team collaboration, and API access.</li>
+            <li><strong class="text-slate-200">Enterprise</strong> — custom pricing for larger teams, dedicated support, and SLA guarantees.</li>
+          </ul>
+          <p class="rounded-xl border border-white/10 bg-white/[0.02] px-4 py-3 text-slate-300/95">
+            <span class="mr-1.5 font-medium text-emerald-200" aria-hidden>Tip:</span>
+            Murf charges by generation minutes, not characters. A 5-minute voiceover consumes 5 minutes of your
+            monthly allowance. Confirm the current limits at
+            <a class="font-medium text-emerald-300/95 underline decoration-emerald-500/40 underline-offset-4 hover:text-emerald-200" href="https://murf.ai/pricing" target="_blank" rel="noopener noreferrer">murf.ai/pricing</a>.
+          </p>
+        </section>
+
+        <section class="space-y-6" aria-labelledby="alternatives-heading">
+          <h2 id="alternatives-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">Alternatives to Murf AI</h2>
+          <ul class="list-disc space-y-3 pl-5 marker:text-emerald-400/80">
+            <li><strong class="text-slate-200">ElevenLabs</strong> — more realistic voices and voice cloning; better for creative and entertainment use cases; slightly less "studio workflow" focused.</li>
+            <li><strong class="text-slate-200">Descript</strong> — includes voiceover AI alongside a full video and podcast editor; better if you need more editing features in one tool.</li>
+            <li><strong class="text-slate-200">LOVO AI</strong> — strong character voices and avatar features; good for interactive content and game development.</li>
+            <li><strong class="text-slate-200">Play.ht</strong> — competitive pricing and a solid API; less polished studio UI but good for developer-driven workflows.</li>
+          </ul>
+        </section>
+
+        <section class="space-y-4" aria-labelledby="who-heading">
+          <h2 id="who-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">Who should use Murf AI?</h2>
+          <p>Murf AI is the right choice if you:</p>
+          <ul class="list-disc space-y-2 pl-5 marker:text-emerald-400/80">
+            <li>Build e-learning courses and need professional narration without studio bookings</li>
+            <li>Create explainer or product demo videos regularly</li>
+            <li>Want voiceover audio that syncs directly to your slides or video</li>
+            <li>Work in a team that reviews and approves audio before publishing</li>
+            <li>Need multilingual audio but can't afford separate voice actors per language</li>
+          </ul>
+          <p class="rounded-xl border border-white/10 bg-white/[0.02] px-4 py-3 text-slate-300/95">
+            If ultra-realistic voice cloning is your priority, ElevenLabs edges ahead. But for professional voiceover
+            workflows — especially e-learning — Murf's studio-first design is hard to beat.
+          </p>
+        </section>
+
+        <section class="space-y-6" aria-labelledby="bonus-heading">
+          <h2 id="bonus-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">Bonus section</h2>
+          <div class="space-y-3 rounded-2xl border border-white/10 bg-white/[0.03] p-5 sm:p-6">
+            <h3 class="text-lg font-semibold text-white">Practical tips for beginners</h3>
+            <ul class="list-disc space-y-2 pl-5 text-slate-300/95 marker:text-emerald-400/80">
+              <li><strong class="text-slate-200">Preview before generating in bulk.</strong> Always listen to a few lines before generating your whole script — small adjustments to voice or speed make a big difference.</li>
+              <li><strong class="text-slate-200">Use emphasis sparingly.</strong> Highlighting key words for emphasis sounds great when used selectively — overusing it makes the narration feel unnatural.</li>
+              <li><strong class="text-slate-200">Add pauses at slide transitions.</strong> Insert a one-second pause between sections so your audio feels paced rather than rushed.</li>
+              <li><strong class="text-slate-200">Use the pronunciation editor.</strong> For product names, acronyms, or technical terms, add phonetic pronunciations so they're said correctly every time.</li>
+            </ul>
+          </div>
+          <div class="space-y-3 rounded-2xl border border-white/10 bg-white/[0.03] p-5 sm:p-6">
+            <h3 class="text-lg font-semibold text-white">Common mistakes to avoid</h3>
+            <ul class="list-disc space-y-2 pl-5 text-slate-300/95 marker:text-amber-400/80">
+              <li><strong class="text-slate-200">Choosing a voice based on the sample alone.</strong> Voices can sound different on your actual script — always test with a real excerpt before committing.</li>
+              <li><strong class="text-slate-200">Ignoring the background music option.</strong> Subtle background audio can dramatically lift the production quality of e-learning content — Murf has royalty-free options built in.</li>
+              <li><strong class="text-slate-200">Not updating audio when content changes.</strong> One of Murf's biggest advantages is how fast you can re-generate audio after a script edit — use it rather than leaving old narration on updated content.</li>
+            </ul>
+          </div>
+        </section>
+
+        <p class="text-lg text-slate-200/95">
+          Murf AI gives you the clean, professional narration that used to require a recording studio and a voice
+          actor booking — in a fraction of the time and cost. For anyone who produces educational or video content
+          regularly, it's a genuine workflow upgrade.
+        </p>
+
+      </article>
+    </div>
+  </div>
+{% endblock %}

@@ -1,0 +1,247 @@
+{% extends "web/base.html" %}
+{% block title %}Otter.ai — DevShelf{% endblock %}
+{% block content %}
+  <div class="space-y-10">
+    <div class="flex flex-wrap items-center gap-2 text-sm text-slate-400/90">
+      <a href="{% url 'ai_tools' %}" class="font-medium text-emerald-300/90 transition hover:text-emerald-200">AI tools</a>
+      <span aria-hidden class="text-slate-600">/</span>
+      <span class="text-slate-200/90">Otter.ai</span>
+    </div>
+
+    <section
+      class="relative overflow-hidden rounded-3xl border border-emerald-400/20 bg-white/[0.06] p-6 shadow-[0_0_0_1px_rgba(255,255,255,0.04)] backdrop-blur-2xl sm:p-8"
+    >
+      <div class="pointer-events-none absolute -right-24 top-0 h-72 w-72 rounded-full bg-emerald-500/15 blur-3xl"></div>
+      <div class="pointer-events-none absolute -left-20 bottom-0 h-56 w-56 rounded-full bg-cyan-500/10 blur-3xl"></div>
+      <div class="relative">
+        <p class="text-xs font-semibold uppercase tracking-[0.22em] text-emerald-300/90">AI tool</p>
+        <h1 class="mt-3 text-3xl font-semibold tracking-tight text-white sm:text-4xl lg:text-[2.5rem] lg:leading-tight">
+          Otter.ai: Never Take Meeting Notes Again
+        </h1>
+        <p class="mt-4 text-sm leading-relaxed text-slate-200/80 sm:text-base">
+          Otter.ai transcribes your meetings in real time, identifies who's speaking, extracts action items, and
+          generates a summary — so you can focus on the conversation instead of your notepad.
+        </p>
+        <p class="mt-6 flex flex-wrap items-center gap-3">
+          <a
+            href="https://otter.ai"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="inline-flex items-center gap-2 rounded-full border border-emerald-400/35 bg-emerald-500/10 px-4 py-2 text-sm font-medium text-emerald-200 transition hover:border-emerald-300/50 hover:bg-emerald-500/15 hover:text-white"
+          >
+            Try Otter.ai <span aria-hidden class="text-emerald-300/80">↗</span>
+          </a>
+          <a
+            href="https://otter.ai/pricing"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/[0.04] px-4 py-2 text-sm font-medium text-slate-200/90 transition hover:border-white/25 hover:bg-white/[0.07] hover:text-white"
+          >
+            Pricing <span aria-hidden class="text-slate-400">↗</span>
+          </a>
+        </p>
+      </div>
+    </section>
+
+    <div class="glass rounded-3xl border border-white/10 p-5 sm:p-8">
+      <article class="mx-auto space-y-12 text-base leading-relaxed text-slate-300/95">
+
+        <section class="space-y-4" aria-labelledby="what-heading">
+          <h2 id="what-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">What is Otter.ai?</h2>
+          <p>
+            Otter.ai is an AI meeting assistant that listens to your conversations — whether live on Zoom, Google
+            Meet, or Microsoft Teams, or from an audio file you upload — and turns them into searchable, shareable
+            transcripts automatically. No manual note-taking, no post-meeting write-up, no trying to remember who
+            said what.
+          </p>
+          <p>
+            Beyond just transcription, Otter uses AI to process what was said and extract the important bits:
+            the summary, the key decisions, and the action items with the names of who said they'd do them. It's
+            the difference between a raw word-for-word log and an actually useful record of your meeting.
+          </p>
+          <p>
+            Used by students, business teams, journalists, researchers, and anyone who sits in a lot of meetings,
+            Otter has become one of the most popular productivity AI tools — especially as remote work made
+            asynchronous meeting records even more valuable.
+          </p>
+        </section>
+
+        <section class="space-y-6" aria-labelledby="features-heading">
+          <h2 id="features-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">Key features of Otter.ai</h2>
+          <div class="space-y-3 rounded-2xl border border-white/10 bg-white/[0.03] p-5 sm:p-6">
+            <h3 class="text-lg font-semibold text-white">Real-time transcription</h3>
+            <p class="text-slate-300/95">Otter joins your meeting and transcribes every word as it's spoken — live, in real time. You can follow along on-screen or review after the call.</p>
+          </div>
+          <div class="space-y-3 rounded-2xl border border-white/10 bg-white/[0.03] p-5 sm:p-6">
+            <h3 class="text-lg font-semibold text-white">Speaker identification</h3>
+            <p class="text-slate-300/95">Otter learns to identify different voices and labels each speaker in the transcript. You can name speakers once and it remembers them for future meetings.</p>
+          </div>
+          <div class="space-y-3 rounded-2xl border border-white/10 bg-white/[0.03] p-5 sm:p-6">
+            <h3 class="text-lg font-semibold text-white">AI meeting summaries</h3>
+            <p class="text-slate-300/95">After the meeting, Otter automatically generates a concise summary and a list of action items — the kind of write-up that used to take 20 minutes to do by hand.</p>
+          </div>
+          <div class="space-y-3 rounded-2xl border border-white/10 bg-white/[0.03] p-5 sm:p-6">
+            <h3 class="text-lg font-semibold text-white">Platform integrations</h3>
+            <p class="text-slate-300/95">Works natively with Zoom, Google Meet, Microsoft Teams, and Webex. Otter's bot joins automatically so you don't have to do anything to start recording.</p>
+          </div>
+          <div class="space-y-3 rounded-2xl border border-white/10 bg-white/[0.03] p-5 sm:p-6">
+            <h3 class="text-lg font-semibold text-white">Searchable archive</h3>
+            <p class="text-slate-300/95">All your transcripts are saved and fully searchable. Find any quote, decision, or moment from any meeting in seconds — even from calls months ago.</p>
+          </div>
+          <div class="space-y-3 rounded-2xl border border-white/10 bg-white/[0.03] p-5 sm:p-6">
+            <h3 class="text-lg font-semibold text-white">OtterPilot chat</h3>
+            <p class="text-slate-300/95">Ask questions about your meeting transcripts in natural language. "What did we agree on pricing?" or "What action items were assigned to Sarah?" — answered instantly.</p>
+          </div>
+        </section>
+
+        <section class="space-y-6" aria-labelledby="how-heading">
+          <h2 id="how-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">How Otter.ai works</h2>
+          <p>
+            Otter combines automatic speech recognition (ASR) with natural language processing (NLP) to go from raw
+            audio to structured, useful notes. Here's the simple flow:
+          </p>
+          <ul class="list-disc space-y-2 pl-5 marker:text-emerald-400/80">
+            <li><strong class="text-slate-200">Otter joins your meeting</strong> — either automatically via calendar sync or when you share the recording link.</li>
+            <li><strong class="text-slate-200">It listens and transcribes in real time</strong> — speech recognition converts audio to text as it happens, labelling each speaker.</li>
+            <li><strong class="text-slate-200">After the meeting, AI processes the transcript</strong> — generating a summary, extracting action items, and making the full text searchable.</li>
+          </ul>
+          <p class="rounded-xl border border-white/10 bg-white/[0.02] px-4 py-3 text-slate-300/95">
+            The more meetings Otter records with the same group of people, the better it gets at distinguishing
+            voices. You can also train it on specific terms — like internal project names or technical vocabulary —
+            to improve accuracy on specialised content.
+          </p>
+        </section>
+
+        <section class="space-y-6" aria-labelledby="usecases-heading">
+          <h2 id="usecases-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">Real-life use cases of Otter.ai</h2>
+          <div class="space-y-3 rounded-2xl border border-white/10 bg-white/[0.03] p-5 sm:p-6">
+            <h3 class="text-lg font-semibold text-white">Business teams</h3>
+            <ul class="list-disc space-y-2 pl-5 marker:text-emerald-400/80">
+              <li>Automatic meeting minutes for every standup, client call, and all-hands</li>
+              <li>Action item tracking so follow-ups don't fall through the cracks</li>
+              <li>Sharing notes with teammates who couldn't attend</li>
+            </ul>
+          </div>
+          <div class="space-y-3 rounded-2xl border border-white/10 bg-white/[0.03] p-5 sm:p-6">
+            <h3 class="text-lg font-semibold text-white">Students & academics</h3>
+            <ul class="list-disc space-y-2 pl-5 marker:text-emerald-400/80">
+              <li>Transcribing lectures so you can focus on listening instead of writing</li>
+              <li>Recording and transcribing interviews for research projects</li>
+              <li>Reviewing class content by searching the transcript later</li>
+            </ul>
+          </div>
+          <div class="space-y-3 rounded-2xl border border-white/10 bg-white/[0.03] p-5 sm:p-6">
+            <h3 class="text-lg font-semibold text-white">Journalists & researchers</h3>
+            <ul class="list-disc space-y-2 pl-5 marker:text-emerald-400/80">
+              <li>Transcribing recorded interviews accurately and quickly</li>
+              <li>Searching through interview archives to find specific quotes</li>
+            </ul>
+          </div>
+          <div class="space-y-3 rounded-2xl border border-white/10 bg-white/[0.03] p-5 sm:p-6">
+            <h3 class="text-lg font-semibold text-white">Sales & customer success teams</h3>
+            <ul class="list-disc space-y-2 pl-5 marker:text-emerald-400/80">
+              <li>Logging sales calls automatically in CRM notes</li>
+              <li>Reviewing what prospects said about their pain points or objections</li>
+            </ul>
+          </div>
+        </section>
+
+        <section class="space-y-6" aria-labelledby="proscons-heading">
+          <h2 id="proscons-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">Pros and cons of Otter.ai</h2>
+          <div class="grid gap-6 lg:grid-cols-2">
+            <div class="rounded-2xl border border-emerald-500/20 bg-emerald-500/5 p-5 sm:p-6">
+              <h3 class="mb-4 text-lg font-semibold text-emerald-100">Pros</h3>
+              <ul class="list-disc space-y-2 pl-5 text-slate-300/95 marker:text-emerald-400/80">
+                <li>Real-time transcription with high accuracy for clear audio</li>
+                <li>Auto-joins meetings via calendar sync — zero friction</li>
+                <li>AI summaries and action item extraction save real time</li>
+                <li>Fully searchable transcript archive</li>
+                <li>Native integrations with Zoom, Meet, and Teams</li>
+                <li>Generous free plan for individual users</li>
+              </ul>
+            </div>
+            <div class="rounded-2xl border border-amber-500/20 bg-amber-500/5 p-5 sm:p-6">
+              <h3 class="mb-4 text-lg font-semibold text-amber-100">Cons</h3>
+              <ul class="list-disc space-y-2 pl-5 text-slate-300/95 marker:text-amber-400/80">
+                <li>Struggles with heavy accents, background noise, or crosstalk</li>
+                <li>Summaries can miss nuance or misattribute points</li>
+                <li>Some participants find meeting bots intrusive</li>
+                <li>Privacy considerations for sensitive or confidential conversations</li>
+                <li>Business plans can be expensive at scale</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        <section class="space-y-6" aria-labelledby="pricing-heading">
+          <h2 id="pricing-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">Otter.ai pricing</h2>
+          <ul class="list-disc space-y-3 pl-5 marker:text-emerald-400/80">
+            <li><strong class="text-slate-200">Free</strong> — 300 transcription minutes/month, 30 minutes max per conversation, and limited AI summaries. Good for light personal use.</li>
+            <li><strong class="text-slate-200">Pro — ~$16.99/month</strong> — 1,200 minutes/month, 90-minute conversations, advanced search, and custom vocabulary.</li>
+            <li><strong class="text-slate-200">Business — ~$30/user/month</strong> — 6,000 minutes/month, team features, admin controls, and priority support.</li>
+            <li><strong class="text-slate-200">Enterprise</strong> — custom pricing with SSO, advanced security, and dedicated support for large organisations.</li>
+          </ul>
+          <p class="rounded-xl border border-white/10 bg-white/[0.02] px-4 py-3 text-slate-300/95">
+            <span class="mr-1.5 font-medium text-emerald-200" aria-hidden>Tip:</span>
+            Minutes are consumed per recording — a 60-minute meeting uses 60 minutes. Check current allocations at
+            <a class="font-medium text-emerald-300/95 underline decoration-emerald-500/40 underline-offset-4 hover:text-emerald-200" href="https://otter.ai/pricing" target="_blank" rel="noopener noreferrer">otter.ai/pricing</a>.
+          </p>
+        </section>
+
+        <section class="space-y-6" aria-labelledby="alternatives-heading">
+          <h2 id="alternatives-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">Alternatives to Otter.ai</h2>
+          <ul class="list-disc space-y-3 pl-5 marker:text-emerald-400/80">
+            <li><strong class="text-slate-200">Fireflies.ai</strong> — strong competitor with similar features, a generous free plan, and better CRM integration; popular with sales teams.</li>
+            <li><strong class="text-slate-200">Notion AI</strong> — if you already keep notes in Notion, its AI summarisation tools bring similar value for saved recordings.</li>
+            <li><strong class="text-slate-200">Rev</strong> — human-powered transcription with higher accuracy for difficult audio; slower but more reliable for critical transcripts.</li>
+            <li><strong class="text-slate-200">Zoom AI Companion</strong> — built directly into Zoom; good for basic meeting summaries without an additional tool if your meetings are all on Zoom.</li>
+          </ul>
+        </section>
+
+        <section class="space-y-4" aria-labelledby="who-heading">
+          <h2 id="who-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">Who should use Otter.ai?</h2>
+          <p>Otter.ai is a great fit if you:</p>
+          <ul class="list-disc space-y-2 pl-5 marker:text-emerald-400/80">
+            <li>Attend multiple meetings a week and spend too much time on notes afterwards</li>
+            <li>Are a student who wants to focus on lectures rather than transcribing them</li>
+            <li>Work remotely and need to keep asynchronous teammates in the loop</li>
+            <li>Are a journalist, researcher, or interviewer who records conversations</li>
+            <li>Run a sales team that needs a log of customer calls</li>
+          </ul>
+          <p class="rounded-xl border border-white/10 bg-white/[0.02] px-4 py-3 text-slate-300/95">
+            If your meetings involve heavy accents or poor audio quality, test thoroughly on the free plan first.
+            For clear, professional English calls, Otter's accuracy is hard to fault.
+          </p>
+        </section>
+
+        <section class="space-y-6" aria-labelledby="bonus-heading">
+          <h2 id="bonus-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">Bonus section</h2>
+          <div class="space-y-3 rounded-2xl border border-white/10 bg-white/[0.03] p-5 sm:p-6">
+            <h3 class="text-lg font-semibold text-white">Practical tips for beginners</h3>
+            <ul class="list-disc space-y-2 pl-5 text-slate-300/95 marker:text-emerald-400/80">
+              <li><strong class="text-slate-200">Sync your calendar on day one.</strong> Otter can auto-join meetings from your Google or Outlook calendar — set this up and you'll never forget to record.</li>
+              <li><strong class="text-slate-200">Add custom vocabulary.</strong> Go to settings and add project names, acronyms, and technical terms so Otter transcribes them correctly.</li>
+              <li><strong class="text-slate-200">Label speakers early.</strong> After your first few meetings, assign names to speakers — Otter will start recognising voices and doing it automatically.</li>
+              <li><strong class="text-slate-200">Use the search across meetings.</strong> The ability to find a quote from any meeting you've ever recorded is one of Otter's most powerful features — use it regularly.</li>
+            </ul>
+          </div>
+          <div class="space-y-3 rounded-2xl border border-white/10 bg-white/[0.03] p-5 sm:p-6">
+            <h3 class="text-lg font-semibold text-white">Common mistakes to avoid</h3>
+            <ul class="list-disc space-y-2 pl-5 text-slate-300/95 marker:text-amber-400/80">
+              <li><strong class="text-slate-200">Treating the transcript as verbatim truth.</strong> Speech recognition isn't perfect — always skim the transcript and correct any obvious errors before sharing it.</li>
+              <li><strong class="text-slate-200">Forgetting to tell participants.</strong> In many regions, recording conversations without consent is a legal issue. Always inform participants that a meeting bot is recording.</li>
+              <li><strong class="text-slate-200">Ignoring the action items panel.</strong> The auto-extracted action items are one of Otter's best features — reviewing them right after a meeting takes 60 seconds and prevents follow-ups being dropped.</li>
+              <li><strong class="text-slate-200">Using it for highly confidential discussions.</strong> Be aware of your organisation's data policies before running Otter in executive or legal meetings.</li>
+            </ul>
+          </div>
+        </section>
+
+        <p class="text-lg text-slate-200/95">
+          For anyone drowning in meetings, Otter.ai is one of those tools that pays for itself in the first week.
+          When you stop taking notes and start being fully present in conversations, you notice the difference immediately.
+        </p>
+
+      </article>
+    </div>
+  </div>
+{% endblock %}

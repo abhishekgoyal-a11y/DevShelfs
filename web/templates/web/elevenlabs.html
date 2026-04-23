@@ -1,0 +1,250 @@
+{% extends "web/base.html" %}
+{% block title %}ElevenLabs — DevShelf{% endblock %}
+{% block content %}
+  <div class="space-y-10">
+    <div class="flex flex-wrap items-center gap-2 text-sm text-slate-400/90">
+      <a href="{% url 'ai_tools' %}" class="font-medium text-emerald-300/90 transition hover:text-emerald-200">AI tools</a>
+      <span aria-hidden class="text-slate-600">/</span>
+      <span class="text-slate-200/90">ElevenLabs</span>
+    </div>
+
+    <section
+      class="relative overflow-hidden rounded-3xl border border-emerald-400/20 bg-white/[0.06] p-6 shadow-[0_0_0_1px_rgba(255,255,255,0.04)] backdrop-blur-2xl sm:p-8"
+    >
+      <div class="pointer-events-none absolute -right-24 top-0 h-72 w-72 rounded-full bg-emerald-500/15 blur-3xl"></div>
+      <div class="pointer-events-none absolute -left-20 bottom-0 h-56 w-56 rounded-full bg-cyan-500/10 blur-3xl"></div>
+      <div class="relative">
+        <p class="text-xs font-semibold uppercase tracking-[0.22em] text-emerald-300/90">AI tool</p>
+        <h1 class="mt-3 text-3xl font-semibold tracking-tight text-white sm:text-4xl lg:text-[2.5rem] lg:leading-tight">
+          ElevenLabs: AI Voices That Actually Sound Human
+        </h1>
+        <p class="mt-4 text-sm leading-relaxed text-slate-200/80 sm:text-base">
+          ElevenLabs is an AI voice platform that turns text into eerily realistic speech — with voice cloning,
+          multilingual support, and studio-quality output that content creators, developers, and publishers rely on every day.
+        </p>
+        <p class="mt-6 flex flex-wrap items-center gap-3">
+          <a
+            href="https://elevenlabs.io"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="inline-flex items-center gap-2 rounded-full border border-emerald-400/35 bg-emerald-500/10 px-4 py-2 text-sm font-medium text-emerald-200 transition hover:border-emerald-300/50 hover:bg-emerald-500/15 hover:text-white"
+          >
+            Try ElevenLabs <span aria-hidden class="text-emerald-300/80">↗</span>
+          </a>
+          <a
+            href="https://elevenlabs.io/pricing"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/[0.04] px-4 py-2 text-sm font-medium text-slate-200/90 transition hover:border-white/25 hover:bg-white/[0.07] hover:text-white"
+          >
+            Pricing <span aria-hidden class="text-slate-400">↗</span>
+          </a>
+        </p>
+      </div>
+    </section>
+
+    <div class="glass rounded-3xl border border-white/10 p-5 sm:p-8">
+      <article class="mx-auto space-y-12 text-base leading-relaxed text-slate-300/95">
+
+        <section class="space-y-4" aria-labelledby="what-heading">
+          <h2 id="what-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">What is ElevenLabs?</h2>
+          <p>
+            ElevenLabs is an AI voice technology company that lets you convert any text into natural-sounding spoken
+            audio. What sets it apart from older text-to-speech tools is the quality — ElevenLabs voices don't sound
+            robotic or flat. They carry emotion, pacing, and cadence in a way that's often indistinguishable from a
+            real voice actor.
+          </p>
+          <p>
+            Founded in 2022 and used by creators, publishers, game developers, and enterprises worldwide, ElevenLabs
+            has quickly become the go-to platform for AI audio. Whether you need a narration for your YouTube video,
+            a voice for your podcast, or a multilingual dub for your online course, ElevenLabs handles it with
+            a level of quality that was nearly impossible to achieve with AI just a few years ago.
+          </p>
+          <p>
+            The platform also includes voice cloning — you can upload a short sample of someone's voice and ElevenLabs
+            will replicate it, including for your own voice if you want a consistent digital narrator for your work.
+          </p>
+        </section>
+
+        <section class="space-y-6" aria-labelledby="features-heading">
+          <h2 id="features-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">Key features of ElevenLabs</h2>
+          <div class="space-y-3 rounded-2xl border border-white/10 bg-white/[0.03] p-5 sm:p-6">
+            <h3 class="text-lg font-semibold text-white">Text to speech</h3>
+            <p class="text-slate-300/95">Paste any text and get high-quality audio back in seconds. Choose from hundreds of pre-made voices with different accents, genders, ages, and tones.</p>
+          </div>
+          <div class="space-y-3 rounded-2xl border border-white/10 bg-white/[0.03] p-5 sm:p-6">
+            <h3 class="text-lg font-semibold text-white">Voice cloning</h3>
+            <p class="text-slate-300/95">Upload a one-minute audio sample and create a clone of that voice. Great for maintaining a consistent narrator voice across a large project — or cloning your own voice for accessibility.</p>
+          </div>
+          <div class="space-y-3 rounded-2xl border border-white/10 bg-white/[0.03] p-5 sm:p-6">
+            <h3 class="text-lg font-semibold text-white">Multilingual support</h3>
+            <p class="text-slate-300/95">Generate audio in 29+ languages with native accents. Combine with the dubbing feature to translate and re-voice video content automatically.</p>
+          </div>
+          <div class="space-y-3 rounded-2xl border border-white/10 bg-white/[0.03] p-5 sm:p-6">
+            <h3 class="text-lg font-semibold text-white">AI dubbing</h3>
+            <p class="text-slate-300/95">Upload a video and ElevenLabs will translate the speech and re-voice it in another language, preserving the original speaker's pacing and emotion.</p>
+          </div>
+          <div class="space-y-3 rounded-2xl border border-white/10 bg-white/[0.03] p-5 sm:p-6">
+            <h3 class="text-lg font-semibold text-white">Voice library</h3>
+            <p class="text-slate-300/95">Browse and use thousands of voices shared by the community, or publish your own cloned voice to earn revenue when others use it.</p>
+          </div>
+          <div class="space-y-3 rounded-2xl border border-white/10 bg-white/[0.03] p-5 sm:p-6">
+            <h3 class="text-lg font-semibold text-white">API access</h3>
+            <p class="text-slate-300/95">Developers can integrate ElevenLabs directly into apps, games, and products — powering dynamic narration, AI characters, or accessibility features.</p>
+          </div>
+        </section>
+
+        <section class="space-y-6" aria-labelledby="how-heading">
+          <h2 id="how-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">How ElevenLabs works</h2>
+          <p>
+            ElevenLabs uses deep learning models trained on large amounts of human speech to understand the subtle
+            patterns that make voices sound natural. Here's what happens when you generate audio:
+          </p>
+          <ul class="list-disc space-y-2 pl-5 marker:text-emerald-400/80">
+            <li><strong class="text-slate-200">You paste your text and choose a voice</strong> — from the library, a clone, or a voice you've created.</li>
+            <li><strong class="text-slate-200">The AI analyses the text for emotional tone and pacing</strong> — exclamation marks, question marks, and sentence structure all influence how the voice sounds.</li>
+            <li><strong class="text-slate-200">It synthesises the audio</strong> — producing a high-quality WAV or MP3 file that you can download or pipe directly into your project via API.</li>
+          </ul>
+          <p class="rounded-xl border border-white/10 bg-white/[0.02] px-4 py-3 text-slate-300/95">
+            Voice cloning works by analysing the unique acoustic fingerprint of a voice sample — the specific resonance,
+            pitch variation, and rhythm of a particular person's speech. ElevenLabs then uses that fingerprint to
+            generate new audio that matches it. The longer the sample, the more accurate the clone.
+          </p>
+        </section>
+
+        <section class="space-y-6" aria-labelledby="usecases-heading">
+          <h2 id="usecases-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">Real-life use cases of ElevenLabs</h2>
+          <div class="space-y-3 rounded-2xl border border-white/10 bg-white/[0.03] p-5 sm:p-6">
+            <h3 class="text-lg font-semibold text-white">Content creators & YouTubers</h3>
+            <ul class="list-disc space-y-2 pl-5 marker:text-emerald-400/80">
+              <li>Voiceovers for YouTube videos without hiring a voice actor</li>
+              <li>Consistent narrator voice across a video series</li>
+              <li>Dubbing content into multiple languages to reach global audiences</li>
+            </ul>
+          </div>
+          <div class="space-y-3 rounded-2xl border border-white/10 bg-white/[0.03] p-5 sm:p-6">
+            <h3 class="text-lg font-semibold text-white">Podcasters & audiobook creators</h3>
+            <ul class="list-disc space-y-2 pl-5 marker:text-emerald-400/80">
+              <li>Turning written content into listenable audio formats</li>
+              <li>Creating narrated versions of blog posts or newsletters</li>
+              <li>Producing audiobooks without full recording studio setups</li>
+            </ul>
+          </div>
+          <div class="space-y-3 rounded-2xl border border-white/10 bg-white/[0.03] p-5 sm:p-6">
+            <h3 class="text-lg font-semibold text-white">Developers & product teams</h3>
+            <ul class="list-disc space-y-2 pl-5 marker:text-emerald-400/80">
+              <li>Dynamic text-to-speech in apps and games via the API</li>
+              <li>AI characters with natural-sounding voices in interactive products</li>
+              <li>Accessibility features — reading content aloud for users</li>
+            </ul>
+          </div>
+          <div class="space-y-3 rounded-2xl border border-white/10 bg-white/[0.03] p-5 sm:p-6">
+            <h3 class="text-lg font-semibold text-white">E-learning & training</h3>
+            <ul class="list-disc space-y-2 pl-5 marker:text-emerald-400/80">
+              <li>Professional narration for online courses without recording equipment</li>
+              <li>Multilingual course versions from a single script</li>
+            </ul>
+          </div>
+        </section>
+
+        <section class="space-y-6" aria-labelledby="proscons-heading">
+          <h2 id="proscons-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">Pros and cons of ElevenLabs</h2>
+          <div class="grid gap-6 lg:grid-cols-2">
+            <div class="rounded-2xl border border-emerald-500/20 bg-emerald-500/5 p-5 sm:p-6">
+              <h3 class="mb-4 text-lg font-semibold text-emerald-100">Pros</h3>
+              <ul class="list-disc space-y-2 pl-5 text-slate-300/95 marker:text-emerald-400/80">
+                <li>Best-in-class voice realism — genuinely hard to tell from human</li>
+                <li>Voice cloning from a short audio sample</li>
+                <li>29+ languages with native accents</li>
+                <li>Large library of community voices</li>
+                <li>Solid API for developers and product teams</li>
+                <li>AI dubbing for video content</li>
+              </ul>
+            </div>
+            <div class="rounded-2xl border border-amber-500/20 bg-amber-500/5 p-5 sm:p-6">
+              <h3 class="mb-4 text-lg font-semibold text-amber-100">Cons</h3>
+              <ul class="list-disc space-y-2 pl-5 text-slate-300/95 marker:text-amber-400/80">
+                <li>Voice cloning can be misused — deepfake audio is a real concern</li>
+                <li>Free plan is limited (10,000 characters/month)</li>
+                <li>Higher tiers get expensive quickly for high-volume use</li>
+                <li>Audio generation can fail on very long texts — needs chunking</li>
+                <li>Emotions can occasionally be over-dramatised</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        <section class="space-y-6" aria-labelledby="pricing-heading">
+          <h2 id="pricing-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">ElevenLabs pricing</h2>
+          <ul class="list-disc space-y-3 pl-5 marker:text-emerald-400/80">
+            <li><strong class="text-slate-200">Free</strong> — 10,000 characters/month, 3 custom voices, access to the voice library. Good for light experimentation.</li>
+            <li><strong class="text-slate-200">Starter — $5/month</strong> — 30,000 characters, 10 custom voices. A low-cost entry point for hobbyists and light creators.</li>
+            <li><strong class="text-slate-200">Creator — $22/month</strong> — 100,000 characters, 30 voices, professional clone, commercial licence. The sweet spot for most content creators.</li>
+            <li><strong class="text-slate-200">Pro — $99/month</strong> — 500,000 characters, 160 voices, higher quality synthesis. For studios and high-volume users.</li>
+            <li><strong class="text-slate-200">Scale & Enterprise</strong> — custom, for large-scale API users and enterprise deployments.</li>
+          </ul>
+          <p class="rounded-xl border border-white/10 bg-white/[0.02] px-4 py-3 text-slate-300/95">
+            <span class="mr-1.5 font-medium text-emerald-200" aria-hidden>Tip:</span>
+            Pricing is based on characters, not minutes — so a long chapter will cost more than a short clip. Verify
+            current limits at
+            <a class="font-medium text-emerald-300/95 underline decoration-emerald-500/40 underline-offset-4 hover:text-emerald-200" href="https://elevenlabs.io/pricing" target="_blank" rel="noopener noreferrer">elevenlabs.io/pricing</a>.
+          </p>
+        </section>
+
+        <section class="space-y-6" aria-labelledby="alternatives-heading">
+          <h2 id="alternatives-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">Alternatives to ElevenLabs</h2>
+          <ul class="list-disc space-y-3 pl-5 marker:text-emerald-400/80">
+            <li><strong class="text-slate-200">Murf AI</strong> — more focused on professional voiceovers with a cleaner studio interface; slightly less realistic but great for e-learning.</li>
+            <li><strong class="text-slate-200">Play.ht</strong> — solid TTS platform with voice cloning and a competitive free tier; API-friendly for developers.</li>
+            <li><strong class="text-slate-200">LOVO AI</strong> — strong character voices for games and interactive media; also does video with AI avatars.</li>
+            <li><strong class="text-slate-200">Google Text-to-Speech / AWS Polly</strong> — cheaper for high-volume API use, but noticeably less natural-sounding.</li>
+          </ul>
+        </section>
+
+        <section class="space-y-4" aria-labelledby="who-heading">
+          <h2 id="who-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">Who should use ElevenLabs?</h2>
+          <p>ElevenLabs is the right tool if you:</p>
+          <ul class="list-disc space-y-2 pl-5 marker:text-emerald-400/80">
+            <li>Create video or audio content and want professional-quality narration</li>
+            <li>Need multilingual audio without hiring separate voice actors for each language</li>
+            <li>Are a developer building a product with voice or audio features</li>
+            <li>Run an e-learning platform and need high volumes of spoken content</li>
+            <li>Want a consistent, cloned narrator voice across all your work</li>
+          </ul>
+          <p class="rounded-xl border border-white/10 bg-white/[0.02] px-4 py-3 text-slate-300/95">
+            If you need simple, occasional TTS for slides or demos, the free plan is enough. For professional,
+            high-volume audio production, Creator or Pro tier unlocks the full quality ElevenLabs is known for.
+          </p>
+        </section>
+
+        <section class="space-y-6" aria-labelledby="bonus-heading">
+          <h2 id="bonus-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">Bonus section</h2>
+          <div class="space-y-3 rounded-2xl border border-white/10 bg-white/[0.03] p-5 sm:p-6">
+            <h3 class="text-lg font-semibold text-white">Practical tips for beginners</h3>
+            <ul class="list-disc space-y-2 pl-5 text-slate-300/95 marker:text-emerald-400/80">
+              <li><strong class="text-slate-200">Try multiple voices for the same script.</strong> A voice that sounds great on one type of content may not suit another. Preview a few before committing.</li>
+              <li><strong class="text-slate-200">Use punctuation to control pacing.</strong> Commas and periods tell the AI where to pause. Add ellipses (…) for dramatic effect or long pauses.</li>
+              <li><strong class="text-slate-200">Break long texts into sections.</strong> Generate each paragraph separately if you want to tweak pacing for different parts of the script.</li>
+              <li><strong class="text-slate-200">Use the voice library first.</strong> Before cloning a voice, browse the library — there may already be a perfect match there.</li>
+            </ul>
+          </div>
+          <div class="space-y-3 rounded-2xl border border-white/10 bg-white/[0.03] p-5 sm:p-6">
+            <h3 class="text-lg font-semibold text-white">Common mistakes to avoid</h3>
+            <ul class="list-disc space-y-2 pl-5 text-slate-300/95 marker:text-amber-400/80">
+              <li><strong class="text-slate-200">Cloning a voice without consent.</strong> Only clone voices you own or have explicit permission to clone — ElevenLabs has policies in place, and misuse can have serious consequences.</li>
+              <li><strong class="text-slate-200">Generating everything in one block.</strong> Very long texts sometimes produce audio with strange pacing or mispronunciations. Chunking gives you more control.</li>
+              <li><strong class="text-slate-200">Ignoring the stability and similarity sliders.</strong> These settings adjust how consistent and accurate the voice is. Experiment with them for the best result with your specific voice.</li>
+              <li><strong class="text-slate-200">Overlooking the dubbing feature.</strong> If you create video content, AI dubbing is one of ElevenLabs' most powerful and underused tools.</li>
+            </ul>
+          </div>
+        </section>
+
+        <p class="text-lg text-slate-200/95">
+          ElevenLabs has moved AI voice from "impressively functional" to "genuinely indistinguishable." For anyone
+          who creates audio or video content, it's one of the most impactful AI tools available today.
+        </p>
+
+      </article>
+    </div>
+  </div>
+{% endblock %}

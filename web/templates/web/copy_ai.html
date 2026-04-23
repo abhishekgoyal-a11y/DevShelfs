@@ -1,0 +1,242 @@
+{% extends "web/base.html" %}
+{% block title %}Copy.ai — DevShelf{% endblock %}
+{% block content %}
+  <div class="space-y-10">
+    <div class="flex flex-wrap items-center gap-2 text-sm text-slate-400/90">
+      <a href="{% url 'ai_tools' %}" class="font-medium text-emerald-300/90 transition hover:text-emerald-200">AI tools</a>
+      <span aria-hidden class="text-slate-600">/</span>
+      <span class="text-slate-200/90">Copy.ai</span>
+    </div>
+
+    <section
+      class="relative overflow-hidden rounded-3xl border border-emerald-400/20 bg-white/[0.06] p-6 shadow-[0_0_0_1px_rgba(255,255,255,0.04)] backdrop-blur-2xl sm:p-8"
+    >
+      <div class="pointer-events-none absolute -right-24 top-0 h-72 w-72 rounded-full bg-emerald-500/15 blur-3xl"></div>
+      <div class="pointer-events-none absolute -left-20 bottom-0 h-56 w-56 rounded-full bg-cyan-500/10 blur-3xl"></div>
+      <div class="relative">
+        <p class="text-xs font-semibold uppercase tracking-[0.22em] text-emerald-300/90">AI tool</p>
+        <h1 class="mt-3 text-3xl font-semibold tracking-tight text-white sm:text-4xl lg:text-[2.5rem] lg:leading-tight">
+          Copy.ai: AI Copywriting That Gets Out of Your Way
+        </h1>
+        <p class="mt-4 text-sm leading-relaxed text-slate-200/80 sm:text-base">
+          Copy.ai is an AI-powered copywriting tool that helps marketers, founders, and creators write better
+          sales copy, emails, product descriptions, and social content — in minutes, not hours.
+        </p>
+        <p class="mt-6 flex flex-wrap items-center gap-3">
+          <a
+            href="https://www.copy.ai"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="inline-flex items-center gap-2 rounded-full border border-emerald-400/35 bg-emerald-500/10 px-4 py-2 text-sm font-medium text-emerald-200 transition hover:border-emerald-300/50 hover:bg-emerald-500/15 hover:text-white"
+          >
+            Try Copy.ai <span aria-hidden class="text-emerald-300/80">↗</span>
+          </a>
+          <a
+            href="https://www.copy.ai/pricing"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/[0.04] px-4 py-2 text-sm font-medium text-slate-200/90 transition hover:border-white/25 hover:bg-white/[0.07] hover:text-white"
+          >
+            Pricing <span aria-hidden class="text-slate-400">↗</span>
+          </a>
+        </p>
+      </div>
+    </section>
+
+    <div class="glass rounded-3xl border border-white/10 p-5 sm:p-8">
+      <article class="mx-auto space-y-12 text-base leading-relaxed text-slate-300/95">
+
+        <section class="space-y-4" aria-labelledby="what-heading">
+          <h2 id="what-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">What is Copy.ai?</h2>
+          <p>
+            Copy.ai is an AI writing tool built to help you produce marketing copy without staring at a blank page.
+            Whether you need a punchy email subject line, a product description for your store, or a week's worth of
+            social media captions, Copy.ai lets you go from idea to finished copy in minutes.
+          </p>
+          <p>
+            Unlike more complex platforms, Copy.ai has always prioritised being easy to pick up and use right away.
+            You don't need to understand AI or write elaborate prompts — just choose a template, fill in a few fields,
+            and hit generate. It's one of the most accessible AI writing tools on the market, with a free tier that
+            genuinely lets you test the value before paying anything.
+          </p>
+          <p>
+            More recently, Copy.ai has expanded beyond templates into Workflows — automated multi-step pipelines that
+            can handle research, drafting, and formatting in sequence, making it increasingly useful for sales and
+            go-to-market teams alongside its copywriting roots.
+          </p>
+        </section>
+
+        <section class="space-y-6" aria-labelledby="features-heading">
+          <h2 id="features-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">Key features of Copy.ai</h2>
+          <div class="space-y-3 rounded-2xl border border-white/10 bg-white/[0.03] p-5 sm:p-6">
+            <h3 class="text-lg font-semibold text-white">90+ templates</h3>
+            <p class="text-slate-300/95">Cover practically every copywriting job: product descriptions, email sequences, landing page copy, LinkedIn posts, ad headlines, video scripts, and more.</p>
+          </div>
+          <div class="space-y-3 rounded-2xl border border-white/10 bg-white/[0.03] p-5 sm:p-6">
+            <h3 class="text-lg font-semibold text-white">Workflows</h3>
+            <p class="text-slate-300/95">Automate multi-step tasks — like pulling a prospect's LinkedIn profile, researching their company, and generating a personalised cold email — all in one automated pipeline.</p>
+          </div>
+          <div class="space-y-3 rounded-2xl border border-white/10 bg-white/[0.03] p-5 sm:p-6">
+            <h3 class="text-lg font-semibold text-white">Brand Voice</h3>
+            <p class="text-slate-300/95">Train Copy.ai on your tone and style guidelines so every piece of copy sounds like you, not a generic AI output.</p>
+          </div>
+          <div class="space-y-3 rounded-2xl border border-white/10 bg-white/[0.03] p-5 sm:p-6">
+            <h3 class="text-lg font-semibold text-white">Chat interface</h3>
+            <p class="text-slate-300/95">A conversational mode for when you want to brainstorm freely, refine existing copy, or ask for variations without selecting a template.</p>
+          </div>
+          <div class="space-y-3 rounded-2xl border border-white/10 bg-white/[0.03] p-5 sm:p-6">
+            <h3 class="text-lg font-semibold text-white">Multilingual support</h3>
+            <p class="text-slate-300/95">Generate copy in 25+ languages — useful for global campaigns and teams working across markets.</p>
+          </div>
+          <div class="space-y-3 rounded-2xl border border-white/10 bg-white/[0.03] p-5 sm:p-6">
+            <h3 class="text-lg font-semibold text-white">Infobase</h3>
+            <p class="text-slate-300/95">A knowledge store where you upload company information, product details, and messaging docs — so Copy.ai always has the right context when generating content.</p>
+          </div>
+        </section>
+
+        <section class="space-y-6" aria-labelledby="how-heading">
+          <h2 id="how-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">How Copy.ai works</h2>
+          <p>
+            Copy.ai runs on large language models fine-tuned for marketing copy. The experience is intentionally streamlined:
+          </p>
+          <ul class="list-disc space-y-2 pl-5 marker:text-emerald-400/80">
+            <li><strong class="text-slate-200">Pick a template</strong> — choose from the library based on what you need to write.</li>
+            <li><strong class="text-slate-200">Fill in the brief</strong> — product name, key benefits, audience, tone. The more context you give, the better the output.</li>
+            <li><strong class="text-slate-200">Generate and iterate</strong> — Copy.ai produces multiple variations. Pick the best one, edit it to fit, and ship it.</li>
+          </ul>
+          <p class="rounded-xl border border-white/10 bg-white/[0.02] px-4 py-3 text-slate-300/95">
+            The Workflows feature takes this further — instead of one output, you can chain together multiple steps (research → draft → format → export) and run them automatically, reducing manual work for repeatable content tasks.
+          </p>
+        </section>
+
+        <section class="space-y-6" aria-labelledby="usecases-heading">
+          <h2 id="usecases-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">Real-life use cases of Copy.ai</h2>
+          <div class="space-y-3 rounded-2xl border border-white/10 bg-white/[0.03] p-5 sm:p-6">
+            <h3 class="text-lg font-semibold text-white">Sales teams</h3>
+            <ul class="list-disc space-y-2 pl-5 marker:text-emerald-400/80">
+              <li>Personalised cold email sequences at scale using Workflows</li>
+              <li>Follow-up messages and objection-handling scripts</li>
+            </ul>
+          </div>
+          <div class="space-y-3 rounded-2xl border border-white/10 bg-white/[0.03] p-5 sm:p-6">
+            <h3 class="text-lg font-semibold text-white">E-commerce store owners</h3>
+            <ul class="list-disc space-y-2 pl-5 marker:text-emerald-400/80">
+              <li>Product descriptions for every item in your catalogue</li>
+              <li>Ad copy variations for Facebook, Google, and Instagram</li>
+            </ul>
+          </div>
+          <div class="space-y-3 rounded-2xl border border-white/10 bg-white/[0.03] p-5 sm:p-6">
+            <h3 class="text-lg font-semibold text-white">Social media managers</h3>
+            <ul class="list-disc space-y-2 pl-5 marker:text-emerald-400/80">
+              <li>A week of Instagram, LinkedIn, and Twitter captions from one brief</li>
+              <li>Engaging hooks and calls to action for different platforms</li>
+            </ul>
+          </div>
+          <div class="space-y-3 rounded-2xl border border-white/10 bg-white/[0.03] p-5 sm:p-6">
+            <h3 class="text-lg font-semibold text-white">Startups & founders</h3>
+            <ul class="list-disc space-y-2 pl-5 marker:text-emerald-400/80">
+              <li>Landing page copy that communicates value quickly</li>
+              <li>Investor pitch decks, one-pagers, and outreach emails</li>
+            </ul>
+          </div>
+        </section>
+
+        <section class="space-y-6" aria-labelledby="proscons-heading">
+          <h2 id="proscons-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">Pros and cons of Copy.ai</h2>
+          <div class="grid gap-6 lg:grid-cols-2">
+            <div class="rounded-2xl border border-emerald-500/20 bg-emerald-500/5 p-5 sm:p-6">
+              <h3 class="mb-4 text-lg font-semibold text-emerald-100">Pros</h3>
+              <ul class="list-disc space-y-2 pl-5 text-slate-300/95 marker:text-emerald-400/80">
+                <li>Very easy to use — minimal learning curve</li>
+                <li>Generous free tier to try before buying</li>
+                <li>Workflows automate repetitive content tasks</li>
+                <li>Large template library for most copy needs</li>
+                <li>Multilingual — works in 25+ languages</li>
+              </ul>
+            </div>
+            <div class="rounded-2xl border border-amber-500/20 bg-amber-500/5 p-5 sm:p-6">
+              <h3 class="mb-4 text-lg font-semibold text-amber-100">Cons</h3>
+              <ul class="list-disc space-y-2 pl-5 text-slate-300/95 marker:text-amber-400/80">
+                <li>Outputs can feel generic without good Brand Voice setup</li>
+                <li>Long-form content (full articles) needs significant editing</li>
+                <li>Workflows can take time to configure properly</li>
+                <li>Less SEO-focused than Jasper with Surfer integration</li>
+                <li>No real-time web search in the writing interface</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        <section class="space-y-6" aria-labelledby="pricing-heading">
+          <h2 id="pricing-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">Copy.ai pricing</h2>
+          <ul class="list-disc space-y-3 pl-5 marker:text-emerald-400/80">
+            <li><strong class="text-slate-200">Free</strong> — one seat, 2,000 words per month in chat, access to templates. A solid way to test the product.</li>
+            <li><strong class="text-slate-200">Starter — ~$49/month</strong> — unlimited words, one seat, full template access, and Infobase.</li>
+            <li><strong class="text-slate-200">Advanced — ~$249/month</strong> — up to 5 seats, Workflows, Brand Voice, and priority features. Built for teams.</li>
+            <li><strong class="text-slate-200">Enterprise</strong> — custom pricing for larger teams with advanced security, integrations, and support.</li>
+          </ul>
+          <p class="rounded-xl border border-white/10 bg-white/[0.02] px-4 py-3 text-slate-300/95">
+            <span class="mr-1.5 font-medium text-emerald-200" aria-hidden>Tip:</span>
+            Copy.ai's pricing has evolved significantly as they've shifted toward go-to-market workflows. Confirm the
+            latest tiers at
+            <a class="font-medium text-emerald-300/95 underline decoration-emerald-500/40 underline-offset-4 hover:text-emerald-200" href="https://www.copy.ai/pricing" target="_blank" rel="noopener noreferrer">copy.ai/pricing</a>.
+          </p>
+        </section>
+
+        <section class="space-y-6" aria-labelledby="alternatives-heading">
+          <h2 id="alternatives-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">Alternatives to Copy.ai</h2>
+          <ul class="list-disc space-y-3 pl-5 marker:text-emerald-400/80">
+            <li><strong class="text-slate-200">Jasper AI</strong> — more powerful for long-form content and enterprise marketing teams, but pricier and more complex to set up.</li>
+            <li><strong class="text-slate-200">ChatGPT</strong> — highly flexible and cheaper; requires more prompt crafting but covers a wider range of tasks.</li>
+            <li><strong class="text-slate-200">Writesonic</strong> — strong competitor with similar templates and competitive pricing; Chatsonic adds web search.</li>
+            <li><strong class="text-slate-200">Notion AI</strong> — excellent if your team is already working in Notion and wants lightweight AI writing built in.</li>
+          </ul>
+        </section>
+
+        <section class="space-y-4" aria-labelledby="who-heading">
+          <h2 id="who-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">Who should use Copy.ai?</h2>
+          <p>Copy.ai is a great fit if you:</p>
+          <ul class="list-disc space-y-2 pl-5 marker:text-emerald-400/80">
+            <li>Need to write marketing copy regularly but don't have a dedicated copywriter</li>
+            <li>Run a small e-commerce store and need product descriptions at scale</li>
+            <li>Manage social media and want to batch-create posts quickly</li>
+            <li>Are a founder or sales rep who needs personalised outreach at volume</li>
+            <li>Want to explore AI writing without paying upfront — the free tier is real</li>
+          </ul>
+          <p class="rounded-xl border border-white/10 bg-white/[0.02] px-4 py-3 text-slate-300/95">
+            If your needs skew toward long-form blog content or SEO optimisation, Jasper is the stronger choice.
+            Copy.ai shines brightest for short-form, high-volume, marketing-first copy tasks.
+          </p>
+        </section>
+
+        <section class="space-y-6" aria-labelledby="bonus-heading">
+          <h2 id="bonus-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">Bonus section</h2>
+          <div class="space-y-3 rounded-2xl border border-white/10 bg-white/[0.03] p-5 sm:p-6">
+            <h3 class="text-lg font-semibold text-white">Practical tips for beginners</h3>
+            <ul class="list-disc space-y-2 pl-5 text-slate-300/95 marker:text-emerald-400/80">
+              <li><strong class="text-slate-200">Start with the free plan.</strong> You'll quickly get a feel for what Copy.ai can do and whether it fits your workflow before paying anything.</li>
+              <li><strong class="text-slate-200">Generate at least 3 variations.</strong> The first output is rarely the best — always generate multiple options and pick the strongest one to edit.</li>
+              <li><strong class="text-slate-200">Set up the Infobase early.</strong> Add your company description, product details, and audience profile. This context makes every generation noticeably better.</li>
+              <li><strong class="text-slate-200">Use Chat for iteration.</strong> Once you have a draft, switch to chat mode to refine it: "make it shorter," "add urgency," "make it sound less formal."</li>
+            </ul>
+          </div>
+          <div class="space-y-3 rounded-2xl border border-white/10 bg-white/[0.03] p-5 sm:p-6">
+            <h3 class="text-lg font-semibold text-white">Common mistakes to avoid</h3>
+            <ul class="list-disc space-y-2 pl-5 text-slate-300/95 marker:text-amber-400/80">
+              <li><strong class="text-slate-200">Publishing the first draft.</strong> AI copy is a starting point — always read it through, adjust the voice, and check for accuracy before it goes live.</li>
+              <li><strong class="text-slate-200">Being too vague in the brief.</strong> "Write me some product copy" will produce generic output. Specifics — audience, benefits, tone — dramatically improve the result.</li>
+              <li><strong class="text-slate-200">Ignoring Workflows if you do repetitive tasks.</strong> If you're writing the same type of content regularly, building a Workflow will save you hours every week.</li>
+              <li><strong class="text-slate-200">Expecting long-form magic.</strong> Copy.ai is strongest at short, punchy copy. For full 2000-word blog posts, you'll need to do significant structural work yourself.</li>
+            </ul>
+          </div>
+        </section>
+
+        <p class="text-lg text-slate-200/95">
+          Copy.ai won't replace your voice or your strategy — but it'll handle the blank-page problem so you can
+          focus on what actually needs your judgment. For most marketers, that's a very good trade.
+        </p>
+
+      </article>
+    </div>
+  </div>
+{% endblock %}

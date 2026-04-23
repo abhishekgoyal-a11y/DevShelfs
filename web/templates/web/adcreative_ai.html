@@ -1,0 +1,248 @@
+{% extends "web/base.html" %}
+{% block title %}AdCreative.ai — DevShelf{% endblock %}
+{% block content %}
+  <div class="space-y-10">
+    <div class="flex flex-wrap items-center gap-2 text-sm text-slate-400/90">
+      <a href="{% url 'ai_tools' %}" class="font-medium text-emerald-300/90 transition hover:text-emerald-200">AI tools</a>
+      <span aria-hidden class="text-slate-600">/</span>
+      <span class="text-slate-200/90">AdCreative.ai</span>
+    </div>
+
+    <section
+      class="relative overflow-hidden rounded-3xl border border-emerald-400/20 bg-white/[0.06] p-6 shadow-[0_0_0_1px_rgba(255,255,255,0.04)] backdrop-blur-2xl sm:p-8"
+    >
+      <div class="pointer-events-none absolute -right-24 top-0 h-72 w-72 rounded-full bg-emerald-500/15 blur-3xl"></div>
+      <div class="pointer-events-none absolute -left-20 bottom-0 h-56 w-56 rounded-full bg-cyan-500/10 blur-3xl"></div>
+      <div class="relative">
+        <p class="text-xs font-semibold uppercase tracking-[0.22em] text-emerald-300/90">AI tool</p>
+        <h1 class="mt-3 text-3xl font-semibold tracking-tight text-white sm:text-4xl lg:text-[2.5rem] lg:leading-tight">
+          AdCreative.ai: AI-Generated Ad Creatives That Are Built to Convert
+        </h1>
+        <p class="mt-4 text-sm leading-relaxed text-slate-200/80 sm:text-base">
+          AdCreative.ai generates scroll-stopping ad banners, social creatives, and copy in seconds — using AI
+          trained on high-performing ad data to predict what will actually convert, not just what looks good.
+        </p>
+        <p class="mt-6 flex flex-wrap items-center gap-3">
+          <a
+            href="https://www.adcreative.ai"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="inline-flex items-center gap-2 rounded-full border border-emerald-400/35 bg-emerald-500/10 px-4 py-2 text-sm font-medium text-emerald-200 transition hover:border-emerald-300/50 hover:bg-emerald-500/15 hover:text-white"
+          >
+            Try AdCreative.ai <span aria-hidden class="text-emerald-300/80">↗</span>
+          </a>
+          <a
+            href="https://www.adcreative.ai/pricing"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/[0.04] px-4 py-2 text-sm font-medium text-slate-200/90 transition hover:border-white/25 hover:bg-white/[0.07] hover:text-white"
+          >
+            Pricing <span aria-hidden class="text-slate-400">↗</span>
+          </a>
+        </p>
+      </div>
+    </section>
+
+    <div class="glass rounded-3xl border border-white/10 p-5 sm:p-8">
+      <article class="mx-auto space-y-12 text-base leading-relaxed text-slate-300/95">
+
+        <section class="space-y-4" aria-labelledby="what-heading">
+          <h2 id="what-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">What is AdCreative.ai?</h2>
+          <p>
+            AdCreative.ai is an AI platform built specifically for generating advertising creatives — the visual
+            banners, copy, and social media assets you need to run paid ad campaigns. Unlike general design tools,
+            it's trained on real ad performance data, which means it doesn't just make things that look good — it
+            tries to make things that actually convert.
+          </p>
+          <p>
+            The platform connects to your brand kit, generates dozens of ad variations at once, and scores each
+            one based on predicted performance. This alone removes a huge amount of guesswork from the creative
+            testing process. Instead of asking "which of these will perform better?", AdCreative.ai shows you a
+            score before you even launch.
+          </p>
+          <p>
+            Used by e-commerce brands, digital marketing agencies, and performance marketers, it's primarily aimed
+            at people who run paid ads on Facebook, Instagram, Google Display, and similar channels — and need to
+            produce a high volume of creative variations without a large design team.
+          </p>
+        </section>
+
+        <section class="space-y-6" aria-labelledby="features-heading">
+          <h2 id="features-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">Key features of AdCreative.ai</h2>
+          <div class="space-y-3 rounded-2xl border border-white/10 bg-white/[0.03] p-5 sm:p-6">
+            <h3 class="text-lg font-semibold text-white">AI ad generation</h3>
+            <p class="text-slate-300/95">Upload your product image or logo, describe your offer, and AdCreative.ai generates dozens of ready-to-use banner variations in all the standard ad sizes within seconds.</p>
+          </div>
+          <div class="space-y-3 rounded-2xl border border-white/10 bg-white/[0.03] p-5 sm:p-6">
+            <h3 class="text-lg font-semibold text-white">Conversion score</h3>
+            <p class="text-slate-300/95">Each generated creative gets a predicted conversion score — a 0-100 ranking based on patterns from millions of real ad campaigns. Focus your budget on the creatives most likely to perform.</p>
+          </div>
+          <div class="space-y-3 rounded-2xl border border-white/10 bg-white/[0.03] p-5 sm:p-6">
+            <h3 class="text-lg font-semibold text-white">Brand kit</h3>
+            <p class="text-slate-300/95">Upload your logo, brand colours, and fonts once. Every creative generated automatically reflects your visual identity — no restyling needed.</p>
+          </div>
+          <div class="space-y-3 rounded-2xl border border-white/10 bg-white/[0.03] p-5 sm:p-6">
+            <h3 class="text-lg font-semibold text-white">Ad copy generation</h3>
+            <p class="text-slate-300/95">Generate headline and body copy variations alongside your visuals — all tuned for the platform you're advertising on, whether that's Facebook, Instagram, or Google.</p>
+          </div>
+          <div class="space-y-3 rounded-2xl border border-white/10 bg-white/[0.03] p-5 sm:p-6">
+            <h3 class="text-lg font-semibold text-white">Social media creatives</h3>
+            <p class="text-slate-300/95">Generate posts and story-format creatives for Instagram, LinkedIn, Twitter, and other platforms — sized correctly and optimised for each channel's format.</p>
+          </div>
+          <div class="space-y-3 rounded-2xl border border-white/10 bg-white/[0.03] p-5 sm:p-6">
+            <h3 class="text-lg font-semibold text-white">Competitor analysis</h3>
+            <p class="text-slate-300/95">See what creative styles are working for competitors in your niche and use those insights to inform your own ad strategy.</p>
+          </div>
+        </section>
+
+        <section class="space-y-6" aria-labelledby="how-heading">
+          <h2 id="how-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">How AdCreative.ai works</h2>
+          <p>
+            AdCreative.ai's underlying edge is the dataset it was trained on — performance data from millions of
+            real ad campaigns. Here's the workflow:
+          </p>
+          <ul class="list-disc space-y-2 pl-5 marker:text-emerald-400/80">
+            <li><strong class="text-slate-200">Set up your brand kit</strong> — logo, colours, fonts, and any product images you want to feature.</li>
+            <li><strong class="text-slate-200">Describe your campaign</strong> — the offer, audience, and platform you're targeting.</li>
+            <li><strong class="text-slate-200">Generate and score</strong> — AdCreative.ai produces dozens of variations and ranks them by predicted conversion rate. Pick the top-scoring ones to launch first.</li>
+          </ul>
+          <p class="rounded-xl border border-white/10 bg-white/[0.02] px-4 py-3 text-slate-300/95">
+            The conversion score is the differentiator. Most design tools tell you how something looks — AdCreative.ai
+            tells you how it's likely to <em>perform</em>. This doesn't replace A/B testing, but it gives you a smarter
+            starting point for which creatives to test first.
+          </p>
+        </section>
+
+        <section class="space-y-6" aria-labelledby="usecases-heading">
+          <h2 id="usecases-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">Real-life use cases of AdCreative.ai</h2>
+          <div class="space-y-3 rounded-2xl border border-white/10 bg-white/[0.03] p-5 sm:p-6">
+            <h3 class="text-lg font-semibold text-white">E-commerce brands</h3>
+            <ul class="list-disc space-y-2 pl-5 marker:text-emerald-400/80">
+              <li>Generating product ad creatives for Facebook and Instagram at scale</li>
+              <li>Creating seasonal campaign assets (sales, launches, promotions) quickly</li>
+              <li>Testing many creative variations without a full design team</li>
+            </ul>
+          </div>
+          <div class="space-y-3 rounded-2xl border border-white/10 bg-white/[0.03] p-5 sm:p-6">
+            <h3 class="text-lg font-semibold text-white">Digital marketing agencies</h3>
+            <ul class="list-disc space-y-2 pl-5 marker:text-emerald-400/80">
+              <li>Producing high-volume creative deliverables for multiple clients efficiently</li>
+              <li>Showing clients predicted performance data alongside creative options</li>
+              <li>Rapid iteration on campaigns based on live results</li>
+            </ul>
+          </div>
+          <div class="space-y-3 rounded-2xl border border-white/10 bg-white/[0.03] p-5 sm:p-6">
+            <h3 class="text-lg font-semibold text-white">Performance marketers</h3>
+            <ul class="list-disc space-y-2 pl-5 marker:text-emerald-400/80">
+              <li>Running creative-heavy A/B tests without waiting for a designer</li>
+              <li>Prioritising ad spend on statistically higher-scoring creative variations</li>
+            </ul>
+          </div>
+          <div class="space-y-3 rounded-2xl border border-white/10 bg-white/[0.03] p-5 sm:p-6">
+            <h3 class="text-lg font-semibold text-white">Small business owners</h3>
+            <ul class="list-disc space-y-2 pl-5 marker:text-emerald-400/80">
+              <li>Creating professional-looking ads without hiring a designer</li>
+              <li>Producing social content for multiple platforms without separate tools</li>
+            </ul>
+          </div>
+        </section>
+
+        <section class="space-y-6" aria-labelledby="proscons-heading">
+          <h2 id="proscons-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">Pros and cons of AdCreative.ai</h2>
+          <div class="grid gap-6 lg:grid-cols-2">
+            <div class="rounded-2xl border border-emerald-500/20 bg-emerald-500/5 p-5 sm:p-6">
+              <h3 class="mb-4 text-lg font-semibold text-emerald-100">Pros</h3>
+              <ul class="list-disc space-y-2 pl-5 text-slate-300/95 marker:text-emerald-400/80">
+                <li>Conversion scoring is a genuine differentiator</li>
+                <li>Generates many variations in seconds — huge time saving</li>
+                <li>Brand kit keeps all outputs visually consistent</li>
+                <li>Covers all major ad sizes and social formats</li>
+                <li>Good for agencies managing multiple clients</li>
+              </ul>
+            </div>
+            <div class="rounded-2xl border border-amber-500/20 bg-amber-500/5 p-5 sm:p-6">
+              <h3 class="mb-4 text-lg font-semibold text-amber-100">Cons</h3>
+              <ul class="list-disc space-y-2 pl-5 text-slate-300/95 marker:text-amber-400/80">
+                <li>Designs can feel templated — less creative freedom than Canva</li>
+                <li>Expensive for small businesses with limited ad budgets</li>
+                <li>Conversion scores are predictions, not guarantees</li>
+                <li>Limited advanced editing within the platform</li>
+                <li>Less suitable for brand-awareness campaigns vs. direct response</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        <section class="space-y-6" aria-labelledby="pricing-heading">
+          <h2 id="pricing-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">AdCreative.ai pricing</h2>
+          <ul class="list-disc space-y-3 pl-5 marker:text-emerald-400/80">
+            <li><strong class="text-slate-200">Starter — ~$29/month</strong> — one brand, limited credits per month, access to core generation features. Good for a single small business or solopreneur.</li>
+            <li><strong class="text-slate-200">Professional — ~$99/month</strong> — more credits, multiple brands, competitor analysis, and API access. The sweet spot for active advertisers.</li>
+            <li><strong class="text-slate-200">Ultimate — ~$149/month</strong> — highest credits, more team seats, and priority features. Suited for agencies with multiple active clients.</li>
+            <li><strong class="text-slate-200">Enterprise</strong> — custom pricing for large-scale agency or in-house marketing teams.</li>
+          </ul>
+          <p class="rounded-xl border border-white/10 bg-white/[0.02] px-4 py-3 text-slate-300/95">
+            <span class="mr-1.5 font-medium text-emerald-200" aria-hidden>Tip:</span>
+            Credits are consumed per creative generated. Check exactly what counts as a credit in the current plan before committing. Verify at
+            <a class="font-medium text-emerald-300/95 underline decoration-emerald-500/40 underline-offset-4 hover:text-emerald-200" href="https://www.adcreative.ai/pricing" target="_blank" rel="noopener noreferrer">adcreative.ai/pricing</a>.
+          </p>
+        </section>
+
+        <section class="space-y-6" aria-labelledby="alternatives-heading">
+          <h2 id="alternatives-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">Alternatives to AdCreative.ai</h2>
+          <ul class="list-disc space-y-3 pl-5 marker:text-emerald-400/80">
+            <li><strong class="text-slate-200">Canva AI</strong> — much more design flexibility and a strong free tier; better for brand-awareness assets and general social content, less performance-score focused.</li>
+            <li><strong class="text-slate-200">Jasper AI</strong> — strong for ad copywriting alongside visual assets; pairs well with a separate design tool.</li>
+            <li><strong class="text-slate-200">Madgicx</strong> — combines ad creative tools with media buying insights; more expensive but more comprehensive for performance marketing teams.</li>
+            <li><strong class="text-slate-200">Pencil</strong> — AI ad video and static creative tool specifically for performance marketing; a closer direct competitor with video support.</li>
+          </ul>
+        </section>
+
+        <section class="space-y-4" aria-labelledby="who-heading">
+          <h2 id="who-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">Who should use AdCreative.ai?</h2>
+          <p>AdCreative.ai is the right tool if you:</p>
+          <ul class="list-disc space-y-2 pl-5 marker:text-emerald-400/80">
+            <li>Run paid ad campaigns on Facebook, Instagram, or Google regularly</li>
+            <li>Need to produce many creative variations quickly for testing</li>
+            <li>Manage advertising for multiple clients or multiple brands</li>
+            <li>Want data-informed creative prioritisation, not just good-looking designs</li>
+            <li>Don't have a full design team but need professional-quality ad assets</li>
+          </ul>
+          <p class="rounded-xl border border-white/10 bg-white/[0.02] px-4 py-3 text-slate-300/95">
+            If your primary need is general social content or brand materials (not ads), Canva is more flexible
+            and likely more cost-effective. AdCreative.ai earns its price when you're actively spending on
+            paid ads and need to test creatives at volume.
+          </p>
+        </section>
+
+        <section class="space-y-6" aria-labelledby="bonus-heading">
+          <h2 id="bonus-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">Bonus section</h2>
+          <div class="space-y-3 rounded-2xl border border-white/10 bg-white/[0.03] p-5 sm:p-6">
+            <h3 class="text-lg font-semibold text-white">Practical tips for beginners</h3>
+            <ul class="list-disc space-y-2 pl-5 text-slate-300/95 marker:text-emerald-400/80">
+              <li><strong class="text-slate-200">Set up your brand kit completely before generating.</strong> The output quality drops significantly if you're using placeholder logos or generic colours — spend 10 minutes on the brand setup first.</li>
+              <li><strong class="text-slate-200">Focus on the top 10 scored creatives.</strong> Generate a large batch and then filter by conversion score rather than manually eyeballing every output.</li>
+              <li><strong class="text-slate-200">Test at least 3 copy variations per visual.</strong> Great images with weak headlines underperform — use the copy generation tools alongside the visual ones.</li>
+              <li><strong class="text-slate-200">Use the social media format specifically for social.</strong> The ad banner and social creative formats are optimised differently — use the right one for each channel.</li>
+            </ul>
+          </div>
+          <div class="space-y-3 rounded-2xl border border-white/10 bg-white/[0.03] p-5 sm:p-6">
+            <h3 class="text-lg font-semibold text-white">Common mistakes to avoid</h3>
+            <ul class="list-disc space-y-2 pl-5 text-slate-300/95 marker:text-amber-400/80">
+              <li><strong class="text-slate-200">Treating the conversion score as a guarantee.</strong> The score predicts — it doesn't promise. Always test your top-scoring ads with real budget and let the data speak.</li>
+              <li><strong class="text-slate-200">Generating everything in one style.</strong> Use different tone settings (urgent, playful, professional) to get a spread of creative directions rather than 20 versions of the same idea.</li>
+              <li><strong class="text-slate-200">Ignoring the competitor analysis feature.</strong> If you're not sure what visual direction to take, looking at what's working in your niche can short-circuit a lot of trial and error.</li>
+              <li><strong class="text-slate-200">Skipping manual editing.</strong> The generated assets are a strong starting point — but a quick manual tweak to copy or visual placement can lift performance further.</li>
+            </ul>
+          </div>
+        </section>
+
+        <p class="text-lg text-slate-200/95">
+          AdCreative.ai won't replace a great creative director — but for most businesses running paid ads, it
+          dramatically reduces the time and cost of producing enough creative to test, iterate, and scale what works.
+        </p>
+
+      </article>
+    </div>
+  </div>
+{% endblock %}

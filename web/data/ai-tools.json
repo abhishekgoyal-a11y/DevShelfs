@@ -86,5 +86,77 @@
     "description": "AI-powered search engine that answers questions directly with cited sources—real-time web results, no ads, and conversational follow-ups built in.",
     "detailPath": "/ai-tools/perplexity",
     "featured": false
+  },
+  {
+    "id": "chatgpt",
+    "name": "ChatGPT",
+    "category": "AI assistants",
+    "description": "OpenAI's flagship AI assistant—write, code, research, and brainstorm through conversation, with image understanding, voice mode, and a vast ecosystem of custom GPTs.",
+    "detailPath": "/ai-tools/chatgpt",
+    "featured": false
+  },
+  {
+    "id": "jasper-ai",
+    "name": "Jasper AI",
+    "category": "Writing & content",
+    "description": "AI writing platform built for marketing teams—generate on-brand blog posts, ad copy, and campaigns with Brand Voice, 50+ templates, and optional SEO integration.",
+    "detailPath": "/ai-tools/jasper-ai",
+    "featured": false
+  },
+  {
+    "id": "copy-ai",
+    "name": "Copy.ai",
+    "category": "Writing & content",
+    "description": "AI copywriting tool for marketers and sales teams—90+ templates, multi-step Workflows, and a generous free tier for product descriptions, emails, and social captions.",
+    "detailPath": "/ai-tools/copy-ai",
+    "featured": false
+  },
+  {
+    "id": "elevenlabs",
+    "name": "ElevenLabs",
+    "category": "Audio & voice",
+    "description": "AI voice platform with best-in-class realism—text to speech, voice cloning from short samples, AI dubbing, and 29+ languages for creators, developers, and publishers.",
+    "detailPath": "/ai-tools/elevenlabs",
+    "featured": false
+  },
+  {
+    "id": "murf-ai",
+    "name": "Murf AI",
+    "category": "Audio & voice",
+    "description": "Professional AI voiceover studio—200+ lifelike voices, per-sentence customisation, built-in media sync, and team collaboration for e-learning and video content.",
+    "detailPath": "/ai-tools/murf-ai",
+    "featured": false
+  },
+  {
+    "id": "otter-ai",
+    "name": "Otter.ai",
+    "category": "Audio & voice",
+    "description": "AI meeting assistant that transcribes conversations in real time, identifies speakers, and auto-generates summaries and action items for Zoom, Meet, and Teams.",
+    "detailPath": "/ai-tools/otter-ai",
+    "featured": false
+  },
+  {
+    "id": "replit-ai",
+    "name": "Replit AI",
+    "category": "Developer tools",
+    "description": "AI coding assistant built into Replit's browser IDE—Ghostwriter completions, inline chat, and an Agent that builds full apps from plain-English descriptions with zero setup.",
+    "detailPath": "/ai-tools/replit-ai",
+    "featured": false
+  },
+  {
+    "id": "adcreative-ai",
+    "name": "AdCreative.ai",
+    "category": "Marketing & ads",
+    "description": "AI ad creative generator trained on real campaign data—produce batch banner and social creatives with predicted conversion scores to prioritise what to test first.",
+    "detailPath": "/ai-tools/adcreative-ai",
+    "featured": false
+  },
+  {
+    "id": "claude-ai",
+    "name": "Claude",
+    "category": "AI assistants",
+    "description": "Anthropic's AI assistant built for nuanced analysis and long documents—200K token context window, exceptional writing quality, and a safety-first design that acknowledges uncertainty.",
+    "detailPath": "/ai-tools/claude-ai",
+    "featured": false
   }
 ]

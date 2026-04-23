@@ -1,0 +1,244 @@
+{% extends "web/base.html" %}
+{% block title %}Jasper AI — DevShelf{% endblock %}
+{% block content %}
+  <div class="space-y-10">
+    <div class="flex flex-wrap items-center gap-2 text-sm text-slate-400/90">
+      <a href="{% url 'ai_tools' %}" class="font-medium text-emerald-300/90 transition hover:text-emerald-200">AI tools</a>
+      <span aria-hidden class="text-slate-600">/</span>
+      <span class="text-slate-200/90">Jasper AI</span>
+    </div>
+
+    <section
+      class="relative overflow-hidden rounded-3xl border border-emerald-400/20 bg-white/[0.06] p-6 shadow-[0_0_0_1px_rgba(255,255,255,0.04)] backdrop-blur-2xl sm:p-8"
+    >
+      <div class="pointer-events-none absolute -right-24 top-0 h-72 w-72 rounded-full bg-emerald-500/15 blur-3xl"></div>
+      <div class="pointer-events-none absolute -left-20 bottom-0 h-56 w-56 rounded-full bg-cyan-500/10 blur-3xl"></div>
+      <div class="relative">
+        <p class="text-xs font-semibold uppercase tracking-[0.22em] text-emerald-300/90">AI tool</p>
+        <h1 class="mt-3 text-3xl font-semibold tracking-tight text-white sm:text-4xl lg:text-[2.5rem] lg:leading-tight">
+          Jasper AI: The AI Writing Tool Built for Marketers
+        </h1>
+        <p class="mt-4 text-sm leading-relaxed text-slate-200/80 sm:text-base">
+          Jasper is an AI writing platform designed for marketing teams and content creators — helping you generate
+          on-brand blog posts, ad copy, emails, and campaigns in a fraction of the time.
+        </p>
+        <p class="mt-6 flex flex-wrap items-center gap-3">
+          <a
+            href="https://www.jasper.ai"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="inline-flex items-center gap-2 rounded-full border border-emerald-400/35 bg-emerald-500/10 px-4 py-2 text-sm font-medium text-emerald-200 transition hover:border-emerald-300/50 hover:bg-emerald-500/15 hover:text-white"
+          >
+            Try Jasper <span aria-hidden class="text-emerald-300/80">↗</span>
+          </a>
+          <a
+            href="https://www.jasper.ai/pricing"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/[0.04] px-4 py-2 text-sm font-medium text-slate-200/90 transition hover:border-white/25 hover:bg-white/[0.07] hover:text-white"
+          >
+            Pricing <span aria-hidden class="text-slate-400">↗</span>
+          </a>
+        </p>
+      </div>
+    </section>
+
+    <div class="glass rounded-3xl border border-white/10 p-5 sm:p-8">
+      <article class="mx-auto space-y-12 text-base leading-relaxed text-slate-300/95">
+
+        <section class="space-y-4" aria-labelledby="what-heading">
+          <h2 id="what-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">What is Jasper AI?</h2>
+          <p>
+            Jasper AI is an AI writing assistant built specifically for marketing and content teams. While tools like
+            ChatGPT are general-purpose, Jasper is purpose-built for one thing: helping marketers produce more
+            high-quality content, faster, without losing their brand's voice.
+          </p>
+          <p>
+            It launched in 2021 (originally as Jarvis, then rebranded to Jasper) and quickly became one of the most
+            popular AI writing tools for businesses. Today it's used by marketing agencies, e-commerce brands,
+            SaaS companies, and content teams who need to ship a lot of copy — consistently and on-brand.
+          </p>
+          <p>
+            Think of Jasper as a tireless writing team member who knows your brand guidelines, understands your tone,
+            and can produce a finished blog post or ad campaign from a short brief — all while sounding like you,
+            not like a robot.
+          </p>
+        </section>
+
+        <section class="space-y-6" aria-labelledby="features-heading">
+          <h2 id="features-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">Key features of Jasper AI</h2>
+          <div class="space-y-3 rounded-2xl border border-white/10 bg-white/[0.03] p-5 sm:p-6">
+            <h3 class="text-lg font-semibold text-white">Brand Voice</h3>
+            <p class="text-slate-300/95">You can train Jasper on your company's tone, style, and vocabulary. Once set, every output it generates will sound like your brand — not generic AI text.</p>
+          </div>
+          <div class="space-y-3 rounded-2xl border border-white/10 bg-white/[0.03] p-5 sm:p-6">
+            <h3 class="text-lg font-semibold text-white">50+ writing templates</h3>
+            <p class="text-slate-300/95">Blog post intros, product descriptions, Facebook ads, email subject lines, YouTube scripts — Jasper has a template for almost every content type marketers produce.</p>
+          </div>
+          <div class="space-y-3 rounded-2xl border border-white/10 bg-white/[0.03] p-5 sm:p-6">
+            <h3 class="text-lg font-semibold text-white">Jasper Chat</h3>
+            <p class="text-slate-300/95">A conversational interface for when you want to brainstorm, refine, or iterate on ideas without filling out a template. Works just like ChatGPT but with marketing context baked in.</p>
+          </div>
+          <div class="space-y-3 rounded-2xl border border-white/10 bg-white/[0.03] p-5 sm:p-6">
+            <h3 class="text-lg font-semibold text-white">Campaigns</h3>
+            <p class="text-slate-300/95">Generate all the content assets for a marketing campaign at once — blog post, social captions, email, and ad copy — from a single campaign brief.</p>
+          </div>
+          <div class="space-y-3 rounded-2xl border border-white/10 bg-white/[0.03] p-5 sm:p-6">
+            <h3 class="text-lg font-semibold text-white">SEO mode</h3>
+            <p class="text-slate-300/95">Integrates with Surfer SEO to optimize content for search rankings as you write. Built for teams who care about organic traffic, not just publishing volume.</p>
+          </div>
+          <div class="space-y-3 rounded-2xl border border-white/10 bg-white/[0.03] p-5 sm:p-6">
+            <h3 class="text-lg font-semibold text-white">Browser extension & integrations</h3>
+            <p class="text-slate-300/95">Use Jasper directly inside Google Docs, Gmail, and other tools via a Chrome extension — no switching tabs to copy-paste.</p>
+          </div>
+        </section>
+
+        <section class="space-y-6" aria-labelledby="how-heading">
+          <h2 id="how-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">How Jasper AI works</h2>
+          <p>
+            Jasper is built on top of large language models (primarily OpenAI's GPT) but adds a marketing-specific layer on top. Here's the simple breakdown:
+          </p>
+          <ul class="list-disc space-y-2 pl-5 marker:text-emerald-400/80">
+            <li><strong class="text-slate-200">You fill in a brief</strong> — product name, audience, tone, goal, and any key points you want included.</li>
+            <li><strong class="text-slate-200">Jasper applies your brand voice and chosen template</strong> — so the output fits your style, not a generic AI default.</li>
+            <li><strong class="text-slate-200">It generates the content</strong> — you review, edit, and iterate in the document editor until it's ready to publish.</li>
+          </ul>
+          <p class="rounded-xl border border-white/10 bg-white/[0.02] px-4 py-3 text-slate-300/95">
+            The key difference from using ChatGPT directly is that Jasper's templates and Brand Voice features act like
+            guardrails — steering the AI toward outputs that are actually useful for marketing teams, without requiring
+            you to craft elaborate prompts from scratch every time.
+          </p>
+        </section>
+
+        <section class="space-y-6" aria-labelledby="usecases-heading">
+          <h2 id="usecases-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">Real-life use cases of Jasper AI</h2>
+          <div class="space-y-3 rounded-2xl border border-white/10 bg-white/[0.03] p-5 sm:p-6">
+            <h3 class="text-lg font-semibold text-white">Content marketing teams</h3>
+            <ul class="list-disc space-y-2 pl-5 marker:text-emerald-400/80">
+              <li>Scaling blog output from 2 posts a month to 10+</li>
+              <li>Maintaining consistent brand voice across multiple writers</li>
+              <li>Repurposing one piece of content into multiple formats</li>
+            </ul>
+          </div>
+          <div class="space-y-3 rounded-2xl border border-white/10 bg-white/[0.03] p-5 sm:p-6">
+            <h3 class="text-lg font-semibold text-white">Digital marketing agencies</h3>
+            <ul class="list-disc space-y-2 pl-5 marker:text-emerald-400/80">
+              <li>Producing ad copy variations for A/B testing at scale</li>
+              <li>Onboarding new brand voices without extensive briefing documents</li>
+              <li>Drafting campaign content for multiple clients faster</li>
+            </ul>
+          </div>
+          <div class="space-y-3 rounded-2xl border border-white/10 bg-white/[0.03] p-5 sm:p-6">
+            <h3 class="text-lg font-semibold text-white">E-commerce brands</h3>
+            <ul class="list-disc space-y-2 pl-5 marker:text-emerald-400/80">
+              <li>Writing product descriptions for hundreds of SKUs quickly</li>
+              <li>Creating seasonal email campaigns and promotional copy</li>
+            </ul>
+          </div>
+          <div class="space-y-3 rounded-2xl border border-white/10 bg-white/[0.03] p-5 sm:p-6">
+            <h3 class="text-lg font-semibold text-white">Solo creators & freelancers</h3>
+            <ul class="list-disc space-y-2 pl-5 marker:text-emerald-400/80">
+              <li>Beating writer's block with a strong first draft to edit</li>
+              <li>Producing more client deliverables in less time</li>
+            </ul>
+          </div>
+        </section>
+
+        <section class="space-y-6" aria-labelledby="proscons-heading">
+          <h2 id="proscons-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">Pros and cons of Jasper AI</h2>
+          <div class="grid gap-6 lg:grid-cols-2">
+            <div class="rounded-2xl border border-emerald-500/20 bg-emerald-500/5 p-5 sm:p-6">
+              <h3 class="mb-4 text-lg font-semibold text-emerald-100">Pros</h3>
+              <ul class="list-disc space-y-2 pl-5 text-slate-300/95 marker:text-emerald-400/80">
+                <li>Purpose-built for marketing — not a generic AI tool</li>
+                <li>Brand Voice keeps outputs consistent across your team</li>
+                <li>Large library of templates for specific content types</li>
+                <li>Campaign mode speeds up multi-asset production</li>
+                <li>SEO integration for search-optimised content</li>
+              </ul>
+            </div>
+            <div class="rounded-2xl border border-amber-500/20 bg-amber-500/5 p-5 sm:p-6">
+              <h3 class="mb-4 text-lg font-semibold text-amber-100">Cons</h3>
+              <ul class="list-disc space-y-2 pl-5 text-slate-300/95 marker:text-amber-400/80">
+                <li>Expensive compared to general AI tools like ChatGPT</li>
+                <li>Overkill for individuals who only write occasionally</li>
+                <li>Outputs still require human editing and fact-checking</li>
+                <li>Learning curve to set up Brand Voice effectively</li>
+                <li>No real-time web search in the core product</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        <section class="space-y-6" aria-labelledby="pricing-heading">
+          <h2 id="pricing-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">Jasper AI pricing</h2>
+          <ul class="list-disc space-y-3 pl-5 marker:text-emerald-400/80">
+            <li><strong class="text-slate-200">Creator — ~$39/month</strong> — one user, one Brand Voice, unlimited content generation. Good for solo marketers and freelancers.</li>
+            <li><strong class="text-slate-200">Pro — ~$59/month</strong> — up to 5 users, multiple Brand Voices, Campaigns, and collaboration features. Built for small teams.</li>
+            <li><strong class="text-slate-200">Business</strong> — custom pricing. Enterprise-grade features, custom workflows, SSO, and dedicated support.</li>
+          </ul>
+          <p class="rounded-xl border border-white/10 bg-white/[0.02] px-4 py-3 text-slate-300/95">
+            <span class="mr-1.5 font-medium text-emerald-200" aria-hidden>Tip:</span>
+            Jasper often runs trials and promotional pricing. Always check
+            <a class="font-medium text-emerald-300/95 underline decoration-emerald-500/40 underline-offset-4 hover:text-emerald-200" href="https://www.jasper.ai/pricing" target="_blank" rel="noopener noreferrer">jasper.ai/pricing</a>
+            before committing — the numbers above may have changed.
+          </p>
+        </section>
+
+        <section class="space-y-6" aria-labelledby="alternatives-heading">
+          <h2 id="alternatives-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">Alternatives to Jasper AI</h2>
+          <ul class="list-disc space-y-3 pl-5 marker:text-emerald-400/80">
+            <li><strong class="text-slate-200">Copy.ai</strong> — similar feature set, often more affordable, with a strong free tier and growing workflow automation tools.</li>
+            <li><strong class="text-slate-200">ChatGPT</strong> — more flexible and cheaper, but requires more prompt crafting to match Jasper's marketing focus out of the box.</li>
+            <li><strong class="text-slate-200">Writesonic</strong> — another marketing-focused writing tool with competitive pricing and a Chatsonic web-search feature.</li>
+            <li><strong class="text-slate-200">Notion AI</strong> — great for teams already in Notion who want AI writing built into their existing workflow.</li>
+          </ul>
+        </section>
+
+        <section class="space-y-4" aria-labelledby="who-heading">
+          <h2 id="who-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">Who should use Jasper AI?</h2>
+          <p>Jasper is the right tool if you:</p>
+          <ul class="list-disc space-y-2 pl-5 marker:text-emerald-400/80">
+            <li>Run a marketing team that needs to publish consistently at scale</li>
+            <li>Work at an agency managing content for multiple clients</li>
+            <li>Want brand-consistent AI output without prompting from scratch every time</li>
+            <li>Are a freelance content writer trying to increase throughput</li>
+            <li>Already use Surfer SEO and want AI writing that integrates with it</li>
+          </ul>
+          <p class="rounded-xl border border-white/10 bg-white/[0.02] px-4 py-3 text-slate-300/95">
+            If you write occasionally or have a tight budget, ChatGPT or Copy.ai's free tier will likely serve
+            you just as well. Jasper earns its price when your team is producing a high volume of on-brand content every week.
+          </p>
+        </section>
+
+        <section class="space-y-6" aria-labelledby="bonus-heading">
+          <h2 id="bonus-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">Bonus section</h2>
+          <div class="space-y-3 rounded-2xl border border-white/10 bg-white/[0.03] p-5 sm:p-6">
+            <h3 class="text-lg font-semibold text-white">Practical tips for beginners</h3>
+            <ul class="list-disc space-y-2 pl-5 text-slate-300/95 marker:text-emerald-400/80">
+              <li><strong class="text-slate-200">Set up Brand Voice first.</strong> Before generating any content, spend 20 minutes training Jasper on your brand's style. It makes every output dramatically better.</li>
+              <li><strong class="text-slate-200">Use templates as a starting point.</strong> Don't stare at a blank page — pick the closest template and fill in the brief.</li>
+              <li><strong class="text-slate-200">Generate 3 variations.</strong> Always ask for multiple outputs and pick the best one to edit — don't settle for the first draft.</li>
+              <li><strong class="text-slate-200">Combine with Jasper Chat for refinement.</strong> Generate a draft with a template, then use Chat to adjust tone, cut length, or punch up specific sections.</li>
+            </ul>
+          </div>
+          <div class="space-y-3 rounded-2xl border border-white/10 bg-white/[0.03] p-5 sm:p-6">
+            <h3 class="text-lg font-semibold text-white">Common mistakes to avoid</h3>
+            <ul class="list-disc space-y-2 pl-5 text-slate-300/95 marker:text-amber-400/80">
+              <li><strong class="text-slate-200">Publishing without editing.</strong> Jasper writes fast first drafts — they still need a human pass for accuracy, flow, and voice.</li>
+              <li><strong class="text-slate-200">Skipping the brief.</strong> The more detail you give in the input fields, the better the output. Vague briefs produce vague content.</li>
+              <li><strong class="text-slate-200">Using it for factual research.</strong> Jasper is a writing tool, not a research tool. Don't rely on it for data, stats, or claims you haven't verified.</li>
+              <li><strong class="text-slate-200">Ignoring the SEO integration.</strong> If organic traffic matters to you, connecting Surfer SEO is one of Jasper's most underused power features.</li>
+            </ul>
+          </div>
+        </section>
+
+        <p class="text-lg text-slate-200/95">
+          For marketing teams that need to produce more content without sacrificing quality or brand consistency,
+          Jasper is hard to beat. Think of it as giving your whole team access to a fast, on-brand first draft — every time.
+        </p>
+
+      </article>
+    </div>
+  </div>
+{% endblock %}

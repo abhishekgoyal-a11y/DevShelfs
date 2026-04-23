@@ -1,0 +1,248 @@
+{% extends "web/base.html" %}
+{% block title %}Replit AI — DevShelf{% endblock %}
+{% block content %}
+  <div class="space-y-10">
+    <div class="flex flex-wrap items-center gap-2 text-sm text-slate-400/90">
+      <a href="{% url 'ai_tools' %}" class="font-medium text-emerald-300/90 transition hover:text-emerald-200">AI tools</a>
+      <span aria-hidden class="text-slate-600">/</span>
+      <span class="text-slate-200/90">Replit AI</span>
+    </div>
+
+    <section
+      class="relative overflow-hidden rounded-3xl border border-emerald-400/20 bg-white/[0.06] p-6 shadow-[0_0_0_1px_rgba(255,255,255,0.04)] backdrop-blur-2xl sm:p-8"
+    >
+      <div class="pointer-events-none absolute -right-24 top-0 h-72 w-72 rounded-full bg-emerald-500/15 blur-3xl"></div>
+      <div class="pointer-events-none absolute -left-20 bottom-0 h-56 w-56 rounded-full bg-cyan-500/10 blur-3xl"></div>
+      <div class="relative">
+        <p class="text-xs font-semibold uppercase tracking-[0.22em] text-emerald-300/90">AI tool</p>
+        <h1 class="mt-3 text-3xl font-semibold tracking-tight text-white sm:text-4xl lg:text-[2.5rem] lg:leading-tight">
+          Replit AI: Code, Build, and Deploy — All in Your Browser
+        </h1>
+        <p class="mt-4 text-sm leading-relaxed text-slate-200/80 sm:text-base">
+          Replit AI is an AI coding assistant built directly into Replit's browser-based IDE — helping beginners
+          learn to code and developers prototype faster, with AI completions, debugging help, and an Agent that
+          can build entire apps from a description.
+        </p>
+        <p class="mt-6 flex flex-wrap items-center gap-3">
+          <a
+            href="https://replit.com"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="inline-flex items-center gap-2 rounded-full border border-emerald-400/35 bg-emerald-500/10 px-4 py-2 text-sm font-medium text-emerald-200 transition hover:border-emerald-300/50 hover:bg-emerald-500/15 hover:text-white"
+          >
+            Try Replit <span aria-hidden class="text-emerald-300/80">↗</span>
+          </a>
+          <a
+            href="https://replit.com/pricing"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/[0.04] px-4 py-2 text-sm font-medium text-slate-200/90 transition hover:border-white/25 hover:bg-white/[0.07] hover:text-white"
+          >
+            Pricing <span aria-hidden class="text-slate-400">↗</span>
+          </a>
+        </p>
+      </div>
+    </section>
+
+    <div class="glass rounded-3xl border border-white/10 p-5 sm:p-8">
+      <article class="mx-auto space-y-12 text-base leading-relaxed text-slate-300/95">
+
+        <section class="space-y-4" aria-labelledby="what-heading">
+          <h2 id="what-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">What is Replit AI?</h2>
+          <p>
+            Replit is a browser-based coding platform that lets you write, run, and deploy code without installing
+            anything on your computer. Replit AI is the AI layer built directly into that environment — offering
+            code completions, a chat assistant, debugging help, and an agentic mode that can build apps from a
+            plain-English description.
+          </p>
+          <p>
+            What makes Replit AI special isn't just that it has AI features — it's that those features live inside
+            a complete development environment. You don't need to copy code from ChatGPT into your editor, paste
+            error messages back to ask for help, or manually set up hosting. It all happens in one tab.
+          </p>
+          <p>
+            For beginners, it removes every piece of friction between "I want to learn coding" and "I have a working
+            app." For experienced developers, it's an instant-on playground for prototyping ideas without the setup
+            overhead of a local environment.
+          </p>
+        </section>
+
+        <section class="space-y-6" aria-labelledby="features-heading">
+          <h2 id="features-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">Key features of Replit AI</h2>
+          <div class="space-y-3 rounded-2xl border border-white/10 bg-white/[0.03] p-5 sm:p-6">
+            <h3 class="text-lg font-semibold text-white">Ghostwriter completions</h3>
+            <p class="text-slate-300/95">AI autocomplete that suggests the next line, function, or entire block of code as you type — similar to GitHub Copilot but built natively into Replit's editor.</p>
+          </div>
+          <div class="space-y-3 rounded-2xl border border-white/10 bg-white/[0.03] p-5 sm:p-6">
+            <h3 class="text-lg font-semibold text-white">AI Chat</h3>
+            <p class="text-slate-300/95">A sidebar chat where you can ask questions about your code, request changes, or get explanations — the AI has full context of your project without you having to paste anything.</p>
+          </div>
+          <div class="space-y-3 rounded-2xl border border-white/10 bg-white/[0.03] p-5 sm:p-6">
+            <h3 class="text-lg font-semibold text-white">Replit Agent</h3>
+            <p class="text-slate-300/95">Describe what you want to build in plain English and the Agent writes the code, sets up the project structure, installs dependencies, and gets it running. One of the most impressive beginner-friendly features in any coding tool.</p>
+          </div>
+          <div class="space-y-3 rounded-2xl border border-white/10 bg-white/[0.03] p-5 sm:p-6">
+            <h3 class="text-lg font-semibold text-white">Zero-setup environment</h3>
+            <p class="text-slate-300/95">No installation, no configuration, no "it works on my machine" problems. Open a browser, start a Repl, and your environment is ready in seconds — including languages, packages, and a terminal.</p>
+          </div>
+          <div class="space-y-3 rounded-2xl border border-white/10 bg-white/[0.03] p-5 sm:p-6">
+            <h3 class="text-lg font-semibold text-white">One-click deployment</h3>
+            <p class="text-slate-300/95">Deploy your project to the web with one click. Replit handles hosting, so you can share a working link to your app without managing servers.</p>
+          </div>
+          <div class="space-y-3 rounded-2xl border border-white/10 bg-white/[0.03] p-5 sm:p-6">
+            <h3 class="text-lg font-semibold text-white">Multiplayer & sharing</h3>
+            <p class="text-slate-300/95">Invite collaborators to edit the same Repl in real time — like Google Docs for code. Great for pair programming, tutoring, or code reviews.</p>
+          </div>
+        </section>
+
+        <section class="space-y-6" aria-labelledby="how-heading">
+          <h2 id="how-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">How Replit AI works</h2>
+          <p>
+            Replit AI combines AI models (including partnerships with major providers) with deep integration into
+            the Replit editor and runtime. Here's the simple picture:
+          </p>
+          <ul class="list-disc space-y-2 pl-5 marker:text-emerald-400/80">
+            <li><strong class="text-slate-200">The AI sees your full project</strong> — not just the file you're editing, but the folder structure, dependencies, and recent errors.</li>
+            <li><strong class="text-slate-200">Suggestions appear inline as you type</strong> — press Tab to accept, or keep typing to ignore.</li>
+            <li><strong class="text-slate-200">The chat assistant runs inside the same environment</strong> — so when it suggests a fix, it can apply it directly to your file rather than just showing a code block.</li>
+          </ul>
+          <p class="rounded-xl border border-white/10 bg-white/[0.02] px-4 py-3 text-slate-300/95">
+            The Agent mode works by treating your description as a spec. It breaks the task into steps, writes
+            code, runs it, checks the output, and iterates — all automatically. Think of it as having a junior
+            developer who can set up an entire project while you watch.
+          </p>
+        </section>
+
+        <section class="space-y-6" aria-labelledby="usecases-heading">
+          <h2 id="usecases-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">Real-life use cases of Replit AI</h2>
+          <div class="space-y-3 rounded-2xl border border-white/10 bg-white/[0.03] p-5 sm:p-6">
+            <h3 class="text-lg font-semibold text-white">Beginners learning to code</h3>
+            <ul class="list-disc space-y-2 pl-5 marker:text-emerald-400/80">
+              <li>Learning Python, JavaScript, or another language without local setup friction</li>
+              <li>Building first projects with AI help for explanations and debugging</li>
+              <li>Following tutorials while Replit runs the code instantly</li>
+            </ul>
+          </div>
+          <div class="space-y-3 rounded-2xl border border-white/10 bg-white/[0.03] p-5 sm:p-6">
+            <h3 class="text-lg font-semibold text-white">Developers prototyping ideas</h3>
+            <ul class="list-disc space-y-2 pl-5 marker:text-emerald-400/80">
+              <li>Spinning up a quick proof-of-concept without local project setup</li>
+              <li>Testing a library or API before integrating it into a main project</li>
+              <li>Sharing a working demo with a link rather than sending code files</li>
+            </ul>
+          </div>
+          <div class="space-y-3 rounded-2xl border border-white/10 bg-white/[0.03] p-5 sm:p-6">
+            <h3 class="text-lg font-semibold text-white">Non-technical founders & makers</h3>
+            <ul class="list-disc space-y-2 pl-5 marker:text-emerald-400/80">
+              <li>Using Replit Agent to build internal tools or simple apps from a description</li>
+              <li>Automating repetitive business tasks with small scripts</li>
+            </ul>
+          </div>
+          <div class="space-y-3 rounded-2xl border border-white/10 bg-white/[0.03] p-5 sm:p-6">
+            <h3 class="text-lg font-semibold text-white">Teachers & students</h3>
+            <ul class="list-disc space-y-2 pl-5 marker:text-emerald-400/80">
+              <li>Running coding exercises in class without installation headaches</li>
+              <li>Sharing Repls with students who can fork and edit their own copy</li>
+            </ul>
+          </div>
+        </section>
+
+        <section class="space-y-6" aria-labelledby="proscons-heading">
+          <h2 id="proscons-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">Pros and cons of Replit AI</h2>
+          <div class="grid gap-6 lg:grid-cols-2">
+            <div class="rounded-2xl border border-emerald-500/20 bg-emerald-500/5 p-5 sm:p-6">
+              <h3 class="mb-4 text-lg font-semibold text-emerald-100">Pros</h3>
+              <ul class="list-disc space-y-2 pl-5 text-slate-300/95 marker:text-emerald-400/80">
+                <li>Zero setup — works instantly in any browser</li>
+                <li>AI is deeply integrated, not bolted on</li>
+                <li>Agent mode is genuinely impressive for beginners</li>
+                <li>One-click deployment for sharing working apps</li>
+                <li>Great for learning — AI explains as it helps</li>
+                <li>Real-time multiplayer collaboration</li>
+              </ul>
+            </div>
+            <div class="rounded-2xl border border-amber-500/20 bg-amber-500/5 p-5 sm:p-6">
+              <h3 class="mb-4 text-lg font-semibold text-amber-100">Cons</h3>
+              <ul class="list-disc space-y-2 pl-5 text-slate-300/95 marker:text-amber-400/80">
+                <li>Full AI features require a paid Core subscription</li>
+                <li>Not ideal for large professional codebases</li>
+                <li>Browser-based limits some performance-sensitive work</li>
+                <li>Agent can produce buggy code on complex tasks</li>
+                <li>Limited offline access — needs an internet connection</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        <section class="space-y-6" aria-labelledby="pricing-heading">
+          <h2 id="pricing-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">Replit AI pricing</h2>
+          <ul class="list-disc space-y-3 pl-5 marker:text-emerald-400/80">
+            <li><strong class="text-slate-200">Free (Starter)</strong> — basic code editor, limited AI completions, community access. Good for trying Replit and light learning.</li>
+            <li><strong class="text-slate-200">Core — ~$20/month</strong> — full Ghostwriter AI, Replit Agent, more compute resources, and private Repls. The tier where the AI tools fully unlock.</li>
+            <li><strong class="text-slate-200">Teams</strong> — custom pricing for organisations, with admin controls, shared workspaces, and priority support.</li>
+          </ul>
+          <p class="rounded-xl border border-white/10 bg-white/[0.02] px-4 py-3 text-slate-300/95">
+            <span class="mr-1.5 font-medium text-emerald-200" aria-hidden>Tip:</span>
+            Replit's pricing and AI feature availability shift as the product evolves. Confirm the latest at
+            <a class="font-medium text-emerald-300/95 underline decoration-emerald-500/40 underline-offset-4 hover:text-emerald-200" href="https://replit.com/pricing" target="_blank" rel="noopener noreferrer">replit.com/pricing</a>.
+          </p>
+        </section>
+
+        <section class="space-y-6" aria-labelledby="alternatives-heading">
+          <h2 id="alternatives-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">Alternatives to Replit AI</h2>
+          <ul class="list-disc space-y-3 pl-5 marker:text-emerald-400/80">
+            <li><strong class="text-slate-200">GitHub Copilot</strong> — best AI code completion for professional workflows; works in VS Code, JetBrains, and other editors you already use.</li>
+            <li><strong class="text-slate-200">Cursor</strong> — AI-native code editor with a more powerful chat and edit experience; better for professional-grade projects.</li>
+            <li><strong class="text-slate-200">CodeSandbox</strong> — another browser-based environment; strong for frontend JavaScript work, less AI-focused.</li>
+            <li><strong class="text-slate-200">Bolt.new / v0</strong> — AI app builders similar to Replit Agent; good for rapid web app prototyping without any coding experience.</li>
+          </ul>
+        </section>
+
+        <section class="space-y-4" aria-labelledby="who-heading">
+          <h2 id="who-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">Who should use Replit AI?</h2>
+          <p>Replit AI is the right fit if you:</p>
+          <ul class="list-disc space-y-2 pl-5 marker:text-emerald-400/80">
+            <li>Are learning to code and want an environment that runs immediately</li>
+            <li>Want to build a small app or tool without installing anything</li>
+            <li>Are a developer who needs a fast scratchpad for prototyping</li>
+            <li>Are a teacher or student who needs shared, runnable code environments</li>
+            <li>Want to try building something with AI assistance but aren't a programmer</li>
+          </ul>
+          <p class="rounded-xl border border-white/10 bg-white/[0.02] px-4 py-3 text-slate-300/95">
+            For large professional codebases or teams with complex workflows, GitHub Copilot or Cursor will serve
+            you better. Replit AI's edge is in accessibility, speed, and its beginner-friendly integrated approach.
+          </p>
+        </section>
+
+        <section class="space-y-6" aria-labelledby="bonus-heading">
+          <h2 id="bonus-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">Bonus section</h2>
+          <div class="space-y-3 rounded-2xl border border-white/10 bg-white/[0.03] p-5 sm:p-6">
+            <h3 class="text-lg font-semibold text-white">Practical tips for beginners</h3>
+            <ul class="list-disc space-y-2 pl-5 text-slate-300/95 marker:text-emerald-400/80">
+              <li><strong class="text-slate-200">Start with a template.</strong> Replit has dozens of starter templates for common languages and frameworks — pick one instead of starting from scratch.</li>
+              <li><strong class="text-slate-200">Use AI Chat to understand errors.</strong> When your code throws an error, paste it in the chat and ask what it means. Replit AI often spots the fix immediately.</li>
+              <li><strong class="text-slate-200">Try Replit Agent for your first full project.</strong> Describe what you want to build in simple sentences and watch it scaffold the whole thing. It's a great way to see what's possible.</li>
+              <li><strong class="text-slate-200">Fork public Repls to learn.</strong> Thousands of public projects are available to explore and fork — find something interesting and reverse-engineer it.</li>
+            </ul>
+          </div>
+          <div class="space-y-3 rounded-2xl border border-white/10 bg-white/[0.03] p-5 sm:p-6">
+            <h3 class="text-lg font-semibold text-white">Common mistakes to avoid</h3>
+            <ul class="list-disc space-y-2 pl-5 text-slate-300/95 marker:text-amber-400/80">
+              <li><strong class="text-slate-200">Accepting AI completions without reading them.</strong> Tab-completing AI suggestions is fast, but always read what you're accepting — it's easy to introduce bugs that way.</li>
+              <li><strong class="text-slate-200">Using Replit for secret API keys.</strong> Be careful with sensitive credentials in Replit projects — use the Secrets manager rather than hardcoding keys in your files.</li>
+              <li><strong class="text-slate-200">Expecting Agent to be perfect on the first try.</strong> Replit Agent does impressive work but often needs guidance on ambiguous requirements. Give feedback iteratively rather than expecting a finished product from one prompt.</li>
+              <li><strong class="text-slate-200">Not using version control.</strong> Replit has built-in Git support — use it, especially if you're doing anything you'd be upset to lose.</li>
+            </ul>
+          </div>
+        </section>
+
+        <p class="text-lg text-slate-200/95">
+          Replit AI removes the biggest barrier to getting started with coding: setup. When the environment is
+          ready in seconds and an AI is right there to help when you're stuck, building things with code stops
+          feeling like a specialist skill and starts feeling like just another tool.
+        </p>
+
+      </article>
+    </div>
+  </div>
+{% endblock %}

@@ -262,6 +262,78 @@ def perplexity(request):
     )
 
 
+def chatgpt(request):
+    return render(
+        request,
+        "web/chatgpt.html",
+        {"layout": _layout(request.path), "active_nav": "ai"},
+    )
+
+
+def jasper_ai(request):
+    return render(
+        request,
+        "web/jasper_ai.html",
+        {"layout": _layout(request.path), "active_nav": "ai"},
+    )
+
+
+def copy_ai(request):
+    return render(
+        request,
+        "web/copy_ai.html",
+        {"layout": _layout(request.path), "active_nav": "ai"},
+    )
+
+
+def elevenlabs(request):
+    return render(
+        request,
+        "web/elevenlabs.html",
+        {"layout": _layout(request.path), "active_nav": "ai"},
+    )
+
+
+def murf_ai(request):
+    return render(
+        request,
+        "web/murf_ai.html",
+        {"layout": _layout(request.path), "active_nav": "ai"},
+    )
+
+
+def otter_ai(request):
+    return render(
+        request,
+        "web/otter_ai.html",
+        {"layout": _layout(request.path), "active_nav": "ai"},
+    )
+
+
+def replit_ai(request):
+    return render(
+        request,
+        "web/replit_ai.html",
+        {"layout": _layout(request.path), "active_nav": "ai"},
+    )
+
+
+def adcreative_ai(request):
+    return render(
+        request,
+        "web/adcreative_ai.html",
+        {"layout": _layout(request.path), "active_nav": "ai"},
+    )
+
+
+def claude_ai(request):
+    return render(
+        request,
+        "web/claude_ai.html",
+        {"layout": _layout(request.path), "active_nav": "ai"},
+    )
+
+
 def hackathons(request):
     type_filter = (request.GET.get("type") or "all").lower()
     q = (request.GET.get("q") or "").strip().lower()

@@ -1,0 +1,260 @@
+{% extends "web/base.html" %}
+{% block title %}ChatGPT — DevShelf{% endblock %}
+{% block content %}
+  <div class="space-y-10">
+    <div class="flex flex-wrap items-center gap-2 text-sm text-slate-400/90">
+      <a href="{% url 'ai_tools' %}" class="font-medium text-emerald-300/90 transition hover:text-emerald-200">AI tools</a>
+      <span aria-hidden class="text-slate-600">/</span>
+      <span class="text-slate-200/90">ChatGPT</span>
+    </div>
+
+    <section
+      class="relative overflow-hidden rounded-3xl border border-emerald-400/20 bg-white/[0.06] p-6 shadow-[0_0_0_1px_rgba(255,255,255,0.04)] backdrop-blur-2xl sm:p-8"
+    >
+      <div class="pointer-events-none absolute -right-24 top-0 h-72 w-72 rounded-full bg-emerald-500/15 blur-3xl"></div>
+      <div class="pointer-events-none absolute -left-20 bottom-0 h-56 w-56 rounded-full bg-cyan-500/10 blur-3xl"></div>
+      <div class="relative">
+        <p class="text-xs font-semibold uppercase tracking-[0.22em] text-emerald-300/90">AI tool</p>
+        <h1 class="mt-3 text-3xl font-semibold tracking-tight text-white sm:text-4xl lg:text-[2.5rem] lg:leading-tight">
+          ChatGPT: The AI Assistant That Started It All
+        </h1>
+        <p class="mt-4 text-sm leading-relaxed text-slate-200/80 sm:text-base">
+          ChatGPT is OpenAI's conversational AI assistant — write, code, research, brainstorm, and get things done by
+          having a natural back-and-forth conversation with one of the most capable AI models in the world.
+        </p>
+        <p class="mt-6 flex flex-wrap items-center gap-3">
+          <a
+            href="https://chatgpt.com"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="inline-flex items-center gap-2 rounded-full border border-emerald-400/35 bg-emerald-500/10 px-4 py-2 text-sm font-medium text-emerald-200 transition hover:border-emerald-300/50 hover:bg-emerald-500/15 hover:text-white"
+          >
+            Try ChatGPT <span aria-hidden class="text-emerald-300/80">↗</span>
+          </a>
+          <a
+            href="https://openai.com/chatgpt/pricing"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/[0.04] px-4 py-2 text-sm font-medium text-slate-200/90 transition hover:border-white/25 hover:bg-white/[0.07] hover:text-white"
+          >
+            Pricing <span aria-hidden class="text-slate-400">↗</span>
+          </a>
+        </p>
+      </div>
+    </section>
+
+    <div class="glass rounded-3xl border border-white/10 p-5 sm:p-8">
+      <article class="mx-auto space-y-12 text-base leading-relaxed text-slate-300/95">
+
+        <section class="space-y-4" aria-labelledby="what-heading">
+          <h2 id="what-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">What is ChatGPT?</h2>
+          <p>
+            ChatGPT is an AI chatbot made by OpenAI. When it launched in November 2022, it went from zero to one million
+            users in just five days — faster than any app in history. That kind of reception doesn't happen by accident.
+            People immediately recognized that this was something genuinely different.
+          </p>
+          <p>
+            At its core, ChatGPT lets you have a conversation with an AI that can write, explain, code, summarize,
+            translate, brainstorm, and reason through problems. You type a message, it responds. You push back, ask
+            follow-up questions, or refine the direction — and it adapts. It's less like a search engine and more like
+            having a very well-read collaborator available 24/7.
+          </p>
+          <p>
+            Today ChatGPT supports text, images, files, voice, and browsing. It runs on OpenAI's most capable models
+            and has an ecosystem of custom GPTs built by third parties. It's both beginner-friendly and deep enough for
+            professional workflows.
+          </p>
+        </section>
+
+        <section class="space-y-6" aria-labelledby="features-heading">
+          <h2 id="features-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">Key features of ChatGPT</h2>
+          <div class="space-y-3 rounded-2xl border border-white/10 bg-white/[0.03] p-5 sm:p-6">
+            <h3 class="text-lg font-semibold text-white">Natural conversation</h3>
+            <p class="text-slate-300/95">Ask questions, get answers, push back, refine — it keeps the full context of your conversation so you don't have to repeat yourself.</p>
+          </div>
+          <div class="space-y-3 rounded-2xl border border-white/10 bg-white/[0.03] p-5 sm:p-6">
+            <h3 class="text-lg font-semibold text-white">Writing assistance</h3>
+            <p class="text-slate-300/95">Draft emails, essays, blog posts, cover letters, scripts, or social captions. You give the brief; ChatGPT gives you a strong first draft.</p>
+          </div>
+          <div class="space-y-3 rounded-2xl border border-white/10 bg-white/[0.03] p-5 sm:p-6">
+            <h3 class="text-lg font-semibold text-white">Code generation & debugging</h3>
+            <p class="text-slate-300/95">Write code in any major language, fix bugs, explain what existing code does, or get step-by-step help learning a new framework.</p>
+          </div>
+          <div class="space-y-3 rounded-2xl border border-white/10 bg-white/[0.03] p-5 sm:p-6">
+            <h3 class="text-lg font-semibold text-white">Image understanding & generation</h3>
+            <p class="text-slate-300/95">Upload an image and ask questions about it. Or generate images using DALL·E directly inside the chat. Great for visual thinkers.</p>
+          </div>
+          <div class="space-y-3 rounded-2xl border border-white/10 bg-white/[0.03] p-5 sm:p-6">
+            <h3 class="text-lg font-semibold text-white">Web browsing</h3>
+            <p class="text-slate-300/95">On paid plans, ChatGPT can search the internet and pull in current information — so you're not limited to its training data.</p>
+          </div>
+          <div class="space-y-3 rounded-2xl border border-white/10 bg-white/[0.03] p-5 sm:p-6">
+            <h3 class="text-lg font-semibold text-white">Custom GPTs</h3>
+            <p class="text-slate-300/95">Thousands of specialized AI assistants built on top of ChatGPT — for cooking, law, fitness, coding, language learning, and more. Many are free to use.</p>
+          </div>
+          <div class="space-y-3 rounded-2xl border border-white/10 bg-white/[0.03] p-5 sm:p-6">
+            <h3 class="text-lg font-semibold text-white">Voice mode</h3>
+            <p class="text-slate-300/95">Have a spoken back-and-forth conversation with ChatGPT on mobile. It listens, responds in natural speech, and can be interrupted mid-sentence.</p>
+          </div>
+        </section>
+
+        <section class="space-y-6" aria-labelledby="how-heading">
+          <h2 id="how-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">How ChatGPT works</h2>
+          <p>
+            ChatGPT is powered by large language models (LLMs) — specifically OpenAI's GPT series. Here's the simple version of what happens every time you send a message:
+          </p>
+          <ul class="list-disc space-y-2 pl-5 marker:text-emerald-400/80">
+            <li><strong class="text-slate-200">It reads everything in your conversation</strong> — every message, in order, every time.</li>
+            <li><strong class="text-slate-200">It predicts the most useful next response</strong> — not by looking things up in a database, but by pattern-matching across everything it learned during training.</li>
+            <li><strong class="text-slate-200">It generates text word by word</strong> — which is why you sometimes see it "think out loud" before arriving at an answer.</li>
+          </ul>
+          <p class="rounded-xl border border-white/10 bg-white/[0.02] px-4 py-3 text-slate-300/95">
+            The model was trained on a huge portion of the internet, books, and other text sources — giving it a broad base of knowledge. Then it was fine-tuned to be helpful, honest, and safe through a process called RLHF (reinforcement learning from human feedback), where human raters guided it toward better answers.
+          </p>
+        </section>
+
+        <section class="space-y-6" aria-labelledby="usecases-heading">
+          <h2 id="usecases-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">Real-life use cases of ChatGPT</h2>
+          <div class="space-y-3 rounded-2xl border border-white/10 bg-white/[0.03] p-5 sm:p-6">
+            <h3 class="text-lg font-semibold text-white">Writers & content creators</h3>
+            <ul class="list-disc space-y-2 pl-5 marker:text-emerald-400/80">
+              <li>Drafting blog posts, newsletters, or social captions from a quick brief</li>
+              <li>Editing existing drafts for tone, clarity, or length</li>
+              <li>Generating outlines or brainstorming angles for a topic</li>
+            </ul>
+          </div>
+          <div class="space-y-3 rounded-2xl border border-white/10 bg-white/[0.03] p-5 sm:p-6">
+            <h3 class="text-lg font-semibold text-white">Developers</h3>
+            <ul class="list-disc space-y-2 pl-5 marker:text-emerald-400/80">
+              <li>Writing boilerplate code or utility functions in seconds</li>
+              <li>Debugging error messages with plain-English explanations</li>
+              <li>Learning new languages or frameworks through conversation</li>
+            </ul>
+          </div>
+          <div class="space-y-3 rounded-2xl border border-white/10 bg-white/[0.03] p-5 sm:p-6">
+            <h3 class="text-lg font-semibold text-white">Students</h3>
+            <ul class="list-disc space-y-2 pl-5 marker:text-emerald-400/80">
+              <li>Understanding complex topics explained in simpler terms</li>
+              <li>Getting feedback on essays before submission</li>
+              <li>Quizzing themselves to prepare for exams</li>
+            </ul>
+          </div>
+          <div class="space-y-3 rounded-2xl border border-white/10 bg-white/[0.03] p-5 sm:p-6">
+            <h3 class="text-lg font-semibold text-white">Professionals & business owners</h3>
+            <ul class="list-disc space-y-2 pl-5 marker:text-emerald-400/80">
+              <li>Drafting proposals, reports, or client emails faster</li>
+              <li>Summarizing long documents or meeting notes</li>
+              <li>Brainstorming product ideas or marketing angles</li>
+            </ul>
+          </div>
+          <div class="space-y-3 rounded-2xl border border-white/10 bg-white/[0.03] p-5 sm:p-6">
+            <h3 class="text-lg font-semibold text-white">Everyday users</h3>
+            <ul class="list-disc space-y-2 pl-5 marker:text-emerald-400/80">
+              <li>Planning meals, trips, or schedules</li>
+              <li>Learning a new skill through patient, interactive explanation</li>
+              <li>Getting a second opinion before making a decision</li>
+            </ul>
+          </div>
+        </section>
+
+        <section class="space-y-6" aria-labelledby="proscons-heading">
+          <h2 id="proscons-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">Pros and cons of ChatGPT</h2>
+          <div class="grid gap-6 lg:grid-cols-2">
+            <div class="rounded-2xl border border-emerald-500/20 bg-emerald-500/5 p-5 sm:p-6">
+              <h3 class="mb-4 text-lg font-semibold text-emerald-100">Pros</h3>
+              <ul class="list-disc space-y-2 pl-5 text-slate-300/95 marker:text-emerald-400/80">
+                <li>Extremely versatile — writing, coding, analysis, image, voice</li>
+                <li>Huge ecosystem of custom GPTs for specialized tasks</li>
+                <li>Free tier is generous and genuinely capable</li>
+                <li>Constantly updated with new features and models</li>
+                <li>Excellent at maintaining context in long conversations</li>
+                <li>Works in dozens of languages</li>
+              </ul>
+            </div>
+            <div class="rounded-2xl border border-amber-500/20 bg-amber-500/5 p-5 sm:p-6">
+              <h3 class="mb-4 text-lg font-semibold text-amber-100">Cons</h3>
+              <ul class="list-disc space-y-2 pl-5 text-slate-300/95 marker:text-amber-400/80">
+                <li>Can confidently state wrong information (hallucinations)</li>
+                <li>Free plan doesn't browse the web in real time</li>
+                <li>Responses can be verbose and over-explain</li>
+                <li>No persistent memory by default across sessions</li>
+                <li>Web browsing results are less citation-focused than Perplexity</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        <section class="space-y-6" aria-labelledby="pricing-heading">
+          <h2 id="pricing-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">ChatGPT pricing</h2>
+          <ul class="list-disc space-y-3 pl-5 marker:text-emerald-400/80">
+            <li><strong class="text-slate-200">Free</strong> — access to GPT-4o with limits, basic image generation, and voice mode. Solid for casual use.</li>
+            <li><strong class="text-slate-200">Plus — $20/month</strong> — higher limits on GPT-4o, web browsing, more image generation, and early access to new features.</li>
+            <li><strong class="text-slate-200">Team — $25/user/month</strong> — everything in Plus, with shared workspaces and admin controls for small teams.</li>
+            <li><strong class="text-slate-200">Enterprise</strong> — custom pricing for large organisations. Includes advanced security, unlimited context, and dedicated support.</li>
+          </ul>
+          <p class="rounded-xl border border-white/10 bg-white/[0.02] px-4 py-3 text-slate-300/95">
+            <span class="mr-1.5 font-medium text-emerald-200" aria-hidden>Tip:</span>
+            OpenAI frequently adjusts what's included in each tier. Check
+            <a class="font-medium text-emerald-300/95 underline decoration-emerald-500/40 underline-offset-4 hover:text-emerald-200" href="https://openai.com/chatgpt/pricing" target="_blank" rel="noopener noreferrer">openai.com/chatgpt/pricing</a>
+            for the latest.
+          </p>
+        </section>
+
+        <section class="space-y-6" aria-labelledby="alternatives-heading">
+          <h2 id="alternatives-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">Alternatives to ChatGPT</h2>
+          <ul class="list-disc space-y-3 pl-5 marker:text-emerald-400/80">
+            <li><strong class="text-slate-200">Claude (Anthropic)</strong> — better for long documents and nuanced writing; very thoughtful responses with a large context window.</li>
+            <li><strong class="text-slate-200">Google Gemini</strong> — deeply integrated with Google Docs, Gmail, and Google Search; great if you live in Google's ecosystem.</li>
+            <li><strong class="text-slate-200">Perplexity AI</strong> — best for real-time web research with cited sources; less conversational but more verifiable.</li>
+            <li><strong class="text-slate-200">Microsoft Copilot</strong> — ChatGPT-powered but built into Bing and Microsoft 365; free for basic use.</li>
+          </ul>
+        </section>
+
+        <section class="space-y-4" aria-labelledby="who-heading">
+          <h2 id="who-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">Who should use ChatGPT?</h2>
+          <p>ChatGPT is a strong fit if you:</p>
+          <ul class="list-disc space-y-2 pl-5 marker:text-emerald-400/80">
+            <li>Want one AI tool that handles writing, coding, research, and conversation</li>
+            <li>Are a developer, student, writer, or business professional</li>
+            <li>Need a tool that supports files, images, and voice — not just text</li>
+            <li>Want access to a large library of specialized AI assistants (custom GPTs)</li>
+            <li>Are comfortable verifying important outputs before acting on them</li>
+          </ul>
+          <p class="rounded-xl border border-white/10 bg-white/[0.02] px-4 py-3 text-slate-300/95">
+            If your primary need is real-time, sourced research, Perplexity may suit you better. If you want the
+            best-in-class long-document assistant, Claude is worth a look. But for sheer breadth? ChatGPT is still
+            the benchmark.
+          </p>
+        </section>
+
+        <section class="space-y-6" aria-labelledby="bonus-heading">
+          <h2 id="bonus-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">Bonus section</h2>
+          <div class="space-y-3 rounded-2xl border border-white/10 bg-white/[0.03] p-5 sm:p-6">
+            <h3 class="text-lg font-semibold text-white">Practical tips for beginners</h3>
+            <ul class="list-disc space-y-2 pl-5 text-slate-300/95 marker:text-emerald-400/80">
+              <li><strong class="text-slate-200">Give it a role.</strong> "You are an experienced copywriter. Write me…" gets better results than just "Write me…"</li>
+              <li><strong class="text-slate-200">Iterate, don't restart.</strong> Say "make it shorter," "add more examples," or "rewrite the intro" — don't start a new chat.</li>
+              <li><strong class="text-slate-200">Use custom GPTs.</strong> Browse the GPT Store for tools tuned to your specific use case — many are better than the base model for niche tasks.</li>
+              <li><strong class="text-slate-200">Upload files for context.</strong> Paste your notes, a PDF, or a chunk of code and ask ChatGPT to work from your material.</li>
+            </ul>
+          </div>
+          <div class="space-y-3 rounded-2xl border border-white/10 bg-white/[0.03] p-5 sm:p-6">
+            <h3 class="text-lg font-semibold text-white">Common mistakes to avoid</h3>
+            <ul class="list-disc space-y-2 pl-5 text-slate-300/95 marker:text-amber-400/80">
+              <li><strong class="text-slate-200">Copying without checking.</strong> ChatGPT can fabricate facts, names, and citations. Always verify before publishing or acting.</li>
+              <li><strong class="text-slate-200">Asking everything in one go.</strong> Break complex requests into steps — the output quality improves significantly.</li>
+              <li><strong class="text-slate-200">Ignoring the system prompt.</strong> If you're building workflows, a clear instruction at the start of a conversation sets the tone for everything after.</li>
+              <li><strong class="text-slate-200">Forgetting it has no memory by default.</strong> Each new chat starts fresh — paste in your context or use Projects/Memory features if you need continuity.</li>
+            </ul>
+          </div>
+        </section>
+
+        <p class="text-lg text-slate-200/95">
+          ChatGPT kicked off the AI revolution that's still accelerating. Whether you're writing your first email draft
+          with AI or building complex multi-step workflows, it remains one of the most capable and accessible places to start.
+        </p>
+
+      </article>
+    </div>
+  </div>
+{% endblock %}

@@ -1,0 +1,260 @@
+{% extends "web/base.html" %}
+{% block title %}Claude — DevShelf{% endblock %}
+{% block content %}
+  <div class="space-y-10">
+    <div class="flex flex-wrap items-center gap-2 text-sm text-slate-400/90">
+      <a href="{% url 'ai_tools' %}" class="font-medium text-emerald-300/90 transition hover:text-emerald-200">AI tools</a>
+      <span aria-hidden class="text-slate-600">/</span>
+      <span class="text-slate-200/90">Claude</span>
+    </div>
+
+    <section
+      class="relative overflow-hidden rounded-3xl border border-emerald-400/20 bg-white/[0.06] p-6 shadow-[0_0_0_1px_rgba(255,255,255,0.04)] backdrop-blur-2xl sm:p-8"
+    >
+      <div class="pointer-events-none absolute -right-24 top-0 h-72 w-72 rounded-full bg-emerald-500/15 blur-3xl"></div>
+      <div class="pointer-events-none absolute -left-20 bottom-0 h-56 w-56 rounded-full bg-cyan-500/10 blur-3xl"></div>
+      <div class="relative">
+        <p class="text-xs font-semibold uppercase tracking-[0.22em] text-emerald-300/90">AI tool</p>
+        <h1 class="mt-3 text-3xl font-semibold tracking-tight text-white sm:text-4xl lg:text-[2.5rem] lg:leading-tight">
+          Claude: The AI Assistant That Thinks Before It Speaks
+        </h1>
+        <p class="mt-4 text-sm leading-relaxed text-slate-200/80 sm:text-base">
+          Claude is Anthropic's AI assistant — known for nuanced, thoughtful responses, a massive context window for
+          handling long documents, and a safety-first design philosophy that makes it one of the most trusted AI
+          tools for sensitive or complex work.
+        </p>
+        <p class="mt-6 flex flex-wrap items-center gap-3">
+          <a
+            href="https://claude.ai"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="inline-flex items-center gap-2 rounded-full border border-emerald-400/35 bg-emerald-500/10 px-4 py-2 text-sm font-medium text-emerald-200 transition hover:border-emerald-300/50 hover:bg-emerald-500/15 hover:text-white"
+          >
+            Try Claude <span aria-hidden class="text-emerald-300/80">↗</span>
+          </a>
+          <a
+            href="https://claude.ai/pricing"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/[0.04] px-4 py-2 text-sm font-medium text-slate-200/90 transition hover:border-white/25 hover:bg-white/[0.07] hover:text-white"
+          >
+            Pricing <span aria-hidden class="text-slate-400">↗</span>
+          </a>
+        </p>
+      </div>
+    </section>
+
+    <div class="glass rounded-3xl border border-white/10 p-5 sm:p-8">
+      <article class="mx-auto space-y-12 text-base leading-relaxed text-slate-300/95">
+
+        <section class="space-y-4" aria-labelledby="what-heading">
+          <h2 id="what-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">What is Claude?</h2>
+          <p>
+            Claude is an AI assistant made by Anthropic, a company founded specifically around AI safety research.
+            Where many AI tools optimise primarily for capability, Anthropic built Claude with an additional focus on
+            making it honest, helpful, and — crucially — less likely to confidently say wrong things.
+          </p>
+          <p>
+            In practice, Claude feels different from other AI assistants. Its answers tend to be more measured, more
+            nuanced, and more willing to say "I'm not certain about this" rather than bluffing through an answer.
+            For users who work with sensitive topics, legal or medical content, or anything where wrong information
+            has real consequences, that quality is genuinely valuable.
+          </p>
+          <p>
+            Claude also stands out for its large context window — the ability to hold and reason over an enormous
+            amount of text in a single conversation. Where other AI tools hit a wall with long documents, Claude can
+            read a full book, an entire codebase, or a stack of research papers and reason across all of it at once.
+          </p>
+        </section>
+
+        <section class="space-y-6" aria-labelledby="features-heading">
+          <h2 id="features-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">Key features of Claude</h2>
+          <div class="space-y-3 rounded-2xl border border-white/10 bg-white/[0.03] p-5 sm:p-6">
+            <h3 class="text-lg font-semibold text-white">Large context window (200K tokens)</h3>
+            <p class="text-slate-300/95">Claude can process up to 200,000 tokens in a single conversation — roughly 150,000 words or 500 pages. This makes it unmatched for analysing long documents, large codebases, or research corpora.</p>
+          </div>
+          <div class="space-y-3 rounded-2xl border border-white/10 bg-white/[0.03] p-5 sm:p-6">
+            <h3 class="text-lg font-semibold text-white">Long-form writing & editing</h3>
+            <p class="text-slate-300/95">Claude produces high-quality long-form prose — reports, essays, proposals, technical documentation — with a coherent voice and careful structure. It's widely regarded as the best AI for writing that needs to feel human.</p>
+          </div>
+          <div class="space-y-3 rounded-2xl border border-white/10 bg-white/[0.03] p-5 sm:p-6">
+            <h3 class="text-lg font-semibold text-white">Document analysis</h3>
+            <p class="text-slate-300/95">Upload a PDF, contract, research paper, or spreadsheet and ask Claude to summarise, extract key points, compare sections, or identify issues. It handles complex documents better than almost any other AI tool.</p>
+          </div>
+          <div class="space-y-3 rounded-2xl border border-white/10 bg-white/[0.03] p-5 sm:p-6">
+            <h3 class="text-lg font-semibold text-white">Coding assistance</h3>
+            <p class="text-slate-300/95">Write, debug, explain, and refactor code across dozens of languages. Claude is particularly good at explaining <em>why</em> something works, not just giving you the code to copy-paste.</p>
+          </div>
+          <div class="space-y-3 rounded-2xl border border-white/10 bg-white/[0.03] p-5 sm:p-6">
+            <h3 class="text-lg font-semibold text-white">Nuanced reasoning</h3>
+            <p class="text-slate-300/95">Ask Claude to analyse trade-offs, weigh competing arguments, or think through a complex decision. It's built to handle ambiguous, multi-faceted questions without oversimplifying.</p>
+          </div>
+          <div class="space-y-3 rounded-2xl border border-white/10 bg-white/[0.03] p-5 sm:p-6">
+            <h3 class="text-lg font-semibold text-white">Projects (persistent context)</h3>
+            <p class="text-slate-300/95">Create Projects to maintain persistent context across multiple conversations — Claude remembers your instructions, documents, and preferences within a project so you don't repeat yourself each session.</p>
+          </div>
+        </section>
+
+        <section class="space-y-6" aria-labelledby="how-heading">
+          <h2 id="how-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">How Claude works</h2>
+          <p>
+            Claude is a large language model trained by Anthropic using a combination of standard training techniques
+            and a framework called Constitutional AI (CAI). Here's the simple version:
+          </p>
+          <ul class="list-disc space-y-2 pl-5 marker:text-emerald-400/80">
+            <li><strong class="text-slate-200">Constitutional AI</strong> — during training, Claude was taught a set of principles about being helpful, honest, and avoiding harm. It was then trained to apply those principles to its own outputs — effectively learning to critique and improve its own responses against those values.</li>
+            <li><strong class="text-slate-200">Large context window</strong> — Claude reads your entire conversation history on every response, allowing it to stay consistent and reason across a much larger amount of information than most AI tools.</li>
+            <li><strong class="text-slate-200">Extended thinking</strong> — on complex problems, Claude can work through reasoning step by step before giving a final answer, improving accuracy on difficult analytical tasks.</li>
+          </ul>
+          <p class="rounded-xl border border-white/10 bg-white/[0.02] px-4 py-3 text-slate-300/95">
+            The practical effect is a model that often acknowledges uncertainty, qualifies its answers appropriately,
+            and pushes back when asked to do something problematic — rather than just complying or hallucinating
+            confidently. For many users, this is exactly what they need.
+          </p>
+        </section>
+
+        <section class="space-y-6" aria-labelledby="usecases-heading">
+          <h2 id="usecases-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">Real-life use cases of Claude</h2>
+          <div class="space-y-3 rounded-2xl border border-white/10 bg-white/[0.03] p-5 sm:p-6">
+            <h3 class="text-lg font-semibold text-white">Researchers & analysts</h3>
+            <ul class="list-disc space-y-2 pl-5 marker:text-emerald-400/80">
+              <li>Uploading and analysing full research papers or reports</li>
+              <li>Synthesising findings across multiple documents in one session</li>
+              <li>Asking nuanced questions about complex or contradictory data</li>
+            </ul>
+          </div>
+          <div class="space-y-3 rounded-2xl border border-white/10 bg-white/[0.03] p-5 sm:p-6">
+            <h3 class="text-lg font-semibold text-white">Writers & editors</h3>
+            <ul class="list-disc space-y-2 pl-5 marker:text-emerald-400/80">
+              <li>Producing long-form drafts that maintain a consistent voice throughout</li>
+              <li>Getting detailed editorial feedback on structure, argument, and clarity</li>
+              <li>Rewriting content for different audiences or tones</li>
+            </ul>
+          </div>
+          <div class="space-y-3 rounded-2xl border border-white/10 bg-white/[0.03] p-5 sm:p-6">
+            <h3 class="text-lg font-semibold text-white">Legal, medical & finance professionals</h3>
+            <ul class="list-disc space-y-2 pl-5 marker:text-emerald-400/80">
+              <li>Summarising long contracts or policy documents</li>
+              <li>Explaining complex regulatory language in plain terms</li>
+              <li>Identifying key clauses or risk areas in uploaded documents</li>
+            </ul>
+          </div>
+          <div class="space-y-3 rounded-2xl border border-white/10 bg-white/[0.03] p-5 sm:p-6">
+            <h3 class="text-lg font-semibold text-white">Developers</h3>
+            <ul class="list-disc space-y-2 pl-5 marker:text-emerald-400/80">
+              <li>Pasting large chunks of code for review and refactoring suggestions</li>
+              <li>Learning why code works, not just what to copy</li>
+              <li>Debugging complex logic with a patient, step-by-step AI partner</li>
+            </ul>
+          </div>
+          <div class="space-y-3 rounded-2xl border border-white/10 bg-white/[0.03] p-5 sm:p-6">
+            <h3 class="text-lg font-semibold text-white">Business professionals</h3>
+            <ul class="list-disc space-y-2 pl-5 marker:text-emerald-400/80">
+              <li>Drafting and refining strategic documents, memos, and reports</li>
+              <li>Preparing nuanced briefings from large amounts of source material</li>
+            </ul>
+          </div>
+        </section>
+
+        <section class="space-y-6" aria-labelledby="proscons-heading">
+          <h2 id="proscons-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">Pros and cons of Claude</h2>
+          <div class="grid gap-6 lg:grid-cols-2">
+            <div class="rounded-2xl border border-emerald-500/20 bg-emerald-500/5 p-5 sm:p-6">
+              <h3 class="mb-4 text-lg font-semibold text-emerald-100">Pros</h3>
+              <ul class="list-disc space-y-2 pl-5 text-slate-300/95 marker:text-emerald-400/80">
+                <li>Exceptional for long documents — 200K token context window</li>
+                <li>Thoughtful, nuanced responses that acknowledge uncertainty</li>
+                <li>One of the best AI tools for long-form writing quality</li>
+                <li>Strong safety design — less likely to confidently hallucinate</li>
+                <li>Projects feature for persistent context across sessions</li>
+                <li>Free tier is genuinely capable for everyday use</li>
+              </ul>
+            </div>
+            <div class="rounded-2xl border border-amber-500/20 bg-amber-500/5 p-5 sm:p-6">
+              <h3 class="mb-4 text-lg font-semibold text-amber-100">Cons</h3>
+              <ul class="list-disc space-y-2 pl-5 text-slate-300/95 marker:text-amber-400/80">
+                <li>No real-time web search in the base product</li>
+                <li>Smaller ecosystem of integrations vs ChatGPT</li>
+                <li>Can be overly cautious — sometimes declines edge cases unnecessarily</li>
+                <li>Usage limits on the free plan can be hit on heavier sessions</li>
+                <li>No image generation (only image understanding)</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        <section class="space-y-6" aria-labelledby="pricing-heading">
+          <h2 id="pricing-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">Claude pricing</h2>
+          <ul class="list-disc space-y-3 pl-5 marker:text-emerald-400/80">
+            <li><strong class="text-slate-200">Free</strong> — access to Claude with usage limits. Good for casual daily use and getting a feel for the model.</li>
+            <li><strong class="text-slate-200">Pro — $20/month</strong> — higher usage limits, access to the most powerful Claude models, Projects, and early access to new features. The right choice if you use Claude regularly.</li>
+            <li><strong class="text-slate-200">Team — $25/user/month</strong> — everything in Pro, with shared workspaces, team administration, and collaboration features.</li>
+            <li><strong class="text-slate-200">API (pay-per-use)</strong> — for developers integrating Claude into apps and workflows. Priced per million tokens, with different rates for different model tiers.</li>
+          </ul>
+          <p class="rounded-xl border border-white/10 bg-white/[0.02] px-4 py-3 text-slate-300/95">
+            <span class="mr-1.5 font-medium text-emerald-200" aria-hidden>Tip:</span>
+            Claude's model lineup (Haiku, Sonnet, Opus) spans speed and capability trade-offs. Pro users access
+            the full range. Confirm the latest model availability and pricing at
+            <a class="font-medium text-emerald-300/95 underline decoration-emerald-500/40 underline-offset-4 hover:text-emerald-200" href="https://claude.ai/pricing" target="_blank" rel="noopener noreferrer">claude.ai/pricing</a>.
+          </p>
+        </section>
+
+        <section class="space-y-6" aria-labelledby="alternatives-heading">
+          <h2 id="alternatives-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">Alternatives to Claude</h2>
+          <ul class="list-disc space-y-3 pl-5 marker:text-emerald-400/80">
+            <li><strong class="text-slate-200">ChatGPT</strong> — broader ecosystem, image generation, more plugins and integrations; better if you need one tool for everything including visuals and voice.</li>
+            <li><strong class="text-slate-200">Google Gemini</strong> — deeply integrated with Google Workspace; strong for users who live in Google Docs and Gmail.</li>
+            <li><strong class="text-slate-200">Perplexity AI</strong> — best for real-time, cited web research; Claude's complement rather than its replacement for research use cases.</li>
+            <li><strong class="text-slate-200">Microsoft Copilot</strong> — GPT-powered and built into Microsoft 365; the practical choice if you're already in the Microsoft ecosystem.</li>
+          </ul>
+        </section>
+
+        <section class="space-y-4" aria-labelledby="who-heading">
+          <h2 id="who-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">Who should use Claude?</h2>
+          <p>Claude is a great fit if you:</p>
+          <ul class="list-disc space-y-2 pl-5 marker:text-emerald-400/80">
+            <li>Regularly work with long documents — contracts, papers, reports, codebases</li>
+            <li>Write long-form content and care about voice consistency and quality</li>
+            <li>Work in a sensitive domain where AI reliability and honesty matters</li>
+            <li>Want an AI that explains its reasoning rather than just outputting results</li>
+            <li>Need nuanced analysis of complex, multi-faceted problems</li>
+          </ul>
+          <p class="rounded-xl border border-white/10 bg-white/[0.02] px-4 py-3 text-slate-300/95">
+            If you want real-time web search, image generation, or a large app ecosystem, ChatGPT covers more
+            ground. But for thoughtful analysis, long documents, and writing that needs to sound genuinely human,
+            Claude is the best AI tool on the market.
+          </p>
+        </section>
+
+        <section class="space-y-6" aria-labelledby="bonus-heading">
+          <h2 id="bonus-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">Bonus section</h2>
+          <div class="space-y-3 rounded-2xl border border-white/10 bg-white/[0.03] p-5 sm:p-6">
+            <h3 class="text-lg font-semibold text-white">Practical tips for beginners</h3>
+            <ul class="list-disc space-y-2 pl-5 text-slate-300/95 marker:text-emerald-400/80">
+              <li><strong class="text-slate-200">Upload your documents.</strong> Claude's superpower is context length — instead of copy-pasting excerpts, upload the whole document and let it work with the full picture.</li>
+              <li><strong class="text-slate-200">Use Projects for ongoing work.</strong> If you're working on the same project across multiple sessions, set up a Project with instructions and your relevant files — Claude will remember.</li>
+              <li><strong class="text-slate-200">Ask it to explain its reasoning.</strong> If you get a response you're not sure about, ask "can you walk me through how you arrived at that?" — the explanation often reveals whether the answer is solid or shaky.</li>
+              <li><strong class="text-slate-200">Push back when it's wrong.</strong> Claude responds well to polite correction — say "I don't think that's right because…" and it will reconsider and usually improve its answer.</li>
+            </ul>
+          </div>
+          <div class="space-y-3 rounded-2xl border border-white/10 bg-white/[0.03] p-5 sm:p-6">
+            <h3 class="text-lg font-semibold text-white">Common mistakes to avoid</h3>
+            <ul class="list-disc space-y-2 pl-5 text-slate-300/95 marker:text-amber-400/80">
+              <li><strong class="text-slate-200">Assuming it has current information.</strong> Claude's knowledge has a training cutoff — it doesn't browse the web by default, so don't rely on it for recent news or live data.</li>
+              <li><strong class="text-slate-200">Treating it as a search engine.</strong> Claude is best for reasoning, writing, and analysis — not for looking up current facts. Pair it with Perplexity for research that needs live sources.</li>
+              <li><strong class="text-slate-200">Not giving enough context.</strong> The more context you provide — your audience, goal, constraints, and background — the better Claude's output will be. Don't be brief when the task is complex.</li>
+              <li><strong class="text-slate-200">Giving up after one response.</strong> Claude gets better through conversation. Iterate on its outputs with specific feedback rather than starting a new chat every time.</li>
+            </ul>
+          </div>
+        </section>
+
+        <p class="text-lg text-slate-200/95">
+          Claude isn't the flashiest AI tool — it won't generate images or search the web by default. But for
+          the work that really matters — understanding complex material, writing with genuine quality, reasoning
+          through difficult problems — it's the most trustworthy AI assistant available.
+        </p>
+
+      </article>
+    </div>
+  </div>
+{% endblock %}
