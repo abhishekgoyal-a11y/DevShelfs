@@ -30,6 +30,7 @@ def group_ai_by_category(
         "Image & design",
         "Video & motion",
         "Developer tools",
+        "AI agents & automation",
     ),
 ) -> list[tuple[str, list[dict]]]:
     m: dict[str, list[dict]] = {}

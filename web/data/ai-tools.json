@@ -52,5 +52,14 @@
     "detailPath": "/ai-tools/github-copilot",
     "featured": true,
     "featured_order": 6
+  },
+  {
+    "id": "autogpt",
+    "name": "AutoGPT",
+    "category": "AI agents & automation",
+    "description": "Open-source autonomous agent loop: set a high-level goal, and it plans steps, executes, and revises—often backed by LLM APIs for research and drafts.",
+    "detailPath": "/ai-tools/autogpt",
+    "featured": true,
+    "featured_order": 7
   }
 ]

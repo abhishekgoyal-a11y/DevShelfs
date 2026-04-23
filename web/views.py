@@ -59,7 +59,7 @@ def home(request):
             "project_count": len(projects),
             "ai_tool_count": len(tools),
             "featured_projects": pick_featured_list(projects, 3),
-            "featured_tools": pick_featured_list(tools, 8),
+            "featured_tools": pick_featured_list(tools, 10),
             "site_about": SITE_ABOUT,
         },
     )
@@ -213,6 +213,14 @@ def github_copilot(request):
     return render(
         request,
         "web/github_copilot.html",
+        {"layout": _layout(request.path), "active_nav": "ai"},
+    )
+
+
+def autogpt(request):
+    return render(
+        request,
+        "web/autogpt.html",
         {"layout": _layout(request.path), "active_nav": "ai"},
     )
 
