@@ -25,5 +25,14 @@
     "detailPath": "/ai-tools/dall-e",
     "featured": true,
     "featured_order": 3
+  },
+  {
+    "id": "runwayml",
+    "name": "RunwayML",
+    "category": "Video & motion",
+    "description": "Browser-based AI for text-to-video, smart editing, backgrounds, and image generation—built for creators who want pro-ish results without a pro toolchain.",
+    "detailPath": "/ai-tools/runwayml",
+    "featured": true,
+    "featured_order": 4
   }
 ]
