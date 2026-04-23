@@ -1,0 +1,333 @@
+{% extends "web/base.html" %}
+{% block title %}AgentGPT — DevShelf{% endblock %}
+{% block content %}
+  <div class="space-y-10">
+    <div class="flex flex-wrap items-center gap-2 text-sm text-slate-400/90">
+      <a href="{% url 'ai_tools' %}" class="font-medium text-emerald-300/90 transition hover:text-emerald-200">AI tools</a>
+      <span aria-hidden class="text-slate-600">/</span>
+      <span class="text-slate-200/90">AgentGPT</span>
+    </div>
+
+    <section
+      class="relative overflow-hidden rounded-3xl border border-emerald-400/20 bg-white/[0.06] p-6 shadow-[0_0_0_1px_rgba(255,255,255,0.04)] backdrop-blur-2xl sm:p-8"
+    >
+      <div class="pointer-events-none absolute -right-24 top-0 h-72 w-72 rounded-full bg-emerald-500/15 blur-3xl"></div>
+      <div class="pointer-events-none absolute -left-20 bottom-0 h-56 w-56 rounded-full bg-indigo-500/10 blur-3xl"></div>
+      <div class="relative">
+        <p class="text-xs font-semibold uppercase tracking-[0.22em] text-emerald-300/90">AI tool</p>
+        <h1 class="mt-3 text-3xl font-semibold tracking-tight text-white sm:text-4xl lg:text-[2.5rem] lg:leading-tight">
+          AgentGPT: Browser Agents That Chase a Goal for You
+        </h1>
+        <p class="mt-4 text-sm leading-relaxed text-slate-200/80 sm:text-base">
+          AgentGPT (from Reworkd) lets you spin up named AI agents in the browser: you set an objective, and the agent plans
+          steps, executes, and refines—handy for research, itineraries, outlines, and brainstorming without installing a dev stack.
+        </p>
+        <p class="mt-6 flex flex-wrap items-center gap-3">
+          <a
+            href="https://agentgpt.reworkd.ai/"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="inline-flex items-center gap-2 rounded-full border border-emerald-400/35 bg-emerald-500/10 px-4 py-2 text-sm font-medium text-emerald-200 transition hover:border-emerald-300/50 hover:bg-emerald-500/15 hover:text-white"
+          >
+            Open AgentGPT app <span aria-hidden class="text-emerald-300/80">↗</span>
+          </a>
+          <a
+            href="https://agentgpt.io/"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/[0.04] px-4 py-2 text-sm font-medium text-slate-200/90 transition hover:border-white/25 hover:bg-white/[0.07] hover:text-white"
+          >
+            agentgpt.io <span aria-hidden class="text-slate-400">↗</span>
+          </a>
+        </p>
+      </div>
+    </section>
+
+    <div class="glass rounded-3xl border border-white/10 p-5 sm:p-8">
+      <article class="mx-auto space-y-12 text-base leading-relaxed text-slate-300/95">
+        <section class="space-y-4" aria-labelledby="what-heading">
+          <h2 id="what-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">What is AgentGPT?</h2>
+          <p>
+            AgentGPT is a tool that lets you create AI “agents” that can work on tasks for you automatically.
+          </p>
+          <p>
+            Think of it like this: instead of asking AI one question at a time, you give it a goal, and it tries to complete
+            that goal step by step on its own.
+          </p>
+          <p>For example:</p>
+          <ul class="list-disc space-y-2 pl-5 marker:text-emerald-400/80">
+            <li>“Plan a 7-day travel itinerary for Paris”</li>
+            <li>“Research the best laptops under $1000”</li>
+            <li>“Write a business plan for a coffee shop”</li>
+          </ul>
+          <p>Once you give the goal, AgentGPT acts like a little assistant that keeps working until it finishes the task.</p>
+        </section>
+
+        <section class="space-y-6" aria-labelledby="features-heading">
+          <h2 id="features-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">Key features of AgentGPT</h2>
+          <p>Here are the main things that make AgentGPT interesting:</p>
+          <ul class="list-disc space-y-2 pl-5 marker:text-emerald-400/80">
+            <li><strong class="text-slate-200">Goal-based AI</strong> — you do not need to guide it step by step. Just set a goal and it starts working.</li>
+            <li><strong class="text-slate-200">Breaks tasks into steps</strong> — it does not try to do everything at once. It splits big tasks into smaller parts.</li>
+            <li><strong class="text-slate-200">Works independently</strong> — it keeps going without needing constant instructions.</li>
+            <li><strong class="text-slate-200">Web-based access</strong> — you can use it directly in your browser without installing complicated software.</li>
+            <li><strong class="text-slate-200">Custom agents</strong> — you can name your AI agent and give it a specific purpose.</li>
+          </ul>
+        </section>
+
+        <section class="space-y-6" aria-labelledby="how-heading">
+          <h2 id="how-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">How AgentGPT works (explained simply)</h2>
+          <p>Let us break it down in an easy way:</p>
+          <ol class="list-decimal space-y-3 pl-5 marker:text-emerald-400/80">
+            <li>
+              <strong class="text-slate-200">You give a goal</strong> — example: “Create a marketing plan for a new bakery.”
+            </li>
+            <li>
+              <strong class="text-slate-200">The AI thinks about steps</strong> — it might decide:
+              <ul class="mt-2 list-disc space-y-1 pl-5 marker:text-emerald-400/60">
+                <li>Research bakery trends</li>
+                <li>Identify target customers</li>
+                <li>Create marketing ideas</li>
+              </ul>
+            </li>
+            <li>
+              <strong class="text-slate-200">It completes each step one by one</strong> — it gathers information, analyzes it,
+              and builds the final result.
+            </li>
+            <li><strong class="text-slate-200">It improves along the way</strong> — if something does not work, it adjusts and tries again.</li>
+          </ol>
+          <p>So basically, it behaves like a self-working digital assistant.</p>
+        </section>
+
+        <section class="space-y-6" aria-labelledby="usecases-heading">
+          <h2 id="usecases-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">
+            Real-life use cases of AgentGPT
+          </h2>
+          <p>AgentGPT can be useful in many everyday situations:</p>
+
+          <div class="space-y-3 rounded-2xl border border-white/10 bg-white/[0.03] p-5 sm:p-6">
+            <h3 class="text-lg font-semibold text-white">Learning &amp; research</h3>
+            <ul class="list-disc space-y-2 pl-5 marker:text-emerald-400/80">
+              <li>Summarizing topics</li>
+              <li>Studying new subjects</li>
+              <li>Comparing products</li>
+            </ul>
+          </div>
+          <div class="space-y-3 rounded-2xl border border-white/10 bg-white/[0.03] p-5 sm:p-6">
+            <h3 class="text-lg font-semibold text-white">Business tasks</h3>
+            <ul class="list-disc space-y-2 pl-5 marker:text-emerald-400/80">
+              <li>Writing business plans</li>
+              <li>Brainstorming ideas</li>
+              <li>Market research</li>
+            </ul>
+          </div>
+          <div class="space-y-3 rounded-2xl border border-white/10 bg-white/[0.03] p-5 sm:p-6">
+            <h3 class="text-lg font-semibold text-white">Travel planning</h3>
+            <ul class="list-disc space-y-2 pl-5 marker:text-emerald-400/80">
+              <li>Creating itineraries</li>
+              <li>Finding places to visit</li>
+              <li>Budget planning</li>
+            </ul>
+          </div>
+          <div class="space-y-3 rounded-2xl border border-white/10 bg-white/[0.03] p-5 sm:p-6">
+            <h3 class="text-lg font-semibold text-white">Content creation</h3>
+            <ul class="list-disc space-y-2 pl-5 marker:text-emerald-400/80">
+              <li>Blog ideas</li>
+              <li>Social media posts</li>
+              <li>Video scripts</li>
+            </ul>
+          </div>
+          <div class="space-y-3 rounded-2xl border border-white/10 bg-white/[0.03] p-5 sm:p-6">
+            <h3 class="text-lg font-semibold text-white">Productivity</h3>
+            <ul class="list-disc space-y-2 pl-5 marker:text-emerald-400/80">
+              <li>Task breakdowns</li>
+              <li>Goal planning</li>
+              <li>Workflow suggestions</li>
+            </ul>
+          </div>
+        </section>
+
+        <section class="space-y-6" aria-labelledby="proscons-heading">
+          <h2 id="proscons-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">Pros and cons of AgentGPT</h2>
+          <div class="grid gap-6 lg:grid-cols-2">
+            <div class="rounded-2xl border border-emerald-500/20 bg-emerald-500/5 p-5 sm:p-6">
+              <h3 class="mb-4 text-lg font-semibold text-emerald-100">Pros</h3>
+              <ul class="list-disc space-y-2 pl-5 text-slate-300/95 marker:text-emerald-400/80">
+                <li>Easy to use for beginners</li>
+                <li>Works independently</li>
+                <li>Saves time on research and planning</li>
+                <li>Great for brainstorming ideas</li>
+                <li>No advanced skills needed</li>
+              </ul>
+            </div>
+            <div class="rounded-2xl border border-amber-500/20 bg-amber-500/5 p-5 sm:p-6">
+              <h3 class="mb-4 text-lg font-semibold text-amber-100">Cons</h3>
+              <ul class="list-disc space-y-2 pl-5 text-slate-300/95 marker:text-amber-400/80">
+                <li>Sometimes gives inaccurate information</li>
+                <li>Can be slow for complex tasks</li>
+                <li>Needs clear goals to work well</li>
+                <li>May require checking and editing results</li>
+                <li>Not always reliable for critical decisions</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        <section class="space-y-6" aria-labelledby="pricing-heading">
+          <h2 id="pricing-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">
+            AgentGPT pricing (Reworkd AI)
+          </h2>
+          <p>On the Reworkd-hosted AgentGPT app, plans are often structured like this:</p>
+          <div class="space-y-3 rounded-2xl border border-white/10 bg-white/[0.03] p-5 sm:p-6">
+            <h3 class="text-lg font-semibold text-white">Free ($0/month)</h3>
+            <ul class="list-disc space-y-2 pl-5 text-slate-300/95 marker:text-emerald-400/80">
+              <li>5 demo agents per day</li>
+              <li>Basic GPT-3.5</li>
+              <li>Limited features</li>
+            </ul>
+          </div>
+          <div class="space-y-3 rounded-2xl border border-white/10 bg-white/[0.03] p-5 sm:p-6">
+            <h3 class="text-lg font-semibold text-white">Pro ($40/month)</h3>
+            <ul class="list-disc space-y-2 pl-5 text-slate-300/95 marker:text-emerald-400/80">
+              <li>30 agents per day</li>
+              <li>GPT-4 access</li>
+              <li>Unlimited web search</li>
+              <li>Plugins</li>
+              <li>Priority support</li>
+            </ul>
+          </div>
+          <div class="space-y-3 rounded-2xl border border-white/10 bg-white/[0.03] p-5 sm:p-6">
+            <h3 class="text-lg font-semibold text-white">Enterprise (custom)</h3>
+            <ul class="list-disc space-y-2 pl-5 text-slate-300/95 marker:text-emerald-400/80">
+              <li>Full features</li>
+              <li>Team tools</li>
+              <li>Dedicated support</li>
+            </ul>
+          </div>
+          <p class="text-sm leading-relaxed text-slate-400/95">
+            Limits and prices can change—confirm the current tiers in billing on
+            <a
+              class="ml-1 font-medium text-emerald-300/95 underline decoration-emerald-500/40 underline-offset-4 hover:text-emerald-200"
+              href="https://agentgpt.reworkd.ai/"
+              target="_blank"
+              rel="noopener noreferrer"
+              >agentgpt.reworkd.ai</a
+            >. For the separate services site, see
+            <a
+              class="ml-1 font-medium text-emerald-300/95 underline decoration-emerald-500/40 underline-offset-4 hover:text-emerald-200"
+              href="https://agentgpt.io/"
+              target="_blank"
+              rel="noopener noreferrer"
+              >agentgpt.io</a
+            >.
+          </p>
+        </section>
+
+        <section class="space-y-6" aria-labelledby="alternatives-heading">
+          <h2 id="alternatives-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">Alternatives to AgentGPT</h2>
+          <p>If you want similar tools, here are some options:</p>
+          <ul class="list-disc space-y-2 pl-5 marker:text-emerald-400/80">
+            <li>
+              <strong class="text-slate-200">AutoGPT</strong> — a more technical version of autonomous AI agents.
+              <a
+                class="ml-1 font-medium text-emerald-300/95 underline decoration-emerald-500/40 underline-offset-4 hover:text-emerald-200"
+                href="{% url 'autogpt' %}"
+                >DevShelf overview</a
+              >
+              ·
+              <a
+                class="font-medium text-emerald-300/95 underline decoration-emerald-500/40 underline-offset-4 hover:text-emerald-200"
+                href="https://agpt.co/"
+                target="_blank"
+                rel="noopener noreferrer"
+                >agpt.co</a
+              >
+            </li>
+            <li>
+              <strong class="text-slate-200">ChatGPT</strong> — great for step-by-step help and conversations.
+              <a
+                class="ml-1 font-medium text-emerald-300/95 underline decoration-emerald-500/40 underline-offset-4 hover:text-emerald-200"
+                href="https://chatgpt.com/"
+                target="_blank"
+                rel="noopener noreferrer"
+                >chatgpt.com</a
+              >
+            </li>
+            <li>
+              <strong class="text-slate-200">Microsoft Copilot</strong> — useful for productivity and office tasks.
+              <a
+                class="ml-1 font-medium text-emerald-300/95 underline decoration-emerald-500/40 underline-offset-4 hover:text-emerald-200"
+                href="https://www.microsoft.com/en-us/microsoft-copilot"
+                target="_blank"
+                rel="noopener noreferrer"
+                >microsoft.com/microsoft-copilot</a
+              >
+            </li>
+            <li>
+              <strong class="text-slate-200">Claude (Anthropic)</strong> — known for detailed and thoughtful responses.
+              <a
+                class="ml-1 font-medium text-emerald-300/95 underline decoration-emerald-500/40 underline-offset-4 hover:text-emerald-200"
+                href="https://claude.ai/"
+                target="_blank"
+                rel="noopener noreferrer"
+                >claude.ai</a
+              >
+            </li>
+            <li>
+              <strong class="text-slate-200">Perplexity AI</strong> — strong for research and web-based answers.
+              <a
+                class="ml-1 font-medium text-emerald-300/95 underline decoration-emerald-500/40 underline-offset-4 hover:text-emerald-200"
+                href="https://www.perplexity.ai/"
+                target="_blank"
+                rel="noopener noreferrer"
+                >perplexity.ai</a
+              >
+            </li>
+          </ul>
+        </section>
+
+        <section class="space-y-4" aria-labelledby="who-heading">
+          <h2 id="who-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">Who should use AgentGPT?</h2>
+          <p>AgentGPT is best for:</p>
+          <ul class="list-disc space-y-2 pl-5 marker:text-emerald-400/80">
+            <li>Students who want help with research or assignments</li>
+            <li>Freelancers and creators who need ideas fast</li>
+            <li>Entrepreneurs planning projects or businesses</li>
+            <li>Curious beginners exploring AI tools</li>
+            <li>Anyone who wants automation for simple thinking tasks</li>
+          </ul>
+          <p>It is <strong class="text-slate-200">not</strong> ideal for:</p>
+          <ul class="list-disc space-y-2 pl-5 marker:text-emerald-400/80">
+            <li>Highly technical work requiring accuracy</li>
+            <li>Legal, medical, or financial decisions without expert review</li>
+          </ul>
+        </section>
+
+        <section class="space-y-6" aria-labelledby="bonus-heading">
+          <h2 id="bonus-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">Bonus section</h2>
+
+          <div class="space-y-3 rounded-2xl border border-white/10 bg-white/[0.03] p-5 sm:p-6">
+            <h3 class="text-lg font-semibold text-white">Practical tips for beginners</h3>
+            <ul class="list-disc space-y-2 pl-5 text-slate-300/95 marker:text-emerald-400/80">
+              <li>Start with simple goals, not complex ones</li>
+              <li>Be very clear about what you want</li>
+              <li>Try different prompts to see better results</li>
+              <li>Review and edit everything it generates</li>
+              <li>Use it as a helper, not a final decision-maker</li>
+            </ul>
+          </div>
+
+          <div class="space-y-3 rounded-2xl border border-white/10 bg-white/[0.03] p-5 sm:p-6">
+            <h3 class="text-lg font-semibold text-white">Common mistakes to avoid</h3>
+            <ul class="list-disc space-y-2 pl-5 text-slate-300/95 marker:text-emerald-400/80">
+              <li>Giving vague instructions like “help me make money”</li>
+              <li>Expecting perfect results without checking</li>
+              <li>Relying fully on it without human judgment</li>
+              <li>Using it for highly sensitive or critical decisions</li>
+            </ul>
+          </div>
+        </section>
+      </article>
+    </div>
+  </div>
+{% endblock %}

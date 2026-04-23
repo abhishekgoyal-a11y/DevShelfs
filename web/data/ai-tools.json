@@ -61,5 +61,14 @@
     "detailPath": "/ai-tools/autogpt",
     "featured": true,
     "featured_order": 7
+  },
+  {
+    "id": "agentgpt",
+    "name": "AgentGPT",
+    "category": "AI agents & automation",
+    "description": "Browser-based autonomous agents: set a named goal, and it breaks work into steps—great for research, plans, and drafts without local installs.",
+    "detailPath": "/ai-tools/agentgpt",
+    "featured": true,
+    "featured_order": 8
   }
 ]
