@@ -1,0 +1,257 @@
+{% extends "web/base.html" %}
+{% block title %}Google Gemini — DevShelf{% endblock %}
+{% block content %}
+  <div class="space-y-10">
+    <div class="flex flex-wrap items-center gap-2 text-sm text-slate-400/90">
+      <a href="{% url 'ai_tools' %}" class="font-medium text-emerald-300/90 transition hover:text-emerald-200">AI tools</a>
+      <span aria-hidden class="text-slate-600">/</span>
+      <span class="text-slate-200/90">Google Gemini</span>
+    </div>
+
+    <section
+      class="relative overflow-hidden rounded-3xl border border-emerald-400/20 bg-white/[0.06] p-6 shadow-[0_0_0_1px_rgba(255,255,255,0.04)] backdrop-blur-2xl sm:p-8"
+    >
+      <div class="pointer-events-none absolute -right-24 top-0 h-72 w-72 rounded-full bg-emerald-500/15 blur-3xl"></div>
+      <div class="pointer-events-none absolute -left-20 bottom-0 h-56 w-56 rounded-full bg-cyan-500/10 blur-3xl"></div>
+      <div class="relative">
+        <p class="text-xs font-semibold uppercase tracking-[0.22em] text-emerald-300/90">AI tool</p>
+        <h1 class="mt-3 text-3xl font-semibold tracking-tight text-white sm:text-4xl lg:text-[2.5rem] lg:leading-tight">
+          Google Gemini: Google's Multimodal AI Assistant
+        </h1>
+        <p class="mt-4 text-sm leading-relaxed text-slate-200/80 sm:text-base">
+          Google Gemini is a conversational AI that understands text, images, and more—designed to help you write, research,
+          and get things done faster, with deep integration across Google's ecosystem.
+        </p>
+        <p class="mt-6 flex flex-wrap items-center gap-3">
+          <a
+            href="https://gemini.google.com"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="inline-flex items-center gap-2 rounded-full border border-emerald-400/35 bg-emerald-500/10 px-4 py-2 text-sm font-medium text-emerald-200 transition hover:border-emerald-300/50 hover:bg-emerald-500/15 hover:text-white"
+          >
+            Try Gemini <span aria-hidden class="text-emerald-300/80">↗</span>
+          </a>
+          <a
+            href="https://one.google.com/about/plans"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/[0.04] px-4 py-2 text-sm font-medium text-slate-200/90 transition hover:border-white/25 hover:bg-white/[0.07] hover:text-white"
+          >
+            Pricing <span aria-hidden class="text-slate-400">↗</span>
+          </a>
+        </p>
+      </div>
+    </section>
+
+    <div class="glass rounded-3xl border border-white/10 p-5 sm:p-8">
+      <article class="mx-auto space-y-12 text-base leading-relaxed text-slate-300/95">
+
+        <section class="space-y-4" aria-labelledby="what-heading">
+          <h2 id="what-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">What is Google Gemini?</h2>
+          <p>
+            Google Gemini is an AI tool created by Google. Think of it as a smart assistant you can chat with—similar to
+            talking to a knowledgeable friend who can help you write, learn, plan, or solve problems.
+          </p>
+          <p>
+            It can understand text, images, and sometimes even videos, which makes it more than just a simple chatbot. Whether
+            you want help drafting an email, summarizing a long article, or brainstorming ideas, Gemini is designed to make
+            everyday tasks faster and easier.
+          </p>
+        </section>
+
+        <section class="space-y-6" aria-labelledby="features-heading">
+          <h2 id="features-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">
+            Key features of Google Gemini
+          </h2>
+          <p>Here are some of the standout things Gemini can do:</p>
+          <div class="space-y-3 rounded-2xl border border-white/10 bg-white/[0.03] p-5 sm:p-6">
+            <h3 class="text-lg font-semibold text-white">1. Conversational AI</h3>
+            <p class="text-slate-300/95">You can chat with it naturally, like messaging a person.</p>
+          </div>
+          <div class="space-y-3 rounded-2xl border border-white/10 bg-white/[0.03] p-5 sm:p-6">
+            <h3 class="text-lg font-semibold text-white">2. Multimodal abilities</h3>
+            <p class="text-slate-300/95">It can understand not just text, but also images and other formats.</p>
+          </div>
+          <div class="space-y-3 rounded-2xl border border-white/10 bg-white/[0.03] p-5 sm:p-6">
+            <h3 class="text-lg font-semibold text-white">3. Writing assistance</h3>
+            <p class="text-slate-300/95">Great for emails, essays, social posts, and more.</p>
+          </div>
+          <div class="space-y-3 rounded-2xl border border-white/10 bg-white/[0.03] p-5 sm:p-6">
+            <h3 class="text-lg font-semibold text-white">4. Research support</h3>
+            <p class="text-slate-300/95">It can summarize information and explain topics in simple terms.</p>
+          </div>
+          <div class="space-y-3 rounded-2xl border border-white/10 bg-white/[0.03] p-5 sm:p-6">
+            <h3 class="text-lg font-semibold text-white">5. Google tools integration</h3>
+            <p class="text-slate-300/95">Works with services like Google Docs and Gmail.</p>
+          </div>
+          <div class="space-y-3 rounded-2xl border border-white/10 bg-white/[0.03] p-5 sm:p-6">
+            <h3 class="text-lg font-semibold text-white">6. Coding help</h3>
+            <p class="text-slate-300/95">Can assist with basic programming tasks.</p>
+          </div>
+        </section>
+
+        <section class="space-y-6" aria-labelledby="how-heading">
+          <h2 id="how-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">
+            How Google Gemini works
+          </h2>
+          <p>
+            Imagine Gemini as a super-trained brain that has read a huge portion of the internet. When you ask it something:
+          </p>
+          <ul class="list-disc space-y-2 pl-5 marker:text-emerald-400/80">
+            <li>It reads your question</li>
+            <li>It predicts what a helpful answer should look like</li>
+            <li>It responds in a way that sounds natural and relevant</li>
+          </ul>
+          <p class="rounded-xl border border-white/10 bg-white/[0.02] px-4 py-3 text-slate-300/95">
+            Behind the scenes it uses advanced AI models similar to other leading tools—but you don't need to understand the
+            technical details. Just type your question and it does the heavy lifting.
+          </p>
+        </section>
+
+        <section class="space-y-6" aria-labelledby="usecases-heading">
+          <h2 id="usecases-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">
+            Real-life use cases of Google Gemini
+          </h2>
+          <div class="space-y-3 rounded-2xl border border-white/10 bg-white/[0.03] p-5 sm:p-6">
+            <h3 class="text-lg font-semibold text-white">Students</h3>
+            <ul class="list-disc space-y-2 pl-5 marker:text-emerald-400/80">
+              <li>Summarizing chapters and understanding tough topics</li>
+              <li>Getting homework help explained step by step</li>
+            </ul>
+          </div>
+          <div class="space-y-3 rounded-2xl border border-white/10 bg-white/[0.03] p-5 sm:p-6">
+            <h3 class="text-lg font-semibold text-white">Professionals</h3>
+            <ul class="list-disc space-y-2 pl-5 marker:text-emerald-400/80">
+              <li>Writing emails, reports, and presentations faster</li>
+              <li>Drafting replies directly inside Gmail</li>
+            </ul>
+          </div>
+          <div class="space-y-3 rounded-2xl border border-white/10 bg-white/[0.03] p-5 sm:p-6">
+            <h3 class="text-lg font-semibold text-white">Content creators</h3>
+            <ul class="list-disc space-y-2 pl-5 marker:text-emerald-400/80">
+              <li>Generating blog ideas, captions, or scripts</li>
+              <li>Repurposing content across formats</li>
+            </ul>
+          </div>
+          <div class="space-y-3 rounded-2xl border border-white/10 bg-white/[0.03] p-5 sm:p-6">
+            <h3 class="text-lg font-semibold text-white">Business owners</h3>
+            <ul class="list-disc space-y-2 pl-5 marker:text-emerald-400/80">
+              <li>Drafting proposals, marketing copy, or customer replies</li>
+              <li>Summarizing long documents quickly</li>
+            </ul>
+          </div>
+          <div class="space-y-3 rounded-2xl border border-white/10 bg-white/[0.03] p-5 sm:p-6">
+            <h3 class="text-lg font-semibold text-white">Everyday users</h3>
+            <ul class="list-disc space-y-2 pl-5 marker:text-emerald-400/80">
+              <li>Planning trips or recipes</li>
+              <li>Learning new skills through conversation</li>
+            </ul>
+          </div>
+        </section>
+
+        <section class="space-y-6" aria-labelledby="proscons-heading">
+          <h2 id="proscons-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">Pros and cons of Google Gemini</h2>
+          <div class="grid gap-6 lg:grid-cols-2">
+            <div class="rounded-2xl border border-emerald-500/20 bg-emerald-500/5 p-5 sm:p-6">
+              <h3 class="mb-4 text-lg font-semibold text-emerald-100">Pros</h3>
+              <ul class="list-disc space-y-2 pl-5 text-slate-300/95 marker:text-emerald-400/80">
+                <li>Easy to use, even for beginners</li>
+                <li>Saves time on writing and research</li>
+                <li>Works across multiple Google apps</li>
+                <li>Handles different types of content (text, images, etc.)</li>
+              </ul>
+            </div>
+            <div class="rounded-2xl border border-amber-500/20 bg-amber-500/5 p-5 sm:p-6">
+              <h3 class="mb-4 text-lg font-semibold text-amber-100">Cons</h3>
+              <ul class="list-disc space-y-2 pl-5 text-slate-300/95 marker:text-amber-400/80">
+                <li>Sometimes gives incorrect or outdated information</li>
+                <li>Can sound confident even when it's wrong</li>
+                <li>Advanced features may require a paid plan</li>
+                <li>Needs internet access to work</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        <section class="space-y-6" aria-labelledby="pricing-heading">
+          <h2 id="pricing-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">Google Gemini pricing</h2>
+          <ul class="list-disc space-y-2 pl-5 marker:text-emerald-400/80">
+            <li>
+              <strong class="text-slate-200">Free</strong> — good for everyday tasks like chatting, writing, and basic help.
+            </li>
+            <li>
+              <strong class="text-slate-200">Gemini Advanced (paid)</strong> — more powerful models, better reasoning, and
+              priority access; often bundled with Google One AI plans.
+            </li>
+          </ul>
+          <p class="rounded-xl border border-white/10 bg-white/[0.02] px-4 py-3 text-slate-300/95">
+            <span class="mr-1.5 font-medium text-emerald-200" aria-hidden>Tip:</span>
+            Pricing can change depending on your country and Google's latest updates—check
+            <a
+              class="font-medium text-emerald-300/95 underline decoration-emerald-500/40 underline-offset-4 hover:text-emerald-200"
+              href="https://one.google.com/about/plans"
+              target="_blank"
+              rel="noopener noreferrer"
+              >Google's official site</a
+            > for current numbers.
+          </p>
+        </section>
+
+        <section class="space-y-6" aria-labelledby="alternatives-heading">
+          <h2 id="alternatives-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">
+            Alternatives to Google Gemini
+          </h2>
+          <p>If you want to explore other options, here are a few popular ones:</p>
+          <ul class="list-disc space-y-2 pl-5 marker:text-emerald-400/80">
+            <li><strong class="text-slate-200">ChatGPT</strong> — great all-round AI assistant</li>
+            <li><strong class="text-slate-200">Microsoft Copilot</strong> — integrated with Microsoft Office tools</li>
+            <li><strong class="text-slate-200">Claude</strong> — known for thoughtful, detailed responses</li>
+          </ul>
+          <p>Each tool has its own strengths, so it's worth trying a couple to see what fits your style.</p>
+        </section>
+
+        <section class="space-y-4" aria-labelledby="who-heading">
+          <h2 id="who-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">Who should use Google Gemini?</h2>
+          <p>Gemini is a good fit if you:</p>
+          <ul class="list-disc space-y-2 pl-5 marker:text-emerald-400/80">
+            <li>Use Google products daily (Docs, Gmail, etc.)</li>
+            <li>Want a simple AI tool without a steep learning curve</li>
+            <li>Need help writing, researching, or organizing ideas</li>
+            <li>Are a student, freelancer, or professional looking to save time</li>
+          </ul>
+          <p>If you're already in the Google ecosystem, Gemini feels like a natural extension.</p>
+        </section>
+
+        <section class="space-y-6" aria-labelledby="bonus-heading">
+          <h2 id="bonus-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">Bonus section</h2>
+
+          <div class="space-y-3 rounded-2xl border border-white/10 bg-white/[0.03] p-5 sm:p-6">
+            <h3 class="text-lg font-semibold text-white">Practical tips for beginners</h3>
+            <ul class="list-disc space-y-2 pl-5 text-slate-300/95 marker:text-emerald-400/80">
+              <li><strong class="text-slate-200">Be specific:</strong> instead of "Explain marketing," try "Explain digital marketing in simple terms with examples."</li>
+              <li><strong class="text-slate-200">Ask follow-up questions:</strong> treat it like a conversation.</li>
+              <li><strong class="text-slate-200">Experiment with prompts:</strong> try different ways of asking to get better results.</li>
+              <li><strong class="text-slate-200">Double-check important info:</strong> especially for facts, numbers, or advice.</li>
+            </ul>
+          </div>
+
+          <div class="space-y-3 rounded-2xl border border-white/10 bg-white/[0.03] p-5 sm:p-6">
+            <h3 class="text-lg font-semibold text-white">Common mistakes to avoid</h3>
+            <ul class="list-disc space-y-2 pl-5 text-slate-300/95 marker:text-amber-400/80">
+              <li><strong class="text-slate-200">Asking vague questions</strong> — specificity gets much better results.</li>
+              <li><strong class="text-slate-200">Trusting every answer blindly</strong> — always verify important facts.</li>
+              <li><strong class="text-slate-200">Expecting perfect results on the first try</strong> — iteration is part of the process.</li>
+              <li><strong class="text-slate-200">Not refining your prompt</strong> — small tweaks can make a big difference.</li>
+            </ul>
+          </div>
+        </section>
+
+        <p class="text-lg text-slate-200/95">
+          If you approach it with curiosity and a bit of experimentation, Google Gemini can quickly become one of those tools
+          you rely on every day.
+        </p>
+
+      </article>
+    </div>
+  </div>
+{% endblock %}

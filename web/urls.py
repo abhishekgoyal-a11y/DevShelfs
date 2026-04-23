@@ -15,6 +15,7 @@ urlpatterns = [
     path("ai-tools/github-copilot", views.github_copilot, name="github_copilot"),
     path("ai-tools/autogpt", views.autogpt, name="autogpt"),
     path("ai-tools/agentgpt", views.agentgpt, name="agentgpt"),
+    path("ai-tools/google-gemini", views.google_gemini, name="google_gemini"),
     path("ai-tools/category/<slug:category_slug>/", views.ai_tools_category, name="ai_tools_category"),
     path("ai-tools/", views.ai_tools_list, name="ai_tools"),
     path("hackathons/", views.hackathons, name="hackathons"),

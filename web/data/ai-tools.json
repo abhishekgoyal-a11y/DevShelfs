@@ -70,5 +70,13 @@
     "detailPath": "/ai-tools/agentgpt",
     "featured": true,
     "featured_order": 8
+  },
+  {
+    "id": "google-gemini",
+    "name": "Google Gemini",
+    "category": "AI assistants",
+    "description": "Google's multimodal AI assistant—chat, write, research, and get coding help, with deep integration across Docs, Gmail, and the wider Google ecosystem.",
+    "detailPath": "/ai-tools/google-gemini",
+    "featured": false
   }
 ]
