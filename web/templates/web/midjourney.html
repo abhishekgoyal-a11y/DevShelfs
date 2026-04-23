@@ -1,0 +1,259 @@
+{% extends "web/base.html" %}
+{% block title %}Midjourney — DevShelf{% endblock %}
+{% block content %}
+  <div class="space-y-10">
+    <div class="flex flex-wrap items-center gap-2 text-sm text-slate-400/90">
+      <a href="{% url 'ai_tools' %}" class="font-medium text-emerald-300/90 transition hover:text-emerald-200">AI tools</a>
+      <span aria-hidden class="text-slate-600">/</span>
+      <span class="text-slate-200/90">Midjourney</span>
+    </div>
+
+    <section
+      class="relative overflow-hidden rounded-3xl border border-emerald-400/20 bg-white/[0.06] p-6 shadow-[0_0_0_1px_rgba(255,255,255,0.04)] backdrop-blur-2xl sm:p-8"
+    >
+      <div class="pointer-events-none absolute -right-24 top-0 h-72 w-72 rounded-full bg-emerald-500/15 blur-3xl"></div>
+      <div class="pointer-events-none absolute -left-20 bottom-0 h-56 w-56 rounded-full bg-violet-500/10 blur-3xl"></div>
+      <div class="relative">
+        <p class="text-xs font-semibold uppercase tracking-[0.22em] text-emerald-300/90">AI tool</p>
+        <h1 class="mt-3 text-3xl font-semibold tracking-tight text-white sm:text-4xl lg:text-[2.5rem] lg:leading-tight">
+          Midjourney: Turn Words Into Striking AI Art
+        </h1>
+        <p class="mt-4 text-sm leading-relaxed text-slate-200/80 sm:text-base">
+          Midjourney turns text prompts into images—no drawing skills required. Describe an idea, refine with variations and
+          upscales, and explore a huge range of styles from painterly illustrations to cinematic scenes.
+        </p>
+        <p class="mt-6">
+          <a
+            href="https://www.midjourney.com/"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="inline-flex items-center gap-2 rounded-full border border-emerald-400/35 bg-emerald-500/10 px-4 py-2 text-sm font-medium text-emerald-200 transition hover:border-emerald-300/50 hover:bg-emerald-500/15 hover:text-white"
+          >
+            Open Midjourney <span aria-hidden class="text-emerald-300/80">↗</span>
+          </a>
+        </p>
+      </div>
+    </section>
+
+    <div class="glass rounded-3xl border border-white/10 p-5 sm:p-8">
+      <article class="mx-auto space-y-12 text-base leading-relaxed text-slate-300/95">
+        <section class="space-y-4" aria-labelledby="what-heading">
+          <h2 id="what-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">What is Midjourney?</h2>
+          <p>
+            Midjourney is a tool that turns text into images. You type a description—something like “a futuristic city at
+            sunset” or “a cute panda wearing sunglasses”—and it creates artwork based on your words.
+          </p>
+          <p>
+            Think of it as a creative partner. You don’t need to know how to draw or use design software. If you can
+            describe an idea, Midjourney can visualize it for you.
+          </p>
+        </section>
+
+        <section class="space-y-6" aria-labelledby="features-heading">
+          <h2 id="features-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">
+            Key features of Midjourney
+          </h2>
+          <div class="space-y-3 rounded-2xl border border-white/10 bg-white/[0.03] p-5 sm:p-6">
+            <h3 class="text-lg font-semibold text-white">Text-to-image generation</h3>
+            <p class="text-slate-300/95">Just type what you imagine, and it creates images.</p>
+          </div>
+          <div class="space-y-3 rounded-2xl border border-white/10 bg-white/[0.03] p-5 sm:p-6">
+            <h3 class="text-lg font-semibold text-white">High-quality, artistic results</h3>
+            <p class="text-slate-300/95">
+              Midjourney is especially known for producing visually striking, almost “painterly” images.
+            </p>
+          </div>
+          <div class="space-y-3 rounded-2xl border border-white/10 bg-white/[0.03] p-5 sm:p-6">
+            <h3 class="text-lg font-semibold text-white">Style flexibility</h3>
+            <p class="text-slate-300/95">
+              You can ask for realistic photos, cartoons, fantasy art, or even specific art styles.
+            </p>
+          </div>
+          <div class="space-y-3 rounded-2xl border border-white/10 bg-white/[0.03] p-5 sm:p-6">
+            <h3 class="text-lg font-semibold text-white">Prompt control</h3>
+            <p class="text-slate-300/95">
+              You can tweak your descriptions to guide the results—adding details like lighting, mood, or camera angles.
+            </p>
+          </div>
+          <div class="space-y-3 rounded-2xl border border-white/10 bg-white/[0.03] p-5 sm:p-6">
+            <h3 class="text-lg font-semibold text-white">Community-based platform</h3>
+            <p class="text-slate-300/95">
+              It runs mainly through Discord, where you can see what others are creating and learn from them.
+            </p>
+          </div>
+        </section>
+
+        <section class="space-y-6" aria-labelledby="how-heading">
+          <h2 id="how-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">
+            How Midjourney works (explained simply)
+          </h2>
+          <p>
+            At its core, Midjourney has been trained on a huge collection of images and text. When you type a prompt, it:
+          </p>
+          <ol class="list-decimal space-y-2 pl-5 marker:text-emerald-400/80">
+            <li>Reads your description</li>
+            <li>Finds patterns it learned from similar images</li>
+            <li>Builds a new image from scratch based on those patterns</li>
+          </ol>
+          <p>
+            It’s not copying images—it’s generating something new based on what it understands.
+          </p>
+          <p class="text-slate-300/95">You usually interact with it by typing a command like:</p>
+          <pre
+            class="overflow-x-auto rounded-xl border border-white/10 bg-slate-950/60 px-4 py-3 font-mono text-sm text-emerald-100/90"
+          ><code>/imagine a cozy cabin in snowy mountains at sunset</code></pre>
+          <p>Then it gives you a few image options, and you can:</p>
+          <ul class="list-disc space-y-2 pl-5 marker:text-emerald-400/80">
+            <li><strong class="text-slate-200">Upscale</strong> (make one bigger and clearer)</li>
+            <li><strong class="text-slate-200">Remix</strong> (change the prompt slightly)</li>
+            <li><strong class="text-slate-200">Generate more variations</strong></li>
+          </ul>
+        </section>
+
+        <section class="space-y-6" aria-labelledby="usecases-heading">
+          <h2 id="usecases-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">
+            Real-life use cases of Midjourney
+          </h2>
+          <p>People use Midjourney in all kinds of practical ways:</p>
+          <ul class="list-disc space-y-2 pl-5 marker:text-emerald-400/80">
+            <li><strong class="text-slate-200">Content creation</strong> — blog images, social media posts, thumbnails</li>
+            <li><strong class="text-slate-200">Design inspiration</strong> — logos, branding ideas, UI concepts</li>
+            <li><strong class="text-slate-200">Storytelling</strong> — illustrations for books, comics, or personal projects</li>
+            <li><strong class="text-slate-200">Marketing</strong> — ad visuals, product mockups, creative campaigns</li>
+            <li><strong class="text-slate-200">Personal fun</strong> — avatars, wallpapers, fantasy art of yourself or friends</li>
+          </ul>
+        </section>
+
+        <section class="space-y-6" aria-labelledby="proscons-heading">
+          <h2 id="proscons-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">Pros and cons of Midjourney</h2>
+          <div class="grid gap-6 lg:grid-cols-2">
+            <div class="rounded-2xl border border-emerald-500/20 bg-emerald-500/5 p-5 sm:p-6">
+              <h3 class="mb-4 text-lg font-semibold text-emerald-100">Pros</h3>
+              <ul class="list-disc space-y-2 pl-5 text-slate-300/95 marker:text-emerald-400/80">
+                <li>Very easy to use once you get the hang of prompts</li>
+                <li>Produces stunning, high-quality images</li>
+                <li>Great for creativity and brainstorming</li>
+                <li>Active community for inspiration</li>
+              </ul>
+            </div>
+            <div class="rounded-2xl border border-amber-500/20 bg-amber-500/5 p-5 sm:p-6">
+              <h3 class="mb-4 text-lg font-semibold text-amber-100">Cons</h3>
+              <ul class="list-disc space-y-2 pl-5 text-slate-300/95 marker:text-amber-400/80">
+                <li>Works through Discord (which can feel confusing at first)</li>
+                <li>Not always precise—you may need multiple tries</li>
+                <li>Paid tool (no longer fully free)</li>
+                <li>Limited control compared to professional design software</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        <section class="space-y-6" aria-labelledby="pricing-heading">
+          <h2 id="pricing-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">
+            Midjourney pricing (simple overview)
+          </h2>
+          <p>
+            Midjourney is a paid tool with subscription plans. While prices can change, here’s a general idea:
+          </p>
+          <ul class="list-disc space-y-2 pl-5 marker:text-emerald-400/80">
+            <li><strong class="text-slate-200">Basic plan</strong> — good for casual users</li>
+            <li><strong class="text-slate-200">Standard plan</strong> — more image generation time</li>
+            <li><strong class="text-slate-200">Pro plan</strong> — faster results and more usage</li>
+          </ul>
+          <p>
+            Plans usually range from around $10 to $60 per month, depending on how much you use it.
+          </p>
+          <p>
+            There’s no permanent free version right now, though sometimes trials or limited access may appear.
+          </p>
+          <p class="text-sm leading-relaxed text-slate-400/95">
+            Check the latest pricing on
+            <a
+              class="ml-1 font-medium text-emerald-300/95 underline decoration-emerald-500/40 underline-offset-4 hover:text-emerald-200"
+              href="https://www.midjourney.com/"
+              target="_blank"
+              rel="noopener noreferrer"
+              >midjourney.com</a
+            >—plans and availability change over time.
+          </p>
+        </section>
+
+        <section class="space-y-6" aria-labelledby="alternatives-heading">
+          <h2 id="alternatives-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">
+            Alternatives to Midjourney
+          </h2>
+          <p>If you want to explore other tools, here are some popular ones:</p>
+          <div class="space-y-3 rounded-2xl border border-white/10 bg-white/[0.03] p-5 sm:p-6">
+            <h3 class="text-lg font-semibold text-white">DALL·E</h3>
+            <p class="text-slate-300/95">Easy to use and integrated into platforms like ChatGPT.</p>
+          </div>
+          <div class="space-y-3 rounded-2xl border border-white/10 bg-white/[0.03] p-5 sm:p-6">
+            <h3 class="text-lg font-semibold text-white">Stable Diffusion</h3>
+            <p class="text-slate-300/95">More flexible and customizable, especially for advanced users.</p>
+          </div>
+          <div class="space-y-3 rounded-2xl border border-white/10 bg-white/[0.03] p-5 sm:p-6">
+            <h3 class="text-lg font-semibold text-white">Adobe Firefly</h3>
+            <p class="text-slate-300/95">Great if you already use Adobe tools.</p>
+          </div>
+          <p>
+            Each tool has its own strengths—Midjourney is especially loved for its artistic style.
+          </p>
+        </section>
+
+        <section class="space-y-4" aria-labelledby="who-heading">
+          <h2 id="who-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">Who should use Midjourney?</h2>
+          <p>Midjourney is a great fit for:</p>
+          <ul class="list-disc space-y-2 pl-5 marker:text-emerald-400/80">
+            <li>Creators who want eye-catching visuals</li>
+            <li>Bloggers and social media managers</li>
+            <li>Designers looking for inspiration</li>
+            <li>Writers who need illustrations</li>
+            <li>Anyone curious about AI art</li>
+          </ul>
+          <p>You don’t need to be “technical”—just creative and willing to experiment.</p>
+        </section>
+
+        <section class="space-y-6" aria-labelledby="bonus-heading">
+          <h2 id="bonus-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">Bonus section</h2>
+
+          <div class="space-y-3 rounded-2xl border border-white/10 bg-white/[0.03] p-5 sm:p-6">
+            <h3 class="text-lg font-semibold text-white">Practical tips for beginners</h3>
+            <ul class="list-disc space-y-2 pl-5 text-slate-300/95 marker:text-emerald-400/80">
+              <li><strong class="text-slate-200">Start simple</strong> — don’t overcomplicate prompts. Begin with clear ideas like “a sunset beach.”</li>
+              <li><strong class="text-slate-200">Add details gradually</strong> — try adding mood, lighting, or style step by step.</li>
+              <li><strong class="text-slate-200">Learn by observing</strong> — look at what others are creating in the Discord community.</li>
+              <li><strong class="text-slate-200">Save good prompts</strong> — when something works, keep it—you’ll reuse and improve it later.</li>
+            </ul>
+          </div>
+
+          <div class="space-y-3 rounded-2xl border border-white/10 bg-white/[0.03] p-5 sm:p-6">
+            <h3 class="text-lg font-semibold text-white">Common mistakes to avoid</h3>
+            <ul class="list-disc space-y-2 pl-5 text-slate-300/95 marker:text-emerald-400/80">
+              <li><strong class="text-slate-200">Being too vague</strong> — “A nice picture” won’t give great results. Be specific.</li>
+              <li><strong class="text-slate-200">Overloading prompts</strong> — too many details can confuse the AI.</li>
+              <li><strong class="text-slate-200">Expecting perfection instantly</strong> — great results often take a few tries.</li>
+              <li><strong class="text-slate-200">Ignoring variations</strong> — sometimes the best image comes from tweaking, not starting over.</li>
+            </ul>
+          </div>
+
+          <div class="space-y-3 rounded-2xl border border-white/10 bg-white/[0.03] p-5 sm:p-6">
+            <h3 class="text-lg font-semibold text-white">What extra value to add when publishing</h3>
+            <p class="text-slate-300/95">If you’re writing about Midjourney or sharing your work:</p>
+            <ul class="list-disc space-y-2 pl-5 text-slate-300/95 marker:text-emerald-400/80">
+              <li>Include before-and-after examples</li>
+              <li>Show actual prompts used</li>
+              <li>Add step-by-step breakdowns</li>
+              <li>Compare different styles from the same prompt</li>
+              <li>Share mistakes and lessons learned</li>
+            </ul>
+            <p class="text-slate-300/95">This makes your content much more useful and relatable.</p>
+          </div>
+        </section>
+
+        <p class="text-lg text-slate-200/95">
+          Midjourney isn’t just a tool—it’s a playground for ideas. The more you experiment, the better your results get.
+        </p>
+      </article>
+    </div>
+  </div>
+{% endblock %}

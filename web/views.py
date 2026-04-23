@@ -177,6 +177,14 @@ def pomelli(request):
     )
 
 
+def midjourney(request):
+    return render(
+        request,
+        "web/midjourney.html",
+        {"layout": _layout(request.path), "active_nav": "ai"},
+    )
+
+
 def hackathons(request):
     type_filter = (request.GET.get("type") or "all").lower()
     q = (request.GET.get("q") or "").strip().lower()

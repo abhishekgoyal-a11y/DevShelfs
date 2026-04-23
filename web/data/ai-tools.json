@@ -7,5 +7,14 @@
     "detailPath": "/ai-tools/pomelli-ai",
     "featured": true,
     "featured_order": 1
+  },
+  {
+    "id": "midjourney",
+    "name": "Midjourney",
+    "category": "Image & design",
+    "description": "Text-to-image AI known for painterly, high-quality art—describe a scene in words and iterate with upscales, remixes, and variations.",
+    "detailPath": "/ai-tools/midjourney",
+    "featured": true,
+    "featured_order": 2
   }
 ]

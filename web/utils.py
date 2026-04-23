@@ -24,7 +24,7 @@ def find_category_name_from_slug(slug: str, items: list[dict]) -> str | None:
 
 
 def group_ai_by_category(
-    items: list[dict], category_order: tuple[str, ...] = ("Marketing & ads",)
+    items: list[dict], category_order: tuple[str, ...] = ("Marketing & ads", "Image & design")
 ) -> list[tuple[str, list[dict]]]:
     m: dict[str, list[dict]] = {}
     for item in items:
