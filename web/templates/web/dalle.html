@@ -1,0 +1,242 @@
+{% extends "web/base.html" %}
+{% block title %}DALL·E — DevShelf{% endblock %}
+{% block content %}
+  <div class="space-y-10">
+    <div class="flex flex-wrap items-center gap-2 text-sm text-slate-400/90">
+      <a href="{% url 'ai_tools' %}" class="font-medium text-emerald-300/90 transition hover:text-emerald-200">AI tools</a>
+      <span aria-hidden class="text-slate-600">/</span>
+      <span class="text-slate-200/90">DALL·E</span>
+    </div>
+
+    <section
+      class="relative overflow-hidden rounded-3xl border border-emerald-400/20 bg-white/[0.06] p-6 shadow-[0_0_0_1px_rgba(255,255,255,0.04)] backdrop-blur-2xl sm:p-8"
+    >
+      <div class="pointer-events-none absolute -right-24 top-0 h-72 w-72 rounded-full bg-emerald-500/15 blur-3xl"></div>
+      <div class="pointer-events-none absolute -left-20 bottom-0 h-56 w-56 rounded-full bg-sky-500/10 blur-3xl"></div>
+      <div class="relative">
+        <p class="text-xs font-semibold uppercase tracking-[0.22em] text-emerald-300/90">AI tool</p>
+        <h1 class="mt-3 text-3xl font-semibold tracking-tight text-white sm:text-4xl lg:text-[2.5rem] lg:leading-tight">
+          DALL·E: Ideas to Images in Seconds
+        </h1>
+        <p class="mt-4 text-sm leading-relaxed text-slate-200/80 sm:text-base">
+          DALL·E is OpenAI’s text-to-image system—describe what you want and get pictures back fast. It powers image creation
+          inside ChatGPT and other experiences, with editing, style control, and multiple variations so you can iterate
+          without traditional design tools.
+        </p>
+        <p class="mt-6">
+          <a
+            href="https://openai.com/dall-e-3"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="inline-flex items-center gap-2 rounded-full border border-emerald-400/35 bg-emerald-500/10 px-4 py-2 text-sm font-medium text-emerald-200 transition hover:border-emerald-300/50 hover:bg-emerald-500/15 hover:text-white"
+          >
+            Learn about DALL·E on OpenAI <span aria-hidden class="text-emerald-300/80">↗</span>
+          </a>
+        </p>
+      </div>
+    </section>
+
+    <div class="glass rounded-3xl border border-white/10 p-5 sm:p-8">
+      <article class="mx-auto space-y-12 text-base leading-relaxed text-slate-300/95">
+        <section class="space-y-4" aria-labelledby="what-heading">
+          <h2 id="what-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">What is DALL·E?</h2>
+          <p>
+            DALL·E is an AI tool that creates images from text. You simply describe what you want—like “a cat wearing
+            sunglasses riding a scooter”—and it turns that idea into a picture within seconds.
+          </p>
+          <p>
+            It was developed by OpenAI, the same organization behind ChatGPT. The goal is simple: make creativity easier
+            and more accessible, even if you can’t draw or design.
+          </p>
+          <p>Think of it as a super-fast digital artist that listens to your instructions.</p>
+        </section>
+
+        <section class="space-y-6" aria-labelledby="features-heading">
+          <h2 id="features-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">
+            Key features of DALL·E
+          </h2>
+          <div class="space-y-3 rounded-2xl border border-white/10 bg-white/[0.03] p-5 sm:p-6">
+            <h3 class="text-lg font-semibold text-white">Text-to-image generation</h3>
+            <p class="text-slate-300/95">Type a description, get an image. That’s the core magic.</p>
+          </div>
+          <div class="space-y-3 rounded-2xl border border-white/10 bg-white/[0.03] p-5 sm:p-6">
+            <h3 class="text-lg font-semibold text-white">Image editing (inpainting &amp; outpainting)</h3>
+            <p class="text-slate-300/95">You can tweak parts of an image or expand it beyond its borders.</p>
+          </div>
+          <div class="space-y-3 rounded-2xl border border-white/10 bg-white/[0.03] p-5 sm:p-6">
+            <h3 class="text-lg font-semibold text-white">Style control</h3>
+            <p class="text-slate-300/95">
+              Want a painting in the style of watercolor, anime, or realistic photography? Just say it.
+            </p>
+          </div>
+          <div class="space-y-3 rounded-2xl border border-white/10 bg-white/[0.03] p-5 sm:p-6">
+            <h3 class="text-lg font-semibold text-white">Fast results</h3>
+            <p class="text-slate-300/95">Images are generated in seconds.</p>
+          </div>
+          <div class="space-y-3 rounded-2xl border border-white/10 bg-white/[0.03] p-5 sm:p-6">
+            <h3 class="text-lg font-semibold text-white">Multiple variations</h3>
+            <p class="text-slate-300/95">You often get several versions of the same idea to choose from.</p>
+          </div>
+        </section>
+
+        <section class="space-y-6" aria-labelledby="how-heading">
+          <h2 id="how-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">
+            How DALL·E works (explained simply)
+          </h2>
+          <p>At a basic level, DALL·E has “learned” from millions of images and descriptions.</p>
+          <p>Here’s a simple way to think about it:</p>
+          <ol class="list-decimal space-y-2 pl-5 marker:text-emerald-400/80">
+            <li>You type a prompt (your idea)</li>
+            <li>The AI reads and understands your words</li>
+            <li>It combines patterns it has learned from past images</li>
+            <li>It generates a brand-new image based on your request</li>
+          </ol>
+          <p>
+            It doesn’t “copy” images—it creates something new by mixing ideas it has seen before.
+          </p>
+          <p class="rounded-xl border border-white/10 bg-white/[0.02] px-4 py-3 text-slate-300/95">
+            <span class="mr-1.5" aria-hidden>💡</span>
+            Imagine telling an artist: “Draw a panda eating noodles in a cyberpunk city.” DALL·E just happens to be
+            incredibly fast at doing that.
+          </p>
+        </section>
+
+        <section class="space-y-6" aria-labelledby="usecases-heading">
+          <h2 id="usecases-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">
+            Real-life use cases of DALL·E
+          </h2>
+          <p>People are already using DALL·E in all kinds of ways:</p>
+          <ul class="list-disc space-y-2 pl-5 marker:text-emerald-400/80">
+            <li><strong class="text-slate-200">Marketing &amp; social media</strong> — eye-catching visuals for posts, ads, and campaigns</li>
+            <li><strong class="text-slate-200">Content creation</strong> — bloggers and writers use it for custom illustrations</li>
+            <li><strong class="text-slate-200">Game design &amp; storytelling</strong> — quickly visualize characters, worlds, and scenes</li>
+            <li><strong class="text-slate-200">Product mockups</strong> — generate ideas before investing in real prototypes</li>
+            <li><strong class="text-slate-200">Education</strong> — teachers use it to explain concepts visually</li>
+          </ul>
+        </section>
+
+        <section class="space-y-6" aria-labelledby="proscons-heading">
+          <h2 id="proscons-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">Pros and cons of DALL·E</h2>
+          <div class="grid gap-6 lg:grid-cols-2">
+            <div class="rounded-2xl border border-emerald-500/20 bg-emerald-500/5 p-5 sm:p-6">
+              <h3 class="mb-4 text-lg font-semibold text-emerald-100">Pros</h3>
+              <ul class="list-disc space-y-2 pl-5 text-slate-300/95 marker:text-emerald-400/80">
+                <li>Easy to use—even for beginners</li>
+                <li>Saves time and money on design</li>
+                <li>Endless creative possibilities</li>
+                <li>No drawing skills required</li>
+              </ul>
+            </div>
+            <div class="rounded-2xl border border-amber-500/20 bg-amber-500/5 p-5 sm:p-6">
+              <h3 class="mb-4 text-lg font-semibold text-amber-100">Cons</h3>
+              <ul class="list-disc space-y-2 pl-5 text-slate-300/95 marker:text-amber-400/80">
+                <li>Results aren’t always perfect</li>
+                <li>Sometimes struggles with very detailed prompts</li>
+                <li>Can generate inconsistent images (especially faces or text)</li>
+                <li>Requires good prompt writing for best results</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        <section class="space-y-6" aria-labelledby="pricing-heading">
+          <h2 id="pricing-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">
+            DALL·E pricing (simple overview)
+          </h2>
+          <p>Pricing can change, but here’s a simple way to think about it:</p>
+          <ul class="list-disc space-y-2 pl-5 marker:text-emerald-400/80">
+            <li>Often included within tools or platforms from OpenAI</li>
+            <li>You typically pay per image generation or via credits</li>
+            <li>Some platforms may offer limited free usage</li>
+          </ul>
+          <p>
+            If you’re using it through ChatGPT or similar apps, it may be bundled into a subscription plan.
+          </p>
+          <p class="text-sm leading-relaxed text-slate-400/95">
+            Confirm current pricing on
+            <a
+              class="ml-1 font-medium text-emerald-300/95 underline decoration-emerald-500/40 underline-offset-4 hover:text-emerald-200"
+              href="https://openai.com/dall-e-3"
+              target="_blank"
+              rel="noopener noreferrer"
+              >OpenAI’s DALL·E page</a
+            >
+            or in the product you use (e.g. ChatGPT)—plans change over time.
+          </p>
+        </section>
+
+        <section class="space-y-6" aria-labelledby="alternatives-heading">
+          <h2 id="alternatives-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">
+            Alternatives to DALL·E
+          </h2>
+          <p>If you want to explore other options, here are a few popular ones:</p>
+          <ul class="list-disc space-y-2 pl-5 marker:text-emerald-400/80">
+            <li><strong class="text-slate-200">Midjourney</strong> — known for highly artistic, detailed images</li>
+            <li><strong class="text-slate-200">Stable Diffusion</strong> — flexible and customizable</li>
+            <li><strong class="text-slate-200">Adobe Firefly</strong> — great for design workflows</li>
+            <li><strong class="text-slate-200">Canva AI Image Generator</strong> — beginner-friendly and integrated with design tools</li>
+          </ul>
+          <p>Each has its own strengths depending on your needs.</p>
+        </section>
+
+        <section class="space-y-4" aria-labelledby="who-heading">
+          <h2 id="who-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">Who should use DALL·E?</h2>
+          <p>DALL·E is useful for:</p>
+          <ul class="list-disc space-y-2 pl-5 marker:text-emerald-400/80">
+            <li>Creators who need visuals quickly</li>
+            <li>Small business owners without a design team</li>
+            <li>Students and teachers</li>
+            <li>Marketers and content creators</li>
+            <li>Anyone curious about AI creativity</li>
+          </ul>
+          <p>If you’ve ever thought, “I wish I could turn this idea into an image,” this tool is for you.</p>
+        </section>
+
+        <section class="space-y-6" aria-labelledby="bonus-heading">
+          <h2 id="bonus-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">Bonus section</h2>
+
+          <div class="space-y-3 rounded-2xl border border-white/10 bg-white/[0.03] p-5 sm:p-6">
+            <h3 class="text-lg font-semibold text-white">Practical tips for beginners</h3>
+            <ul class="list-disc space-y-2 pl-5 text-slate-300/95 marker:text-emerald-400/80">
+              <li><strong class="text-slate-200">Be specific:</strong> “a dog” vs. “a golden retriever running on a beach at sunset”</li>
+              <li><strong class="text-slate-200">Add style hints:</strong> “realistic,” “cartoon,” “oil painting”</li>
+              <li><strong class="text-slate-200">Experiment often</strong> — small changes can give very different results</li>
+              <li><strong class="text-slate-200">Use references</strong> like “in the style of…” (but keep it general)</li>
+            </ul>
+          </div>
+
+          <div class="space-y-3 rounded-2xl border border-white/10 bg-white/[0.03] p-5 sm:p-6">
+            <h3 class="text-lg font-semibold text-white">Common mistakes to avoid</h3>
+            <ul class="list-disc space-y-2 pl-5 text-slate-300/95 marker:text-emerald-400/80">
+              <li>Writing vague prompts (“make something cool”)</li>
+              <li>Expecting perfect results on the first try</li>
+              <li>Overloading prompts with too many details</li>
+              <li>Ignoring lighting, angle, or mood (these matter a lot!)</li>
+            </ul>
+          </div>
+
+          <div class="space-y-3 rounded-2xl border border-white/10 bg-white/[0.03] p-5 sm:p-6">
+            <h3 class="text-lg font-semibold text-white">What extra value to add when publishing</h3>
+            <p class="text-slate-300/95">If you’re writing about DALL·E (blog, social post, etc.), make it more useful by including:</p>
+            <ul class="list-disc space-y-2 pl-5 text-slate-300/95 marker:text-emerald-400/80">
+              <li>Before/after examples</li>
+              <li>Sample prompts people can copy</li>
+              <li>Side-by-side comparisons with other tools</li>
+              <li>Real results (not just theory)</li>
+              <li>
+                Short prompt templates like:
+                <span class="mt-2 block rounded-xl border border-white/10 bg-slate-950/50 px-3 py-2 font-mono text-sm text-emerald-100/90"
+                  >“A [subject] in [style] with [lighting] in [environment]”</span
+                >
+              </li>
+            </ul>
+          </div>
+        </section>
+
+        <p class="text-lg text-slate-200/95">
+          DALL·E isn’t just a tool—it’s a creative partner. The more you experiment with it, the better your results get.
+        </p>
+      </article>
+    </div>
+  </div>
+{% endblock %}

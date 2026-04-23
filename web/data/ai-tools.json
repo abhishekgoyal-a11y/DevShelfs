@@ -16,5 +16,14 @@
     "detailPath": "/ai-tools/midjourney",
     "featured": true,
     "featured_order": 2
+  },
+  {
+    "id": "dall-e",
+    "name": "DALL·E",
+    "category": "Image & design",
+    "description": "OpenAI's text-to-image model—describe a scene and get polished visuals fast, with editing and variations inside ChatGPT and other apps.",
+    "detailPath": "/ai-tools/dall-e",
+    "featured": true,
+    "featured_order": 3
   }
 ]
