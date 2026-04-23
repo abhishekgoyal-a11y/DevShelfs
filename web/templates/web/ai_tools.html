@@ -22,7 +22,7 @@
           AI tools
         </h1>
         <p class="mt-4 max-w-2xl text-sm leading-relaxed text-slate-200/80 sm:text-base">
-          Grouped by category — a short preview here; open a category for the full list.
+          Grouped by category — every tool in each group is listed here; open a category for a focused view of that group only.
         </p>
         <p class="mt-5 text-xs text-slate-400/90">
           Data source: <span class="font-mono text-slate-200/90">{{ data_source }}</span>
@@ -51,7 +51,7 @@
               </div>
             </div>
             <ul class="space-y-3">
-              {% for e in tools|slice:":3" %}
+              {% for e in tools %}
                 <li>{% include "web/partials/ai_tool_row.html" with tool=e only %}</li>
               {% endfor %}
             </ul>
