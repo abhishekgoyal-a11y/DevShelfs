@@ -47,6 +47,19 @@ def _layout(path: str) -> str:
     return "default"
 
 
+_HOME_AI_TOOL_ORDER = (
+    "pomelli-ai",
+    "midjourney",
+    "runwayml",
+    "cursor",
+)
+
+
+def _home_featured_tools(tools: list[dict]) -> list[dict]:
+    by_id = {t.get("id"): t for t in tools if t.get("id")}
+    return [by_id[i] for i in _HOME_AI_TOOL_ORDER if i in by_id]
+
+
 def home(request):
     projects = _projects_data()
     tools = _ai_tools_data()
@@ -59,7 +72,7 @@ def home(request):
             "project_count": len(projects),
             "ai_tool_count": len(tools),
             "featured_projects": pick_featured_list(projects, 3),
-            "featured_tools": pick_featured_list(tools, 12),
+            "featured_tools": _home_featured_tools(tools),
             "site_about": SITE_ABOUT,
         },
     )
