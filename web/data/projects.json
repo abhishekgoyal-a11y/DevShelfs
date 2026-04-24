@@ -56,7 +56,7 @@
     "id": "p6",
     "slug": "ai-product-description-generator",
     "title": "AI Product Description Generator",
-    "description": "Beginner-friendly Streamlit app that turns structured product inputs into descriptions, taglines, social blurbs, and benefit-led bullets using Python, Streamlit, and the Groq API.",
+    "description": "Beginner-friendly project that turns structured product inputs into descriptions, taglines, social blurbs, and benefit-led bullets using Python, Streamlit, and the Groq API.",
     "repoUrl": "https://github.com/abhishekgoyal-a11y/Projects/tree/main/ai-product-description-generator",
     "tech": ["Python", "Streamlit", "Groq API"],
     "difficulty": "beginner",
