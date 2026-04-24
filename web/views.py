@@ -26,6 +26,9 @@ PROJECT_BODY = {
     "smart-study-assistant",
     "notes-qa-bot",
     "ai-email-reply-generator",
+    "resume-cover-letter-improver",
+    "website-rag-chatbot",
+    "ai-product-description-generator",
 }
 
 

@@ -1,0 +1,154 @@
+{% verbatim %}
+# Resume & Cover Letter Improver — Streamlit + Groq
+# Save as app.py, add GROQ_API_KEY to .streamlit/secrets.toml, then: streamlit run app.py
+
+import io
+import ssl
+
+import httpx
+import streamlit as st
+import truststore
+
+MAX_RESUME_CHARS = 8000
+MAX_JD_CHARS = 4000
+
+st.set_page_config(page_title="Resume & Cover Letter Improver", layout="centered")
+st.title("Resume & Cover Letter Improver")
+st.caption(
+    "Upload or paste your resume, add a job description, and get AI-powered "
+    "feedback plus a tailored cover letter."
+)
+
+_ssl_ctx = truststore.SSLContext(ssl.PROTOCOL_TLS_CLIENT)
+
+
+@st.cache_resource
+def _groq_client():
+    import groq
+
+    return groq.Groq(
+        api_key=st.secrets["GROQ_API_KEY"],
+        http_client=httpx.Client(timeout=120.0, verify=_ssl_ctx),
+    )
+
+
+_CHAT_MODEL = "llama-3.3-70b-versatile"
+
+
+def _extract_pdf_text(uploaded_file) -> str:
+    import pypdf
+
+    reader = pypdf.PdfReader(io.BytesIO(uploaded_file.read()))
+    return "\n".join(page.extract_text() or "" for page in reader.pages)
+
+
+st.markdown("### Your Resume")
+
+uploaded = st.file_uploader("Upload PDF resume", type=["pdf"])
+
+resume_from_pdf = ""
+if uploaded:
+    with st.spinner("Extracting text from PDF…"):
+        try:
+            resume_from_pdf = _extract_pdf_text(uploaded)[:MAX_RESUME_CHARS]
+            st.success(f"Extracted {len(resume_from_pdf):,} characters from PDF.")
+        except Exception as err:
+            st.error(f"Could not read PDF: {err}")
+
+pasted_resume = st.text_area(
+    "Or paste resume text here",
+    value=resume_from_pdf,
+    height=240,
+    placeholder="Paste your resume content here…",
+    max_chars=MAX_RESUME_CHARS,
+)
+
+final_resume = (pasted_resume or resume_from_pdf).strip()
+
+st.markdown("### Job Description")
+job_desc = st.text_area(
+    "Paste the job description (required for Cover Letter; optional for Improvements)",
+    height=160,
+    placeholder="Copy and paste the full job listing you're applying for…",
+    max_chars=MAX_JD_CHARS,
+)
+
+st.markdown("---")
+col_a, col_b = st.columns(2)
+with col_a:
+    do_improve = st.button("Suggest Improvements", type="primary", use_container_width=True)
+with col_b:
+    do_cover = st.button("Generate Cover Letter", type="primary", use_container_width=True)
+
+if do_improve or do_cover:
+    if not final_resume:
+        st.warning("Please upload or paste your resume first.")
+    elif do_cover and not job_desc.strip():
+        st.warning("Please paste a job description to generate a tailored cover letter.")
+    else:
+        client = _groq_client()
+
+        if do_improve:
+            with st.spinner("Analyzing your resume…"):
+                try:
+                    system_msg = (
+                        "You are an expert resume reviewer and career coach. "
+                        "Review the resume and provide exactly four sections using these headings:\n"
+                        "**Strengths** — 2-3 bullets on what is done well.\n"
+                        "**Improvements** — 3-5 specific, actionable fixes.\n"
+                        "**Rewritten Bullet Examples** — rewrite 2 weak bullet points using the STAR method.\n"
+                        "**ATS Keywords** — list 8-10 keywords missing from the resume common for this role. "
+                        "Be direct and constructive. Do not add any preamble."
+                    )
+                    user_content = f"Resume:\n{final_resume}"
+                    if job_desc.strip():
+                        user_content += f"\n\nTarget job description:\n{job_desc}"
+                    resp = client.chat.completions.create(
+                        model=_CHAT_MODEL,
+                        messages=[
+                            {"role": "system", "content": system_msg},
+                            {"role": "user", "content": user_content},
+                        ],
+                    )
+                    feedback = (resp.choices[0].message.content or "").strip()
+                    st.markdown("### Resume Feedback")
+                    st.markdown(feedback)
+                except Exception as err:
+                    st.error(f"Something went wrong: {err}")
+
+        if do_cover:
+            with st.spinner("Writing your cover letter…"):
+                try:
+                    system_msg = (
+                        "You are a professional cover letter writer. "
+                        "Write a compelling, tailored cover letter based on the resume and job description. "
+                        "Structure: strong opening hook, connect experience to the role's requirements, "
+                        "highlight 2-3 specific achievements with numbers where possible, close with a call to action. "
+                        "Keep it to 3-4 paragraphs. "
+                        "Use the candidate's name from the resume if present; otherwise write in first person. "
+                        "Output only the letter text — no instructions or meta commentary."
+                    )
+                    resp = client.chat.completions.create(
+                        model=_CHAT_MODEL,
+                        messages=[
+                            {"role": "system", "content": system_msg},
+                            {
+                                "role": "user",
+                                "content": (
+                                    f"Resume:\n{final_resume}\n\nJob description:\n{job_desc}"
+                                ),
+                            },
+                        ],
+                    )
+                    letter = (resp.choices[0].message.content or "").strip()
+                    st.markdown("### Cover Letter")
+                    st.markdown(letter)
+                    st.download_button(
+                        "Download Cover Letter (.txt)",
+                        data=letter,
+                        file_name="cover_letter.txt",
+                        mime="text/plain",
+                    )
+                except Exception as err:
+                    st.error(f"Something went wrong: {err}")
+{% endverbatim %}

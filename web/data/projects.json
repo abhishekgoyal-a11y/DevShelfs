@@ -31,5 +31,35 @@
     "difficulty": "beginner",
     "featured": true,
     "featured_order": 3
+  },
+  {
+    "id": "p4",
+    "slug": "resume-cover-letter-improver",
+    "title": "Resume & Cover Letter Improver",
+    "description": "Upload or paste a resume, add a job description, and get AI-powered feedback—strengths, improvements, STAR rewrites, ATS keywords—plus a tailored cover letter you can download.",
+    "repoUrl": "https://github.com/abhishekgoyal-a11y/Projects/tree/main/resume-cover-letter-improver",
+    "tech": ["Python", "Streamlit", "Groq API", "pypdf"],
+    "difficulty": "beginner",
+    "featured": false
+  },
+  {
+    "id": "p5",
+    "slug": "website-rag-chatbot",
+    "title": "Website RAG Chatbot",
+    "description": "Enter any public URL, scrape its content automatically, and chat with it using Retrieval-Augmented Generation—local embeddings, Chroma vector store, and Groq for answers.",
+    "repoUrl": "https://github.com/abhishekgoyal-a11y/Projects/tree/main/website-rag-chatbot",
+    "tech": ["Python", "Streamlit", "LangChain", "Chroma", "Groq", "Hugging Face", "RAG", "BeautifulSoup"],
+    "difficulty": "intermediate",
+    "featured": false
+  },
+  {
+    "id": "p6",
+    "slug": "ai-product-description-generator",
+    "title": "AI Product Description Generator",
+    "description": "Beginner-friendly Streamlit app that turns structured product inputs into descriptions, taglines, social blurbs, and benefit-led bullets using Python, Streamlit, and the Groq API.",
+    "repoUrl": "https://github.com/abhishekgoyal-a11y/Projects/tree/main/ai-product-description-generator",
+    "tech": ["Python", "Streamlit", "Groq API"],
+    "difficulty": "beginner",
+    "featured": false
   }
 ]

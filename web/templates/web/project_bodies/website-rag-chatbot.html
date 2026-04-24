@@ -1,0 +1,383 @@
+{% load static %}
+<div class="glass space-y-10 rounded-3xl p-5 sm:p-8">
+  <div class="space-y-4">
+    <p class="text-sm leading-relaxed text-slate-200/85 sm:text-base">
+      This intermediate project is a <strong class="text-slate-100">Streamlit</strong> app that lets you chat with any
+      public webpage. Paste a URL, the app scrapes the page with
+      <strong class="text-slate-100">BeautifulSoup</strong>, splits the text into overlapping chunks, embeds them
+      <strong class="text-slate-100">locally</strong> with Hugging Face sentence-transformers (no embedding API key),
+      stores the vectors in <strong class="text-slate-100">Chroma</strong>, and answers your questions with
+      <strong class="text-slate-100">Groq</strong> via LangChain RAG.
+    </p>
+    <p class="text-sm leading-relaxed text-slate-200/85 sm:text-base">
+      <strong class="text-slate-100">Purpose:</strong> learn how to turn arbitrary web content into a queryable knowledge
+      base—the same pipeline that powers many AI research and customer-support tools.
+    </p>
+    <p class="text-sm leading-relaxed text-slate-200/85 sm:text-base">
+      <strong class="text-slate-100">Typical use:</strong> point it at a long documentation page, a product landing page,
+      or a news article and ask follow-up questions without re-reading the whole thing.
+    </p>
+    <p class="text-sm font-medium text-slate-200/90">Key ideas you will touch:</p>
+    <ul class="list-inside list-disc space-y-2 text-sm leading-relaxed text-slate-200/85 sm:text-base">
+      <li>
+        <strong class="text-slate-100">Web scraping</strong> — <code class="text-sky-200/90">requests</code> + a
+        <code class="text-sky-200/90">BeautifulSoup</code> tag-removal pass to strip navigation, scripts, and boilerplate
+        before indexing.
+      </li>
+      <li>
+        <strong class="text-slate-100">Chunking</strong> — <code class="text-sky-200/90">RecursiveCharacterTextSplitter</code>
+        with overlap so facts that span paragraph boundaries land in a single retrievable chunk.
+      </li>
+      <li>
+        <strong class="text-slate-100">Local embeddings</strong> — <code class="text-sky-200/90">sentence-transformers/all-MiniLM-L6-v2</code>
+        via <code class="text-sky-200/90">HuggingFaceEmbeddings</code>; no separate embedding API key needed.
+      </li>
+      <li>
+        <strong class="text-slate-100">Vector store + retrieval</strong> — Chroma stores the chunk vectors and returns the
+        top-4 matches for each question.
+      </li>
+      <li>
+        <strong class="text-slate-100">RAG generation</strong> — <code class="text-sky-200/90">RetrievalQA</code>
+        (chain type &ldquo;stuff&rdquo;) passes retrieved chunks to <code class="text-sky-200/90">ChatGroq</code> and
+        surfaces source chunks in an expander.
+      </li>
+    </ul>
+    <p class="text-sm leading-relaxed text-slate-200/85 sm:text-base">
+      <strong class="text-slate-100">Example prompts:</strong> &ldquo;What pricing plans are available?&rdquo; or
+      &ldquo;Summarise the main argument in the second section.&rdquo;
+    </p>
+  </div>
+
+  <div class="space-y-3">
+    <h2 class="text-lg font-semibold tracking-tight text-white">Overall flow</h2>
+    <pre
+      class="overflow-x-auto rounded-2xl border border-white/10 bg-slate-950/60 p-4 text-sm leading-relaxed text-slate-200/90 sm:text-base"
+    ><code class="font-mono whitespace-pre-wrap">User enters a URL → clicks "Scrape & Build Index"
+      ↓
+requests fetches the page HTML
+      ↓
+BeautifulSoup strips scripts / nav / footer / boilerplate
+      ↓
+RecursiveCharacterTextSplitter → chunks (500 chars, 80 overlap)
+      ↓
+HuggingFaceEmbeddings (local) → Chroma vector store
+      ↓
+"Indexed N chars" confirmation
+      ↓
+User types a question → clicks "Ask"
+      ↓
+Retriever finds top-4 similar chunks
+      ↓
+ChatGroq (Groq) generates grounded answer
+      ↓
+Answer + optional Source Chunks on screen</code></pre>
+  </div>
+
+  <hr class="border-0 border-t border-white/10" />
+
+  <div class="space-y-4">
+    <h2 class="text-lg font-semibold tracking-tight text-white">Step-by-Step Implementation</h2>
+    <p class="text-sm leading-relaxed text-slate-200/85 sm:text-base">Follow these steps in order:</p>
+    <ol class="list-decimal list-outside space-y-5 pl-6 text-sm leading-relaxed text-slate-200/85 sm:text-base">
+      <li>
+        <span class="font-medium text-slate-100">Set up the project</span>
+        <ul class="mt-2 list-disc space-y-1.5 pl-5">
+          <li>Install Python 3.10+</li>
+          <li>Create a folder and a virtual environment</li>
+        </ul>
+      </li>
+      <li>
+        <span class="font-medium text-slate-100">Install dependencies</span>
+        <ul class="mt-2 list-disc space-y-1.5 pl-5">
+          <li>
+            <code class="text-sky-200/90">streamlit</code>, <code class="text-sky-200/90">httpx</code>,
+            <code class="text-sky-200/90">truststore</code>, <code class="text-sky-200/90">requests</code>,
+            <code class="text-sky-200/90">beautifulsoup4</code>, <code class="text-sky-200/90">groq</code>,
+            <code class="text-sky-200/90">langchain</code>, <code class="text-sky-200/90">langchain-core</code>,
+            <code class="text-sky-200/90">langchain-community</code>,
+            <code class="text-sky-200/90">langchain-text-splitters</code>,
+            <code class="text-sky-200/90">langchain-groq</code>,
+            <code class="text-sky-200/90">langchain-huggingface</code>,
+            <code class="text-sky-200/90">chromadb</code>,
+            <code class="text-sky-200/90">sentence-transformers</code>
+          </li>
+          <li>
+            Pin versions in <code class="text-sky-200/90">requirements.txt</code>; the first run downloads the
+            embedding model weights (~22 MB)
+          </li>
+        </ul>
+      </li>
+      <li>
+        <span class="font-medium text-slate-100">Secrets</span>
+        <ul class="mt-2 list-disc space-y-1.5 pl-5">
+          <li>
+            Put <code class="text-sky-200/90">GROQ_API_KEY</code> in
+            <code class="text-sky-200/90">.streamlit/secrets.toml</code>. No embedding key needed.
+          </li>
+        </ul>
+      </li>
+      <li>
+        <span class="font-medium text-slate-100">Scrape and clean</span>
+        <ul class="mt-2 list-disc space-y-1.5 pl-5">
+          <li>
+            <code class="text-sky-200/90">requests.get</code> with a browser-like
+            <code class="text-sky-200/90">User-Agent</code> header reduces bot-blocking
+          </li>
+          <li>
+            Decompose <code class="text-sky-200/90">script</code>, <code class="text-sky-200/90">style</code>,
+            <code class="text-sky-200/90">nav</code>, <code class="text-sky-200/90">footer</code>,
+            <code class="text-sky-200/90">aside</code>, <code class="text-sky-200/90">noscript</code>, and
+            <code class="text-sky-200/90">form</code> tags before extracting text
+          </li>
+          <li>
+            Join non-empty lines and cap at <code class="text-sky-200/90">MAX_SCRAPED_CHARS</code> to keep prompts
+            manageable
+          </li>
+        </ul>
+      </li>
+      <li>
+        <span class="font-medium text-slate-100">Build the index</span>
+        <ul class="mt-2 list-disc space-y-1.5 pl-5">
+          <li>
+            <code class="text-sky-200/90">RecursiveCharacterTextSplitter(chunk_size=500, chunk_overlap=80)</code>
+          </li>
+          <li>
+            <code class="text-sky-200/90">HuggingFaceEmbeddings</code> with
+            <code class="text-sky-200/90">all-MiniLM-L6-v2</code> — runs on-device
+          </li>
+          <li>
+            <code class="text-sky-200/90">Chroma.from_documents</code> stores the in-memory index in
+            <code class="text-sky-200/90">st.session_state</code>
+          </li>
+        </ul>
+      </li>
+      <li>
+        <span class="font-medium text-slate-100">Ask with RAG</span>
+        <ul class="mt-2 list-disc space-y-1.5 pl-5">
+          <li>
+            <code class="text-sky-200/90">as_retriever(search_kwargs={"k": 4})</code> for top chunks
+          </li>
+          <li>
+            <code class="text-sky-200/90">RetrievalQA.from_chain_type</code> with
+            <code class="text-sky-200/90">chain_type="stuff"</code> and
+            <code class="text-sky-200/90">return_source_documents=True</code>
+          </li>
+          <li>Store each Q&amp;A turn in <code class="text-sky-200/90">st.session_state["history"]</code></li>
+        </ul>
+      </li>
+      <li>
+        <span class="font-medium text-slate-100">Guardrails</span>
+        <ul class="mt-2 list-disc space-y-1.5 pl-5">
+          <li>Warn on empty URL, empty scraped text, and empty question</li>
+          <li>
+            Both <code class="text-sky-200/90">_scrape</code> and <code class="text-sky-200/90">_ask</code> paths are
+            wrapped in <code class="text-sky-200/90">try</code>/<code class="text-sky-200/90">except</code> with
+            <code class="text-sky-200/90">st.error</code> on failure
+          </li>
+        </ul>
+      </li>
+    </ol>
+  </div>
+
+  <hr class="border-0 border-t border-white/10" />
+
+  <div class="space-y-4">
+    <h2 class="text-lg font-semibold tracking-tight text-white">Code implementation</h2>
+    <p class="text-sm leading-relaxed text-slate-200/85 sm:text-base">
+      The snippet below is the complete <code class="text-sky-200/90">app.py</code>. LangChain package layout changes
+      between releases—if imports fail, align pins with the
+      <a
+        class="font-medium text-sky-200/90 hover:underline"
+        href="https://python.langchain.com/"
+        target="_blank"
+        rel="noopener noreferrer"
+        >LangChain docs</a
+      >
+      and your <code class="text-sky-200/90">requirements.txt</code>.
+    </p>
+    {% include "web/partials/code_block_frame.html" with language="python" code_template="web/code/website_rag_chatbot_app.html" pre_class="ds-codeblock-pre code-block m-0 max-h-[min(70vh,36rem)] overflow-x-auto overflow-y-auto p-4 text-[0.8125rem] leading-[1.55] sm:text-sm" only %}
+    <div class="rounded-xl border border-white/10 bg-slate-950/45 px-4 py-3 text-sm leading-relaxed text-slate-200/90">
+      <p>
+        <span class="font-semibold text-slate-100">Complete code</span>
+        <span class="mx-2 text-slate-500">—</span>
+        <a
+          href="{{ project.repoUrl }}"
+          class="font-medium text-sky-200/90 underline-offset-2 hover:text-white hover:underline"
+          target="_blank"
+          rel="noreferrer"
+          >Project link (GitHub)</a
+        >
+      </p>
+    </div>
+  </div>
+
+  <hr class="border-0 border-t border-white/10" />
+
+  <div class="space-y-5">
+    <h2 class="text-lg font-semibold tracking-tight text-white">📖 How the Code Works (Step-by-Step)</h2>
+    <p class="text-sm leading-relaxed text-slate-200/85 sm:text-base">
+      A walkthrough of <code class="text-sky-200/90">app.py</code> from top to bottom.
+    </p>
+
+    <hr class="border-0 border-t border-white/10" />
+
+    <section class="space-y-3">
+      <h3 class="text-base font-semibold tracking-tight text-white">1. Streamlit shell</h3>
+      <ul class="list-disc space-y-1.5 pl-5 text-sm leading-relaxed text-slate-200/85 sm:text-base">
+        <li>
+          <code class="text-sky-200/90">truststore</code> wires the OS certificate store into an
+          <code class="text-sky-200/90">httpx.Client</code> passed to <code class="text-sky-200/90">ChatGroq</code>—same
+          fix used in the notes-qa-bot to avoid macOS TLS surprises.
+        </li>
+        <li>
+          The Chroma index lives in <code class="text-sky-200/90">st.session_state["vs"]</code> so it persists across
+          reruns without rebuilding on every button click.
+        </li>
+      </ul>
+    </section>
+
+    <hr class="border-0 border-t border-white/10" />
+
+    <section class="space-y-3">
+      <h3 class="text-base font-semibold tracking-tight text-white">2. Scraping</h3>
+      <ul class="list-disc space-y-1.5 pl-5 text-sm leading-relaxed text-slate-200/85 sm:text-base">
+        <li>
+          A custom <code class="text-sky-200/90">User-Agent</code> header mimics a browser and reduces 403 errors on
+          sites that block plain <code class="text-sky-200/90">python-requests</code> strings.
+        </li>
+        <li>
+          Decomposing structural tags (nav, footer, aside) before calling
+          <code class="text-sky-200/90">get_text</code> removes boilerplate that would pollute embeddings and waste
+          context window on the answer side.
+        </li>
+      </ul>
+    </section>
+
+    <hr class="border-0 border-t border-white/10" />
+
+    <section class="space-y-3">
+      <h3 class="text-base font-semibold tracking-tight text-white">3. Chunking and embedding</h3>
+      <ul class="list-disc space-y-1.5 pl-5 text-sm leading-relaxed text-slate-200/85 sm:text-base">
+        <li>
+          Chunk size 500 / overlap 80 is a reasonable default for web prose; smaller chunks improve retrieval
+          precision, larger ones improve context richness—tune for your target pages.
+        </li>
+        <li>
+          <code class="text-sky-200/90">HuggingFaceEmbeddings</code> downloads
+          <code class="text-sky-200/90">all-MiniLM-L6-v2</code> once and caches it locally; subsequent runs skip the
+          download.
+        </li>
+      </ul>
+    </section>
+
+    <hr class="border-0 border-t border-white/10" />
+
+    <section class="space-y-3">
+      <h3 class="text-base font-semibold tracking-tight text-white">4. Retrieval QA</h3>
+      <ul class="list-disc space-y-1.5 pl-5 text-sm leading-relaxed text-slate-200/85 sm:text-base">
+        <li>
+          The retriever returns the 4 chunks whose embeddings are closest to the question embedding.
+        </li>
+        <li>
+          <code class="text-sky-200/90">chain_type="stuff"</code> concatenates those chunks directly into the
+          <code class="text-sky-200/90">ChatGroq</code> prompt—no summarization or map-reduce step.
+        </li>
+        <li>
+          <code class="text-sky-200/90">return_source_documents=True</code> gives users transparency into what the model
+          actually read before answering.
+        </li>
+      </ul>
+    </section>
+
+    <hr class="border-0 border-t border-white/10" />
+
+    <section class="space-y-3">
+      <h3 class="text-base font-semibold tracking-tight text-white">5. Chat history</h3>
+      <ul class="list-disc space-y-1.5 pl-5 text-sm leading-relaxed text-slate-200/85 sm:text-base">
+        <li>
+          Each Q&amp;A turn is appended to <code class="text-sky-200/90">st.session_state["history"]</code>; the
+          &ldquo;Earlier Q&amp;A&rdquo; expander shows all but the most recent turn in reverse order.
+        </li>
+        <li>
+          Scraping a new URL clears history with
+          <code class="text-sky-200/90">st.session_state.pop("history", None)</code> so you start fresh after switching
+          pages.
+        </li>
+      </ul>
+    </section>
+
+    <hr class="border-0 border-t border-white/10" />
+
+    <section class="space-y-3">
+      <h3 class="text-base font-semibold tracking-tight text-white">6. Error handling</h3>
+      <ul class="list-disc space-y-1.5 pl-5 text-sm leading-relaxed text-slate-200/85 sm:text-base">
+        <li>Empty URL, empty scraped text, and empty question each get a targeted warning before any external call.</li>
+        <li>
+          Both the scrape/index path and the QA path are wrapped in
+          <code class="text-sky-200/90">try</code>/<code class="text-sky-200/90">except</code>; the exception message
+          surfaces in <code class="text-sky-200/90">st.error()</code> without crashing Streamlit.
+        </li>
+      </ul>
+    </section>
+  </div>
+
+  <nav class="border-t border-white/10 pt-6" aria-label="Related links">
+    <p class="text-sm font-medium text-slate-200/90">Useful links</p>
+    <ul class="mt-2 space-y-2 text-sm">
+      <li>
+        <a
+          class="font-medium text-sky-200/90 underline-offset-2 hover:text-white hover:underline"
+          href="https://docs.streamlit.io"
+          target="_blank"
+          rel="noopener noreferrer"
+          >Streamlit docs</a
+        >
+      </li>
+      <li>
+        <a
+          class="font-medium text-sky-200/90 underline-offset-2 hover:text-white hover:underline"
+          href="https://python.langchain.com/docs/tutorials/rag/"
+          target="_blank"
+          rel="noopener noreferrer"
+          >LangChain RAG tutorial</a
+        >
+      </li>
+      <li>
+        <a
+          class="font-medium text-sky-200/90 underline-offset-2 hover:text-white hover:underline"
+          href="https://docs.trychroma.com/"
+          target="_blank"
+          rel="noopener noreferrer"
+          >Chroma docs</a
+        >
+      </li>
+      <li>
+        <a
+          class="font-medium text-sky-200/90 underline-offset-2 hover:text-white hover:underline"
+          href="https://www.crummy.com/software/BeautifulSoup/bs4/doc/"
+          target="_blank"
+          rel="noopener noreferrer"
+          >BeautifulSoup docs</a
+        >
+      </li>
+      <li>
+        <a
+          class="font-medium text-sky-200/90 underline-offset-2 hover:text-white hover:underline"
+          href="https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2"
+          target="_blank"
+          rel="noopener noreferrer"
+          >all-MiniLM-L6-v2 model card</a
+        >
+      </li>
+      <li>
+        <a
+          class="font-medium text-sky-200/90 underline-offset-2 hover:text-white hover:underline"
+          href="https://console.groq.com/docs/overview"
+          target="_blank"
+          rel="noopener noreferrer"
+          >Groq API docs</a
+        >
+      </li>
+    </ul>
+  </nav>
+</div>
