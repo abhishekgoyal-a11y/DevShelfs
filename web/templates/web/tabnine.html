@@ -1,0 +1,312 @@
+{% extends "web/base.html" %}
+{% block title %}Tabnine — DevShelf{% endblock %}
+{% block content %}
+  <div class="space-y-10">
+    <div class="flex flex-wrap items-center gap-2 text-sm text-slate-400/90">
+      <a href="{% url 'ai_tools' %}" class="font-medium text-emerald-300/90 transition hover:text-emerald-200">AI tools</a>
+      <span aria-hidden class="text-slate-600">/</span>
+      <span class="text-slate-200/90">Tabnine</span>
+    </div>
+
+    <section
+      class="relative overflow-hidden rounded-3xl border border-emerald-400/20 bg-white/[0.06] p-6 shadow-[0_0_0_1px_rgba(255,255,255,0.04)] backdrop-blur-2xl sm:p-8"
+    >
+      <div class="pointer-events-none absolute -right-24 top-0 h-72 w-72 rounded-full bg-emerald-500/15 blur-3xl"></div>
+      <div class="pointer-events-none absolute -left-20 bottom-0 h-56 w-56 rounded-full bg-cyan-500/10 blur-3xl"></div>
+      <div class="relative">
+        <p class="text-xs font-semibold uppercase tracking-[0.22em] text-emerald-300/90">AI tool</p>
+        <h1 class="mt-3 text-3xl font-semibold tracking-tight text-white sm:text-4xl lg:text-[2.5rem] lg:leading-tight">
+          Tabnine: The Privacy-First AI Code Assistant for Teams
+        </h1>
+        <p class="mt-4 text-sm leading-relaxed text-slate-200/80 sm:text-base">
+          Tabnine delivers context-aware code completions across all major languages and IDEs — with a local model option
+          that means your code never leaves your machine. Built for teams and enterprises with serious privacy requirements.
+        </p>
+        <p class="mt-6 flex flex-wrap items-center gap-3">
+          <a
+            href="https://www.tabnine.com"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="inline-flex items-center gap-2 rounded-full border border-emerald-400/35 bg-emerald-500/10 px-4 py-2 text-sm font-medium text-emerald-200 transition hover:border-emerald-300/50 hover:bg-emerald-500/15 hover:text-white"
+          >
+            Try Tabnine <span aria-hidden class="text-emerald-300/80">↗</span>
+          </a>
+          <a
+            href="https://www.tabnine.com/pricing"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/[0.04] px-4 py-2 text-sm font-medium text-slate-200/90 transition hover:border-white/25 hover:bg-white/[0.07] hover:text-white"
+          >
+            Pricing <span aria-hidden class="text-slate-400">↗</span>
+          </a>
+        </p>
+      </div>
+    </section>
+
+    <div class="glass rounded-3xl border border-white/10 p-5 sm:p-8">
+      <article class="mx-auto space-y-12 text-base leading-relaxed text-slate-300/95">
+
+        <section class="space-y-4" aria-labelledby="what-heading">
+          <h2 id="what-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">What is Tabnine?</h2>
+          <p>
+            Tabnine has been in the AI coding game since 2019 — long before it was a trend. It's one of the earliest
+            and most battle-tested AI code completion tools, and it's carved out a unique niche: <em>privacy-first,
+            enterprise-ready AI assistance</em> that can run entirely on your own hardware.
+          </p>
+          <p>
+            While tools like GitHub Copilot send your code to the cloud to generate suggestions, Tabnine offers a
+            local model option that runs entirely on your machine. Your code stays on your machine, period. For enterprises
+            with strict IP policies, regulated industries, or just developers who care about data sovereignty, this is a
+            genuinely important distinction.
+          </p>
+          <p>
+            Beyond privacy, Tabnine learns from your team's codebase patterns — so the more your team uses it, the more
+            it sounds like your codebase, not generic training data.
+          </p>
+        </section>
+
+        <section class="space-y-6" aria-labelledby="features-heading">
+          <h2 id="features-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">
+            Key features of Tabnine
+          </h2>
+          <div class="space-y-3 rounded-2xl border border-white/10 bg-white/[0.03] p-5 sm:p-6">
+            <h3 class="text-lg font-semibold text-white">Smart code completions</h3>
+            <p class="text-slate-300/95">
+              Single-line and whole-function completions that understand the context of what you're building.
+              It considers your current file, recent edits, and imported modules — not just the line you're typing.
+            </p>
+          </div>
+          <div class="space-y-3 rounded-2xl border border-white/10 bg-white/[0.03] p-5 sm:p-6">
+            <h3 class="text-lg font-semibold text-white">Local model (privacy mode)</h3>
+            <p class="text-slate-300/95">
+              Tabnine's local model runs entirely offline on your hardware. No code is ever transmitted anywhere.
+              This is Tabnine's biggest differentiator — and for many enterprise customers, the deciding factor.
+            </p>
+          </div>
+          <div class="space-y-3 rounded-2xl border border-white/10 bg-white/[0.03] p-5 sm:p-6">
+            <h3 class="text-lg font-semibold text-white">Protected AI (no training on your code)</h3>
+            <p class="text-slate-300/95">
+              Even when using the cloud model, Tabnine guarantees your code is never used to train the general model.
+              What you write stays yours. This commitment is backed contractually for enterprise customers.
+            </p>
+          </div>
+          <div class="space-y-3 rounded-2xl border border-white/10 bg-white/[0.03] p-5 sm:p-6">
+            <h3 class="text-lg font-semibold text-white">Personalized AI for your team</h3>
+            <p class="text-slate-300/95">
+              Tabnine can learn from your team's codebase — your patterns, your naming conventions, your internal APIs —
+              without sending that data to train a shared model. It gets smarter about your specific project over time.
+            </p>
+          </div>
+          <div class="space-y-3 rounded-2xl border border-white/10 bg-white/[0.03] p-5 sm:p-6">
+            <h3 class="text-lg font-semibold text-white">AI Chat</h3>
+            <p class="text-slate-300/95">
+              Ask questions, generate functions from descriptions, explain legacy code, and get refactoring suggestions
+              in a conversational interface directly inside your IDE.
+            </p>
+          </div>
+          <div class="space-y-3 rounded-2xl border border-white/10 bg-white/[0.03] p-5 sm:p-6">
+            <h3 class="text-lg font-semibold text-white">Broad IDE support</h3>
+            <p class="text-slate-300/95">
+              VS Code, JetBrains (IntelliJ, PyCharm, WebStorm, etc.), Vim, Neovim, Eclipse, Emacs, and more.
+              Works across the full range of languages: Python, JavaScript, Java, Go, C++, Ruby, and dozens more.
+            </p>
+          </div>
+        </section>
+
+        <section class="space-y-6" aria-labelledby="how-heading">
+          <h2 id="how-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">
+            How Tabnine works, simply
+          </h2>
+          <p>Tabnine runs in two modes, and the choice is yours:</p>
+          <ul class="list-disc space-y-2 pl-5 marker:text-emerald-400/80">
+            <li>
+              <strong class="text-slate-200">Cloud mode:</strong> Your code context is sent to Tabnine's servers,
+              predictions are generated by a powerful cloud model, and suggestions stream back to your editor.
+              Fast, high quality, but data leaves your machine.
+            </li>
+            <li>
+              <strong class="text-slate-200">Local mode:</strong> A smaller model runs entirely on your CPU or GPU.
+              No data ever leaves. Completions may be slightly simpler, but everything is private.
+            </li>
+          </ul>
+          <p class="rounded-xl border border-white/10 bg-white/[0.02] px-4 py-3 text-slate-300/95">
+            Either way, Tabnine watches what you type, builds up a picture of your coding context (current file,
+            open files, recent edits), and predicts the next most likely code block. The longer you use it, the
+            more it adapts to your style — and in team mode, to your whole team's patterns.
+          </p>
+        </section>
+
+        <section class="space-y-6" aria-labelledby="usecases-heading">
+          <h2 id="usecases-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">
+            Real-life use cases
+          </h2>
+          <div class="space-y-3 rounded-2xl border border-white/10 bg-white/[0.03] p-5 sm:p-6">
+            <h3 class="text-lg font-semibold text-white">Enterprise and regulated teams</h3>
+            <ul class="list-disc space-y-2 pl-5 marker:text-emerald-400/80">
+              <li>Law firms, banks, healthcare companies with strict IP and data policies</li>
+              <li>Government contractors who can't use cloud-based AI tools</li>
+              <li>Teams that need contractual guarantees their code won't train external models</li>
+            </ul>
+          </div>
+          <div class="space-y-3 rounded-2xl border border-white/10 bg-white/[0.03] p-5 sm:p-6">
+            <h3 class="text-lg font-semibold text-white">Teams with large proprietary codebases</h3>
+            <ul class="list-disc space-y-2 pl-5 marker:text-emerald-400/80">
+              <li>Get AI that learns your team's internal APIs, patterns, and style conventions</li>
+              <li>Speed up onboarding for new developers — the AI "knows" your codebase</li>
+              <li>Consistent style suggestions that match how your team actually writes code</li>
+            </ul>
+          </div>
+          <div class="space-y-3 rounded-2xl border border-white/10 bg-white/[0.03] p-5 sm:p-6">
+            <h3 class="text-lg font-semibold text-white">Privacy-conscious solo developers</h3>
+            <ul class="list-disc space-y-2 pl-5 marker:text-emerald-400/80">
+              <li>Use the free tier with local model for offline completions</li>
+              <li>Code on sensitive personal projects without worrying about data exposure</li>
+            </ul>
+          </div>
+        </section>
+
+        <section class="space-y-6" aria-labelledby="proscons-heading">
+          <h2 id="proscons-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">Pros and cons</h2>
+          <div class="grid gap-6 lg:grid-cols-2">
+            <div class="rounded-2xl border border-emerald-500/20 bg-emerald-500/5 p-5 sm:p-6">
+              <h3 class="mb-4 text-lg font-semibold text-emerald-100">Pros</h3>
+              <ul class="list-disc space-y-2 pl-5 text-slate-300/95 marker:text-emerald-400/80">
+                <li>Local model option — code never leaves your device</li>
+                <li>Contractual guarantee your code won't train external models</li>
+                <li>Adapts to your team's codebase patterns over time</li>
+                <li>Mature product with years of stability and refinement</li>
+                <li>Broad IDE and language support</li>
+                <li>On-premises enterprise deployment available</li>
+              </ul>
+            </div>
+            <div class="rounded-2xl border border-amber-500/20 bg-amber-500/5 p-5 sm:p-6">
+              <h3 class="mb-4 text-lg font-semibold text-amber-100">Cons</h3>
+              <ul class="list-disc space-y-2 pl-5 text-slate-300/95 marker:text-amber-400/80">
+                <li>Free tier is limited compared to Codeium's free offering</li>
+                <li>Local model is less capable than cloud alternatives</li>
+                <li>Raw generation quality behind newer tools like Copilot + GPT-4</li>
+                <li>Setup can be complex for enterprise on-premises deployment</li>
+                <li>Smaller community than GitHub Copilot</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        <section class="space-y-6" aria-labelledby="pricing-heading">
+          <h2 id="pricing-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">Tabnine pricing</h2>
+          <ul class="list-disc space-y-3 pl-5 marker:text-emerald-400/80">
+            <li>
+              <strong class="text-slate-200">Free (Basic)</strong> — limited AI completions in the IDE.
+              Good for trying it out, but the free tier is intentionally light.
+            </li>
+            <li>
+              <strong class="text-slate-200">Dev (~$12/month)</strong> — full AI completions, chat, and the option
+              to run the local model for complete privacy.
+            </li>
+            <li>
+              <strong class="text-slate-200">Enterprise (custom pricing)</strong> — personalized AI trained on your
+              codebase, admin controls, SSO, audit logs, and on-premises deployment.
+            </li>
+          </ul>
+          <p class="rounded-xl border border-white/10 bg-white/[0.02] px-4 py-3 text-slate-300/95">
+            <span class="mr-1.5 font-medium text-emerald-200" aria-hidden>Note:</span>
+            Verify current pricing at
+            <a
+              class="font-medium text-emerald-300/95 underline decoration-emerald-500/40 underline-offset-4 hover:text-emerald-200"
+              href="https://www.tabnine.com/pricing"
+              target="_blank"
+              rel="noopener noreferrer"
+              >tabnine.com/pricing</a
+            > — plans and prices change.
+          </p>
+        </section>
+
+        <section class="space-y-6" aria-labelledby="alternatives-heading">
+          <h2 id="alternatives-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">
+            Alternatives to Tabnine
+          </h2>
+          <ul class="list-disc space-y-3 pl-5 marker:text-emerald-400/80">
+            <li>
+              <strong class="text-slate-200">GitHub Copilot</strong> — more powerful completions, better chat,
+              wider community. But no local model and your code does go to the cloud.
+            </li>
+            <li>
+              <strong class="text-slate-200">Codeium</strong> — strong free tier, good completions, and a
+              competitive alternative for individuals who don't need the enterprise privacy features.
+            </li>
+            <li>
+              <strong class="text-slate-200">Cursor</strong> — a full AI-native editor for power users who want
+              more than just completions.
+            </li>
+            <li>
+              <strong class="text-slate-200">Continue (open source)</strong> — a fully open-source, self-hosted
+              AI coding assistant that lets you connect your own models. Maximum privacy control.
+            </li>
+          </ul>
+        </section>
+
+        <section class="space-y-4" aria-labelledby="who-heading">
+          <h2 id="who-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">Who should use Tabnine?</h2>
+          <p>Tabnine is the right choice if you:</p>
+          <ul class="list-disc space-y-2 pl-5 marker:text-emerald-400/80">
+            <li>Work in an industry with strict data privacy requirements (finance, healthcare, legal, government)</li>
+            <li>Need a contractual guarantee that your code won't be used to train public AI models</li>
+            <li>Want an AI that learns your team's specific coding patterns and internal APIs</li>
+            <li>Need on-premises deployment in an air-gapped environment</li>
+            <li>Care deeply about keeping proprietary code off third-party servers</li>
+          </ul>
+          <p class="rounded-xl border border-white/10 bg-white/[0.02] px-4 py-3 text-slate-300/95">
+            If privacy and enterprise controls aren't your top concerns, Codeium (free) or GitHub Copilot (more powerful)
+            might be better fits. Tabnine's sweet spot is the team or enterprise that won't compromise on data sovereignty.
+          </p>
+        </section>
+
+        <section class="space-y-6" aria-labelledby="bonus-heading">
+          <h2 id="bonus-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">Bonus: tips and mistakes to avoid</h2>
+
+          <div class="space-y-3 rounded-2xl border border-white/10 bg-white/[0.03] p-5 sm:p-6">
+            <h3 class="text-lg font-semibold text-white">Tips for getting the most out of Tabnine</h3>
+            <ul class="list-disc space-y-2 pl-5 text-slate-300/95 marker:text-emerald-400/80">
+              <li>
+                <strong class="text-slate-200">Give it time to learn.</strong> Tabnine's personalized suggestions
+                improve the more you use it in your project. Don't judge it after day one.
+              </li>
+              <li>
+                <strong class="text-slate-200">Set up team sharing for enterprise.</strong> The more team members
+                use Tabnine in a shared codebase, the smarter it gets about your patterns.
+              </li>
+              <li>
+                <strong class="text-slate-200">Try the local model for sensitive files.</strong> Even on a paid
+                plan, you can switch to local mode for specific sensitive files while keeping cloud mode elsewhere.
+              </li>
+            </ul>
+          </div>
+
+          <div class="space-y-3 rounded-2xl border border-white/10 bg-white/[0.03] p-5 sm:p-6">
+            <h3 class="text-lg font-semibold text-white">Common mistakes to avoid</h3>
+            <ul class="list-disc space-y-2 pl-5 text-slate-300/95 marker:text-amber-400/80">
+              <li>
+                <strong class="text-slate-200">Evaluating it on the free tier alone.</strong> The free tier is
+                intentionally limited. If you're evaluating for a team, use the trial of the paid plan instead.
+              </li>
+              <li>
+                <strong class="text-slate-200">Expecting GPT-4 quality from the local model.</strong> The local
+                model is fast and private, but it's smaller. It trades raw power for privacy.
+              </li>
+              <li>
+                <strong class="text-slate-200">Skipping the codebase indexing setup.</strong> For the personalized
+                features to work, you need to properly configure which repositories Tabnine should learn from.
+              </li>
+            </ul>
+          </div>
+        </section>
+
+        <p class="text-lg text-slate-200/95">
+          Tabnine isn't trying to win on buzz — it's trying to win on trust. For teams where code privacy is non-negotiable,
+          it's one of the few AI tools that takes that requirement seriously from the ground up.
+        </p>
+
+      </article>
+    </div>
+  </div>
+{% endblock %}

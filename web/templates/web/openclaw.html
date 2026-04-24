@@ -1,0 +1,321 @@
+{% extends "web/base.html" %}
+{% block title %}OpenClaw — DevShelf{% endblock %}
+{% block content %}
+  <div class="space-y-10">
+    <div class="flex flex-wrap items-center gap-2 text-sm text-slate-400/90">
+      <a href="{% url 'ai_tools' %}" class="font-medium text-emerald-300/90 transition hover:text-emerald-200">AI tools</a>
+      <span aria-hidden class="text-slate-600">/</span>
+      <span class="text-slate-200/90">OpenClaw</span>
+    </div>
+
+    <section
+      class="relative overflow-hidden rounded-3xl border border-emerald-400/20 bg-white/[0.06] p-6 shadow-[0_0_0_1px_rgba(255,255,255,0.04)] backdrop-blur-2xl sm:p-8"
+    >
+      <div class="pointer-events-none absolute -right-24 top-0 h-72 w-72 rounded-full bg-emerald-500/15 blur-3xl"></div>
+      <div class="pointer-events-none absolute -left-20 bottom-0 h-56 w-56 rounded-full bg-cyan-500/10 blur-3xl"></div>
+      <div class="relative">
+        <p class="text-xs font-semibold uppercase tracking-[0.22em] text-emerald-300/90">AI tool</p>
+        <h1 class="mt-3 text-3xl font-semibold tracking-tight text-white sm:text-4xl lg:text-[2.5rem] lg:leading-tight">
+          OpenClaw: The Always-On Personal AI Agent for Your Devices
+        </h1>
+        <p class="mt-4 text-sm leading-relaxed text-slate-200/80 sm:text-base">
+          OpenClaw is an open-source personal AI agent that runs locally and connects to your messaging apps —
+          WhatsApp, Telegram, Slack, Discord, iMessage, and more. It can clear your inbox, manage your calendar,
+          automate web tasks, and run shell commands. Bring your own API key; it works with any major LLM.
+        </p>
+        <p class="mt-6 flex flex-wrap items-center gap-3">
+          <a
+            href="https://openclaw.ai"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="inline-flex items-center gap-2 rounded-full border border-emerald-400/35 bg-emerald-500/10 px-4 py-2 text-sm font-medium text-emerald-200 transition hover:border-emerald-300/50 hover:bg-emerald-500/15 hover:text-white"
+          >
+            Visit OpenClaw <span aria-hidden class="text-emerald-300/80">↗</span>
+          </a>
+          <a
+            href="https://github.com/openclaw/openclaw"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/[0.04] px-4 py-2 text-sm font-medium text-slate-200/90 transition hover:border-white/25 hover:bg-white/[0.07] hover:text-white"
+          >
+            GitHub <span aria-hidden class="text-slate-400">↗</span>
+          </a>
+        </p>
+      </div>
+    </section>
+
+    <div class="glass rounded-3xl border border-white/10 p-5 sm:p-8">
+      <article class="mx-auto space-y-12 text-base leading-relaxed text-slate-300/95">
+
+        <section class="space-y-4" aria-labelledby="what-heading">
+          <h2 id="what-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">What is OpenClaw?</h2>
+          <p>
+            Most AI assistants require you to go to them: open a browser, type a question, wait for a response.
+            OpenClaw flips this: it lives on your machine and integrates directly into the messaging apps you're
+            already in — WhatsApp, Telegram, Slack, Discord, iMessage, and others. You send it a message, it acts.
+          </p>
+          <p>
+            Created by Peter Steinberger — best known as the founder of PSPDFKit — OpenClaw started life as a
+            personal project under different names (Clawdbot, then Moltbot) before settling on OpenClaw after
+            trademark issues. Despite the low-key origin, it exploded in popularity, accumulating hundreds of
+            thousands of GitHub stars and becoming one of the most-watched AI agent projects in the open-source space.
+          </p>
+          <p>
+            What makes it stand out: it's not a cloud service. OpenClaw runs locally on your devices. You bring your
+            own API key (Claude, GPT-4, Gemini, or local models via Ollama). Your data, your infrastructure, your control.
+          </p>
+        </section>
+
+        <section class="space-y-6" aria-labelledby="features-heading">
+          <h2 id="features-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">
+            Key features of OpenClaw
+          </h2>
+          <div class="space-y-3 rounded-2xl border border-white/10 bg-white/[0.03] p-5 sm:p-6">
+            <h3 class="text-lg font-semibold text-white">Messaging app integration</h3>
+            <p class="text-slate-300/95">
+              OpenClaw plugs into WhatsApp, Telegram, Slack, Discord, iMessage, and other platforms. You interact
+              with your AI agent right inside the chat apps you already use, no new interface to learn.
+            </p>
+          </div>
+          <div class="space-y-3 rounded-2xl border border-white/10 bg-white/[0.03] p-5 sm:p-6">
+            <h3 class="text-lg font-semibold text-white">Inbox and calendar management</h3>
+            <p class="text-slate-300/95">
+              Ask OpenClaw to clear your inbox, prioritize emails, draft replies, schedule meetings, or check
+              your calendar. It can take actions on your behalf — not just tell you what to do, but actually do it.
+            </p>
+          </div>
+          <div class="space-y-3 rounded-2xl border border-white/10 bg-white/[0.03] p-5 sm:p-6">
+            <h3 class="text-lg font-semibold text-white">Web automation</h3>
+            <p class="text-slate-300/95">
+              OpenClaw can interact with websites — filling forms, clicking buttons, extracting data — using
+              browser automation under the hood. Useful for repetitive web tasks that don't have a proper API.
+            </p>
+          </div>
+          <div class="space-y-3 rounded-2xl border border-white/10 bg-white/[0.03] p-5 sm:p-6">
+            <h3 class="text-lg font-semibold text-white">Shell command execution</h3>
+            <p class="text-slate-300/95">
+              OpenClaw can run terminal commands on your machine. This is powerful for developers — but it's also
+              why you should be thoughtful about what permissions you grant and what tasks you delegate to it.
+            </p>
+          </div>
+          <div class="space-y-3 rounded-2xl border border-white/10 bg-white/[0.03] p-5 sm:p-6">
+            <h3 class="text-lg font-semibold text-white">Model-agnostic</h3>
+            <p class="text-slate-300/95">
+              Works with any major LLM API — Claude, GPT-4, Gemini, Mistral — and with local models via Ollama.
+              You're not locked into a single provider, and you can run entirely offline with a local model.
+            </p>
+          </div>
+          <div class="space-y-3 rounded-2xl border border-white/10 bg-white/[0.03] p-5 sm:p-6">
+            <h3 class="text-lg font-semibold text-white">Runs locally</h3>
+            <p class="text-slate-300/95">
+              Unlike cloud agent services, OpenClaw runs on your own hardware. Your data doesn't go to a third-party
+              server beyond the LLM API call itself (which you control by your choice of provider).
+            </p>
+          </div>
+        </section>
+
+        <section class="space-y-6" aria-labelledby="how-heading">
+          <h2 id="how-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">
+            How OpenClaw works, simply
+          </h2>
+          <p>Here's the basic flow:</p>
+          <ul class="list-disc space-y-2 pl-5 marker:text-emerald-400/80">
+            <li><strong class="text-slate-200">You install OpenClaw</strong> on your Mac, PC, or server and configure your LLM API key and which messaging apps to connect.</li>
+            <li><strong class="text-slate-200">OpenClaw runs in the background</strong>, watching your connected messaging apps for messages addressed to it.</li>
+            <li><strong class="text-slate-200">You send a message</strong> — "summarize my emails from today" or "schedule a meeting with Alice for Thursday at 3pm".</li>
+            <li><strong class="text-slate-200">OpenClaw calls your chosen LLM</strong>, figures out what actions to take, executes them using its tool set, and reports back.</li>
+          </ul>
+          <p class="rounded-xl border border-white/10 bg-white/[0.02] px-4 py-3 text-slate-300/95">
+            Because it's "always on" (running locally), OpenClaw can also be triggered on a schedule — not just by
+            your messages. It can check your calendar every morning and send you a summary, or monitor for specific
+            events and notify you proactively.
+          </p>
+        </section>
+
+        <section class="space-y-6" aria-labelledby="usecases-heading">
+          <h2 id="usecases-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">
+            Real-life use cases
+          </h2>
+          <div class="space-y-3 rounded-2xl border border-white/10 bg-white/[0.03] p-5 sm:p-6">
+            <h3 class="text-lg font-semibold text-white">Personal productivity</h3>
+            <ul class="list-disc space-y-2 pl-5 marker:text-emerald-400/80">
+              <li>Send "clear my inbox" from WhatsApp while commuting — it drafts replies and archives spam</li>
+              <li>Ask for a daily briefing: calendar, pending emails, and top news — delivered to Telegram each morning</li>
+              <li>Schedule meetings without context-switching out of Slack</li>
+            </ul>
+          </div>
+          <div class="space-y-3 rounded-2xl border border-white/10 bg-white/[0.03] p-5 sm:p-6">
+            <h3 class="text-lg font-semibold text-white">Developer automation</h3>
+            <ul class="list-disc space-y-2 pl-5 marker:text-emerald-400/80">
+              <li>Trigger shell commands remotely via a message: "run the deploy script" or "check the server logs"</li>
+              <li>Set up monitoring alerts that message you when something goes wrong</li>
+              <li>Automate repetitive dev tasks without writing a bespoke script for each one</li>
+            </ul>
+          </div>
+          <div class="space-y-3 rounded-2xl border border-white/10 bg-white/[0.03] p-5 sm:p-6">
+            <h3 class="text-lg font-semibold text-white">Web research and data extraction</h3>
+            <ul class="list-disc space-y-2 pl-5 marker:text-emerald-400/80">
+              <li>Ask OpenClaw to scrape a website and send you a summary</li>
+              <li>Monitor a product page for a price drop and notify you when it happens</li>
+            </ul>
+          </div>
+        </section>
+
+        <section class="space-y-6" aria-labelledby="proscons-heading">
+          <h2 id="proscons-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">Pros and cons</h2>
+          <div class="grid gap-6 lg:grid-cols-2">
+            <div class="rounded-2xl border border-emerald-500/20 bg-emerald-500/5 p-5 sm:p-6">
+              <h3 class="mb-4 text-lg font-semibold text-emerald-100">Pros</h3>
+              <ul class="list-disc space-y-2 pl-5 text-slate-300/95 marker:text-emerald-400/80">
+                <li>Runs locally — your data doesn't go to a third-party agent cloud</li>
+                <li>Integrates with messaging apps you're already in</li>
+                <li>Model-agnostic — use Claude, GPT, Gemini, or local models</li>
+                <li>Hugely popular and actively developed open-source project</li>
+                <li>Can operate proactively on a schedule, not just reactively</li>
+                <li>Free to use (you only pay for LLM API calls)</li>
+              </ul>
+            </div>
+            <div class="rounded-2xl border border-amber-500/20 bg-amber-500/5 p-5 sm:p-6">
+              <h3 class="mb-4 text-lg font-semibold text-amber-100">Cons</h3>
+              <ul class="list-disc space-y-2 pl-5 text-slate-300/95 marker:text-amber-400/80">
+                <li>Broad system permissions are required — it can read messages and run shell commands</li>
+                <li>Security researchers have flagged privacy concerns given the level of access needed</li>
+                <li>Setup requires technical comfort — not a one-click install for non-developers</li>
+                <li>Shell execution and web automation mean mistakes can have real consequences</li>
+                <li>Relatively new; stability can vary across platforms</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        <section class="space-y-6" aria-labelledby="pricing-heading">
+          <h2 id="pricing-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">OpenClaw pricing</h2>
+          <ul class="list-disc space-y-3 pl-5 marker:text-emerald-400/80">
+            <li>
+              <strong class="text-slate-200">OpenClaw itself</strong> — fully open source and free. No subscription,
+              no usage limits from OpenClaw directly.
+            </li>
+            <li>
+              <strong class="text-slate-200">Your LLM API costs</strong> — you pay your LLM provider (OpenAI, Anthropic,
+              Google, etc.) directly for API calls the agent makes. With a capable local model and Ollama, this cost
+              can be zero.
+            </li>
+          </ul>
+          <p class="rounded-xl border border-white/10 bg-white/[0.02] px-4 py-3 text-slate-300/95">
+            <span class="mr-1.5 font-medium text-emerald-200" aria-hidden>Note:</span>
+            Check the official project at
+            <a
+              class="font-medium text-emerald-300/95 underline decoration-emerald-500/40 underline-offset-4 hover:text-emerald-200"
+              href="https://openclaw.ai"
+              target="_blank"
+              rel="noopener noreferrer"
+              >openclaw.ai</a
+            > and the
+            <a
+              class="font-medium text-emerald-300/95 underline decoration-emerald-500/40 underline-offset-4 hover:text-emerald-200"
+              href="https://github.com/openclaw/openclaw"
+              target="_blank"
+              rel="noopener noreferrer"
+              >GitHub repository</a
+            > for the latest status and documentation.
+          </p>
+        </section>
+
+        <section class="space-y-6" aria-labelledby="alternatives-heading">
+          <h2 id="alternatives-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">
+            Alternatives to OpenClaw
+          </h2>
+          <ul class="list-disc space-y-3 pl-5 marker:text-emerald-400/80">
+            <li>
+              <strong class="text-slate-200">AutoGPT</strong> — another autonomous agent project with a long history.
+              More focused on goal-directed tasks than messaging integration.
+            </li>
+            <li>
+              <strong class="text-slate-200">AgentGPT</strong> — browser-based autonomous agents; easier to start
+              but less capable for system-level automation.
+            </li>
+            <li>
+              <strong class="text-slate-200">n8n / Zapier + AI</strong> — traditional workflow automation tools
+              with AI features added. Less flexible but more stable for production use.
+            </li>
+            <li>
+              <strong class="text-slate-200">Claude.ai / ChatGPT</strong> — if you just need a capable AI assistant
+              and don't need local control or messaging integration, these are simpler starting points.
+            </li>
+          </ul>
+        </section>
+
+        <section class="space-y-4" aria-labelledby="who-heading">
+          <h2 id="who-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">Who should use OpenClaw?</h2>
+          <p>OpenClaw is a great fit if you:</p>
+          <ul class="list-disc space-y-2 pl-5 marker:text-emerald-400/80">
+            <li>Want a personal AI agent that lives on your own hardware, not in a cloud service</li>
+            <li>Prefer to interact with AI via messaging apps you're already using</li>
+            <li>Are a developer comfortable with setup and configuration</li>
+            <li>Want to automate personal productivity tasks (inbox, calendar, reminders)</li>
+            <li>Want full control over which LLM model your agent uses, including local options</li>
+          </ul>
+          <p class="rounded-xl border border-white/10 bg-white/[0.02] px-4 py-3 text-slate-300/95">
+            OpenClaw is <em>not</em> beginner-friendly yet — setup requires technical knowledge. It also requires
+            granting significant system permissions, so carefully review what access you're giving before enabling
+            features like shell execution. Read the security notes in the project's documentation.
+          </p>
+        </section>
+
+        <section class="space-y-6" aria-labelledby="bonus-heading">
+          <h2 id="bonus-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">Bonus: tips and mistakes to avoid</h2>
+
+          <div class="space-y-3 rounded-2xl border border-white/10 bg-white/[0.03] p-5 sm:p-6">
+            <h3 class="text-lg font-semibold text-white">Tips for getting started safely</h3>
+            <ul class="list-disc space-y-2 pl-5 text-slate-300/95 marker:text-emerald-400/80">
+              <li>
+                <strong class="text-slate-200">Start with a local model.</strong> Use Ollama with a capable local
+                model (like Llama 3 or Qwen2.5) to evaluate OpenClaw without spending money on API calls during setup.
+              </li>
+              <li>
+                <strong class="text-slate-200">Enable features incrementally.</strong> Start with read-only tasks
+                (summarize emails, check calendar) before enabling write-access features (send emails, run commands).
+              </li>
+              <li>
+                <strong class="text-slate-200">Review the permissions before setup.</strong> Understand exactly what
+                system access each feature requires. Only grant what you need.
+              </li>
+              <li>
+                <strong class="text-slate-200">Use a sandbox for shell commands.</strong> If you enable shell execution,
+                consider running OpenClaw in a containerized environment to limit blast radius.
+              </li>
+            </ul>
+          </div>
+
+          <div class="space-y-3 rounded-2xl border border-white/10 bg-white/[0.03] p-5 sm:p-6">
+            <h3 class="text-lg font-semibold text-white">Common mistakes to avoid</h3>
+            <ul class="list-disc space-y-2 pl-5 text-slate-300/95 marker:text-amber-400/80">
+              <li>
+                <strong class="text-slate-200">Enabling shell execution without understanding the risks.</strong>
+                An AI that can run arbitrary shell commands on your machine is powerful — and potentially dangerous
+                if it misinterprets an instruction. Limit permissions carefully.
+              </li>
+              <li>
+                <strong class="text-slate-200">Sharing your OpenClaw access with others carelessly.</strong>
+                Anyone who can send messages to your connected OpenClaw instance effectively has agent access
+                to your system. Secure your bot credentials.
+              </li>
+              <li>
+                <strong class="text-slate-200">Not keeping it updated.</strong> OpenClaw is actively developed.
+                Security patches and important updates come frequently — follow the repository for notices.
+              </li>
+            </ul>
+          </div>
+        </section>
+
+        <p class="text-lg text-slate-200/95">
+          OpenClaw represents a compelling vision: a personal AI agent that's truly yours, running locally, accessible
+          from wherever you already communicate. It's rough around the edges in places — but for technically inclined
+          users who want real autonomy over their AI stack, it's one of the most interesting open-source projects in
+          the agent space right now.
+        </p>
+
+      </article>
+    </div>
+  </div>
+{% endblock %}

@@ -1,0 +1,310 @@
+{% extends "web/base.html" %}
+{% block title %}LangGraph — DevShelf{% endblock %}
+{% block content %}
+  <div class="space-y-10">
+    <div class="flex flex-wrap items-center gap-2 text-sm text-slate-400/90">
+      <a href="{% url 'ai_tools' %}" class="font-medium text-emerald-300/90 transition hover:text-emerald-200">AI tools</a>
+      <span aria-hidden class="text-slate-600">/</span>
+      <span class="text-slate-200/90">LangGraph</span>
+    </div>
+
+    <section
+      class="relative overflow-hidden rounded-3xl border border-emerald-400/20 bg-white/[0.06] p-6 shadow-[0_0_0_1px_rgba(255,255,255,0.04)] backdrop-blur-2xl sm:p-8"
+    >
+      <div class="pointer-events-none absolute -right-24 top-0 h-72 w-72 rounded-full bg-emerald-500/15 blur-3xl"></div>
+      <div class="pointer-events-none absolute -left-20 bottom-0 h-56 w-56 rounded-full bg-cyan-500/10 blur-3xl"></div>
+      <div class="relative">
+        <p class="text-xs font-semibold uppercase tracking-[0.22em] text-emerald-300/90">AI tool</p>
+        <h1 class="mt-3 text-3xl font-semibold tracking-tight text-white sm:text-4xl lg:text-[2.5rem] lg:leading-tight">
+          LangGraph: Production-Grade Agent Workflows as Graphs
+        </h1>
+        <p class="mt-4 text-sm leading-relaxed text-slate-200/80 sm:text-base">
+          LangGraph is a library from the LangChain team for building stateful, multi-step agent workflows as
+          directed graphs — with cycles, branching, human-in-the-loop checkpoints, and full state persistence.
+          When your agent needs to loop, retry, or branch, LangGraph is the right tool.
+        </p>
+        <p class="mt-6 flex flex-wrap items-center gap-3">
+          <a
+            href="https://www.langchain.com/langgraph"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="inline-flex items-center gap-2 rounded-full border border-emerald-400/35 bg-emerald-500/10 px-4 py-2 text-sm font-medium text-emerald-200 transition hover:border-emerald-300/50 hover:bg-emerald-500/15 hover:text-white"
+          >
+            Visit LangGraph <span aria-hidden class="text-emerald-300/80">↗</span>
+          </a>
+          <a
+            href="https://langchain-ai.github.io/langgraph/"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/[0.04] px-4 py-2 text-sm font-medium text-slate-200/90 transition hover:border-white/25 hover:bg-white/[0.07] hover:text-white"
+          >
+            Docs <span aria-hidden class="text-slate-400">↗</span>
+          </a>
+        </p>
+      </div>
+    </section>
+
+    <div class="glass rounded-3xl border border-white/10 p-5 sm:p-8">
+      <article class="mx-auto space-y-12 text-base leading-relaxed text-slate-300/95">
+
+        <section class="space-y-4" aria-labelledby="what-heading">
+          <h2 id="what-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">What is LangGraph?</h2>
+          <p>
+            LangChain is great for linear pipelines: step A → step B → step C. But real agents aren't linear. They
+            need to try something, check if it worked, retry if it didn't, ask a human for input when stuck, and
+            branch in different directions based on what they find. That's what LangGraph was built for.
+          </p>
+          <p>
+            LangGraph models your agent workflow as a <em>directed graph</em>: nodes are functions that do work
+            (LLM calls, tool calls, logic), and edges connect them — conditionally or unconditionally. Because graphs
+            can have cycles (loops), agents can retry steps, pause for human review, and iterate until they reach
+            a satisfactory result.
+          </p>
+          <p>
+            Released in 2024 by the LangChain team, LangGraph is now their recommended approach for building complex,
+            production-grade agents. It's used in LangChain's own LangGraph Cloud platform and is increasingly the
+            standard for agents that need to be reliable in production, not just impressive in demos.
+          </p>
+        </section>
+
+        <section class="space-y-6" aria-labelledby="features-heading">
+          <h2 id="features-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">
+            Key features of LangGraph
+          </h2>
+          <div class="space-y-3 rounded-2xl border border-white/10 bg-white/[0.03] p-5 sm:p-6">
+            <h3 class="text-lg font-semibold text-white">Graph-based workflow definition</h3>
+            <p class="text-slate-300/95">
+              Define your agent as a graph with nodes (Python functions) and edges (connections). Edges can be
+              conditional — "if the LLM calls a tool, go to the tool node; if it's done, go to END."
+            </p>
+          </div>
+          <div class="space-y-3 rounded-2xl border border-white/10 bg-white/[0.03] p-5 sm:p-6">
+            <h3 class="text-lg font-semibold text-white">Cycles and loops</h3>
+            <p class="text-slate-300/95">
+              Unlike simple chains, graphs can loop. An agent can call a tool, read the result, decide it needs
+              more information, call another tool, and repeat — until it's satisfied. This is how real agents
+              work, and LangGraph supports it natively.
+            </p>
+          </div>
+          <div class="space-y-3 rounded-2xl border border-white/10 bg-white/[0.03] p-5 sm:p-6">
+            <h3 class="text-lg font-semibold text-white">State management</h3>
+            <p class="text-slate-300/95">
+              Each step in the graph can read and update a shared state object. You define exactly what state
+              flows through your graph — messages, tool results, accumulated data, intermediate reasoning steps.
+              No implicit magic: you control what persists.
+            </p>
+          </div>
+          <div class="space-y-3 rounded-2xl border border-white/10 bg-white/[0.03] p-5 sm:p-6">
+            <h3 class="text-lg font-semibold text-white">Human-in-the-loop</h3>
+            <p class="text-slate-300/95">
+              LangGraph has first-class support for pausing execution and waiting for human input — before an
+              agent takes a risky action, for review of intermediate outputs, or for approval checkpoints in
+              multi-step workflows. The graph persists state while it waits.
+            </p>
+          </div>
+          <div class="space-y-3 rounded-2xl border border-white/10 bg-white/[0.03] p-5 sm:p-6">
+            <h3 class="text-lg font-semibold text-white">Persistence and checkpointing</h3>
+            <p class="text-slate-300/95">
+              Graph state can be saved to a database at each step — so if a workflow fails halfway through,
+              it can resume from the last checkpoint rather than starting over. Critical for long-running agents.
+            </p>
+          </div>
+          <div class="space-y-3 rounded-2xl border border-white/10 bg-white/[0.03] p-5 sm:p-6">
+            <h3 class="text-lg font-semibold text-white">Multi-agent support</h3>
+            <p class="text-slate-300/95">
+              Build networks of agents where one "supervisor" graph delegates to specialized "subgraph" agents.
+              Each subgraph is itself a LangGraph, enabling hierarchical, modular multi-agent architectures.
+            </p>
+          </div>
+        </section>
+
+        <section class="space-y-6" aria-labelledby="how-heading">
+          <h2 id="how-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">
+            How LangGraph works, simply
+          </h2>
+          <p>Think of LangGraph as defining a flowchart for your agent:</p>
+          <ul class="list-disc space-y-2 pl-5 marker:text-emerald-400/80">
+            <li><strong class="text-slate-200">State:</strong> a Python dataclass or TypedDict that holds everything the graph needs — conversation history, tool results, flags, etc.</li>
+            <li><strong class="text-slate-200">Nodes:</strong> Python functions that take the current state, do something (call an LLM, run a tool, apply logic), and return updated state.</li>
+            <li><strong class="text-slate-200">Edges:</strong> connections from one node to another. Conditional edges use a function to decide which node to visit next based on the current state.</li>
+          </ul>
+          <p class="rounded-xl border border-white/10 bg-white/[0.02] px-4 py-3 text-slate-300/95">
+            A typical ReAct agent in LangGraph has three nodes: an LLM node (thinks and decides), a tools node
+            (executes the chosen tool), and an END node. The conditional edge after the LLM node checks: "did
+            the LLM call a tool, or is it done?" — and routes accordingly. That simple loop is the foundation
+            of most production agents built with LangGraph.
+          </p>
+        </section>
+
+        <section class="space-y-6" aria-labelledby="usecases-heading">
+          <h2 id="usecases-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">
+            Real-life use cases
+          </h2>
+          <div class="space-y-3 rounded-2xl border border-white/10 bg-white/[0.03] p-5 sm:p-6">
+            <h3 class="text-lg font-semibold text-white">Research and analysis agents</h3>
+            <ul class="list-disc space-y-2 pl-5 marker:text-emerald-400/80">
+              <li>An agent that searches the web, reads pages, decides if it needs more data, and loops until it has enough</li>
+              <li>A financial analysis agent that pulls data, computes ratios, checks for anomalies, and iterates</li>
+            </ul>
+          </div>
+          <div class="space-y-3 rounded-2xl border border-white/10 bg-white/[0.03] p-5 sm:p-6">
+            <h3 class="text-lg font-semibold text-white">Approval-gated workflows</h3>
+            <ul class="list-disc space-y-2 pl-5 marker:text-emerald-400/80">
+              <li>A content pipeline that drafts, then pauses for human review before publishing</li>
+              <li>A code-generation agent that writes code, runs tests, and asks a human before deploying</li>
+            </ul>
+          </div>
+          <div class="space-y-3 rounded-2xl border border-white/10 bg-white/[0.03] p-5 sm:p-6">
+            <h3 class="text-lg font-semibold text-white">Customer support automation</h3>
+            <ul class="list-disc space-y-2 pl-5 marker:text-emerald-400/80">
+              <li>Classify the request, try to resolve autonomously, escalate to a human if confidence is low</li>
+              <li>Handle complex, multi-turn troubleshooting flows that branch based on user responses</li>
+            </ul>
+          </div>
+        </section>
+
+        <section class="space-y-6" aria-labelledby="proscons-heading">
+          <h2 id="proscons-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">Pros and cons</h2>
+          <div class="grid gap-6 lg:grid-cols-2">
+            <div class="rounded-2xl border border-emerald-500/20 bg-emerald-500/5 p-5 sm:p-6">
+              <h3 class="mb-4 text-lg font-semibold text-emerald-100">Pros</h3>
+              <ul class="list-disc space-y-2 pl-5 text-slate-300/95 marker:text-emerald-400/80">
+                <li>First-class support for cycles, loops, and non-linear agent flows</li>
+                <li>Built-in state persistence and checkpointing</li>
+                <li>Human-in-the-loop is a native feature, not an afterthought</li>
+                <li>Strong observability via LangSmith integration</li>
+                <li>Works with any LangChain-compatible LLM</li>
+                <li>LangGraph Cloud for managed deployment</li>
+              </ul>
+            </div>
+            <div class="rounded-2xl border border-amber-500/20 bg-amber-500/5 p-5 sm:p-6">
+              <h3 class="mb-4 text-lg font-semibold text-amber-100">Cons</h3>
+              <ul class="list-disc space-y-2 pl-5 text-slate-300/95 marker:text-amber-400/80">
+                <li>Steeper learning curve than simpler frameworks like CrewAI</li>
+                <li>Requires understanding graph concepts (nodes, edges, state)</li>
+                <li>More boilerplate for simple use cases that don't need loops</li>
+                <li>Documentation can be dense for beginners</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        <section class="space-y-6" aria-labelledby="pricing-heading">
+          <h2 id="pricing-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">LangGraph pricing</h2>
+          <ul class="list-disc space-y-3 pl-5 marker:text-emerald-400/80">
+            <li>
+              <strong class="text-slate-200">LangGraph library</strong> — open source and free. You pay only
+              for LLM API calls.
+            </li>
+            <li>
+              <strong class="text-slate-200">LangGraph Cloud</strong> — a managed hosting platform for deploying
+              LangGraph agents with built-in persistence, scaling, and monitoring. Paid; pricing varies by usage.
+            </li>
+            <li>
+              <strong class="text-slate-200">LangSmith</strong> — the observability platform. Free tier available;
+              paid plans for higher usage.
+            </li>
+          </ul>
+          <p class="rounded-xl border border-white/10 bg-white/[0.02] px-4 py-3 text-slate-300/95">
+            <span class="mr-1.5 font-medium text-emerald-200" aria-hidden>Note:</span>
+            Verify current plans at
+            <a
+              class="font-medium text-emerald-300/95 underline decoration-emerald-500/40 underline-offset-4 hover:text-emerald-200"
+              href="https://www.langchain.com/langgraph"
+              target="_blank"
+              rel="noopener noreferrer"
+              >langchain.com/langgraph</a
+            >.
+          </p>
+        </section>
+
+        <section class="space-y-6" aria-labelledby="alternatives-heading">
+          <h2 id="alternatives-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">
+            Alternatives to LangGraph
+          </h2>
+          <ul class="list-disc space-y-3 pl-5 marker:text-emerald-400/80">
+            <li>
+              <strong class="text-slate-200">CrewAI</strong> — simpler mental model, easier to start with.
+              Less control, but you get most multi-agent patterns without learning graph theory.
+            </li>
+            <li>
+              <strong class="text-slate-200">AutoGen</strong> — Microsoft's conversation-based multi-agent
+              framework. Different model (agents talking), better for back-and-forth dialogue between agents.
+            </li>
+            <li>
+              <strong class="text-slate-200">Prefect / Airflow</strong> — traditional workflow orchestration tools.
+              Better for data pipelines and scheduled jobs; not AI-native.
+            </li>
+            <li>
+              <strong class="text-slate-200">Dapr Workflows</strong> — durable workflow orchestration at the
+              infrastructure level. Language-agnostic, but not LLM-specific.
+            </li>
+          </ul>
+        </section>
+
+        <section class="space-y-4" aria-labelledby="who-heading">
+          <h2 id="who-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">Who should use LangGraph?</h2>
+          <p>LangGraph is the right tool if you:</p>
+          <ul class="list-disc space-y-2 pl-5 marker:text-emerald-400/80">
+            <li>Are building production agents that need to be reliable, resumable, and debuggable</li>
+            <li>Need your agent to loop, retry, or branch — not just run linearly</li>
+            <li>Require human-in-the-loop checkpoints in your workflow</li>
+            <li>Are already using LangChain and want to graduate to more complex agent patterns</li>
+            <li>Need state persistence so long-running workflows can survive failures</li>
+          </ul>
+          <p class="rounded-xl border border-white/10 bg-white/[0.02] px-4 py-3 text-slate-300/95">
+            If you're just starting with agents and want something quick and intuitive, start with CrewAI first.
+            Come to LangGraph when your requirements grow complex enough that a simple framework starts to fight you.
+          </p>
+        </section>
+
+        <section class="space-y-6" aria-labelledby="bonus-heading">
+          <h2 id="bonus-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">Bonus: tips and mistakes to avoid</h2>
+
+          <div class="space-y-3 rounded-2xl border border-white/10 bg-white/[0.03] p-5 sm:p-6">
+            <h3 class="text-lg font-semibold text-white">Tips for getting started</h3>
+            <ul class="list-disc space-y-2 pl-5 text-slate-300/95 marker:text-emerald-400/80">
+              <li>
+                <strong class="text-slate-200">Start with the prebuilt ReAct agent.</strong> LangGraph ships with
+                a pre-built ReAct agent you can use before learning the full graph API. Learn by reading its source.
+              </li>
+              <li>
+                <strong class="text-slate-200">Draw your graph first.</strong> Before writing code, sketch the nodes
+                and edges on paper. If you can't draw it, you can't code it.
+              </li>
+              <li>
+                <strong class="text-slate-200">Add LangSmith from the start.</strong> LangGraph runs are complex;
+                LangSmith visualization makes debugging dramatically easier.
+              </li>
+            </ul>
+          </div>
+
+          <div class="space-y-3 rounded-2xl border border-white/10 bg-white/[0.03] p-5 sm:p-6">
+            <h3 class="text-lg font-semibold text-white">Common mistakes to avoid</h3>
+            <ul class="list-disc space-y-2 pl-5 text-slate-300/95 marker:text-amber-400/80">
+              <li>
+                <strong class="text-slate-200">Forgetting to define a termination condition.</strong> Cyclic graphs
+                can loop forever if you don't have a clear condition that routes to END. Always handle the "done"
+                case explicitly.
+              </li>
+              <li>
+                <strong class="text-slate-200">Putting too much in the state.</strong> State flows through every
+                node. Keep it lean — only include what actually needs to be shared across the graph.
+              </li>
+              <li>
+                <strong class="text-slate-200">Skipping persistence in production.</strong> Agents without
+                checkpointing can lose hours of work if something fails late in a long run. Set up persistence early.
+              </li>
+            </ul>
+          </div>
+        </section>
+
+        <p class="text-lg text-slate-200/95">
+          LangGraph is where agent development gets serious. It trades simplicity for power — and for production
+          applications where reliability and control matter, that's exactly the right trade-off.
+        </p>
+
+      </article>
+    </div>
+  </div>
+{% endblock %}
