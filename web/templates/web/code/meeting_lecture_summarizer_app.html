@@ -1,0 +1,171 @@
+{% verbatim %}
+# Meeting / Lecture Summarizer — Streamlit + Groq
+# Save as app.py, add GROQ_API_KEY to .streamlit/secrets.toml, then: streamlit run app.py
+
+import ssl
+
+import httpx
+import streamlit as st
+import truststore
+
+MAX_TRANSCRIPT_CHARS = 15000
+
+st.set_page_config(page_title="Meeting & Lecture Summarizer", layout="centered")
+st.title("Meeting & Lecture Summarizer")
+st.caption(
+    "Paste a transcript or meeting notes and get a structured summary, "
+    "action items, decisions, and a Q&A chatbot to query the content."
+)
+
+_ssl_ctx = truststore.SSLContext(ssl.PROTOCOL_TLS_CLIENT)
+
+
+@st.cache_resource
+def _groq_client():
+    import groq
+
+    return groq.Groq(
+        api_key=st.secrets["GROQ_API_KEY"],
+        http_client=httpx.Client(verify=_ssl_ctx),
+    )
+
+
+_MODEL = "llama-3.3-70b-versatile"
+
+MEETING_TYPES = ["General Meeting", "Sprint Planning", "Lecture / Class", "Interview", "1:1", "All-Hands"]
+
+# ── Input ──────────────────────────────────────────────────────────────────────
+meeting_type = st.selectbox("Content type", MEETING_TYPES)
+transcript_file = st.file_uploader("Upload transcript (.txt)", type=["txt"])
+transcript_default = ""
+if transcript_file:
+    transcript_default = transcript_file.read().decode("utf-8", errors="replace")[:MAX_TRANSCRIPT_CHARS]
+
+transcript = st.text_area(
+    "Or paste transcript / notes",
+    value=transcript_default,
+    height=250,
+    placeholder="Speaker A: Let's kick off the sprint planning. We have 12 story points available...",
+)
+
+col1, col2 = st.columns(2)
+do_summarize = col1.button("Summarize", type="primary", use_container_width=True)
+do_actions = col2.button("Extract Action Items", use_container_width=True)
+
+st.divider()
+
+# ── Summarize ──────────────────────────────────────────────────────────────────
+if do_summarize:
+    if not transcript.strip():
+        st.warning("Please paste or upload a transcript.")
+    else:
+        system_msg = (
+            f"You are an expert meeting facilitator summarizing a {meeting_type}. "
+            "Produce a structured summary in this exact format:\n\n"
+            "## TL;DR\n[2-3 sentence executive summary]\n\n"
+            "## Key Discussion Points\n[bullet list of main topics covered]\n\n"
+            "## Decisions Made\n[bullet list of decisions reached, or 'None recorded' if absent]\n\n"
+            "## Action Items\n[each as: • [Owner if mentioned] — [task] — [deadline if mentioned]]\n\n"
+            "## Open Questions\n[unresolved questions or next steps needed]\n\n"
+            "Be factual and concise. Do not add information not present in the transcript."
+        )
+        user_msg = f"Transcript:\n{transcript[:MAX_TRANSCRIPT_CHARS]}"
+
+        with st.spinner("Summarizing…"):
+            try:
+                resp = _groq_client().chat.completions.create(
+                    model=_MODEL,
+                    messages=[
+                        {"role": "system", "content": system_msg},
+                        {"role": "user", "content": user_msg},
+                    ],
+                )
+                summary = resp.choices[0].message.content
+                st.markdown(summary)
+                st.download_button(
+                    "Download Summary (.txt)",
+                    data=summary,
+                    file_name="meeting_summary.txt",
+                    mime="text/plain",
+                )
+            except Exception as exc:
+                st.error(f"Error: {exc}")
+
+# ── Action items only ──────────────────────────────────────────────────────────
+if do_actions:
+    if not transcript.strip():
+        st.warning("Please paste or upload a transcript.")
+    else:
+        system_msg = (
+            "Extract all action items, tasks, and commitments from this transcript. "
+            "For each item provide:\n"
+            "- Task description\n"
+            "- Owner (person responsible, if mentioned)\n"
+            "- Deadline (if mentioned)\n"
+            "- Priority (High/Medium/Low based on language used)\n\n"
+            "Format as a clean markdown table with columns: Task | Owner | Deadline | Priority\n"
+            "If no action items exist, say so clearly."
+        )
+        user_msg = f"Transcript:\n{transcript[:MAX_TRANSCRIPT_CHARS]}"
+
+        with st.spinner("Extracting action items…"):
+            try:
+                resp = _groq_client().chat.completions.create(
+                    model=_MODEL,
+                    messages=[
+                        {"role": "system", "content": system_msg},
+                        {"role": "user", "content": user_msg},
+                    ],
+                )
+                st.markdown(resp.choices[0].message.content)
+            except Exception as exc:
+                st.error(f"Error: {exc}")
+
+# ── Q&A chatbot about the meeting ─────────────────────────────────────────────
+st.divider()
+st.subheader("Ask About This Meeting")
+
+if "chat_history" not in st.session_state:
+    st.session_state.chat_history = []
+
+for msg in st.session_state.chat_history:
+    with st.chat_message(msg["role"]):
+        st.markdown(msg["content"])
+
+user_question = st.chat_input("Ask anything about the transcript…")
+
+if user_question:
+    if not transcript.strip():
+        st.warning("Paste a transcript above first, then ask questions about it.")
+    else:
+        st.session_state.chat_history.append({"role": "user", "content": user_question})
+        with st.chat_message("user"):
+            st.markdown(user_question)
+
+        system_msg = (
+            "You are a helpful assistant with access to a meeting transcript. "
+            "Answer questions based only on the transcript provided. "
+            "If the answer is not in the transcript, say so clearly. "
+            "Keep answers concise and factual."
+        )
+        messages = [
+            {"role": "system", "content": system_msg},
+            {"role": "user", "content": f"Here is the transcript:\n{transcript[:MAX_TRANSCRIPT_CHARS]}"},
+            {"role": "assistant", "content": "I have read the transcript. What would you like to know?"},
+        ]
+        for h in st.session_state.chat_history:
+            messages.append(h)
+
+        with st.chat_message("assistant"):
+            with st.spinner("Thinking…"):
+                try:
+                    resp = _groq_client().chat.completions.create(
+                        model=_MODEL,
+                        messages=messages,
+                    )
+                    answer = resp.choices[0].message.content
+                    st.markdown(answer)
+                    st.session_state.chat_history.append({"role": "assistant", "content": answer})
+                except Exception as exc:
+                    st.error(f"Error: {exc}")
+{% endverbatim %}

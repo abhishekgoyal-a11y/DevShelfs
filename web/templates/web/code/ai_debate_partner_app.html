@@ -1,0 +1,223 @@
+{% verbatim %}
+# AI Debate Partner — Streamlit + Groq
+# Save as app.py, add GROQ_API_KEY to .streamlit/secrets.toml, then: streamlit run app.py
+
+import ssl
+
+import httpx
+import streamlit as st
+import truststore
+
+st.set_page_config(page_title="AI Debate Partner", layout="centered")
+st.title("AI Debate Partner")
+st.caption(
+    "Pick a topic, choose a side, and debate an AI that argues its position rigorously. "
+    "Challenge its claims and sharpen your critical thinking."
+)
+
+_ssl_ctx = truststore.SSLContext(ssl.PROTOCOL_TLS_CLIENT)
+
+
+@st.cache_resource
+def _groq_client():
+    import groq
+
+    return groq.Groq(
+        api_key=st.secrets["GROQ_API_KEY"],
+        http_client=httpx.Client(verify=_ssl_ctx),
+    )
+
+
+_MODEL = "llama-3.3-70b-versatile"
+
+EXAMPLE_TOPICS = [
+    "Remote work is better than office work",
+    "AI will eliminate more jobs than it creates",
+    "Social media does more harm than good",
+    "Universal Basic Income should be implemented",
+    "Nuclear energy is the best path to clean energy",
+    "Standardized testing should be abolished",
+    "Space exploration funding should be prioritized over solving Earth's problems",
+]
+
+# ── Setup ──────────────────────────────────────────────────────────────────────
+if "debate_active" not in st.session_state:
+    st.session_state.debate_active = False
+    st.session_state.debate_topic = ""
+    st.session_state.ai_side = ""
+    st.session_state.user_side = ""
+    st.session_state.debate_history = []
+
+if not st.session_state.debate_active:
+    st.subheader("Set Up Your Debate")
+
+    topic_choice = st.selectbox("Choose a topic or enter your own", ["Custom…"] + EXAMPLE_TOPICS)
+    if topic_choice == "Custom…":
+        topic = st.text_input("Your topic", placeholder="e.g. Cats are better pets than dogs")
+    else:
+        topic = topic_choice
+
+    ai_position = st.radio(
+        "The AI will argue:",
+        ["FOR (supporting the topic)", "AGAINST (opposing the topic)"],
+        horizontal=True,
+    )
+    ai_side = "FOR" if "FOR" in ai_position else "AGAINST"
+    user_side = "AGAINST" if ai_side == "FOR" else "FOR"
+
+    show_both_sides = st.checkbox("Show me both sides first (briefing mode)", value=True)
+
+    start_btn = st.button("Start Debate", type="primary")
+
+    if start_btn:
+        if not topic.strip():
+            st.warning("Please enter a debate topic.")
+        else:
+            st.session_state.debate_active = True
+            st.session_state.debate_topic = topic
+            st.session_state.ai_side = ai_side
+            st.session_state.user_side = user_side
+            st.session_state.debate_history = []
+
+            if show_both_sides:
+                # Generate a briefing on both sides
+                system_brief = (
+                    "You are a debate coach. Provide a balanced overview of both sides of the topic. "
+                    "Format:\n\n"
+                    "## FOR (Supporting)\n[3-4 strongest arguments]\n\n"
+                    "## AGAINST (Opposing)\n[3-4 strongest arguments]\n\n"
+                    "## Key Facts & Statistics\n[relevant data points]\n\n"
+                    "Be neutral and academic."
+                )
+                with st.spinner("Preparing briefing…"):
+                    try:
+                        resp = _groq_client().chat.completions.create(
+                            model=_MODEL,
+                            messages=[
+                                {"role": "system", "content": system_brief},
+                                {"role": "user", "content": f"Topic: {topic}"},
+                            ],
+                        )
+                        briefing = resp.choices[0].message.content
+                        st.session_state.debate_history.append(
+                            {"role": "assistant", "content": f"**Debate Briefing**\n\n{briefing}"}
+                        )
+                    except Exception as exc:
+                        st.error(f"Error: {exc}")
+
+            # AI opens the debate
+            open_system = (
+                f"You are a skilled debater arguing {ai_side} the following topic: '{topic}'. "
+                "Open the debate with a strong, compelling opening statement (3-4 sentences). "
+                "State your position clearly and present your first key argument. "
+                "Be persuasive but factual."
+            )
+            with st.spinner("AI preparing opening statement…"):
+                try:
+                    resp = _groq_client().chat.completions.create(
+                        model=_MODEL,
+                        messages=[
+                            {"role": "system", "content": open_system},
+                            {"role": "user", "content": "Please give your opening statement."},
+                        ],
+                    )
+                    opening = resp.choices[0].message.content
+                    st.session_state.debate_history.append(
+                        {"role": "assistant", "content": opening}
+                    )
+                except Exception as exc:
+                    st.error(f"Error: {exc}")
+
+            st.rerun()
+
+# ── Active debate ──────────────────────────────────────────────────────────────
+if st.session_state.debate_active:
+    topic = st.session_state.debate_topic
+    ai_side = st.session_state.ai_side
+    user_side = st.session_state.user_side
+
+    st.info(
+        f"**Topic:** {topic}  \n"
+        f"**AI argues:** {ai_side}  |  **You argue:** {user_side}"
+    )
+
+    for msg in st.session_state.debate_history:
+        role = msg["role"]
+        with st.chat_message(role):
+            st.markdown(msg["content"])
+
+    user_arg = st.chat_input(f"Make your argument ({user_side})…")
+
+    if user_arg:
+        st.session_state.debate_history.append({"role": "user", "content": user_arg})
+        with st.chat_message("user"):
+            st.markdown(user_arg)
+
+        system_msg = (
+            f"You are a skilled debater arguing {ai_side} the topic: '{topic}'. "
+            f"The human is arguing {user_side}. "
+            "Respond to their argument by:\n"
+            "1. Acknowledging what they said (briefly)\n"
+            "2. Pointing out a weakness or flaw in their argument\n"
+            "3. Reinforcing your own position with a new supporting point or evidence\n\n"
+            "Be intellectually rigorous, respectful, and persuasive. "
+            "Keep your response to 3-5 sentences. Stay in character as the debater."
+        )
+
+        messages = [{"role": "system", "content": system_msg}]
+        for h in st.session_state.debate_history[-8:]:
+            messages.append(h)
+
+        with st.chat_message("assistant"):
+            with st.spinner("AI responding…"):
+                try:
+                    resp = _groq_client().chat.completions.create(
+                        model=_MODEL,
+                        messages=messages,
+                    )
+                    ai_response = resp.choices[0].message.content
+                    st.markdown(ai_response)
+                    st.session_state.debate_history.append(
+                        {"role": "assistant", "content": ai_response}
+                    )
+                except Exception as exc:
+                    st.error(f"Error: {exc}")
+
+    st.divider()
+    col1, col2 = st.columns(2)
+
+    with col1:
+        if st.button("Request Verdict", use_container_width=True):
+            verdict_system = (
+                "You are an impartial debate judge. Review the debate and provide:\n\n"
+                "## Verdict\n[Who made stronger arguments overall]\n\n"
+                "## Scoring\n- Argument strength: [X/10 for each side]\n"
+                "- Use of evidence: [X/10 for each side]\n"
+                "- Rebuttal quality: [X/10 for each side]\n\n"
+                "## Key Moments\n[Most compelling points from each side]\n\n"
+                "## What Could Improve\n[One tip for each side]\n\n"
+                "Be fair and analytical."
+            )
+            debate_text = "\n\n".join(
+                f"{'AI' if m['role'] == 'assistant' else 'Human'}: {m['content']}"
+                for m in st.session_state.debate_history
+            )
+            with st.spinner("Judging…"):
+                try:
+                    resp = _groq_client().chat.completions.create(
+                        model=_MODEL,
+                        messages=[
+                            {"role": "system", "content": verdict_system},
+                            {"role": "user", "content": f"Debate transcript:\n{debate_text[:8000]}"},
+                        ],
+                    )
+                    st.markdown(resp.choices[0].message.content)
+                except Exception as exc:
+                    st.error(f"Error: {exc}")
+
+    with col2:
+        if st.button("Start New Debate", use_container_width=True):
+            st.session_state.debate_active = False
+            st.session_state.debate_history = []
+            st.rerun()
+{% endverbatim %}

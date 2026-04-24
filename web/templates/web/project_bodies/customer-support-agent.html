@@ -1,0 +1,233 @@
+{% load static %}
+<div class="glass space-y-10 rounded-3xl p-5 sm:p-8">
+  <div class="space-y-4">
+    <p class="text-sm leading-relaxed text-slate-200/85 sm:text-base">
+      <strong class="text-slate-100">Customer Support Agent Simulator</strong> is an intermediate-level project
+      that turns your product documentation into a live support chatbot. Upload FAQs, help articles, or any
+      text documentation, build a local knowledge index, and chat with an AI agent that answers only from
+      your docs — automatically escalating questions it cannot answer.
+    </p>
+    <p class="text-sm leading-relaxed text-slate-200/85 sm:text-base">
+      The project uses the same <strong class="text-slate-100">RAG pipeline</strong> as the notes Q&amp;A bot:
+      documents are chunked, embedded with local
+      <strong class="text-slate-100">Hugging Face sentence-transformers</strong>, and stored in
+      <strong class="text-slate-100">Chroma</strong>. Each chat turn retrieves the 4 most relevant
+      documentation chunks, injects them as context, and asks
+      <strong class="text-slate-100">Groq</strong> to answer as a named support agent. When the retrieved
+      context does not cover the question, the agent triggers a scripted escalation response.
+    </p>
+    <p class="text-sm leading-relaxed text-slate-200/85 sm:text-base">
+      Built with <strong class="text-slate-100">Python</strong>, <strong class="text-slate-100">Streamlit</strong>,
+      <strong class="text-slate-100">LangChain</strong>, <strong class="text-slate-100">Chroma</strong>, and
+      <strong class="text-slate-100">Groq</strong>, this project demonstrates how RAG and persona prompting
+      combine to create a deployable SaaS demo.
+    </p>
+    <p class="text-sm leading-relaxed text-slate-200/85 sm:text-base">
+      <strong class="text-slate-100">Purpose:</strong> apply RAG to a production-style use case — document-grounded
+      answers with escalation logic, the same pattern used in enterprise support chatbots.
+    </p>
+    <p class="text-sm leading-relaxed text-slate-200/85 sm:text-base">
+      <strong class="text-slate-100">Typical use:</strong> paste a product FAQ into the sidebar, set an agent
+      name and product name, click &ldquo;Build Support KB,&rdquo; then simulate customer questions to test
+      coverage before shipping.
+    </p>
+    <p class="text-sm font-medium text-slate-200/90">Key ideas you will touch:</p>
+    <ul class="list-inside list-disc space-y-2 text-sm leading-relaxed text-slate-200/85 sm:text-base">
+      <li>
+        <strong class="text-slate-100">Persona prompting</strong> — agent name, product name, and escalation
+        script injected into every system message for consistent brand voice.
+      </li>
+      <li>
+        <strong class="text-slate-100">Grounded answers</strong> — &ldquo;use ONLY the provided documentation&rdquo;
+        prevents hallucination about product details.
+      </li>
+      <li>
+        <strong class="text-slate-100">Escalation detection</strong> — a simple keyword check on the response
+        flags escalated cases with a UI warning.
+      </li>
+      <li>
+        <strong class="text-slate-100">Chat history sliding window</strong> — last 6 turns kept to balance
+        context and cost.
+      </li>
+    </ul>
+  </div>
+
+  <div class="space-y-3">
+    <h2 class="text-lg font-semibold tracking-tight text-white">Overall flow</h2>
+    <pre
+      class="overflow-x-auto rounded-2xl border border-white/10 bg-slate-950/60 p-4 text-sm leading-relaxed text-slate-200/90 sm:text-base"
+    ><code class="font-mono whitespace-pre-wrap">Sidebar: upload docs + set product name + agent persona
+      ↓
+Clicks "Build Support KB"
+      ↓
+Docs chunked → embedded locally (sentence-transformers) → stored in Chroma
+      ↓
+Customer asks a question in chat
+      ↓
+Retriever fetches top-4 chunks → injected as context
+      ↓
+Groq answers as named agent
+      ↓
+If answer cannot be grounded → escalation message + UI warning flag</code></pre>
+  </div>
+
+  <hr class="border-0 border-t border-white/10" />
+
+  <div class="space-y-4">
+    <h2 class="text-lg font-semibold tracking-tight text-white">Step-by-Step Implementation</h2>
+    <ol class="list-decimal list-outside space-y-5 pl-6 text-sm leading-relaxed text-slate-200/85 sm:text-base">
+      <li>
+        <span class="font-medium text-slate-100">Set up the project</span>
+        <ul class="mt-2 list-disc space-y-1.5 pl-5">
+          <li>Install Python 3.10+, create folder and virtual environment</li>
+        </ul>
+      </li>
+      <li>
+        <span class="font-medium text-slate-100">Install dependencies</span>
+        <ul class="mt-2 list-disc space-y-1.5 pl-5">
+          <li>
+            <code class="text-sky-200/90">streamlit</code>, <code class="text-sky-200/90">groq</code>,
+            <code class="text-sky-200/90">httpx</code>, <code class="text-sky-200/90">truststore</code>,
+            <code class="text-sky-200/90">langchain</code>, <code class="text-sky-200/90">langchain-community</code>,
+            <code class="text-sky-200/90">langchain-huggingface</code>,
+            <code class="text-sky-200/90">langchain-text-splitters</code>,
+            <code class="text-sky-200/90">chromadb</code>,
+            <code class="text-sky-200/90">sentence-transformers</code>, <code class="text-sky-200/90">pypdf</code>
+          </li>
+        </ul>
+      </li>
+      <li>
+        <span class="font-medium text-slate-100">Build the sidebar</span>
+        <ul class="mt-2 list-disc space-y-1.5 pl-5">
+          <li>Product name and agent persona text inputs</li>
+          <li>Multi-file uploader for PDF and TXT documentation</li>
+          <li>Fallback text area for pasted FAQ content</li>
+        </ul>
+      </li>
+      <li>
+        <span class="font-medium text-slate-100">Index the knowledge base</span>
+        <ul class="mt-2 list-disc space-y-1.5 pl-5">
+          <li>
+            Decode all uploaded files, chunk with <code class="text-sky-200/90">RecursiveCharacterTextSplitter</code>,
+            embed, and store in <code class="text-sky-200/90">st.session_state.support_vs</code>
+          </li>
+        </ul>
+      </li>
+      <li>
+        <span class="font-medium text-slate-100">Build the chat interface</span>
+        <ul class="mt-2 list-disc space-y-1.5 pl-5">
+          <li>
+            Per-turn: retrieve top-4 chunks, inject as <code class="text-sky-200/90">context</code> in system
+            message, include last 6 history turns
+          </li>
+          <li>System message uses product name and agent persona from session state</li>
+        </ul>
+      </li>
+      <li>
+        <span class="font-medium text-slate-100">Add escalation detection</span>
+        <ul class="mt-2 list-disc space-y-1.5 pl-5">
+          <li>
+            After generating the response, check for escalation keywords; show
+            <code class="text-sky-200/90">st.warning()</code> if triggered
+          </li>
+        </ul>
+      </li>
+    </ol>
+  </div>
+
+  <hr class="border-0 border-t border-white/10" />
+
+  <div class="space-y-4">
+    <h2 class="text-lg font-semibold tracking-tight text-white">Code implementation</h2>
+    {% include "web/partials/code_block_frame.html" with language="python" code_template="web/code/customer_support_agent_app.html" pre_class="ds-codeblock-pre code-block m-0 max-h-[min(70vh,36rem)] overflow-x-auto overflow-y-auto p-4 text-[0.8125rem] leading-[1.55] sm:text-sm" only %}
+    <div class="rounded-xl border border-white/10 bg-slate-950/45 px-4 py-3 text-sm leading-relaxed text-slate-200/90">
+      <p>
+        <span class="font-semibold text-slate-100">Complete code</span>
+        <span class="mx-2 text-slate-500">—</span>
+        <a
+          href="{{ project.repoUrl }}"
+          class="font-medium text-sky-200/90 underline-offset-2 hover:text-white hover:underline"
+          target="_blank"
+          rel="noreferrer"
+          >Project link (GitHub)</a
+        >
+      </p>
+    </div>
+  </div>
+
+  <hr class="border-0 border-t border-white/10" />
+
+  <div class="space-y-5">
+    <h2 class="text-lg font-semibold tracking-tight text-white">📖 How the Code Works (Step-by-Step)</h2>
+
+    <hr class="border-0 border-t border-white/10" />
+
+    <section class="space-y-3">
+      <h3 class="text-base font-semibold tracking-tight text-white">1. Persona injection</h3>
+      <ul class="list-disc space-y-1.5 pl-5 text-sm leading-relaxed text-slate-200/85 sm:text-base">
+        <li>
+          Agent name and product name are stored in <code class="text-sky-200/90">st.session_state</code> at
+          index time and read at chat time — so the persona persists across turns without re-entering them.
+        </li>
+      </ul>
+    </section>
+
+    <hr class="border-0 border-t border-white/10" />
+
+    <section class="space-y-3">
+      <h3 class="text-base font-semibold tracking-tight text-white">2. Per-turn retrieval</h3>
+      <ul class="list-disc space-y-1.5 pl-5 text-sm leading-relaxed text-slate-200/85 sm:text-base">
+        <li>
+          The retriever is called inside the chat handler, not at startup, so each question gets fresh
+          top-4 chunks from the vector store without a stale global context.
+        </li>
+      </ul>
+    </section>
+
+    <hr class="border-0 border-t border-white/10" />
+
+    <section class="space-y-3">
+      <h3 class="text-base font-semibold tracking-tight text-white">3. Escalation guard</h3>
+      <ul class="list-disc space-y-1.5 pl-5 text-sm leading-relaxed text-slate-200/85 sm:text-base">
+        <li>
+          The system message instructs the model to use a specific escalation phrase when the context is
+          insufficient. A keyword check on the response then fires
+          <code class="text-sky-200/90">st.warning()</code> — no separate classifier needed.
+        </li>
+      </ul>
+    </section>
+  </div>
+
+  <nav class="border-t border-white/10 pt-6" aria-label="Related links">
+    <p class="text-sm font-medium text-slate-200/90">Useful links</p>
+    <ul class="mt-2 space-y-2 text-sm">
+      <li>
+        <a
+          class="font-medium text-sky-200/90 underline-offset-2 hover:text-white hover:underline"
+          href="https://docs.streamlit.io"
+          target="_blank"
+          rel="noopener noreferrer"
+          >Streamlit docs</a
+        >
+      </li>
+      <li>
+        <a
+          class="font-medium text-sky-200/90 underline-offset-2 hover:text-white hover:underline"
+          href="https://python.langchain.com/docs/tutorials/rag/"
+          target="_blank"
+          rel="noopener noreferrer"
+          >LangChain RAG tutorial</a
+        >
+      </li>
+      <li>
+        <a
+          class="font-medium text-sky-200/90 underline-offset-2 hover:text-white hover:underline"
+          href="https://console.groq.com/docs/overview"
+          target="_blank"
+          rel="noopener noreferrer"
+          >Groq API docs</a
+        >
+      </li>
+    </ul>
+  </nav>
+</div>

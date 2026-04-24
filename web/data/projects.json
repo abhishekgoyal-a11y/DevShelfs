@@ -61,5 +61,95 @@
     "tech": ["Python", "Streamlit", "Groq API"],
     "difficulty": "beginner",
     "featured": false
+  },
+  {
+    "id": "p7",
+    "slug": "personal-study-tutor",
+    "title": "Personal Study Tutor",
+    "description": "RAG-based tutor that indexes your PDFs and notes locally, answers questions from your material, and generates quizzes for active recall—LangChain, Chroma, Hugging Face embeddings, and Groq.",
+    "repoUrl": "https://github.com/abhishekgoyal-a11y/Projects/tree/main/personal-study-tutor",
+    "tech": ["Python", "Streamlit", "LangChain", "Chroma", "Groq", "Hugging Face", "RAG", "pypdf"],
+    "difficulty": "intermediate",
+    "featured": false
+  },
+  {
+    "id": "p8",
+    "slug": "resume-job-match-optimizer",
+    "title": "Resume + Job Match Optimizer",
+    "description": "Upload a resume and job description to get a fit score (0–100), keyword gap analysis, improvement suggestions with STAR rewrites, and a tailored cover letter—Python, Streamlit, and Groq.",
+    "repoUrl": "https://github.com/abhishekgoyal-a11y/Projects/tree/main/resume-job-match-optimizer",
+    "tech": ["Python", "Streamlit", "Groq API", "pypdf"],
+    "difficulty": "intermediate",
+    "featured": false
+  },
+  {
+    "id": "p9",
+    "slug": "ai-coding-pair-programmer",
+    "title": "AI Coding Pair Programmer",
+    "description": "Paste code or pseudocode and choose an action: step-by-step explanation, bug detection with fixes, pseudocode-to-working-code conversion, or a scored code review—Python, Streamlit, and Groq.",
+    "repoUrl": "https://github.com/abhishekgoyal-a11y/Projects/tree/main/ai-coding-pair-programmer",
+    "tech": ["Python", "Streamlit", "Groq API"],
+    "difficulty": "beginner",
+    "featured": false
+  },
+  {
+    "id": "p10",
+    "slug": "meeting-lecture-summarizer",
+    "title": "Meeting & Lecture Summarizer",
+    "description": "Paste or upload any transcript to extract a TL;DR, key decisions, and a formatted action-item table—then ask follow-up questions via a built-in chat interface. Python, Streamlit, and Groq.",
+    "repoUrl": "https://github.com/abhishekgoyal-a11y/Projects/tree/main/meeting-lecture-summarizer",
+    "tech": ["Python", "Streamlit", "Groq API"],
+    "difficulty": "beginner",
+    "featured": false
+  },
+  {
+    "id": "p11",
+    "slug": "personalized-news-digest",
+    "title": "Personalized News Digest",
+    "description": "Select topics, pick a reading tone (beginner-friendly / technical / executive brief), and get a curated daily digest pulled from live RSS feeds and summarized by Groq—Python, Streamlit, feedparser.",
+    "repoUrl": "https://github.com/abhishekgoyal-a11y/Projects/tree/main/personalized-news-digest",
+    "tech": ["Python", "Streamlit", "Groq API", "feedparser", "RSS"],
+    "difficulty": "intermediate",
+    "featured": false
+  },
+  {
+    "id": "p12",
+    "slug": "customer-support-agent",
+    "title": "Customer Support Agent Simulator",
+    "description": "Upload your product docs or FAQ, then chat with an AI support agent that answers only from your documentation and automatically escalates questions it cannot answer—RAG, LangChain, Chroma, Groq.",
+    "repoUrl": "https://github.com/abhishekgoyal-a11y/Projects/tree/main/customer-support-agent",
+    "tech": ["Python", "Streamlit", "LangChain", "Chroma", "Groq", "Hugging Face", "RAG"],
+    "difficulty": "intermediate",
+    "featured": false
+  },
+  {
+    "id": "p13",
+    "slug": "ai-debate-partner",
+    "title": "AI Debate Partner",
+    "description": "Pick a topic, assign sides, and engage in a structured debate where the AI argues its position, rebuts your points, and a judge scores both sides at the end—Python, Streamlit, and Groq.",
+    "repoUrl": "https://github.com/abhishekgoyal-a11y/Projects/tree/main/ai-debate-partner",
+    "tech": ["Python", "Streamlit", "Groq API"],
+    "difficulty": "beginner",
+    "featured": false
+  },
+  {
+    "id": "p14",
+    "slug": "travel-planner-agent",
+    "title": "Travel Planner Agent",
+    "description": "Enter destination, budget, travel style, and interests to get a day-by-day itinerary with hotel picks, food recommendations, and transport options—then refine via a follow-up chat. Python, Streamlit, Groq.",
+    "repoUrl": "https://github.com/abhishekgoyal-a11y/Projects/tree/main/travel-planner-agent",
+    "tech": ["Python", "Streamlit", "Groq API"],
+    "difficulty": "beginner",
+    "featured": false
+  },
+  {
+    "id": "p15",
+    "slug": "mental-model-coach",
+    "title": "Mental Model & Learning Coach",
+    "description": "Apply frameworks like First Principles, Inversion, or SWOT to real problems, learn any mental model with examples, or get guided journaling prompts—three modes, twelve frameworks, Python, Streamlit, Groq.",
+    "repoUrl": "https://github.com/abhishekgoyal-a11y/Projects/tree/main/mental-model-coach",
+    "tech": ["Python", "Streamlit", "Groq API"],
+    "difficulty": "beginner",
+    "featured": false
   }
 ]

@@ -1,0 +1,182 @@
+{% verbatim %}
+# Customer Support Agent Simulator — Streamlit + LangChain + Chroma + Groq
+# Save as app.py, add GROQ_API_KEY to .streamlit/secrets.toml, then: streamlit run app.py
+
+import ssl
+
+import httpx
+import streamlit as st
+import truststore
+
+MAX_DOCS_CHARS = 20000
+
+st.set_page_config(page_title="Customer Support Agent", layout="centered")
+st.title("Customer Support Agent Simulator")
+st.caption(
+    "Upload your product docs, FAQs, or support articles. The agent answers "
+    "customer questions using only your documentation — and flags hard cases."
+)
+
+_ssl_ctx = truststore.SSLContext(ssl.PROTOCOL_TLS_CLIENT)
+
+
+@st.cache_resource
+def _groq_http_client():
+    return httpx.Client(verify=_ssl_ctx)
+
+
+_MODEL = "llama-3.3-70b-versatile"
+
+PRODUCT_NAME_DEFAULT = "Our Product"
+
+# ── Sidebar: knowledge base setup ─────────────────────────────────────────────
+with st.sidebar:
+    st.header("Knowledge Base")
+    product_name = st.text_input("Product / Company name", value=PRODUCT_NAME_DEFAULT)
+    agent_persona = st.text_input(
+        "Agent name / persona",
+        value="Alex",
+        help="The name your support agent will use",
+    )
+    doc_files = st.file_uploader(
+        "Upload docs (PDF or TXT)",
+        type=["pdf", "txt"],
+        accept_multiple_files=True,
+    )
+    doc_paste = st.text_area(
+        "Or paste FAQ / documentation",
+        height=200,
+        placeholder="Q: How do I reset my password?\nA: Go to Settings > Security > Reset Password...",
+    )
+    build_btn = st.button("Build Support KB", type="primary", use_container_width=True)
+
+# ── Build knowledge base ───────────────────────────────────────────────────────
+if build_btn:
+    import io
+
+    from langchain.schema import Document
+    from langchain_community.vectorstores import Chroma
+    from langchain_huggingface import HuggingFaceEmbeddings
+    from langchain_text_splitters import RecursiveCharacterTextSplitter
+
+    all_text = ""
+    for f in (doc_files or []):
+        if f.name.endswith(".pdf"):
+            import pypdf
+
+            reader = pypdf.PdfReader(io.BytesIO(f.read()))
+            for page in reader.pages:
+                all_text += (page.extract_text() or "") + "\n"
+        else:
+            all_text += f.read().decode("utf-8", errors="replace") + "\n"
+
+    if doc_paste.strip():
+        all_text += doc_paste.strip()
+
+    all_text = all_text[:MAX_DOCS_CHARS]
+
+    if not all_text.strip():
+        st.sidebar.warning("Upload docs or paste FAQ content first.")
+    else:
+        with st.sidebar:
+            with st.spinner("Building knowledge base…"):
+                try:
+                    splitter = RecursiveCharacterTextSplitter(chunk_size=500, chunk_overlap=60)
+                    docs = splitter.split_documents([Document(page_content=all_text)])
+                    embeddings = HuggingFaceEmbeddings(
+                        model_name="sentence-transformers/all-MiniLM-L6-v2"
+                    )
+                    st.session_state.support_vs = Chroma.from_documents(docs, embeddings)
+                    st.session_state.product_name = product_name
+                    st.session_state.agent_persona = agent_persona
+                    st.session_state.doc_count = len(docs)
+                    st.success(f"KB ready — {len(docs)} chunks indexed.")
+                except Exception as exc:
+                    st.error(f"Index error: {exc}")
+
+if "support_vs" in st.session_state:
+    st.sidebar.caption(
+        f"KB: {st.session_state.doc_count} chunks | "
+        f"Agent: {st.session_state.get('agent_persona', 'Alex')}"
+    )
+
+# ── Chat interface ─────────────────────────────────────────────────────────────
+if "support_history" not in st.session_state:
+    st.session_state.support_history = []
+
+if "support_vs" not in st.session_state:
+    st.info("Set up the knowledge base in the sidebar to start chatting.")
+else:
+    p_name = st.session_state.get("product_name", PRODUCT_NAME_DEFAULT)
+    a_name = st.session_state.get("agent_persona", "Alex")
+    st.caption(f"Chatting with **{a_name}** — {p_name} Support")
+
+    for msg in st.session_state.support_history:
+        role = msg["role"]
+        icon = "user" if role == "user" else "assistant"
+        with st.chat_message(icon):
+            st.markdown(msg["content"])
+
+    user_input = st.chat_input(f"Ask {a_name} a question…")
+
+    if user_input:
+        st.session_state.support_history.append({"role": "user", "content": user_input})
+        with st.chat_message("user"):
+            st.markdown(user_input)
+
+        # Retrieve relevant docs
+        try:
+            retriever = st.session_state.support_vs.as_retriever(search_kwargs={"k": 4})
+            docs = retriever.invoke(user_input)
+            context = "\n\n".join(d.page_content for d in docs)
+        except Exception:
+            context = ""
+
+        system_msg = (
+            f"You are {a_name}, a friendly and professional customer support agent for {p_name}. "
+            "Use ONLY the provided documentation to answer the customer's question. "
+            "If the answer is not in the documentation, respond with:\n"
+            "'I don't have enough information to answer that directly. "
+            "I'm escalating this to our specialist team — you'll hear back within 24 hours. "
+            "Is there anything else I can help you with?'\n\n"
+            "Keep responses concise, helpful, and professional. "
+            "Never make up information.\n\n"
+            f"Documentation:\n{context}"
+        )
+
+        messages = [{"role": "system", "content": system_msg}]
+        for h in st.session_state.support_history[-6:]:
+            messages.append(h)
+
+        with st.chat_message("assistant"):
+            with st.spinner(f"{a_name} is typing…"):
+                try:
+                    import groq
+
+                    client = groq.Groq(
+                        api_key=st.secrets["GROQ_API_KEY"],
+                        http_client=_groq_http_client(),
+                    )
+                    resp = client.chat.completions.create(
+                        model=_MODEL,
+                        messages=messages,
+                    )
+                    answer = resp.choices[0].message.content
+
+                    # Flag escalation
+                    is_escalated = "escalating" in answer.lower() or "specialist team" in answer.lower()
+                    st.markdown(answer)
+                    if is_escalated:
+                        st.warning("This query has been flagged for human escalation.")
+
+                    st.session_state.support_history.append(
+                        {"role": "assistant", "content": answer}
+                    )
+                except Exception as exc:
+                    st.error(f"Error: {exc}")
+
+    if st.session_state.support_history:
+        if st.button("Clear Chat", key="clear_chat"):
+            st.session_state.support_history = []
+            st.rerun()
+{% endverbatim %}

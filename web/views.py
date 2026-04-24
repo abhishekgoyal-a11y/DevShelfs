@@ -29,6 +29,15 @@ PROJECT_BODY = {
     "resume-cover-letter-improver",
     "website-rag-chatbot",
     "ai-product-description-generator",
+    "personal-study-tutor",
+    "resume-job-match-optimizer",
+    "ai-coding-pair-programmer",
+    "meeting-lecture-summarizer",
+    "personalized-news-digest",
+    "customer-support-agent",
+    "ai-debate-partner",
+    "travel-planner-agent",
+    "mental-model-coach",
 }
 
 

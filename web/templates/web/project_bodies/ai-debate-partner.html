@@ -1,0 +1,226 @@
+{% load static %}
+<div class="glass space-y-10 rounded-3xl p-5 sm:p-8">
+  <div class="space-y-4">
+    <p class="text-sm leading-relaxed text-slate-200/85 sm:text-base">
+      <strong class="text-slate-100">AI Debate Partner</strong> is a beginner-friendly project that turns
+      your critical thinking into a structured conversation. Pick a topic from a preset list or enter your own,
+      assign sides, and engage in a live debate where the AI argues its position, rebuts your points, and an
+      impartial judge scores both sides at the end.
+    </p>
+    <p class="text-sm leading-relaxed text-slate-200/85 sm:text-base">
+      An optional briefing mode gives you a neutral overview of both sides before the debate starts —
+      useful for topics you haven&rsquo;t researched yet. The AI opens with a strong position statement,
+      then responds to each of your arguments by acknowledging your point, finding a weakness, and
+      reinforcing its own stance. The verdict screen scores argument strength, use of evidence, and
+      rebuttal quality for both sides.
+    </p>
+    <p class="text-sm leading-relaxed text-slate-200/85 sm:text-base">
+      Built with <strong class="text-slate-100">Python</strong>, <strong class="text-slate-100">Streamlit</strong>,
+      and the <strong class="text-slate-100">Groq API</strong>, this project demonstrates role-playing system
+      prompts, stateful conversation management, and multi-phase dialogue flows.
+    </p>
+    <p class="text-sm leading-relaxed text-slate-200/85 sm:text-base">
+      <strong class="text-slate-100">Purpose:</strong> practice role-locked system prompts and multi-phase
+      conversation state — a pattern used in interview prep tools, negotiation trainers, and educational AI.
+    </p>
+    <p class="text-sm leading-relaxed text-slate-200/85 sm:text-base">
+      <strong class="text-slate-100">Typical use:</strong> pick &ldquo;AI will eliminate more jobs than it
+      creates,&rdquo; enable briefing mode, argue the opposing side for 5 turns, then request a verdict to
+      see where your arguments were strongest.
+    </p>
+    <p class="text-sm font-medium text-slate-200/90">Key ideas you will touch:</p>
+    <ul class="list-inside list-disc space-y-2 text-sm leading-relaxed text-slate-200/85 sm:text-base">
+      <li>
+        <strong class="text-slate-100">Role-locked prompting</strong> — <code class="text-sky-200/90">f&quot;You are a debater arguing {ai_side} the topic…&quot;</code>
+        keeps the model in character across all turns.
+      </li>
+      <li>
+        <strong class="text-slate-100">Multi-phase flow</strong> — setup → optional briefing → opening
+        statement → debate turns → optional verdict, each with its own system message.
+      </li>
+      <li>
+        <strong class="text-slate-100">Session state machine</strong> — <code class="text-sky-200/90">debate_active</code>
+        flag gates the UI between setup and active debate without separate pages.
+      </li>
+      <li>
+        <strong class="text-slate-100">Verdict scoring</strong> — a separate judge prompt scores both
+        sides across three dimensions and identifies the strongest moments.
+      </li>
+    </ul>
+  </div>
+
+  <div class="space-y-3">
+    <h2 class="text-lg font-semibold tracking-tight text-white">Overall flow</h2>
+    <pre
+      class="overflow-x-auto rounded-2xl border border-white/10 bg-slate-950/60 p-4 text-sm leading-relaxed text-slate-200/90 sm:text-base"
+    ><code class="font-mono whitespace-pre-wrap">User picks topic + assigns sides + (optional) enables briefing mode
+      ↓
+Clicks "Start Debate"
+      ↓
+(Optional) Groq generates neutral both-sides briefing
+      ↓
+AI delivers opening statement
+      ↓
+User types argument in chat
+      ↓
+AI acknowledges → finds weakness → reinforces its position
+[Repeat until user clicks verdict or starts new debate]
+      ↓
+"Request Verdict" → impartial judge scores both sides 1–10 across 3 dimensions</code></pre>
+  </div>
+
+  <hr class="border-0 border-t border-white/10" />
+
+  <div class="space-y-4">
+    <h2 class="text-lg font-semibold tracking-tight text-white">Step-by-Step Implementation</h2>
+    <ol class="list-decimal list-outside space-y-5 pl-6 text-sm leading-relaxed text-slate-200/85 sm:text-base">
+      <li>
+        <span class="font-medium text-slate-100">Set up the project</span>
+        <ul class="mt-2 list-disc space-y-1.5 pl-5">
+          <li>Install Python 3.10+, create folder and virtual environment</li>
+        </ul>
+      </li>
+      <li>
+        <span class="font-medium text-slate-100">Install dependencies</span>
+        <ul class="mt-2 list-disc space-y-1.5 pl-5">
+          <li>
+            <code class="text-sky-200/90">streamlit</code>, <code class="text-sky-200/90">groq</code>,
+            <code class="text-sky-200/90">httpx</code>, <code class="text-sky-200/90">truststore</code>
+          </li>
+        </ul>
+      </li>
+      <li>
+        <span class="font-medium text-slate-100">Build the setup screen</span>
+        <ul class="mt-2 list-disc space-y-1.5 pl-5">
+          <li>Topic selectbox with &ldquo;Custom…&rdquo; option that shows a text input</li>
+          <li>Radio buttons for AI side assignment; briefing mode checkbox</li>
+        </ul>
+      </li>
+      <li>
+        <span class="font-medium text-slate-100">Implement the state machine</span>
+        <ul class="mt-2 list-disc space-y-1.5 pl-5">
+          <li>
+            <code class="text-sky-200/90">st.session_state.debate_active</code> gates between setup
+            and active debate views; <code class="text-sky-200/90">st.rerun()</code> triggers the transition
+          </li>
+        </ul>
+      </li>
+      <li>
+        <span class="font-medium text-slate-100">Write three system prompts</span>
+        <ul class="mt-2 list-disc space-y-1.5 pl-5">
+          <li>
+            <strong class="text-slate-100">Briefing:</strong> neutral overview of FOR and AGAINST with key facts
+          </li>
+          <li>
+            <strong class="text-slate-100">Opening / debate:</strong> role-locked as
+            <code class="text-sky-200/90">{ai_side}</code>, structured rebuttal format
+          </li>
+          <li>
+            <strong class="text-slate-100">Verdict:</strong> impartial judge scoring 3 dimensions, 1–10 per side
+          </li>
+        </ul>
+      </li>
+      <li>
+        <span class="font-medium text-slate-100">Add verdict and reset buttons</span>
+        <ul class="mt-2 list-disc space-y-1.5 pl-5">
+          <li>
+            &ldquo;Request Verdict&rdquo; passes the full debate transcript; &ldquo;Start New Debate&rdquo;
+            resets session state and reruns
+          </li>
+        </ul>
+      </li>
+    </ol>
+  </div>
+
+  <hr class="border-0 border-t border-white/10" />
+
+  <div class="space-y-4">
+    <h2 class="text-lg font-semibold tracking-tight text-white">Code implementation</h2>
+    {% include "web/partials/code_block_frame.html" with language="python" code_template="web/code/ai_debate_partner_app.html" pre_class="ds-codeblock-pre code-block m-0 max-h-[min(70vh,36rem)] overflow-x-auto overflow-y-auto p-4 text-[0.8125rem] leading-[1.55] sm:text-sm" only %}
+    <div class="rounded-xl border border-white/10 bg-slate-950/45 px-4 py-3 text-sm leading-relaxed text-slate-200/90">
+      <p>
+        <span class="font-semibold text-slate-100">Complete code</span>
+        <span class="mx-2 text-slate-500">—</span>
+        <a
+          href="{{ project.repoUrl }}"
+          class="font-medium text-sky-200/90 underline-offset-2 hover:text-white hover:underline"
+          target="_blank"
+          rel="noreferrer"
+          >Project link (GitHub)</a
+        >
+      </p>
+    </div>
+  </div>
+
+  <hr class="border-0 border-t border-white/10" />
+
+  <div class="space-y-5">
+    <h2 class="text-lg font-semibold tracking-tight text-white">📖 How the Code Works (Step-by-Step)</h2>
+
+    <hr class="border-0 border-t border-white/10" />
+
+    <section class="space-y-3">
+      <h3 class="text-base font-semibold tracking-tight text-white">1. Session state as a UI state machine</h3>
+      <ul class="list-disc space-y-1.5 pl-5 text-sm leading-relaxed text-slate-200/85 sm:text-base">
+        <li>
+          <code class="text-sky-200/90">debate_active</code>, <code class="text-sky-200/90">debate_topic</code>,
+          <code class="text-sky-200/90">ai_side</code>, and <code class="text-sky-200/90">debate_history</code>
+          live in session state so the app switches between setup and debate views on the same page.
+        </li>
+        <li>
+          <code class="text-sky-200/90">st.rerun()</code> after setting <code class="text-sky-200/90">debate_active = True</code>
+          causes Streamlit to immediately re-render the debate screen — no page navigation needed.
+        </li>
+      </ul>
+    </section>
+
+    <hr class="border-0 border-t border-white/10" />
+
+    <section class="space-y-3">
+      <h3 class="text-base font-semibold tracking-tight text-white">2. Role-locked rebuttal prompt</h3>
+      <ul class="list-disc space-y-1.5 pl-5 text-sm leading-relaxed text-slate-200/85 sm:text-base">
+        <li>
+          The debate system message specifies a three-step rebuttal structure: acknowledge, find weakness,
+          reinforce. This prevents the model from capitulating to good arguments — keeping the debate
+          challenging and educational.
+        </li>
+      </ul>
+    </section>
+
+    <hr class="border-0 border-t border-white/10" />
+
+    <section class="space-y-3">
+      <h3 class="text-base font-semibold tracking-tight text-white">3. Verdict transcript assembly</h3>
+      <ul class="list-disc space-y-1.5 pl-5 text-sm leading-relaxed text-slate-200/85 sm:text-base">
+        <li>
+          The full debate history is joined into a labeled transcript string and passed to the judge prompt,
+          giving the model the complete context to score both sides fairly.
+        </li>
+      </ul>
+    </section>
+  </div>
+
+  <nav class="border-t border-white/10 pt-6" aria-label="Related links">
+    <p class="text-sm font-medium text-slate-200/90">Useful links</p>
+    <ul class="mt-2 space-y-2 text-sm">
+      <li>
+        <a
+          class="font-medium text-sky-200/90 underline-offset-2 hover:text-white hover:underline"
+          href="https://docs.streamlit.io"
+          target="_blank"
+          rel="noopener noreferrer"
+          >Streamlit docs</a
+        >
+      </li>
+      <li>
+        <a
+          class="font-medium text-sky-200/90 underline-offset-2 hover:text-white hover:underline"
+          href="https://console.groq.com/docs/overview"
+          target="_blank"
+          rel="noopener noreferrer"
+          >Groq API docs</a
+        >
+      </li>
+    </ul>
+  </nav>
+</div>

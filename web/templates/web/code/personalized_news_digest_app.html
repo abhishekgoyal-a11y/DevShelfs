@@ -1,0 +1,151 @@
+{% verbatim %}
+# Personalized News Digest Generator — Streamlit + Groq + feedparser
+# Save as app.py, add GROQ_API_KEY to .streamlit/secrets.toml, then: streamlit run app.py
+
+import ssl
+from datetime import datetime
+
+import feedparser
+import httpx
+import streamlit as st
+import truststore
+
+MAX_ARTICLES = 8
+MAX_ARTICLE_CHARS = 1200
+
+st.set_page_config(page_title="Personalized News Digest", layout="centered")
+st.title("Personalized News Digest")
+st.caption(
+    "Pick your topics, choose a reading style, and get a curated digest of today's "
+    "top stories — summarized in the tone that works for you."
+)
+
+_ssl_ctx = truststore.SSLContext(ssl.PROTOCOL_TLS_CLIENT)
+
+
+@st.cache_resource
+def _groq_client():
+    import groq
+
+    return groq.Groq(
+        api_key=st.secrets["GROQ_API_KEY"],
+        http_client=httpx.Client(verify=_ssl_ctx),
+    )
+
+
+_MODEL = "llama-3.3-70b-versatile"
+
+RSS_FEEDS = {
+    "Technology": "https://feeds.feedburner.com/TechCrunch",
+    "AI & Machine Learning": "https://rss.beehiiv.com/feeds/mTCMoB7KJO.xml",
+    "Science": "https://www.sciencedaily.com/rss/top.xml",
+    "Business": "https://feeds.bloomberg.com/markets/news.rss",
+    "World News": "https://feeds.bbci.co.uk/news/world/rss.xml",
+    "Health": "https://feeds.webmd.com/rss/rss.aspx?RSSSource=RSS_PUBLIC",
+    "Finance": "https://www.reddit.com/r/finance/.rss",
+    "Programming": "https://www.reddit.com/r/programming/.rss",
+}
+
+TONES = {
+    "Beginner-Friendly": "Use simple language, avoid jargon, explain any technical terms.",
+    "Technical": "Use precise technical language, include relevant details and data.",
+    "Executive Brief": "Be extremely concise. Focus on business impact and key decisions only.",
+    "Casual": "Write in a conversational, engaging tone like you're explaining to a friend.",
+}
+
+# ── Settings ───────────────────────────────────────────────────────────────────
+with st.sidebar:
+    st.header("Preferences")
+    selected_topics = st.multiselect(
+        "Topics you care about",
+        list(RSS_FEEDS.keys()),
+        default=["Technology", "AI & Machine Learning"],
+    )
+    tone = st.selectbox("Reading style", list(TONES.keys()))
+    num_stories = st.slider("Stories per topic", 1, 5, 3)
+    custom_topics = st.text_input(
+        "Custom topic (optional)",
+        placeholder="e.g. climate change, crypto",
+    )
+
+generate_btn = st.button("Generate My Digest", type="primary", use_container_width=True)
+
+if generate_btn:
+    if not selected_topics and not custom_topics.strip():
+        st.warning("Select at least one topic.")
+        st.stop()
+
+    # ── Fetch RSS articles ─────────────────────────────────────────────────────
+    articles_by_topic: dict[str, list[dict]] = {}
+
+    with st.spinner("Fetching latest news…"):
+        for topic in selected_topics:
+            feed_url = RSS_FEEDS[topic]
+            try:
+                feed = feedparser.parse(feed_url)
+                entries = feed.entries[:num_stories]
+                items = []
+                for entry in entries:
+                    title = entry.get("title", "No title")
+                    summary = entry.get("summary", entry.get("description", ""))[:MAX_ARTICLE_CHARS]
+                    link = entry.get("link", "")
+                    items.append({"title": title, "summary": summary, "link": link})
+                if items:
+                    articles_by_topic[topic] = items
+            except Exception:
+                articles_by_topic[topic] = []
+
+    # ── Build prompt ───────────────────────────────────────────────────────────
+    articles_text = ""
+    for topic, items in articles_by_topic.items():
+        articles_text += f"\n## {topic}\n"
+        for i, item in enumerate(items, 1):
+            articles_text += f"{i}. {item['title']}\n{item['summary']}\n\n"
+
+    tone_instruction = TONES[tone]
+    today = datetime.now().strftime("%B %d, %Y")
+
+    system_msg = (
+        f"You are a professional news curator creating a personalized digest for {today}. "
+        f"Tone: {tone_instruction}\n\n"
+        "For each topic section, write:\n"
+        "1. A 1-sentence section intro\n"
+        "2. Each story as: **[Story title]** — [2-3 sentence summary focusing on why it matters]\n\n"
+        "End with a '## Key Takeaway' section with 2-3 cross-topic insights.\n"
+        "Only use information from the provided articles. Do not invent facts."
+    )
+    user_msg = f"Here are today's articles:\n{articles_text[:10000]}"
+
+    if custom_topics.strip():
+        user_msg += f"\n\nAlso include a brief section on: {custom_topics} (based on your training data, clearly labeled as 'General Knowledge')."
+
+    with st.spinner("Generating your digest…"):
+        try:
+            resp = _groq_client().chat.completions.create(
+                model=_MODEL,
+                messages=[
+                    {"role": "system", "content": system_msg},
+                    {"role": "user", "content": user_msg},
+                ],
+            )
+            digest = resp.choices[0].message.content
+
+            st.markdown(f"## Your News Digest — {today}")
+            st.markdown(digest)
+
+            st.divider()
+            st.caption("Sources")
+            for topic, items in articles_by_topic.items():
+                for item in items:
+                    if item["link"]:
+                        st.markdown(f"- [{item['title']}]({item['link']})")
+
+            st.download_button(
+                "Download Digest (.txt)",
+                data=digest,
+                file_name=f"digest_{datetime.now().strftime('%Y%m%d')}.txt",
+                mime="text/plain",
+            )
+        except Exception as exc:
+            st.error(f"Error generating digest: {exc}")
+{% endverbatim %}

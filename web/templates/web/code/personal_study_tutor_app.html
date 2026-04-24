@@ -1,0 +1,212 @@
+{% verbatim %}
+# Personal Study Tutor (RAG-based) — Streamlit + LangChain + Chroma + Groq
+# Save as app.py, add GROQ_API_KEY to .streamlit/secrets.toml, then: streamlit run app.py
+
+import io
+import ssl
+
+import httpx
+import streamlit as st
+import truststore
+
+MAX_NOTES_CHARS = 12000
+MAX_PDF_CHARS = 15000
+
+st.set_page_config(page_title="Personal Study Tutor", layout="centered")
+st.title("Personal Study Tutor")
+st.caption(
+    "Upload your notes or PDFs, build a knowledge index, then ask questions "
+    "or request a quiz on any topic inside your material."
+)
+
+_ssl_ctx = truststore.SSLContext(ssl.PROTOCOL_TLS_CLIENT)
+
+
+@st.cache_resource
+def _groq_http_client():
+    return httpx.Client(verify=_ssl_ctx)
+
+
+def _get_groq_client():
+    import groq
+
+    if "groq_client" not in st.session_state:
+        st.session_state.groq_client = groq.Groq(
+            api_key=st.secrets["GROQ_API_KEY"],
+            http_client=_groq_http_client(),
+        )
+    return st.session_state.groq_client
+
+
+_CHAT_MODEL = "llama-3.3-70b-versatile"
+
+# ── Sidebar: input source ──────────────────────────────────────────────────────
+with st.sidebar:
+    st.header("Your Study Material")
+    uploaded_files = st.file_uploader(
+        "Upload PDFs or TXT files",
+        type=["pdf", "txt"],
+        accept_multiple_files=True,
+    )
+    pasted_notes = st.text_area(
+        "Or paste notes here",
+        height=200,
+        placeholder="Paste any text you want to study...",
+    )
+    build_btn = st.button("Build / Refresh Index", type="primary", use_container_width=True)
+
+# ── Build index ────────────────────────────────────────────────────────────────
+if build_btn:
+    from langchain.schema import Document
+    from langchain_community.vectorstores import Chroma
+    from langchain_huggingface import HuggingFaceEmbeddings
+    from langchain_text_splitters import RecursiveCharacterTextSplitter
+
+    all_text = ""
+
+    for f in (uploaded_files or []):
+        if f.name.endswith(".pdf"):
+            import pypdf
+
+            reader = pypdf.PdfReader(io.BytesIO(f.read()))
+            for page in reader.pages:
+                t = page.extract_text() or ""
+                all_text += t + "\n"
+        else:
+            all_text += f.read().decode("utf-8", errors="replace") + "\n"
+
+    if pasted_notes and pasted_notes.strip():
+        all_text += pasted_notes.strip()
+
+    all_text = all_text[:MAX_PDF_CHARS]
+
+    if not all_text.strip():
+        st.sidebar.warning("Please upload a file or paste some notes first.")
+    else:
+        with st.sidebar:
+            with st.spinner("Building index…"):
+                try:
+                    splitter = RecursiveCharacterTextSplitter(chunk_size=600, chunk_overlap=80)
+                    docs = splitter.split_documents([Document(page_content=all_text)])
+                    embeddings = HuggingFaceEmbeddings(
+                        model_name="sentence-transformers/all-MiniLM-L6-v2"
+                    )
+                    st.session_state.vectorstore = Chroma.from_documents(docs, embeddings)
+                    st.session_state.doc_count = len(docs)
+                    st.success(f"Index built — {len(docs)} chunks ready.")
+                except Exception as exc:
+                    st.error(f"Index error: {exc}")
+
+if "vectorstore" in st.session_state:
+    st.sidebar.caption(f"Index: {st.session_state.doc_count} chunks loaded.")
+
+# ── Main area ──────────────────────────────────────────────────────────────────
+tab_ask, tab_quiz = st.tabs(["Ask a Question", "Generate Quiz"])
+
+# ── Tab 1: Ask ─────────────────────────────────────────────────────────────────
+with tab_ask:
+    st.subheader("Ask Anything From Your Notes")
+    question = st.text_input(
+        "Your question",
+        placeholder="What is the main argument in Chapter 3?",
+    )
+    ask_btn = st.button("Get Answer", key="ask_btn")
+
+    if ask_btn:
+        if "vectorstore" not in st.session_state:
+            st.warning("Build the index first using the sidebar.")
+        elif not question.strip():
+            st.warning("Enter a question.")
+        else:
+            from langchain_groq import ChatGroq
+            from langchain.chains import RetrievalQA
+
+            with st.spinner("Searching notes and generating answer…"):
+                try:
+                    retriever = st.session_state.vectorstore.as_retriever(
+                        search_kwargs={"k": 4}
+                    )
+                    llm = ChatGroq(
+                        model_name=_CHAT_MODEL,
+                        groq_api_key=st.secrets["GROQ_API_KEY"],
+                        http_client=_groq_http_client(),
+                    )
+                    qa = RetrievalQA.from_chain_type(
+                        llm=llm,
+                        retriever=retriever,
+                        return_source_documents=True,
+                        chain_type="stuff",
+                    )
+                    result = qa.invoke({"query": question})
+                    st.markdown("### Answer")
+                    st.markdown(result["result"])
+                    with st.expander("Source chunks used"):
+                        for i, doc in enumerate(result["source_documents"], 1):
+                            st.markdown(f"**Chunk {i}:** {doc.page_content[:300]}…")
+                except Exception as exc:
+                    st.error(f"Error: {exc}")
+
+# ── Tab 2: Quiz ────────────────────────────────────────────────────────────────
+with tab_quiz:
+    st.subheader("Test Yourself")
+    col1, col2 = st.columns(2)
+    with col1:
+        topic_focus = st.text_input(
+            "Topic or chapter focus (optional)",
+            placeholder="e.g. photosynthesis, Chapter 2",
+        )
+    with col2:
+        num_questions = st.selectbox("Number of questions", [3, 5, 10], index=1)
+
+    quiz_btn = st.button("Generate Quiz", key="quiz_btn")
+
+    if quiz_btn:
+        if "vectorstore" not in st.session_state:
+            st.warning("Build the index first using the sidebar.")
+        else:
+            context_text = ""
+            if topic_focus.strip():
+                try:
+                    retriever = st.session_state.vectorstore.as_retriever(
+                        search_kwargs={"k": 5}
+                    )
+                    docs = retriever.invoke(topic_focus)
+                    context_text = "\n\n".join(d.page_content for d in docs)
+                except Exception:
+                    context_text = ""
+
+            if not context_text:
+                # Fall back to raw notes if retrieval fails
+                context_text = st.session_state.get("raw_text", "")[:3000]
+
+            if not context_text:
+                st.warning("Could not retrieve relevant content. Try rebuilding the index.")
+            else:
+                system_msg = (
+                    "You are a study tutor. Create a multiple-choice quiz with "
+                    f"{num_questions} questions based on the provided study material. "
+                    "Format each question as:\n"
+                    "Q1. [Question]\n"
+                    "A) ...\nB) ...\nC) ...\nD) ...\n"
+                    "Answer: [letter]\nExplanation: [one sentence]\n\n"
+                    "Focus only on content that appears in the material."
+                )
+                user_msg = f"Study material:\n{context_text[:4000]}"
+                if topic_focus.strip():
+                    user_msg += f"\n\nFocus specifically on: {topic_focus}"
+
+                with st.spinner("Generating quiz…"):
+                    try:
+                        client = _get_groq_client()
+                        resp = client.chat.completions.create(
+                            model=_CHAT_MODEL,
+                            messages=[
+                                {"role": "system", "content": system_msg},
+                                {"role": "user", "content": user_msg},
+                            ],
+                        )
+                        st.markdown("### Your Quiz")
+                        st.markdown(resp.choices[0].message.content)
+                    except Exception as exc:
+                        st.error(f"Error: {exc}")
+{% endverbatim %}
