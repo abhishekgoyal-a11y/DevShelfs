@@ -2,12 +2,23 @@
 <div class="glass space-y-10 rounded-3xl p-5 sm:p-8">
   <div class="space-y-4">
     <p class="text-sm leading-relaxed text-slate-200/85 sm:text-base">
-      This intermediate project is a <strong class="text-slate-100">Streamlit</strong> app that lets you chat with any
-      public webpage. Paste a URL, the app scrapes the page with
-      <strong class="text-slate-100">BeautifulSoup</strong>, splits the text into overlapping chunks, embeds them
-      <strong class="text-slate-100">locally</strong> with Hugging Face sentence-transformers (no embedding API key),
-      stores the vectors in <strong class="text-slate-100">Chroma</strong>, and answers your questions with
-      <strong class="text-slate-100">Groq</strong> via LangChain RAG.
+      <strong class="text-slate-100">Website RAG Chatbot</strong> is an intermediate-level project that enables users to
+      interact directly with the content of any public webpage. By simply providing a URL, the system extracts and
+      processes the page content, making it searchable and conversational.
+    </p>
+    <p class="text-sm leading-relaxed text-slate-200/85 sm:text-base">
+      The pipeline begins by scraping the webpage using <strong class="text-slate-100">BeautifulSoup</strong>, then
+      splitting the text into overlapping chunks for better context retention. These chunks are converted into
+      embeddings using local <strong class="text-slate-100">Hugging Face</strong> sentence-transformers, eliminating the
+      need for external embedding APIs. The embeddings are stored in a <strong class="text-slate-100">Chroma</strong>
+      vector database, enabling efficient similarity search.
+    </p>
+    <p class="text-sm leading-relaxed text-slate-200/85 sm:text-base">
+      When a user asks a question, the system retrieves the most relevant context using a Retrieval-Augmented Generation
+      (RAG) workflow powered by <strong class="text-slate-100">LangChain</strong>, and generates accurate answers using
+      <strong class="text-slate-100">Groq</strong>&rsquo;s language model. This project demonstrates how modern LLM
+      systems combine scraping, vector databases, and retrieval pipelines to turn static web content into an interactive
+      knowledge source.
     </p>
     <p class="text-sm leading-relaxed text-slate-200/85 sm:text-base">
       <strong class="text-slate-100">Purpose:</strong> learn how to turn arbitrary web content into a queryable knowledge
