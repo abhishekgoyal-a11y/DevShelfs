@@ -1,0 +1,329 @@
+{% extends "web/base.html" %}
+{% block title %}LangChain — DevShelf{% endblock %}
+{% block content %}
+  <div class="space-y-10">
+    <div class="flex flex-wrap items-center gap-2 text-sm text-slate-400/90">
+      <a href="{% url 'ai_tools' %}" class="font-medium text-emerald-300/90 transition hover:text-emerald-200">AI tools</a>
+      <span aria-hidden class="text-slate-600">/</span>
+      <span class="text-slate-200/90">LangChain</span>
+    </div>
+
+    <section
+      class="relative overflow-hidden rounded-3xl border border-emerald-400/20 bg-white/[0.06] p-6 shadow-[0_0_0_1px_rgba(255,255,255,0.04)] backdrop-blur-2xl sm:p-8"
+    >
+      <div class="pointer-events-none absolute -right-24 top-0 h-72 w-72 rounded-full bg-emerald-500/15 blur-3xl"></div>
+      <div class="pointer-events-none absolute -left-20 bottom-0 h-56 w-56 rounded-full bg-cyan-500/10 blur-3xl"></div>
+      <div class="relative">
+        <p class="text-xs font-semibold uppercase tracking-[0.22em] text-emerald-300/90">AI tool</p>
+        <h1 class="mt-3 text-3xl font-semibold tracking-tight text-white sm:text-4xl lg:text-[2.5rem] lg:leading-tight">
+          LangChain: The Framework That Made Building LLM Apps Accessible
+        </h1>
+        <p class="mt-4 text-sm leading-relaxed text-slate-200/80 sm:text-base">
+          LangChain is an open-source framework for building applications powered by large language models. It handles the
+          messy plumbing — connecting LLMs to tools, databases, memory, and APIs — so you can focus on building, not
+          boilerplate.
+        </p>
+        <p class="mt-6 flex flex-wrap items-center gap-3">
+          <a
+            href="https://www.langchain.com"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="inline-flex items-center gap-2 rounded-full border border-emerald-400/35 bg-emerald-500/10 px-4 py-2 text-sm font-medium text-emerald-200 transition hover:border-emerald-300/50 hover:bg-emerald-500/15 hover:text-white"
+          >
+            Visit LangChain <span aria-hidden class="text-emerald-300/80">↗</span>
+          </a>
+          <a
+            href="https://python.langchain.com/docs/"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/[0.04] px-4 py-2 text-sm font-medium text-slate-200/90 transition hover:border-white/25 hover:bg-white/[0.07] hover:text-white"
+          >
+            Docs <span aria-hidden class="text-slate-400">↗</span>
+          </a>
+        </p>
+      </div>
+    </section>
+
+    <div class="glass rounded-3xl border border-white/10 p-5 sm:p-8">
+      <article class="mx-auto space-y-12 text-base leading-relaxed text-slate-300/95">
+
+        <section class="space-y-4" aria-labelledby="what-heading">
+          <h2 id="what-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">What is LangChain?</h2>
+          <p>
+            LangChain is not an AI tool you use directly — it's a <em>framework</em> that developers use to build AI-powered
+            applications. Think of it as the Rails or Django of the LLM world: it gives you the building blocks and
+            conventions so you don't have to reinvent everything from scratch.
+          </p>
+          <p>
+            Created by Harrison Chase in late 2022 and open-sourced almost immediately, LangChain exploded in popularity
+            because it answered a real question: "OK, I have access to GPT-4 via API — how do I actually build something
+            useful with it?" LangChain gave developers a structured way to chain LLM calls together with tools, memory,
+            document retrieval, and external APIs.
+          </p>
+          <p>
+            It supports both Python and JavaScript/TypeScript and has integrations with virtually every major LLM provider
+            (OpenAI, Anthropic, Google, Cohere, Mistral, local models via Ollama) and data store (Pinecone, Weaviate,
+            Postgres, Chroma, Redis, and many more).
+          </p>
+        </section>
+
+        <section class="space-y-6" aria-labelledby="features-heading">
+          <h2 id="features-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">
+            Key features of LangChain
+          </h2>
+          <div class="space-y-3 rounded-2xl border border-white/10 bg-white/[0.03] p-5 sm:p-6">
+            <h3 class="text-lg font-semibold text-white">Chains</h3>
+            <p class="text-slate-300/95">
+              The original core concept. A chain is a sequence of steps: format a prompt, call an LLM, parse the output,
+              pass it to the next step. LangChain Expression Language (LCEL) makes building and composing chains elegant
+              and easy to read.
+            </p>
+          </div>
+          <div class="space-y-3 rounded-2xl border border-white/10 bg-white/[0.03] p-5 sm:p-6">
+            <h3 class="text-lg font-semibold text-white">Agents</h3>
+            <p class="text-slate-300/95">
+              Give an LLM a set of tools (web search, calculator, SQL query, custom functions) and let it decide which
+              ones to call to answer a question. LangChain handles the agent loop, tool formatting, and output parsing.
+            </p>
+          </div>
+          <div class="space-y-3 rounded-2xl border border-white/10 bg-white/[0.03] p-5 sm:p-6">
+            <h3 class="text-lg font-semibold text-white">Retrieval-Augmented Generation (RAG)</h3>
+            <p class="text-slate-300/95">
+              LangChain is the go-to framework for RAG: load your documents, split them, embed them, store them in a
+              vector database, and retrieve relevant chunks at query time to give the LLM the context it needs.
+              This is how you build a chatbot that answers questions from your company's internal docs.
+            </p>
+          </div>
+          <div class="space-y-3 rounded-2xl border border-white/10 bg-white/[0.03] p-5 sm:p-6">
+            <h3 class="text-lg font-semibold text-white">Memory</h3>
+            <p class="text-slate-300/95">
+              Add conversation memory to your chatbots so they remember previous messages in a session —
+              or even across sessions using persistent storage backends like Redis or SQL.
+            </p>
+          </div>
+          <div class="space-y-3 rounded-2xl border border-white/10 bg-white/[0.03] p-5 sm:p-6">
+            <h3 class="text-lg font-semibold text-white">100+ integrations</h3>
+            <p class="text-slate-300/95">
+              LangChain integrates with virtually every LLM provider, vector store, document loader, output parser,
+              and tool you'd want to use. If it exists in the LLM ecosystem, there's probably a LangChain integration for it.
+            </p>
+          </div>
+          <div class="space-y-3 rounded-2xl border border-white/10 bg-white/[0.03] p-5 sm:p-6">
+            <h3 class="text-lg font-semibold text-white">LangSmith</h3>
+            <p class="text-slate-300/95">
+              A companion platform for tracing, debugging, testing, and evaluating your LangChain apps. When your
+              chain produces a wrong answer, LangSmith shows you exactly which step failed and why. Invaluable for
+              production applications.
+            </p>
+          </div>
+        </section>
+
+        <section class="space-y-6" aria-labelledby="how-heading">
+          <h2 id="how-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">
+            How LangChain works, simply
+          </h2>
+          <p>Here's the mental model that makes LangChain click:</p>
+          <ul class="list-disc space-y-2 pl-5 marker:text-emerald-400/80">
+            <li>
+              <strong class="text-slate-200">You define components</strong> — a prompt template, an LLM, an output parser,
+              a retriever, a tool.
+            </li>
+            <li>
+              <strong class="text-slate-200">You wire them together</strong> using the pipe operator (<code class="rounded bg-white/10 px-1 text-emerald-300">|</code>)
+              in LCEL, or using higher-level chain classes for common patterns.
+            </li>
+            <li>
+              <strong class="text-slate-200">You call the chain</strong> with input, and LangChain handles the orchestration:
+              formatting, calling APIs, parsing responses, routing.
+            </li>
+          </ul>
+          <p class="rounded-xl border border-white/10 bg-white/[0.02] px-4 py-3 text-slate-300/95">
+            For example, a RAG chain might look like: user question → retrieve relevant docs from vector DB → inject docs
+            into prompt → call GPT-4 → parse and return the answer. LangChain makes all of that maybe 20 lines of code
+            instead of 200.
+          </p>
+        </section>
+
+        <section class="space-y-6" aria-labelledby="usecases-heading">
+          <h2 id="usecases-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">
+            Real-life use cases
+          </h2>
+          <div class="space-y-3 rounded-2xl border border-white/10 bg-white/[0.03] p-5 sm:p-6">
+            <h3 class="text-lg font-semibold text-white">Document Q&A chatbots</h3>
+            <ul class="list-disc space-y-2 pl-5 marker:text-emerald-400/80">
+              <li>A chatbot that answers questions from your company's internal documentation</li>
+              <li>A legal research tool that searches case law and summarizes relevant passages</li>
+              <li>A support bot trained on your product's help articles</li>
+            </ul>
+          </div>
+          <div class="space-y-3 rounded-2xl border border-white/10 bg-white/[0.03] p-5 sm:p-6">
+            <h3 class="text-lg font-semibold text-white">Autonomous agents</h3>
+            <ul class="list-disc space-y-2 pl-5 marker:text-emerald-400/80">
+              <li>A research agent that searches the web, reads pages, and synthesizes a report</li>
+              <li>A coding agent that can read files, run tests, and fix bugs iteratively</li>
+              <li>A data agent that queries a SQL database and explains the results in plain English</li>
+            </ul>
+          </div>
+          <div class="space-y-3 rounded-2xl border border-white/10 bg-white/[0.03] p-5 sm:p-6">
+            <h3 class="text-lg font-semibold text-white">Multi-step content pipelines</h3>
+            <ul class="list-disc space-y-2 pl-5 marker:text-emerald-400/80">
+              <li>Classify incoming support emails → generate a draft reply → escalate if needed</li>
+              <li>Summarize meeting transcripts → extract action items → create tasks in your project tool</li>
+            </ul>
+          </div>
+        </section>
+
+        <section class="space-y-6" aria-labelledby="proscons-heading">
+          <h2 id="proscons-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">Pros and cons</h2>
+          <div class="grid gap-6 lg:grid-cols-2">
+            <div class="rounded-2xl border border-emerald-500/20 bg-emerald-500/5 p-5 sm:p-6">
+              <h3 class="mb-4 text-lg font-semibold text-emerald-100">Pros</h3>
+              <ul class="list-disc space-y-2 pl-5 text-slate-300/95 marker:text-emerald-400/80">
+                <li>Largest ecosystem of integrations in the LLM framework space</li>
+                <li>Huge community — tons of tutorials, examples, and Stack Overflow answers</li>
+                <li>LCEL makes composing complex pipelines readable</li>
+                <li>LangSmith is excellent for debugging and evaluation</li>
+                <li>Available in both Python and JavaScript</li>
+                <li>Open source and free</li>
+              </ul>
+            </div>
+            <div class="rounded-2xl border border-amber-500/20 bg-amber-500/5 p-5 sm:p-6">
+              <h3 class="mb-4 text-lg font-semibold text-amber-100">Cons</h3>
+              <ul class="list-disc space-y-2 pl-5 text-slate-300/95 marker:text-amber-400/80">
+                <li>Can be over-engineered for simple tasks — sometimes raw API calls are cleaner</li>
+                <li>Abstractions can make debugging harder; stack traces get deep</li>
+                <li>Documentation has historically lagged behind its fast release pace</li>
+                <li>Steep learning curve if you're new to LLMs</li>
+                <li>Some abstractions "leak" — you still need to understand the underlying LLM concepts</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        <section class="space-y-6" aria-labelledby="pricing-heading">
+          <h2 id="pricing-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">LangChain pricing</h2>
+          <ul class="list-disc space-y-3 pl-5 marker:text-emerald-400/80">
+            <li>
+              <strong class="text-slate-200">Developer (Free)</strong> — for solo users getting started. Includes up to
+              5k traces/month, tracing for debugging agents, online/offline evals, prompt tools (Hub, Playground, Canvas),
+              human feedback queues, monitoring &amp; alerts, 1 agent, up to 50 runs/month, and community support.
+            </li>
+            <li>
+              <strong class="text-slate-200">Plus (~$39/seat/month)</strong> — for teams building and deploying agents.
+              Everything in Developer, plus 10k traces/month, 1 dev deployment, unlimited agents, up to 500 runs/month,
+              multiple workspaces, email support, and scalable team usage.
+            </li>
+            <li>
+              <strong class="text-slate-200">Enterprise (Custom pricing)</strong> — for advanced security and scale.
+              Everything in Plus, plus hybrid/self-hosted options, SSO &amp; RBAC, dedicated support &amp; SLA, team
+              training, architectural guidance, and custom limits for seats, workspaces, and usage.
+            </li>
+          </ul>
+          <p class="rounded-xl border border-white/10 bg-white/[0.02] px-4 py-3 text-slate-300/95">
+            <span class="mr-1.5 font-medium text-emerald-200" aria-hidden>Note:</span>
+            LangSmith pricing evolves frequently. Check
+            <a
+              class="font-medium text-emerald-300/95 underline decoration-emerald-500/40 underline-offset-4 hover:text-emerald-200"
+              href="https://www.langchain.com/pricing"
+              target="_blank"
+              rel="noopener noreferrer"
+              >langchain.com/pricing</a
+            > for current plans.
+          </p>
+        </section>
+
+        <section class="space-y-6" aria-labelledby="alternatives-heading">
+          <h2 id="alternatives-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">
+            Alternatives to LangChain
+          </h2>
+          <ul class="list-disc space-y-3 pl-5 marker:text-emerald-400/80">
+            <li>
+              <strong class="text-slate-200">LlamaIndex</strong> — more focused on data ingestion and RAG pipelines.
+              Often preferred over LangChain for pure document Q&A use cases.
+            </li>
+            <li>
+              <strong class="text-slate-200">LangGraph</strong> — LangChain's own graph-based framework for building
+              complex, stateful agents with cyclic flows. The recommended path for advanced agents.
+            </li>
+            <li>
+              <strong class="text-slate-200">CrewAI</strong> — simpler mental model for multi-agent workflows.
+              Easier to get started, less flexible than LangChain for complex custom logic.
+            </li>
+            <li>
+              <strong class="text-slate-200">Haystack</strong> — another solid open-source framework, particularly
+              strong for search and NLP pipeline use cases.
+            </li>
+            <li>
+              <strong class="text-slate-200">Raw API calls</strong> — sometimes the right answer. If your use case
+              is simple, a direct API call is cleaner than importing a framework.
+            </li>
+          </ul>
+        </section>
+
+        <section class="space-y-4" aria-labelledby="who-heading">
+          <h2 id="who-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">Who should use LangChain?</h2>
+          <p>LangChain is worth learning if you:</p>
+          <ul class="list-disc space-y-2 pl-5 marker:text-emerald-400/80">
+            <li>Are a developer building production LLM applications</li>
+            <li>Want to connect LLMs to your own documents, databases, or APIs</li>
+            <li>Are building chatbots, agents, or multi-step AI pipelines</li>
+            <li>Want the most integration options and the largest community ecosystem</li>
+            <li>Are prototyping quickly and want common patterns to be pre-built</li>
+          </ul>
+          <p class="rounded-xl border border-white/10 bg-white/[0.02] px-4 py-3 text-slate-300/95">
+            LangChain has a learning curve. If you're just making a one-off API call or need something very simple,
+            using the provider's SDK directly is cleaner. But for anything with real complexity — agents, RAG, memory,
+            multi-step pipelines — LangChain saves enormous time.
+          </p>
+        </section>
+
+        <section class="space-y-6" aria-labelledby="bonus-heading">
+          <h2 id="bonus-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">Bonus: tips and mistakes to avoid</h2>
+
+          <div class="space-y-3 rounded-2xl border border-white/10 bg-white/[0.03] p-5 sm:p-6">
+            <h3 class="text-lg font-semibold text-white">Tips for getting started</h3>
+            <ul class="list-disc space-y-2 pl-5 text-slate-300/95 marker:text-emerald-400/80">
+              <li>
+                <strong class="text-slate-200">Start with LCEL, not legacy chains.</strong> The LangChain Expression
+                Language is the modern way to build chains. Start there rather than with the older class-based chains.
+              </li>
+              <li>
+                <strong class="text-slate-200">Set up LangSmith from day one.</strong> Even for personal projects,
+                having trace visibility makes debugging 10x faster.
+              </li>
+              <li>
+                <strong class="text-slate-200">Don't over-abstract too early.</strong> Start simple — one chain,
+                one LLM, one retriever. Add complexity only when the simpler version breaks.
+              </li>
+            </ul>
+          </div>
+
+          <div class="space-y-3 rounded-2xl border border-white/10 bg-white/[0.03] p-5 sm:p-6">
+            <h3 class="text-lg font-semibold text-white">Common mistakes to avoid</h3>
+            <ul class="list-disc space-y-2 pl-5 text-slate-300/95 marker:text-amber-400/80">
+              <li>
+                <strong class="text-slate-200">Reading outdated tutorials.</strong> LangChain's API has changed
+                significantly over its versions. Always check the tutorial's date and the version it targets.
+              </li>
+              <li>
+                <strong class="text-slate-200">Using LangChain when a direct API call would do.</strong> If you're
+                just making one LLM call with no retrieval or tools, the framework is overkill.
+              </li>
+              <li>
+                <strong class="text-slate-200">Ignoring token costs.</strong> LangChain makes it easy to make lots
+                of LLM calls without noticing. LangSmith shows you exactly how many tokens each step uses.
+              </li>
+            </ul>
+          </div>
+        </section>
+
+        <p class="text-lg text-slate-200/95">
+          LangChain has its critics, but it earned its popularity for good reason: it made building serious LLM applications
+          accessible to developers who aren't AI researchers. If you're building something with LLMs, it's worth understanding
+          even if you don't end up using it for everything.
+        </p>
+
+      </article>
+    </div>
+  </div>
+{% endblock %}

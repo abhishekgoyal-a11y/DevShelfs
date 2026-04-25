@@ -1,0 +1,321 @@
+{% extends "web/base.html" %}
+{% block title %}CrewAI — DevShelf{% endblock %}
+{% block content %}
+  <div class="space-y-10">
+    <div class="flex flex-wrap items-center gap-2 text-sm text-slate-400/90">
+      <a href="{% url 'ai_tools' %}" class="font-medium text-emerald-300/90 transition hover:text-emerald-200">AI tools</a>
+      <span aria-hidden class="text-slate-600">/</span>
+      <span class="text-slate-200/90">CrewAI</span>
+    </div>
+
+    <section
+      class="relative overflow-hidden rounded-3xl border border-emerald-400/20 bg-white/[0.06] p-6 shadow-[0_0_0_1px_rgba(255,255,255,0.04)] backdrop-blur-2xl sm:p-8"
+    >
+      <div class="pointer-events-none absolute -right-24 top-0 h-72 w-72 rounded-full bg-emerald-500/15 blur-3xl"></div>
+      <div class="pointer-events-none absolute -left-20 bottom-0 h-56 w-56 rounded-full bg-cyan-500/10 blur-3xl"></div>
+      <div class="relative">
+        <p class="text-xs font-semibold uppercase tracking-[0.22em] text-emerald-300/90">AI tool</p>
+        <h1 class="mt-3 text-3xl font-semibold tracking-tight text-white sm:text-4xl lg:text-[2.5rem] lg:leading-tight">
+          CrewAI: Build Teams of AI Agents That Work Together
+        </h1>
+        <p class="mt-4 text-sm leading-relaxed text-slate-200/80 sm:text-base">
+          CrewAI is an open-source multi-agent framework where you assemble a "crew" of AI agents — each with a role,
+          goal, and tools — and set them loose on complex tasks. Like having a small AI team where each member
+          has a specific job.
+        </p>
+        <p class="mt-6 flex flex-wrap items-center gap-3">
+          <a
+            href="https://www.crewai.com"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="inline-flex items-center gap-2 rounded-full border border-emerald-400/35 bg-emerald-500/10 px-4 py-2 text-sm font-medium text-emerald-200 transition hover:border-emerald-300/50 hover:bg-emerald-500/15 hover:text-white"
+          >
+            Visit CrewAI <span aria-hidden class="text-emerald-300/80">↗</span>
+          </a>
+          <a
+            href="https://docs.crewai.com"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/[0.04] px-4 py-2 text-sm font-medium text-slate-200/90 transition hover:border-white/25 hover:bg-white/[0.07] hover:text-white"
+          >
+            Docs <span aria-hidden class="text-slate-400">↗</span>
+          </a>
+          <a
+            href="https://crewai.com/pricing"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/[0.04] px-4 py-2 text-sm font-medium text-slate-200/90 transition hover:border-white/25 hover:bg-white/[0.07] hover:text-white"
+          >
+            Pricing <span aria-hidden class="text-slate-400">↗</span>
+          </a>
+        </p>
+      </div>
+    </section>
+
+    <div class="glass rounded-3xl border border-white/10 p-5 sm:p-8">
+      <article class="mx-auto space-y-12 text-base leading-relaxed text-slate-300/95">
+
+        <section class="space-y-4" aria-labelledby="what-heading">
+          <h2 id="what-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">What is CrewAI?</h2>
+          <p>
+            Imagine you need to research a topic, write a report about it, and then have an editor polish the draft.
+            In the real world, you'd hire three people. CrewAI lets you do the same thing with AI agents — each agent
+            plays a specific role and hands off to the next one, just like a real team.
+          </p>
+          <p>
+            Created by João Moura and released in 2024, CrewAI became one of the fastest-growing agent frameworks
+            because its mental model is so intuitive. You don't need to think about "chains" or "graphs" — you think
+            about roles, goals, and tasks. The framework handles the coordination.
+          </p>
+          <p>
+            CrewAI is model-agnostic: you can use OpenAI, Anthropic Claude, Google Gemini, Mistral, or local models
+            via Ollama. And it integrates with tools like web search, file reading, code execution, and custom APIs
+            so your agents can actually <em>do</em> things, not just talk.
+          </p>
+        </section>
+
+        <section class="space-y-6" aria-labelledby="features-heading">
+          <h2 id="features-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">
+            Key features of CrewAI
+          </h2>
+          <div class="space-y-3 rounded-2xl border border-white/10 bg-white/[0.03] p-5 sm:p-6">
+            <h3 class="text-lg font-semibold text-white">Role-based agents</h3>
+            <p class="text-slate-300/95">
+              Each agent has a <em>role</em> (e.g., "Senior Research Analyst"), a <em>goal</em> (what they're trying
+              to achieve), and a <em>backstory</em> (context that shapes how they behave). This makes agents predictable
+              and easy to reason about.
+            </p>
+          </div>
+          <div class="space-y-3 rounded-2xl border border-white/10 bg-white/[0.03] p-5 sm:p-6">
+            <h3 class="text-lg font-semibold text-white">Task assignment and delegation</h3>
+            <p class="text-slate-300/95">
+              You assign specific tasks to specific agents — or let a manager agent delegate dynamically. Agents can
+              also ask each other for help mid-task, enabling genuine collaboration rather than just sequential handoffs.
+            </p>
+          </div>
+          <div class="space-y-3 rounded-2xl border border-white/10 bg-white/[0.03] p-5 sm:p-6">
+            <h3 class="text-lg font-semibold text-white">Sequential and hierarchical execution</h3>
+            <p class="text-slate-300/95">
+              Crews can run in sequential mode (Agent 1 finishes, then Agent 2 starts) or hierarchical mode (a manager
+              agent oversees and routes tasks to specialist agents). Choose the pattern that fits your workflow.
+            </p>
+          </div>
+          <div class="space-y-3 rounded-2xl border border-white/10 bg-white/[0.03] p-5 sm:p-6">
+            <h3 class="text-lg font-semibold text-white">Tool use</h3>
+            <p class="text-slate-300/95">
+              Equip agents with tools: web search, file reading, code execution, database queries, custom API calls.
+              CrewAI integrates with LangChain's tool ecosystem and lets you write custom tools easily.
+            </p>
+          </div>
+          <div class="space-y-3 rounded-2xl border border-white/10 bg-white/[0.03] p-5 sm:p-6">
+            <h3 class="text-lg font-semibold text-white">CrewAI+ (cloud platform)</h3>
+            <p class="text-slate-300/95">
+              A hosted platform for deploying and scheduling crews, monitoring runs, and managing pipelines without
+              managing your own infrastructure. Good for teams who want to productionize crew workflows quickly.
+            </p>
+          </div>
+          <div class="space-y-3 rounded-2xl border border-white/10 bg-white/[0.03] p-5 sm:p-6">
+            <h3 class="text-lg font-semibold text-white">Any LLM, any model</h3>
+            <p class="text-slate-300/95">
+              Point CrewAI at any LLM via its provider integrations. Different agents in the same crew can even use
+              different models — run a powerful (expensive) model for the manager and faster (cheaper) models for
+              routine tasks.
+            </p>
+          </div>
+        </section>
+
+        <section class="space-y-6" aria-labelledby="how-heading">
+          <h2 id="how-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">
+            How CrewAI works, simply
+          </h2>
+          <p>Building a crew takes four steps:</p>
+          <ul class="list-disc space-y-2 pl-5 marker:text-emerald-400/80">
+            <li><strong class="text-slate-200">Define your agents</strong> — each with a role, goal, backstory, and any tools they can use.</li>
+            <li><strong class="text-slate-200">Define your tasks</strong> — what each agent should produce, with a clear expected output.</li>
+            <li><strong class="text-slate-200">Assemble the crew</strong> — which agents, which tasks, what execution order (sequential or hierarchical).</li>
+            <li><strong class="text-slate-200">Kick it off</strong> — call <code class="rounded bg-white/10 px-1 text-emerald-300">crew.kickoff()</code> and the framework handles the rest: the agents run in order, passing their outputs as context to the next agent.</li>
+          </ul>
+          <p class="rounded-xl border border-white/10 bg-white/[0.02] px-4 py-3 text-slate-300/95">
+            The outputs flow naturally: if Agent 1's task is research and Agent 2's task is writing a report,
+            Agent 2 automatically receives Agent 1's research as context. No manual piping required.
+          </p>
+        </section>
+
+        <section class="space-y-6" aria-labelledby="usecases-heading">
+          <h2 id="usecases-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">
+            Real-life use cases
+          </h2>
+          <div class="space-y-3 rounded-2xl border border-white/10 bg-white/[0.03] p-5 sm:p-6">
+            <h3 class="text-lg font-semibold text-white">Content production pipeline</h3>
+            <ul class="list-disc space-y-2 pl-5 marker:text-emerald-400/80">
+              <li>Researcher agent finds relevant information and trends</li>
+              <li>Writer agent drafts a blog post based on the research</li>
+              <li>Editor agent reviews, improves, and fact-checks the draft</li>
+              <li>SEO agent optimizes the final copy for search</li>
+            </ul>
+          </div>
+          <div class="space-y-3 rounded-2xl border border-white/10 bg-white/[0.03] p-5 sm:p-6">
+            <h3 class="text-lg font-semibold text-white">Market research and competitive analysis</h3>
+            <ul class="list-disc space-y-2 pl-5 marker:text-emerald-400/80">
+              <li>Data gatherer searches for competitor pricing, features, and reviews</li>
+              <li>Analyst synthesizes findings into a structured comparison</li>
+              <li>Strategist writes recommendations for your team</li>
+            </ul>
+          </div>
+          <div class="space-y-3 rounded-2xl border border-white/10 bg-white/[0.03] p-5 sm:p-6">
+            <h3 class="text-lg font-semibold text-white">Software development automation</h3>
+            <ul class="list-disc space-y-2 pl-5 marker:text-emerald-400/80">
+              <li>Requirements analyst breaks down a feature request</li>
+              <li>Developer agent writes the code</li>
+              <li>Reviewer agent checks for bugs, style issues, and edge cases</li>
+              <li>Documentation agent writes the docs</li>
+            </ul>
+          </div>
+        </section>
+
+        <section class="space-y-6" aria-labelledby="proscons-heading">
+          <h2 id="proscons-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">Pros and cons</h2>
+          <div class="grid gap-6 lg:grid-cols-2">
+            <div class="rounded-2xl border border-emerald-500/20 bg-emerald-500/5 p-5 sm:p-6">
+              <h3 class="mb-4 text-lg font-semibold text-emerald-100">Pros</h3>
+              <ul class="list-disc space-y-2 pl-5 text-slate-300/95 marker:text-emerald-400/80">
+                <li>Intuitive role-based mental model — easy to understand and explain</li>
+                <li>Fast to prototype — a working crew in under 50 lines of Python</li>
+                <li>Works with any LLM provider</li>
+                <li>Active development and large, growing community</li>
+                <li>Built-in support for sequential and hierarchical agent patterns</li>
+                <li>Open source core with cloud platform option</li>
+              </ul>
+            </div>
+            <div class="rounded-2xl border border-amber-500/20 bg-amber-500/5 p-5 sm:p-6">
+              <h3 class="mb-4 text-lg font-semibold text-amber-100">Cons</h3>
+              <ul class="list-disc space-y-2 pl-5 text-slate-300/95 marker:text-amber-400/80">
+                <li>Complex crews with many agents can burn through LLM tokens quickly</li>
+                <li>Hard to debug when an agent in the middle of a chain fails silently</li>
+                <li>Less fine-grained control over agent-to-agent communication than LangGraph</li>
+                <li>Non-deterministic by nature — same crew can produce different results</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        <section class="space-y-6" aria-labelledby="pricing-heading">
+          <h2 id="pricing-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">CrewAI pricing</h2>
+          <ul class="list-disc space-y-3 pl-5 marker:text-emerald-400/80">
+            <li>
+              <strong class="text-slate-200">Basic (Free)</strong> — build and explore agentic workflows with a visual
+              editor and AI copilot. Includes GitHub integration and up to 50 workflow executions/month.
+            </li>
+            <li>
+              <strong class="text-slate-200">Enterprise (Custom)</strong> — for scaling agentic AI across teams.
+              Everything in Basic, plus private infrastructure (e.g., CrewAI), on-site support &amp; training, and up
+              to 50 development hours/month.
+            </li>
+          </ul>
+          <p class="rounded-xl border border-white/10 bg-white/[0.02] px-4 py-3 text-slate-300/95">
+            <span class="mr-1.5 font-medium text-emerald-200" aria-hidden>Note:</span>
+            Check
+            <a
+              class="font-medium text-emerald-300/95 underline decoration-emerald-500/40 underline-offset-4 hover:text-emerald-200"
+              href="https://crewai.com/pricing"
+              target="_blank"
+              rel="noopener noreferrer"
+              >crewai.com/pricing</a
+            > for the latest pricing.
+          </p>
+        </section>
+
+        <section class="space-y-6" aria-labelledby="alternatives-heading">
+          <h2 id="alternatives-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">
+            Alternatives to CrewAI
+          </h2>
+          <ul class="list-disc space-y-3 pl-5 marker:text-emerald-400/80">
+            <li>
+              <strong class="text-slate-200">AutoGen</strong> — Microsoft's multi-agent framework. More flexible
+              conversation model, better for agents that need to have back-and-forth dialogue.
+            </li>
+            <li>
+              <strong class="text-slate-200">LangGraph</strong> — more fine-grained control with a graph model.
+              Better for complex workflows with branching, loops, and state management.
+            </li>
+            <li>
+              <strong class="text-slate-200">Swarm (OpenAI)</strong> — lightweight agent orchestration from OpenAI.
+              Very simple, but less capable for complex multi-agent scenarios.
+            </li>
+            <li>
+              <strong class="text-slate-200">Smolagents</strong> — Hugging Face's minimal framework. Good if you
+              want something lightweight that runs code-first agents.
+            </li>
+          </ul>
+        </section>
+
+        <section class="space-y-4" aria-labelledby="who-heading">
+          <h2 id="who-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">Who should use CrewAI?</h2>
+          <p>CrewAI is a great fit if you:</p>
+          <ul class="list-disc space-y-2 pl-5 marker:text-emerald-400/80">
+            <li>Want to automate multi-step workflows that involve research, writing, analysis, or decision-making</li>
+            <li>Like the idea of role-based agents (Researcher, Writer, Editor) rather than abstract graphs or chains</li>
+            <li>Are prototyping quickly and want to get a working demo in an afternoon</li>
+            <li>Need a framework that works with any LLM provider</li>
+            <li>Want to build content pipelines, research automation, or data analysis agents</li>
+          </ul>
+          <p class="rounded-xl border border-white/10 bg-white/[0.02] px-4 py-3 text-slate-300/95">
+            If you need very precise control over agent-to-agent communication, branching logic, or stateful workflows,
+            LangGraph might serve you better. But for most business automation use cases, CrewAI's simplicity is a genuine
+            strength — not a limitation.
+          </p>
+        </section>
+
+        <section class="space-y-6" aria-labelledby="bonus-heading">
+          <h2 id="bonus-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">Bonus: tips and mistakes to avoid</h2>
+
+          <div class="space-y-3 rounded-2xl border border-white/10 bg-white/[0.03] p-5 sm:p-6">
+            <h3 class="text-lg font-semibold text-white">Tips for building better crews</h3>
+            <ul class="list-disc space-y-2 pl-5 text-slate-300/95 marker:text-emerald-400/80">
+              <li>
+                <strong class="text-slate-200">Write detailed agent backstories.</strong> The more context each
+                agent has about their role and purpose, the more focused and useful their output will be.
+              </li>
+              <li>
+                <strong class="text-slate-200">Define clear expected outputs for tasks.</strong> Vague task descriptions
+                produce vague agent outputs. Be specific about what format and detail level you want.
+              </li>
+              <li>
+                <strong class="text-slate-200">Start with 2–3 agents.</strong> Resist the urge to build a 10-agent
+                crew on day one. Start small, verify each agent works well, then add complexity.
+              </li>
+              <li>
+                <strong class="text-slate-200">Use verbose mode during development.</strong> Setting <code class="rounded bg-white/10 px-1 text-emerald-300">verbose=True</code>
+                on your crew shows you what each agent is "thinking" as it runs — invaluable for debugging.
+              </li>
+            </ul>
+          </div>
+
+          <div class="space-y-3 rounded-2xl border border-white/10 bg-white/[0.03] p-5 sm:p-6">
+            <h3 class="text-lg font-semibold text-white">Common mistakes to avoid</h3>
+            <ul class="list-disc space-y-2 pl-5 text-slate-300/95 marker:text-amber-400/80">
+              <li>
+                <strong class="text-slate-200">Too many agents, too soon.</strong> More agents doesn't mean better
+                results — it means more complexity, more tokens, and more things that can go wrong.
+              </li>
+              <li>
+                <strong class="text-slate-200">Not tracking token usage.</strong> Multi-agent workflows can rack
+                up LLM costs fast. Monitor usage, especially during development.
+              </li>
+              <li>
+                <strong class="text-slate-200">Expecting perfect output every time.</strong> CrewAI runs on LLMs,
+                which are non-deterministic. Build in quality checks or human review for high-stakes outputs.
+              </li>
+            </ul>
+          </div>
+        </section>
+
+        <p class="text-lg text-slate-200/95">
+          CrewAI makes multi-agent AI feel approachable rather than arcane. If you've had the thought "I wish I could
+          just assign this task to a team of AIs," CrewAI is probably the tool you were imagining.
+        </p>
+
+      </article>
+    </div>
+  </div>
+{% endblock %}

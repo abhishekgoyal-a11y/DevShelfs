@@ -158,5 +158,69 @@
     "description": "Anthropic's AI assistant built for nuanced analysis and long documents—200K token context window, exceptional writing quality, and a safety-first design that acknowledges uncertainty.",
     "detailPath": "/ai-tools/claude-ai",
     "featured": false
+  },
+  {
+    "id": "codeium",
+    "name": "Codeium",
+    "category": "Developer tools",
+    "description": "Free AI code assistant with unlimited completions, chat, and semantic search across 70+ languages and 40+ editors—no credit card, no usage cap.",
+    "detailPath": "/ai-tools/codeium",
+    "featured": false
+  },
+  {
+    "id": "tabnine",
+    "name": "Tabnine",
+    "category": "Developer tools",
+    "description": "Privacy-first AI code completion tool with a local model option—your code never leaves your machine—plus team context learning and enterprise on-premises deployment.",
+    "detailPath": "/ai-tools/tabnine",
+    "featured": false
+  },
+  {
+    "id": "langchain",
+    "name": "LangChain",
+    "category": "AI agents & automation",
+    "description": "The most popular open-source framework for building LLM apps—chains, agents, RAG pipelines, memory, and 100+ integrations with models and data stores.",
+    "detailPath": "/ai-tools/langchain",
+    "featured": false
+  },
+  {
+    "id": "crewai",
+    "name": "CrewAI",
+    "category": "AI agents & automation",
+    "description": "Multi-agent framework where role-based AI 'crews'—Researcher, Writer, Editor—collaborate on tasks sequentially or hierarchically, with any LLM under the hood.",
+    "detailPath": "/ai-tools/crewai",
+    "featured": false
+  },
+  {
+    "id": "langgraph",
+    "name": "LangGraph",
+    "category": "AI agents & automation",
+    "description": "Graph-based agent orchestration from the LangChain team—supports cycles, branching, state persistence, and human-in-the-loop checkpoints for production-grade agents.",
+    "detailPath": "/ai-tools/langgraph",
+    "featured": false
+  },
+  {
+    "id": "autogen",
+    "name": "AutoGen",
+    "category": "AI agents & automation",
+    "description": "Microsoft Research's multi-agent framework where agents converse to solve tasks—with first-class code execution, group chat, human-in-the-loop, and AutoGen Studio for visual building.",
+    "detailPath": "/ai-tools/autogen",
+    "featured": false
+  },
+  {
+    "id": "smolagents",
+    "name": "Smolagents",
+    "category": "AI agents & automation",
+    "description": "Hugging Face's minimal, code-first agent library—agents write Python to use tools rather than calling rigid schemas, with a tiny readable codebase and native Hub integration.",
+    "detailPath": "/ai-tools/smolagents",
+    "featured": false
+  },
+  {
+    "id": "openclaw",
+    "name": "OpenClaw",
+    "category": "AI agents & automation",
+    "description": "Open-source local AI agent that connects to WhatsApp, Telegram, Slack, and more—manages inboxes, calendars, web tasks, and shell commands with your own API key.",
+    "detailPath": "/ai-tools/openclaw",
+    "featured": false
   }
 ]

@@ -334,6 +334,70 @@ def claude_ai(request):
     )
 
 
+def codeium(request):
+    return render(
+        request,
+        "web/codeium.html",
+        {"layout": _layout(request.path), "active_nav": "ai"},
+    )
+
+
+def tabnine(request):
+    return render(
+        request,
+        "web/tabnine.html",
+        {"layout": _layout(request.path), "active_nav": "ai"},
+    )
+
+
+def langchain(request):
+    return render(
+        request,
+        "web/langchain.html",
+        {"layout": _layout(request.path), "active_nav": "ai"},
+    )
+
+
+def crewai(request):
+    return render(
+        request,
+        "web/crewai.html",
+        {"layout": _layout(request.path), "active_nav": "ai"},
+    )
+
+
+def langgraph(request):
+    return render(
+        request,
+        "web/langgraph.html",
+        {"layout": _layout(request.path), "active_nav": "ai"},
+    )
+
+
+def autogen(request):
+    return render(
+        request,
+        "web/autogen.html",
+        {"layout": _layout(request.path), "active_nav": "ai"},
+    )
+
+
+def smolagents(request):
+    return render(
+        request,
+        "web/smolagents.html",
+        {"layout": _layout(request.path), "active_nav": "ai"},
+    )
+
+
+def openclaw(request):
+    return render(
+        request,
+        "web/openclaw.html",
+        {"layout": _layout(request.path), "active_nav": "ai"},
+    )
+
+
 def hackathons(request):
     type_filter = (request.GET.get("type") or "all").lower()
     q = (request.GET.get("q") or "").strip().lower()
