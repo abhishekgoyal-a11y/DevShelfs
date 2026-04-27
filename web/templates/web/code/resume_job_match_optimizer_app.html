@@ -1,0 +1,170 @@
+{% verbatim %}
+# Resume + Job Match Optimizer — Streamlit + Groq
+# Save as app.py, add GROQ_API_KEY to .streamlit/secrets.toml, then: streamlit run app.py
+
+import io
+import ssl
+
+import httpx
+import streamlit as st
+import truststore
+
+MAX_RESUME_CHARS = 8000
+MAX_JD_CHARS = 5000
+
+st.set_page_config(page_title="Resume + Job Match Optimizer", layout="wide")
+st.title("Resume + Job Match Optimizer")
+st.caption(
+    "Upload or paste your resume and a job description to get a fit score, "
+    "keyword gap analysis, improvement suggestions, and a tailored cover letter."
+)
+
+_ssl_ctx = truststore.SSLContext(ssl.PROTOCOL_TLS_CLIENT)
+
+
+@st.cache_resource
+def _groq_client():
+    import groq
+
+    return groq.Groq(
+        api_key=st.secrets["GROQ_API_KEY"],
+        http_client=httpx.Client(verify=_ssl_ctx),
+    )
+
+
+_MODEL = "llama-3.3-70b-versatile"
+
+# ── Inputs ─────────────────────────────────────────────────────────────────────
+col_left, col_right = st.columns(2)
+
+with col_left:
+    st.subheader("Your Resume")
+    resume_file = st.file_uploader("Upload PDF", type=["pdf"], key="resume_pdf")
+    resume_default = ""
+    if resume_file:
+        import pypdf
+
+        reader = pypdf.PdfReader(io.BytesIO(resume_file.read()))
+        resume_default = "\n".join(
+            (p.extract_text() or "") for p in reader.pages
+        )[:MAX_RESUME_CHARS]
+    resume_text = st.text_area(
+        "Or paste resume text",
+        value=resume_default,
+        height=280,
+        placeholder="Paste your resume here…",
+    )
+
+with col_right:
+    st.subheader("Job Description")
+    jd_text = st.text_area(
+        "Paste the job description",
+        height=280,
+        placeholder="Paste the job posting here…",
+    )
+
+st.divider()
+
+btn_col1, btn_col2, btn_col3 = st.columns(3)
+do_score = btn_col1.button("Score Fit & Analyze", type="primary", use_container_width=True)
+do_improve = btn_col2.button("Suggest Improvements", use_container_width=True)
+do_cover = btn_col3.button("Generate Cover Letter", use_container_width=True)
+
+# ── Shared validation ──────────────────────────────────────────────────────────
+if do_score or do_improve or do_cover:
+    if not resume_text.strip():
+        st.warning("Please upload or paste your resume.")
+        st.stop()
+    if not jd_text.strip() and (do_score or do_cover):
+        st.warning("A job description is required for scoring and cover letter generation.")
+        st.stop()
+
+# ── Score & keyword analysis ───────────────────────────────────────────────────
+if do_score:
+    system_msg = (
+        "You are an expert career coach and ATS specialist. Analyze the resume against "
+        "the job description and respond in this exact format:\n\n"
+        "## Fit Score: [0-100]/100\n\n"
+        "## Why This Score\n[2-3 sentences]\n\n"
+        "## Keywords Present\n[comma-separated list]\n\n"
+        "## Missing Keywords\n[comma-separated list of keywords from JD not in resume]\n\n"
+        "## Top 3 Strengths\n- ...\n\n"
+        "## Top 3 Gaps\n- ..."
+    )
+    user_msg = (
+        f"RESUME:\n{resume_text[:MAX_RESUME_CHARS]}\n\n"
+        f"JOB DESCRIPTION:\n{jd_text[:MAX_JD_CHARS]}"
+    )
+    with st.spinner("Analyzing fit…"):
+        try:
+            resp = _groq_client().chat.completions.create(
+                model=_MODEL,
+                messages=[
+                    {"role": "system", "content": system_msg},
+                    {"role": "user", "content": user_msg},
+                ],
+            )
+            st.markdown(resp.choices[0].message.content)
+        except Exception as exc:
+            st.error(f"Error: {exc}")
+
+# ── Improvement suggestions ────────────────────────────────────────────────────
+if do_improve:
+    system_msg = (
+        "You are a senior resume reviewer. Analyze the resume and return exactly these sections:\n\n"
+        "## Strengths\n[3-5 bullet points]\n\n"
+        "## Suggested Improvements\n[5-7 specific, actionable bullet points]\n\n"
+        "## Rewritten Bullet Examples\n[Take 2-3 weak bullets and rewrite them with metrics using STAR format]\n\n"
+        "## ATS Keywords to Add\n[comma-separated list]"
+    )
+    user_msg = f"RESUME:\n{resume_text[:MAX_RESUME_CHARS]}"
+    if jd_text.strip():
+        user_msg += f"\n\nJOB DESCRIPTION (for context):\n{jd_text[:MAX_JD_CHARS]}"
+
+    with st.spinner("Reviewing resume…"):
+        try:
+            resp = _groq_client().chat.completions.create(
+                model=_MODEL,
+                messages=[
+                    {"role": "system", "content": system_msg},
+                    {"role": "user", "content": user_msg},
+                ],
+            )
+            st.markdown(resp.choices[0].message.content)
+        except Exception as exc:
+            st.error(f"Error: {exc}")
+
+# ── Cover letter ───────────────────────────────────────────────────────────────
+if do_cover:
+    system_msg = (
+        "You are an expert career coach. Write a tailored cover letter for this candidate. "
+        "Structure: opening hook that mentions the specific role, 1-2 paragraphs matching "
+        "experience to the job requirements with specific achievements and numbers, "
+        "a brief paragraph about why this company, and a confident call-to-action closing. "
+        "Output only the letter text — no subject line, no meta-commentary. Keep it under 400 words."
+    )
+    user_msg = (
+        f"RESUME:\n{resume_text[:MAX_RESUME_CHARS]}\n\n"
+        f"JOB DESCRIPTION:\n{jd_text[:MAX_JD_CHARS]}"
+    )
+    with st.spinner("Writing cover letter…"):
+        try:
+            resp = _groq_client().chat.completions.create(
+                model=_MODEL,
+                messages=[
+                    {"role": "system", "content": system_msg},
+                    {"role": "user", "content": user_msg},
+                ],
+            )
+            letter = resp.choices[0].message.content
+            st.markdown("### Your Cover Letter")
+            st.markdown(letter)
+            st.download_button(
+                "Download Cover Letter (.txt)",
+                data=letter,
+                file_name="cover_letter.txt",
+                mime="text/plain",
+            )
+        except Exception as exc:
+            st.error(f"Error: {exc}")
+{% endverbatim %}

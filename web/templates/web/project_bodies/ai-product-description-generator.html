@@ -1,0 +1,320 @@
+{% load static %}
+<div class="glass space-y-10 rounded-3xl p-5 sm:p-8">
+  <div class="space-y-4">
+    <p class="text-sm leading-relaxed text-slate-200/85 sm:text-base">
+      <strong class="text-slate-100">AI Product Description Generator</strong> is a beginner-friendly project that
+      transforms simple product inputs into high-quality marketing copy within seconds. By combining structured user data
+      with targeted prompt engineering, the app generates multiple types of content&mdash;including full product
+      descriptions, catchy taglines, social media blurbs, and benefit-driven bullet points.
+    </p>
+    <p class="text-sm leading-relaxed text-slate-200/85 sm:text-base">
+      Built using <strong class="text-slate-100">Python</strong>, <strong class="text-slate-100">Streamlit</strong>, and
+      the <strong class="text-slate-100">Groq API</strong>, this project demonstrates how to integrate large language
+      models into real-world applications. It highlights a practical and reusable pattern: collecting structured input
+      through a UI, dynamically shaping prompts based on user intent, and producing format-specific outputs ready for
+      immediate use.
+    </p>
+    <p class="text-sm leading-relaxed text-slate-200/85 sm:text-base">
+      Whether you&rsquo;re building e-commerce listings, social media posts, or product pages, this tool streamlines the
+      copywriting process and showcases how AI can enhance productivity for developers and marketers alike.
+    </p>
+    <p class="text-sm leading-relaxed text-slate-200/85 sm:text-base">
+      <strong class="text-slate-100">Purpose:</strong> practice writing format-specific system prompts and injecting
+      structured user data into an LLM call—a pattern you&rsquo;ll reuse in almost every real AI product.
+    </p>
+    <p class="text-sm leading-relaxed text-slate-200/85 sm:text-base">
+      <strong class="text-slate-100">Typical use:</strong> drop in your product details, hit generate, copy the short
+      blurb into an Instagram caption and the bullet list into an Amazon listing, then download the full description for
+      your website.
+    </p>
+    <p class="text-sm font-medium text-slate-200/90">Key features:</p>
+    <ul class="list-inside list-disc space-y-2 text-sm leading-relaxed text-slate-200/85 sm:text-base">
+      <li>Five tone options (Professional, Casual &amp; Friendly, Luxury, Playful, Technical).</li>
+      <li>Four output formats selectable via a radio button—including &ldquo;All three&rdquo;.</li>
+      <li>Format-specific system message selected at runtime so the model always gets the right instruction.</li>
+      <li>Download button that saves the output as a named <code class="text-sky-200/90">.txt</code> file.</li>
+      <li>Input validation that blocks the API call when product name or features are missing.</li>
+    </ul>
+    <p class="text-sm leading-relaxed text-slate-200/85 sm:text-base">
+      <strong class="text-slate-100">Quick example:</strong> enter &ldquo;EcoBrew Pro&rdquo; with features like
+      &ldquo;stainless steel filter&rdquo; and &ldquo;built-in scale&rdquo;, choose Luxury tone and &ldquo;All
+      three&rdquo;, and get a description, a blurb, and a bullet list in one shot.
+    </p>
+  </div>
+
+  <div class="space-y-3">
+    <h2 class="text-lg font-semibold tracking-tight text-white">Overall flow</h2>
+    <pre
+      class="overflow-x-auto rounded-2xl border border-white/10 bg-slate-950/60 p-4 text-sm leading-relaxed text-slate-200/90 sm:text-base"
+    ><code class="font-mono whitespace-pre-wrap">User fills in product name, category, features, tone, format
+      ↓
+Clicks "Generate Descriptions"
+      ↓
+Input validation (name + features required)
+      ↓
+product_details string assembled from form values
+      ↓
+Format-specific system message selected from _FORMAT_INSTRUCTIONS dict
+      ↓
+Groq chat completion (llama-3.3-70b-versatile)
+      ↓
+Generated copy shown with st.markdown()
+      ↓
+Download button → saves as {product_name}_descriptions.txt</code></pre>
+  </div>
+
+  <div class="space-y-4">
+    <h2 class="text-lg font-semibold tracking-tight text-white">Demo</h2>
+    <div
+      class="mx-auto max-w-3xl overflow-hidden rounded-2xl border border-white/10 bg-black shadow-lg shadow-black/40"
+    >
+      <video
+        class="block w-full"
+        controls
+        playsinline
+        preload="metadata"
+        aria-label="AI product description generator demo"
+      >
+        <source src="{% static 'web/AiProductDescriptionGenerator.webm' %}" type="video/webm" />
+        <p class="p-4 text-sm text-slate-400">Your browser does not support embedded WebM video.</p>
+      </video>
+    </div>
+  </div>
+
+  <hr class="border-0 border-t border-white/10" />
+
+  <div class="space-y-4">
+    <h2 class="text-lg font-semibold tracking-tight text-white">Step-by-Step Implementation</h2>
+    <ol class="list-decimal list-outside space-y-5 pl-6 text-sm leading-relaxed text-slate-200/85 sm:text-base">
+      <li>
+        <span class="font-medium text-slate-100">Set up the project</span>
+        <ul class="mt-2 list-disc space-y-1.5 pl-5">
+          <li>Install Python 3.10+</li>
+          <li>Create a folder and a virtual environment</li>
+        </ul>
+      </li>
+      <li>
+        <span class="font-medium text-slate-100">Install dependencies</span>
+        <ul class="mt-2 list-disc space-y-1.5 pl-5">
+          <li>
+            <code class="text-sky-200/90">streamlit</code>, <code class="text-sky-200/90">groq</code>,
+            <code class="text-sky-200/90">httpx</code>, <code class="text-sky-200/90">truststore</code>—this is the
+            lightest dependency set of the three projects.
+          </li>
+        </ul>
+      </li>
+      <li>
+        <span class="font-medium text-slate-100">Store your API key</span>
+        <ul class="mt-2 list-disc space-y-1.5 pl-5">
+          <li>
+            Put <code class="text-sky-200/90">GROQ_API_KEY</code> in
+            <code class="text-sky-200/90">.streamlit/secrets.toml</code>
+          </li>
+        </ul>
+      </li>
+      <li>
+        <span class="font-medium text-slate-100">Build the form</span>
+        <ul class="mt-2 list-disc space-y-1.5 pl-5">
+          <li>
+            Two <code class="text-sky-200/90">st.columns(2)</code> rows for product name / category and target audience
+            / tone
+          </li>
+          <li>
+            <code class="text-sky-200/90">st.text_area</code> for multi-line features (one per line)
+          </li>
+          <li>
+            Optional price and USP fields in a second column pair
+          </li>
+          <li>
+            <code class="text-sky-200/90">st.radio</code> for output format (horizontal)
+          </li>
+        </ul>
+      </li>
+      <li>
+        <span class="font-medium text-slate-100">Assemble the prompt</span>
+        <ul class="mt-2 list-disc space-y-1.5 pl-5">
+          <li>
+            Concatenate all non-empty fields into a <code class="text-sky-200/90">product_details</code> string using
+            <code class="text-sky-200/90">filter(None, [...])</code> to skip blank optional fields
+          </li>
+          <li>
+            Select the format-specific instruction from <code class="text-sky-200/90">_FORMAT_INSTRUCTIONS</code> and
+            inject it into the system message
+          </li>
+          <li>
+            Instruct the model to output only the copy—no preamble—to keep the result paste-ready
+          </li>
+        </ul>
+      </li>
+      <li>
+        <span class="font-medium text-slate-100">Call Groq and display</span>
+        <ul class="mt-2 list-disc space-y-1.5 pl-5">
+          <li>
+            <code class="text-sky-200/90">client.chat.completions.create</code> with system + user messages
+          </li>
+          <li>
+            Render with <code class="text-sky-200/90">st.markdown()</code> so headings and bullets in the &ldquo;All
+            three&rdquo; output format correctly
+          </li>
+          <li>
+            <code class="text-sky-200/90">st.download_button</code> names the file using the slugified product name
+          </li>
+        </ul>
+      </li>
+      <li>
+        <span class="font-medium text-slate-100">Validation and error handling</span>
+        <ul class="mt-2 list-disc space-y-1.5 pl-5">
+          <li>Warn separately when product name or features are missing</li>
+          <li>Wrap the API call in <code class="text-sky-200/90">try</code>/<code class="text-sky-200/90">except</code></li>
+        </ul>
+      </li>
+    </ol>
+  </div>
+
+  <hr class="border-0 border-t border-white/10" />
+
+  <div class="space-y-4">
+    <h2 class="text-lg font-semibold tracking-tight text-white">Code Implementation</h2>
+    {% include "web/partials/code_block_frame.html" with language="python" code_template="web/code/ai_product_description_app.html" pre_class="ds-codeblock-pre code-block m-0 max-h-[min(70vh,36rem)] overflow-x-auto overflow-y-auto p-4 text-[0.8125rem] leading-[1.55] sm:text-sm" only %}
+    <div
+      class="rounded-xl border border-white/10 bg-slate-950/45 px-4 py-3 text-sm leading-relaxed text-slate-200/90"
+    >
+      <p>
+        <span class="font-semibold text-slate-100">Complete code</span>
+        <span class="mx-2 text-slate-500">—</span>
+        <a
+          href="{{ project.repoUrl }}"
+          class="font-medium text-sky-200/90 underline-offset-2 hover:text-white hover:underline"
+          target="_blank"
+          rel="noreferrer"
+          >Project link (GitHub)</a
+        >
+      </p>
+    </div>
+  </div>
+
+  <hr class="border-0 border-t border-white/10" />
+
+  <div class="space-y-5">
+    <h2 class="text-lg font-semibold tracking-tight text-white">📖 How the Code Works (Step-by-Step)</h2>
+    <hr class="border-0 border-t border-white/10" />
+
+    <section class="space-y-3">
+      <h3 class="text-base font-semibold tracking-tight text-white">1. Constants at the top</h3>
+      <ul class="list-disc space-y-1.5 pl-5 text-sm leading-relaxed text-slate-200/85 sm:text-base">
+        <li>
+          <code class="text-sky-200/90">_TONES</code>, <code class="text-sky-200/90">_CATEGORIES</code>, and
+          <code class="text-sky-200/90">_FORMATS</code> drive the <code class="text-sky-200/90">st.selectbox</code> and
+          <code class="text-sky-200/90">st.radio</code> widgets—adding a new tone means editing one list, not the UI
+          logic.
+        </li>
+        <li>
+          <code class="text-sky-200/90">_FORMAT_INSTRUCTIONS</code> maps each format label to the precise instruction
+          injected into the system message, keeping prompt logic co-located with the format definitions.
+        </li>
+      </ul>
+    </section>
+
+    <hr class="border-0 border-t border-white/10" />
+
+    <section class="space-y-3">
+      <h3 class="text-base font-semibold tracking-tight text-white">2. Cached Groq client</h3>
+      <ul class="list-disc space-y-1.5 pl-5 text-sm leading-relaxed text-slate-200/85 sm:text-base">
+        <li>
+          <code class="text-sky-200/90">@st.cache_resource</code> ensures the
+          <code class="text-sky-200/90">groq.Groq</code> object and its HTTP client are created once per session.
+          Streamlit reruns the script on every button click; without caching this creates a new connection pool each time.
+        </li>
+      </ul>
+    </section>
+
+    <hr class="border-0 border-t border-white/10" />
+
+    <section class="space-y-3">
+      <h3 class="text-base font-semibold tracking-tight text-white">3. Form and two-column layout</h3>
+      <ul class="list-disc space-y-1.5 pl-5 text-sm leading-relaxed text-slate-200/85 sm:text-base">
+        <li>
+          Two <code class="text-sky-200/90">st.columns(2)</code> rows let related pairs (name/category,
+          audience/tone, price/USP) sit side by side without a sidebar.
+        </li>
+        <li>
+          <code class="text-sky-200/90">st.radio(..., horizontal=True)</code> keeps the four format choices compact on
+          one line instead of stacking them vertically.
+        </li>
+      </ul>
+    </section>
+
+    <hr class="border-0 border-t border-white/10" />
+
+    <section class="space-y-3">
+      <h3 class="text-base font-semibold tracking-tight text-white">4. Prompt assembly</h3>
+      <ul class="list-disc space-y-1.5 pl-5 text-sm leading-relaxed text-slate-200/85 sm:text-base">
+        <li>
+          <code class="text-sky-200/90">filter(None, [...])</code> removes falsy entries (empty price or USP strings)
+          before joining, so the model never sees &ldquo;Price point: &rdquo; with nothing after it.
+        </li>
+        <li>
+          The format-specific instruction is interpolated into the system message with an f-string; the tone phrase
+          appears in both the user data and the system instruction so the model receives the constraint twice.
+        </li>
+      </ul>
+    </section>
+
+    <hr class="border-0 border-t border-white/10" />
+
+    <section class="space-y-3">
+      <h3 class="text-base font-semibold tracking-tight text-white">5. Output and download</h3>
+      <ul class="list-disc space-y-1.5 pl-5 text-sm leading-relaxed text-slate-200/85 sm:text-base">
+        <li>
+          <code class="text-sky-200/90">st.markdown(result)</code> renders the model&rsquo;s markdown headings (used by
+          the &ldquo;All three&rdquo; format) without any post-processing.
+        </li>
+        <li>
+          The download filename is built by lower-casing and replacing spaces in the product name—
+          <code class="text-sky-200/90">product_name.strip().lower().replace(" ", "_")</code>—so it is always a valid
+          file name.
+        </li>
+      </ul>
+    </section>
+
+    <hr class="border-0 border-t border-white/10" />
+
+    <section class="space-y-3">
+      <h3 class="text-base font-semibold tracking-tight text-white">6. Validation and errors</h3>
+      <ul class="list-disc space-y-1.5 pl-5 text-sm leading-relaxed text-slate-200/85 sm:text-base">
+        <li>
+          Two separate <code class="text-sky-200/90">st.warning</code> guards run before the API call—one for a missing
+          name, one for missing features—so the message is specific rather than generic.
+        </li>
+        <li>
+          The API call is wrapped in <code class="text-sky-200/90">try</code>/<code class="text-sky-200/90">except</code>;
+          errors display via <code class="text-sky-200/90">st.error()</code> without crashing the app.
+        </li>
+      </ul>
+    </section>
+  </div>
+
+  <nav class="border-t border-white/10 pt-6" aria-label="Related links">
+    <p class="text-sm font-medium text-slate-200/90">Useful links</p>
+    <ul class="mt-2 space-y-2 text-sm">
+      <li>
+        <a
+          class="font-medium text-sky-200/90 underline-offset-2 hover:text-white hover:underline"
+          href="https://docs.streamlit.io"
+          target="_blank"
+          rel="noopener noreferrer"
+          >Streamlit docs</a
+        >
+      </li>
+      <li>
+        <a
+          class="font-medium text-sky-200/90 underline-offset-2 hover:text-white hover:underline"
+          href="https://console.groq.com/docs/overview"
+          target="_blank"
+          rel="noopener noreferrer"
+          >Groq API docs</a
+        >
+      </li>
+    </ul>
+  </nav>
+</div>

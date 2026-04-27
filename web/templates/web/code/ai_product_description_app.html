@@ -1,0 +1,140 @@
+{% verbatim %}
+# AI Product Description Generator — Streamlit + Groq
+# Save as app.py, add GROQ_API_KEY to .streamlit/secrets.toml, then: streamlit run app.py
+
+import ssl
+
+import httpx
+import streamlit as st
+import truststore
+
+st.set_page_config(page_title="AI Product Description Generator", layout="centered")
+st.title("AI Product Description Generator")
+st.caption("Fill in your product details and get compelling marketing copy in seconds.")
+
+_ssl_ctx = truststore.SSLContext(ssl.PROTOCOL_TLS_CLIENT)
+
+_CHAT_MODEL = "llama-3.3-70b-versatile"
+
+_TONES = ["Professional", "Casual & Friendly", "Luxury", "Playful", "Technical"]
+_CATEGORIES = [
+    "Electronics", "Fashion", "Home & Kitchen", "Beauty & Personal Care",
+    "Sports & Outdoors", "Food & Beverage", "Software / App", "Other",
+]
+_FORMATS = [
+    "Full description + tagline",
+    "Short blurb (2-3 sentences)",
+    "Bullet-point feature highlights",
+    "All three",
+]
+
+_FORMAT_INSTRUCTIONS = {
+    "Full description + tagline": (
+        "Write a full product description of 3-4 sentences followed by a punchy tagline "
+        "on its own line starting with 'Tagline:'."
+    ),
+    "Short blurb (2-3 sentences)": (
+        "Write a 2-3 sentence product blurb suitable for an e-commerce listing or social media post."
+    ),
+    "Bullet-point feature highlights": (
+        "Write 5-7 bullet-point feature highlights for an e-commerce product page. "
+        "Lead each bullet with a customer benefit, not just the feature name."
+    ),
+    "All three": (
+        "Provide three sections with these headings:\n"
+        "**Full Description** — 3-4 sentences + a tagline starting with 'Tagline:'.\n"
+        "**Short Blurb** — 2-3 sentences for social media.\n"
+        "**Feature Highlights** — 5-7 benefit-led bullet points."
+    ),
+}
+
+
+@st.cache_resource
+def _groq_client():
+    import groq
+
+    return groq.Groq(
+        api_key=st.secrets["GROQ_API_KEY"],
+        http_client=httpx.Client(timeout=120.0, verify=_ssl_ctx),
+    )
+
+
+col1, col2 = st.columns(2)
+with col1:
+    product_name = st.text_input("Product name *", placeholder="EcoBrew Pro")
+    category = st.selectbox("Category", _CATEGORIES)
+with col2:
+    target_audience = st.text_input("Target audience", placeholder="Eco-conscious coffee lovers")
+    tone = st.selectbox("Tone", _TONES)
+
+features = st.text_area(
+    "Key features — one per line *",
+    height=130,
+    placeholder=(
+        "Stainless steel filter — no paper waste\n"
+        "Built-in scale for precise brewing\n"
+        "Compact, travel-friendly design"
+    ),
+)
+
+col3, col4 = st.columns(2)
+with col3:
+    price_point = st.text_input("Price point", placeholder="$49.99")
+with col4:
+    usp = st.text_input(
+        "Unique selling point",
+        placeholder="Only brewer with automatic dose measurement",
+    )
+
+output_format = st.radio("Output format", _FORMATS, horizontal=True)
+
+if st.button("Generate Descriptions", type="primary"):
+    if not product_name.strip():
+        st.warning("Please enter a product name.")
+    elif not features.strip():
+        st.warning("Please add at least one feature.")
+    else:
+        product_details = "\n".join(
+            filter(
+                None,
+                [
+                    f"Product: {product_name}",
+                    f"Category: {category}",
+                    f"Target audience: {target_audience or 'general consumers'}",
+                    f"Key features:\n{features}",
+                    f"Price point: {price_point}" if price_point else "",
+                    f"Unique selling point: {usp}" if usp else "",
+                    f"Tone: {tone}",
+                ],
+            )
+        )
+        system_msg = (
+            "You are a professional copywriter specializing in product marketing. "
+            f"{_FORMAT_INSTRUCTIONS[output_format]} "
+            "Match the specified tone exactly. Use specific, vivid language. "
+            "Avoid generic filler phrases like 'game-changing' or 'revolutionary'. "
+            "Output only the copy — no preamble or meta commentary."
+        )
+        with st.spinner("Crafting your product copy…"):
+            try:
+                client = _groq_client()
+                resp = client.chat.completions.create(
+                    model=_CHAT_MODEL,
+                    messages=[
+                        {"role": "system", "content": system_msg},
+                        {"role": "user", "content": product_details},
+                    ],
+                )
+                result = (resp.choices[0].message.content or "").strip()
+                st.markdown("### Generated Copy")
+                st.markdown(result)
+                filename = product_name.strip().lower().replace(" ", "_")
+                st.download_button(
+                    "Download as .txt",
+                    data=result,
+                    file_name=f"{filename}_descriptions.txt",
+                    mime="text/plain",
+                )
+            except Exception as err:
+                st.error(f"Something went wrong: {err}")
+{% endverbatim %}

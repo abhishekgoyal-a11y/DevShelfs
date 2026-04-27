@@ -1,0 +1,129 @@
+{% verbatim %}
+# Website RAG Chatbot — Streamlit + LangChain + Chroma + Groq
+# Save as app.py, add GROQ_API_KEY to .streamlit/secrets.toml, then: streamlit run app.py
+
+import ssl
+
+import httpx
+import streamlit as st
+import truststore
+
+MAX_SCRAPED_CHARS = 50_000
+
+st.set_page_config(page_title="Website RAG Chatbot", layout="centered")
+st.title("Website RAG Chatbot")
+st.caption(
+    "Enter any public URL, scrape its content, and ask questions about it "
+    "using Retrieval-Augmented Generation."
+)
+
+_ssl_ctx = truststore.SSLContext(ssl.PROTOCOL_TLS_CLIENT)
+
+
+def _scrape(url: str) -> str:
+    import requests
+    from bs4 import BeautifulSoup
+
+    headers = {"User-Agent": "Mozilla/5.0 (compatible; DevShelfRAGBot/1.0)"}
+    resp = requests.get(url, headers=headers, timeout=15)
+    resp.raise_for_status()
+    soup = BeautifulSoup(resp.text, "html.parser")
+    for tag in soup(["script", "style", "nav", "footer", "header", "aside", "noscript", "form"]):
+        tag.decompose()
+    text = soup.get_text(separator="\n")
+    lines = [line.strip() for line in text.splitlines() if line.strip()]
+    return "\n".join(lines)[:MAX_SCRAPED_CHARS]
+
+
+def _build_index(text: str):
+    from langchain_community.vectorstores import Chroma
+    from langchain_core.documents import Document
+    from langchain_huggingface import HuggingFaceEmbeddings
+    from langchain_text_splitters import RecursiveCharacterTextSplitter
+
+    splitter = RecursiveCharacterTextSplitter(chunk_size=500, chunk_overlap=80)
+    docs = splitter.split_documents([Document(page_content=text)])
+    embeddings = HuggingFaceEmbeddings(model_name="sentence-transformers/all-MiniLM-L6-v2")
+    return Chroma.from_documents(docs, embeddings)
+
+
+def _ask(vector_store, question: str) -> dict:
+    from langchain.chains import RetrievalQA
+    from langchain_groq import ChatGroq
+
+    llm = ChatGroq(
+        api_key=st.secrets["GROQ_API_KEY"],
+        model_name="llama-3.3-70b-versatile",
+        http_client=httpx.Client(timeout=120.0, verify=_ssl_ctx),
+    )
+    retriever = vector_store.as_retriever(search_kwargs={"k": 4})
+    qa = RetrievalQA.from_chain_type(
+        llm=llm,
+        chain_type="stuff",
+        retriever=retriever,
+        return_source_documents=True,
+    )
+    return qa.invoke({"query": question})
+
+
+url_input = st.text_input("Website URL", placeholder="https://example.com/page")
+
+if st.button("Scrape & Build Index", type="primary"):
+    if not url_input.strip():
+        st.warning("Please enter a URL first.")
+    else:
+        with st.spinner("Scraping and indexing — first run downloads embedding model weights…"):
+            try:
+                raw_text = _scrape(url_input.strip())
+                if not raw_text.strip():
+                    st.error("Could not extract any text from that URL. Try a different page.")
+                else:
+                    st.session_state["vs"] = _build_index(raw_text)
+                    st.session_state["scraped_url"] = url_input.strip()
+                    st.session_state["scraped_chars"] = len(raw_text)
+                    st.session_state.pop("history", None)
+                    st.success(
+                        f"Indexed {len(raw_text):,} characters from {url_input.strip()}"
+                    )
+            except Exception as err:
+                st.error(f"Scraping failed: {err}")
+
+if "vs" in st.session_state:
+    st.markdown("---")
+    st.markdown(
+        f"**Ready.** Ask anything about `{st.session_state['scraped_url']}` "
+        f"({st.session_state['scraped_chars']:,} chars indexed)."
+    )
+
+    question = st.text_input("Your question", placeholder="What is this page about?")
+
+    if st.button("Ask", type="primary"):
+        if not question.strip():
+            st.warning("Please type a question.")
+        else:
+            with st.spinner("Retrieving and generating answer…"):
+                try:
+                    result = _ask(st.session_state["vs"], question.strip())
+                    answer = (result.get("result") or "").strip()
+                    sources = result.get("source_documents", [])
+                    st.session_state.setdefault("history", []).append(
+                        {"q": question.strip(), "a": answer}
+                    )
+                    st.markdown("**Answer:**")
+                    st.markdown(answer)
+                    if sources:
+                        with st.expander("Source chunks"):
+                            for i, doc in enumerate(sources, 1):
+                                st.caption(f"Chunk {i}")
+                                st.text(doc.page_content[:400])
+                except Exception as err:
+                    st.error(f"Something went wrong: {err}")
+
+    history = st.session_state.get("history", [])
+    if len(history) > 1:
+        with st.expander("Earlier Q&A"):
+            for turn in reversed(history[:-1]):
+                st.markdown(f"**Q:** {turn['q']}")
+                st.markdown(f"**A:** {turn['a']}")
+                st.divider()
+{% endverbatim %}

@@ -1,0 +1,332 @@
+{% load static %}
+<div class="glass space-y-10 rounded-3xl p-5 sm:p-8">
+  <div class="space-y-4">
+    <p class="text-sm leading-relaxed text-slate-200/85 sm:text-base">
+      <strong class="text-slate-100">Personal Study Tutor</strong> is an intermediate-level project that turns your
+      own notes and PDFs into an interactive teaching assistant. Upload study material, build a local knowledge index,
+      then ask questions directly from the content or generate a multiple-choice quiz on any topic inside your notes.
+    </p>
+    <p class="text-sm leading-relaxed text-slate-200/85 sm:text-base">
+      The project uses a full <strong class="text-slate-100">RAG (Retrieval-Augmented Generation)</strong> pipeline:
+      documents are split into overlapping chunks, embedded locally with
+      <strong class="text-slate-100">Hugging Face sentence-transformers</strong>, stored in a
+      <strong class="text-slate-100">Chroma</strong> vector database, and queried through a
+      <strong class="text-slate-100">LangChain</strong> retrieval chain powered by
+      <strong class="text-slate-100">Groq</strong>. No external embedding API is needed.
+    </p>
+    <p class="text-sm leading-relaxed text-slate-200/85 sm:text-base">
+      The quiz feature retrieves the most relevant chunks for a topic and instructs the model to write a
+      multiple-choice quiz with correct answers and brief explanations—turning passive reading into active recall
+      in a single click.
+    </p>
+    <p class="text-sm leading-relaxed text-slate-200/85 sm:text-base">
+      <strong class="text-slate-100">Purpose:</strong> combine RAG-based retrieval with quiz generation to replace
+      rereading entire chapters before an exam.
+    </p>
+    <p class="text-sm leading-relaxed text-slate-200/85 sm:text-base">
+      <strong class="text-slate-100">Typical use:</strong> upload a chapter PDF, click &ldquo;Build Index,&rdquo;
+      ask a clarifying question, then generate a five-question quiz on the section you found most difficult.
+    </p>
+    <p class="text-sm font-medium text-slate-200/90">Key ideas you will touch:</p>
+    <ul class="list-inside list-disc space-y-2 text-sm leading-relaxed text-slate-200/85 sm:text-base">
+      <li>
+        <strong class="text-slate-100">PDF ingestion</strong> — <code class="text-sky-200/90">pypdf</code> reads
+        multi-page files without any cloud service.
+      </li>
+      <li>
+        <strong class="text-slate-100">Chunk &amp; embed</strong> — overlapping windows via
+        <code class="text-sky-200/90">RecursiveCharacterTextSplitter</code>, embedded on-device with
+        <code class="text-sky-200/90">sentence-transformers/all-MiniLM-L6-v2</code>.
+      </li>
+      <li>
+        <strong class="text-slate-100">RAG Q&amp;A</strong> — <code class="text-sky-200/90">RetrievalQA</code> with
+        <code class="text-sky-200/90">chain_type=&quot;stuff&quot;</code> and source-document display.
+      </li>
+      <li>
+        <strong class="text-slate-100">Quiz generation</strong> — topic-focused retrieval feeds a structured prompt
+        that produces numbered MCQ questions with answers and explanations.
+      </li>
+    </ul>
+  </div>
+
+  <div class="space-y-3">
+    <h2 class="text-lg font-semibold tracking-tight text-white">Overall flow</h2>
+    <pre
+      class="overflow-x-auto rounded-2xl border border-white/10 bg-slate-950/60 p-4 text-sm leading-relaxed text-slate-200/90 sm:text-base"
+    ><code class="font-mono whitespace-pre-wrap">User uploads PDFs / TXT or pastes notes
+      ↓
+Clicks "Build / Refresh Index"
+      ↓
+Files decoded → text concatenated → chunked → embedded (local) → stored in Chroma
+      ↓
+Tab 1 — Ask a Question:
+  User types question → retriever finds top-4 chunks → Groq answers grounded in chunks
+      ↓
+Tab 2 — Generate Quiz:
+  User picks topic + count → retriever fetches relevant chunks
+  → Groq writes MCQ with answers and explanations</code></pre>
+  </div>
+
+  <div class="space-y-4">
+    <h2 class="text-lg font-semibold tracking-tight text-white">Demo</h2>
+    <div
+      class="mx-auto max-w-3xl overflow-hidden rounded-2xl border border-white/10 bg-black shadow-lg shadow-black/40"
+    >
+      <video
+        class="block w-full"
+        controls
+        playsinline
+        preload="metadata"
+        aria-label="Personal study tutor demo"
+      >
+        <source src="{% static 'web/PersonalStudyTutor.webm' %}" type="video/webm" />
+        <p class="p-4 text-sm text-slate-400">Your browser does not support embedded WebM video.</p>
+      </video>
+    </div>
+  </div>
+
+  <hr class="border-0 border-t border-white/10" />
+
+  <div class="space-y-4">
+    <h2 class="text-lg font-semibold tracking-tight text-white">Step-by-Step Implementation</h2>
+    <ol class="list-decimal list-outside space-y-5 pl-6 text-sm leading-relaxed text-slate-200/85 sm:text-base">
+      <li>
+        <span class="font-medium text-slate-100">Set up the project</span>
+        <ul class="mt-2 list-disc space-y-1.5 pl-5">
+          <li>Install Python 3.10+</li>
+          <li>Create a folder and a virtual environment</li>
+        </ul>
+      </li>
+      <li>
+        <span class="font-medium text-slate-100">Install dependencies</span>
+        <ul class="mt-2 list-disc space-y-1.5 pl-5">
+          <li>
+            <code class="text-sky-200/90">streamlit</code>, <code class="text-sky-200/90">groq</code>,
+            <code class="text-sky-200/90">httpx</code>, <code class="text-sky-200/90">truststore</code>,
+            <code class="text-sky-200/90">pypdf</code>, <code class="text-sky-200/90">langchain</code>,
+            <code class="text-sky-200/90">langchain-community</code>,
+            <code class="text-sky-200/90">langchain-groq</code>,
+            <code class="text-sky-200/90">langchain-huggingface</code>,
+            <code class="text-sky-200/90">langchain-text-splitters</code>,
+            <code class="text-sky-200/90">chromadb</code>,
+            <code class="text-sky-200/90">sentence-transformers</code>
+          </li>
+        </ul>
+      </li>
+      <li>
+        <span class="font-medium text-slate-100">Store your API key</span>
+        <ul class="mt-2 list-disc space-y-1.5 pl-5">
+          <li>
+            Add <code class="text-sky-200/90">GROQ_API_KEY</code> to
+            <code class="text-sky-200/90">.streamlit/secrets.toml</code>
+          </li>
+        </ul>
+      </li>
+      <li>
+        <span class="font-medium text-slate-100">Build the sidebar UI</span>
+        <ul class="mt-2 list-disc space-y-1.5 pl-5">
+          <li>Multi-file uploader accepting PDF and TXT</li>
+          <li>Text area for pasted notes as a fallback</li>
+          <li>&ldquo;Build / Refresh Index&rdquo; button that triggers indexing</li>
+        </ul>
+      </li>
+      <li>
+        <span class="font-medium text-slate-100">Ingest and index</span>
+        <ul class="mt-2 list-disc space-y-1.5 pl-5">
+          <li>Read PDFs with <code class="text-sky-200/90">pypdf.PdfReader</code>; decode TXT as UTF-8</li>
+          <li>
+            Split combined text with <code class="text-sky-200/90">RecursiveCharacterTextSplitter</code>
+            (chunk_size=600, overlap=80)
+          </li>
+          <li>
+            Embed with <code class="text-sky-200/90">HuggingFaceEmbeddings</code>,
+            store in <code class="text-sky-200/90">Chroma.from_documents</code>
+          </li>
+          <li>
+            Save vectorstore in <code class="text-sky-200/90">st.session_state</code> to persist across reruns
+          </li>
+        </ul>
+      </li>
+      <li>
+        <span class="font-medium text-slate-100">Ask tab — RAG Q&amp;A</span>
+        <ul class="mt-2 list-disc space-y-1.5 pl-5">
+          <li>
+            Build <code class="text-sky-200/90">RetrievalQA</code> chain with
+            <code class="text-sky-200/90">ChatGroq</code> and <code class="text-sky-200/90">k=4</code>
+          </li>
+          <li>
+            Show retrieved source chunks in an expander so users can verify the answer
+          </li>
+        </ul>
+      </li>
+      <li>
+        <span class="font-medium text-slate-100">Quiz tab — MCQ generation</span>
+        <ul class="mt-2 list-disc space-y-1.5 pl-5">
+          <li>Optional topic focus triggers a semantic search to pull relevant chunks</li>
+          <li>Structured prompt specifies Q/A/B/C/D format with Answer and Explanation lines</li>
+        </ul>
+      </li>
+      <li>
+        <span class="font-medium text-slate-100">Guardrails</span>
+        <ul class="mt-2 list-disc space-y-1.5 pl-5">
+          <li>
+            Warn on empty input, missing index, or empty question; cap text at
+            <code class="text-sky-200/90">MAX_PDF_CHARS</code>
+          </li>
+          <li>Wrap all API and index calls in <code class="text-sky-200/90">try</code>/<code class="text-sky-200/90">except</code></li>
+        </ul>
+      </li>
+    </ol>
+  </div>
+
+  <hr class="border-0 border-t border-white/10" />
+
+  <div class="space-y-4">
+    <h2 class="text-lg font-semibold tracking-tight text-white">Code implementation</h2>
+    {% include "web/partials/code_block_frame.html" with language="python" code_template="web/code/personal_study_tutor_app.html" pre_class="ds-codeblock-pre code-block m-0 max-h-[min(70vh,36rem)] overflow-x-auto overflow-y-auto p-4 text-[0.8125rem] leading-[1.55] sm:text-sm" only %}
+    <div class="rounded-xl border border-white/10 bg-slate-950/45 px-4 py-3 text-sm leading-relaxed text-slate-200/90">
+      <p>
+        <span class="font-semibold text-slate-100">Complete code</span>
+        <span class="mx-2 text-slate-500">—</span>
+        <a
+          href="{{ project.repoUrl }}"
+          class="font-medium text-sky-200/90 underline-offset-2 hover:text-white hover:underline"
+          target="_blank"
+          rel="noreferrer"
+          >Project link (GitHub)</a
+        >
+      </p>
+    </div>
+  </div>
+
+  <hr class="border-0 border-t border-white/10" />
+
+  <div class="space-y-5">
+    <h2 class="text-lg font-semibold tracking-tight text-white">📖 How the Code Works (Step-by-Step)</h2>
+
+    <hr class="border-0 border-t border-white/10" />
+
+    <section class="space-y-3">
+      <h3 class="text-base font-semibold tracking-tight text-white">1. Sidebar and session state</h3>
+      <ul class="list-disc space-y-1.5 pl-5 text-sm leading-relaxed text-slate-200/85 sm:text-base">
+        <li>
+          The sidebar holds file upload, paste area, and the index button so the main panel stays clean.
+        </li>
+        <li>
+          <code class="text-sky-200/90">st.session_state.vectorstore</code> survives button clicks without rebuilding
+          unless the user explicitly presses &ldquo;Build / Refresh Index.&rdquo;
+        </li>
+      </ul>
+    </section>
+
+    <hr class="border-0 border-t border-white/10" />
+
+    <section class="space-y-3">
+      <h3 class="text-base font-semibold tracking-tight text-white">2. File ingestion</h3>
+      <ul class="list-disc space-y-1.5 pl-5 text-sm leading-relaxed text-slate-200/85 sm:text-base">
+        <li>
+          PDFs are wrapped in <code class="text-sky-200/90">io.BytesIO</code> so
+          <code class="text-sky-200/90">pypdf.PdfReader</code> treats uploaded bytes as a file handle.
+        </li>
+        <li>
+          TXT files are decoded with <code class="text-sky-200/90">errors=&quot;replace&quot;</code> to avoid
+          crashes on unusual encodings.
+        </li>
+        <li>All sources are concatenated and capped at <code class="text-sky-200/90">MAX_PDF_CHARS</code>.</li>
+      </ul>
+    </section>
+
+    <hr class="border-0 border-t border-white/10" />
+
+    <section class="space-y-3">
+      <h3 class="text-base font-semibold tracking-tight text-white">3. Chunking and embedding</h3>
+      <ul class="list-disc space-y-1.5 pl-5 text-sm leading-relaxed text-slate-200/85 sm:text-base">
+        <li>
+          <code class="text-sky-200/90">RecursiveCharacterTextSplitter</code> tries paragraph boundaries first,
+          then sentence, then character—preserving natural breaks.
+        </li>
+        <li>
+          <code class="text-sky-200/90">HuggingFaceEmbeddings</code> runs fully on-device;
+          the first build downloads model weights once then caches them.
+        </li>
+      </ul>
+    </section>
+
+    <hr class="border-0 border-t border-white/10" />
+
+    <section class="space-y-3">
+      <h3 class="text-base font-semibold tracking-tight text-white">4. RAG Q&amp;A chain</h3>
+      <ul class="list-disc space-y-1.5 pl-5 text-sm leading-relaxed text-slate-200/85 sm:text-base">
+        <li>
+          The retriever fetches top-4 chunks by cosine similarity to the question embedding.
+        </li>
+        <li>
+          <code class="text-sky-200/90">chain_type=&quot;stuff&quot;</code> concatenates all four chunks into a
+          single context block—simple and effective for short documents.
+        </li>
+        <li>
+          <code class="text-sky-200/90">return_source_documents=True</code> surfaces the evidence so you can
+          verify the answer in the expander.
+        </li>
+      </ul>
+    </section>
+
+    <hr class="border-0 border-t border-white/10" />
+
+    <section class="space-y-3">
+      <h3 class="text-base font-semibold tracking-tight text-white">5. Quiz generation</h3>
+      <ul class="list-disc space-y-1.5 pl-5 text-sm leading-relaxed text-slate-200/85 sm:text-base">
+        <li>
+          When a topic focus is provided, the retriever is called first so the quiz draws from the
+          most relevant parts of the material—not random chunks.
+        </li>
+        <li>
+          The system message specifies the exact output format (Q, A–D, Answer line, Explanation) so the
+          model cannot produce free-form text that breaks the layout.
+        </li>
+      </ul>
+    </section>
+  </div>
+
+  <nav class="border-t border-white/10 pt-6" aria-label="Related links">
+    <p class="text-sm font-medium text-slate-200/90">Useful links</p>
+    <ul class="mt-2 space-y-2 text-sm">
+      <li>
+        <a
+          class="font-medium text-sky-200/90 underline-offset-2 hover:text-white hover:underline"
+          href="https://docs.streamlit.io"
+          target="_blank"
+          rel="noopener noreferrer"
+          >Streamlit docs</a
+        >
+      </li>
+      <li>
+        <a
+          class="font-medium text-sky-200/90 underline-offset-2 hover:text-white hover:underline"
+          href="https://python.langchain.com/docs/tutorials/rag/"
+          target="_blank"
+          rel="noopener noreferrer"
+          >LangChain RAG tutorial</a
+        >
+      </li>
+      <li>
+        <a
+          class="font-medium text-sky-200/90 underline-offset-2 hover:text-white hover:underline"
+          href="https://pypdf.readthedocs.io/"
+          target="_blank"
+          rel="noopener noreferrer"
+          >pypdf docs</a
+        >
+      </li>
+      <li>
+        <a
+          class="font-medium text-sky-200/90 underline-offset-2 hover:text-white hover:underline"
+          href="https://console.groq.com/docs/overview"
+          target="_blank"
+          rel="noopener noreferrer"
+          >Groq API docs</a
+        >
+      </li>
+    </ul>
+  </nav>
+</div>

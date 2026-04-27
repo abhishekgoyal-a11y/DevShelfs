@@ -2,12 +2,22 @@
 <div class="glass space-y-10 rounded-3xl p-5 sm:p-8">
   <div class="space-y-4">
     <p class="text-sm leading-relaxed text-slate-200/85 sm:text-base">
-      This intermediate project is a small <strong class="text-slate-100">Streamlit</strong> app: you give it your own
-      notes (paste or a <code class="text-sky-200/90">.txt</code> file), split them into chunks, embed each chunk
-      <strong class="text-slate-100">locally</strong> with Hugging Face sentence-transformers (no embedding API key),
-      store vectors in <strong class="text-slate-100">Chroma</strong>, then answer questions with
-      <strong class="text-slate-100">Groq</strong> over LangChain—retrieve the top chunks and generate a reply grounded in
-      your notes (classic <strong class="text-slate-100">RAG</strong>).
+      <strong class="text-slate-100">Smart Q&amp;A Bot for Your Notes</strong> is an intermediate-level project that
+      allows users to turn their personal notes into an interactive question-answering system. Users can upload a file or
+      paste text, and the system processes it into a searchable knowledge base.
+    </p>
+    <p class="text-sm leading-relaxed text-slate-200/85 sm:text-base">
+      The notes are split into smaller overlapping chunks to preserve context, then converted into embeddings using local
+      <strong class="text-slate-100">Hugging Face</strong> sentence-transformers, removing the need for external
+      embedding APIs. These embeddings are stored in a <strong class="text-slate-100">Chroma</strong> vector database for
+      efficient retrieval.
+    </p>
+    <p class="text-sm leading-relaxed text-slate-200/85 sm:text-base">
+      When a question is asked, the system uses a Retrieval-Augmented Generation (<strong class="text-slate-100">RAG</strong>)
+      pipeline powered by <strong class="text-slate-100">LangChain</strong> to fetch the most relevant note sections
+      and generate accurate, context-grounded answers using <strong class="text-slate-100">Groq</strong>&rsquo;s language
+      model. This project demonstrates how personal data can be transformed into an intelligent, queryable assistant using
+      modern LLM architecture.
     </p>
     <p class="text-sm leading-relaxed text-slate-200/85 sm:text-base">
       <strong class="text-slate-100">Purpose:</strong> practice &ldquo;ask my notes&rdquo; without training your own

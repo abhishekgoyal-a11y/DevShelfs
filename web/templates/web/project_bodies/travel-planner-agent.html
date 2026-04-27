@@ -1,0 +1,240 @@
+{% load static %}
+<div class="glass space-y-10 rounded-3xl p-5 sm:p-8">
+  <div class="space-y-4">
+    <p class="text-sm leading-relaxed text-slate-200/85 sm:text-base">
+      <strong class="text-slate-100">Travel Planner Agent</strong> is a beginner-friendly project that generates
+      a complete, personalized travel itinerary from a single form. Enter your destination, budget per day,
+      travel style, interests, and any preferences to avoid — the agent returns a day-by-day plan with hotel
+      recommendations, food picks, transport options, packing tips, and money-saving advice.
+    </p>
+    <p class="text-sm leading-relaxed text-slate-200/85 sm:text-base">
+      Seven travel styles are available — from Budget Backpacker to Luxury to Digital Nomad — and each is
+      injected into the system prompt so the output adapts in vocabulary, accommodation tier, and activity
+      choices. A follow-up chat below the itinerary lets you refine any part of the plan or ask about visa
+      requirements, local customs, or alternative routes.
+    </p>
+    <p class="text-sm leading-relaxed text-slate-200/85 sm:text-base">
+      Built with <strong class="text-slate-100">Python</strong>, <strong class="text-slate-100">Streamlit</strong>,
+      and the <strong class="text-slate-100">Groq API</strong>, this project demonstrates form-to-prompt design
+      and lightweight chat augmentation of a generated document.
+    </p>
+    <p class="text-sm leading-relaxed text-slate-200/85 sm:text-base">
+      <strong class="text-slate-100">Purpose:</strong> practice translating structured form inputs into a
+      rich, multi-section prompt — a pattern used in every AI generation tool that takes user preferences.
+    </p>
+    <p class="text-sm leading-relaxed text-slate-200/85 sm:text-base">
+      <strong class="text-slate-100">Typical use:</strong> plan a 7-day Tokyo trip on a $120/day mid-range
+      budget with food and history interests, download the itinerary, then ask the chat &ldquo;Can you suggest
+      a day trip to Nikko?&rdquo;
+    </p>
+    <p class="text-sm font-medium text-slate-200/90">Key ideas you will touch:</p>
+    <ul class="list-inside list-disc space-y-2 text-sm leading-relaxed text-slate-200/85 sm:text-base">
+      <li>
+        <strong class="text-slate-100">st.form</strong> — groups all inputs and submits them as one batch,
+        preventing Streamlit from re-running on every keystroke.
+      </li>
+      <li>
+        <strong class="text-slate-100">Rich prompt assembly</strong> — destination, days, budget, style,
+        pace, interests, and special notes assembled into a structured user message.
+      </li>
+      <li>
+        <strong class="text-slate-100">Multi-section output format</strong> — system message specifies
+        nine output sections with consistent headings for predictable rendering.
+      </li>
+      <li>
+        <strong class="text-slate-100">Follow-up chat with context</strong> — the form values are summarized
+        as context for the chat system message so follow-up answers stay trip-specific.
+      </li>
+    </ul>
+  </div>
+
+  <div class="space-y-3">
+    <h2 class="text-lg font-semibold tracking-tight text-white">Overall flow</h2>
+    <pre
+      class="overflow-x-auto rounded-2xl border border-white/10 bg-slate-950/60 p-4 text-sm leading-relaxed text-slate-200/90 sm:text-base"
+    ><code class="font-mono whitespace-pre-wrap">User fills in form: destination, days, budget, style, interests, notes
+      ↓
+Clicks "Plan My Trip"
+      ↓
+Groq generates day-by-day itinerary + accommodation + food + transport + packing + tips
+      ↓
+Itinerary displayed + Download button
+      ↓
+Follow-up chat: user refines or asks questions
+  → trip context injected as summary in system message
+  → Groq answers with trip-specific details</code></pre>
+  </div>
+
+  <div class="space-y-4">
+    <h2 class="text-lg font-semibold tracking-tight text-white">Demo</h2>
+    <div
+      class="mx-auto max-w-3xl overflow-hidden rounded-2xl border border-white/10 bg-black shadow-lg shadow-black/40"
+    >
+      <video
+        class="block w-full"
+        controls
+        playsinline
+        preload="metadata"
+        aria-label="Travel planner agent demo"
+      >
+        <source src="{% static 'web/TravelPlannerAgent.webm' %}" type="video/webm" />
+        <p class="p-4 text-sm text-slate-400">Your browser does not support embedded WebM video.</p>
+      </video>
+    </div>
+  </div>
+
+  <hr class="border-0 border-t border-white/10" />
+
+  <div class="space-y-4">
+    <h2 class="text-lg font-semibold tracking-tight text-white">Step-by-Step Implementation</h2>
+    <ol class="list-decimal list-outside space-y-5 pl-6 text-sm leading-relaxed text-slate-200/85 sm:text-base">
+      <li>
+        <span class="font-medium text-slate-100">Set up the project</span>
+        <ul class="mt-2 list-disc space-y-1.5 pl-5">
+          <li>Install Python 3.10+, create folder and virtual environment</li>
+        </ul>
+      </li>
+      <li>
+        <span class="font-medium text-slate-100">Install dependencies</span>
+        <ul class="mt-2 list-disc space-y-1.5 pl-5">
+          <li>
+            <code class="text-sky-200/90">streamlit</code>, <code class="text-sky-200/90">groq</code>,
+            <code class="text-sky-200/90">httpx</code>, <code class="text-sky-200/90">truststore</code>
+          </li>
+        </ul>
+      </li>
+      <li>
+        <span class="font-medium text-slate-100">Build the form</span>
+        <ul class="mt-2 list-disc space-y-1.5 pl-5">
+          <li>Wrap all inputs in <code class="text-sky-200/90">st.form</code> to batch submit</li>
+          <li>
+            Two-column layout for paired fields: destination / origin, days / budget, style / pace
+          </li>
+          <li>
+            <code class="text-sky-200/90">st.multiselect</code> for interests, free-text for avoid and special notes
+          </li>
+        </ul>
+      </li>
+      <li>
+        <span class="font-medium text-slate-100">Write the itinerary prompt</span>
+        <ul class="mt-2 list-disc space-y-1.5 pl-5">
+          <li>
+            System message specifies 9 output sections: Trip Overview, Day-by-Day (with morning/afternoon/evening
+            and daily cost), Accommodation, Food Guide, Getting Around, Packing, Money Tips
+          </li>
+          <li>User message assembles all form values as labeled fields</li>
+        </ul>
+      </li>
+      <li>
+        <span class="font-medium text-slate-100">Add the follow-up chat</span>
+        <ul class="mt-2 list-disc space-y-1.5 pl-5">
+          <li>
+            Chat system message includes a one-line trip context summary built from form values so answers
+            stay relevant without repeating the full prompt
+          </li>
+        </ul>
+      </li>
+      <li>
+        <span class="font-medium text-slate-100">Add download button</span>
+        <ul class="mt-2 list-disc space-y-1.5 pl-5">
+          <li>
+            <code class="text-sky-200/90">st.download_button</code> with
+            <code class="text-sky-200/90">file_name</code> derived from the destination name
+          </li>
+        </ul>
+      </li>
+    </ol>
+  </div>
+
+  <hr class="border-0 border-t border-white/10" />
+
+  <div class="space-y-4">
+    <h2 class="text-lg font-semibold tracking-tight text-white">Code implementation</h2>
+    {% include "web/partials/code_block_frame.html" with language="python" code_template="web/code/travel_planner_agent_app.html" pre_class="ds-codeblock-pre code-block m-0 max-h-[min(70vh,36rem)] overflow-x-auto overflow-y-auto p-4 text-[0.8125rem] leading-[1.55] sm:text-sm" only %}
+    <div class="rounded-xl border border-white/10 bg-slate-950/45 px-4 py-3 text-sm leading-relaxed text-slate-200/90">
+      <p>
+        <span class="font-semibold text-slate-100">Complete code</span>
+        <span class="mx-2 text-slate-500">—</span>
+        <a
+          href="{{ project.repoUrl }}"
+          class="font-medium text-sky-200/90 underline-offset-2 hover:text-white hover:underline"
+          target="_blank"
+          rel="noreferrer"
+          >Project link (GitHub)</a
+        >
+      </p>
+    </div>
+  </div>
+
+  <hr class="border-0 border-t border-white/10" />
+
+  <div class="space-y-5">
+    <h2 class="text-lg font-semibold tracking-tight text-white">📖 How the Code Works (Step-by-Step)</h2>
+
+    <hr class="border-0 border-t border-white/10" />
+
+    <section class="space-y-3">
+      <h3 class="text-base font-semibold tracking-tight text-white">1. st.form prevents premature re-runs</h3>
+      <ul class="list-disc space-y-1.5 pl-5 text-sm leading-relaxed text-slate-200/85 sm:text-base">
+        <li>
+          Wrapping inputs in <code class="text-sky-200/90">st.form</code> means Streamlit only re-runs the
+          script when &ldquo;Plan My Trip&rdquo; is clicked, not on every keystroke — preventing accidental
+          API calls mid-typing.
+        </li>
+      </ul>
+    </section>
+
+    <hr class="border-0 border-t border-white/10" />
+
+    <section class="space-y-3">
+      <h3 class="text-base font-semibold tracking-tight text-white">2. Nine-section output format</h3>
+      <ul class="list-disc space-y-1.5 pl-5 text-sm leading-relaxed text-slate-200/85 sm:text-base">
+        <li>
+          Each section in the system message is prefixed with <code class="text-sky-200/90">## </code> so
+          <code class="text-sky-200/90">st.markdown()</code> renders them as consistent H2 headings across
+          different response lengths.
+        </li>
+        <li>
+          The daily cost line inside each day block gives the user a quick budget reality check without a
+          separate calculation.
+        </li>
+      </ul>
+    </section>
+
+    <hr class="border-0 border-t border-white/10" />
+
+    <section class="space-y-3">
+      <h3 class="text-base font-semibold tracking-tight text-white">3. Conditional prompt assembly</h3>
+      <ul class="list-disc space-y-1.5 pl-5 text-sm leading-relaxed text-slate-200/85 sm:text-base">
+        <li>
+          Origin, avoid, and special notes are appended to the user message only when non-empty —
+          keeping the prompt clean and the model from filling in those fields with assumptions.
+        </li>
+      </ul>
+    </section>
+  </div>
+
+  <nav class="border-t border-white/10 pt-6" aria-label="Related links">
+    <p class="text-sm font-medium text-slate-200/90">Useful links</p>
+    <ul class="mt-2 space-y-2 text-sm">
+      <li>
+        <a
+          class="font-medium text-sky-200/90 underline-offset-2 hover:text-white hover:underline"
+          href="https://docs.streamlit.io"
+          target="_blank"
+          rel="noopener noreferrer"
+          >Streamlit docs</a
+        >
+      </li>
+      <li>
+        <a
+          class="font-medium text-sky-200/90 underline-offset-2 hover:text-white hover:underline"
+          href="https://console.groq.com/docs/overview"
+          target="_blank"
+          rel="noopener noreferrer"
+          >Groq API docs</a
+        >
+      </li>
+    </ul>
+  </nav>
+</div>

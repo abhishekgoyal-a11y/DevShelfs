@@ -1,0 +1,172 @@
+{% verbatim %}
+# Travel Planner Agent — Streamlit + Groq
+# Save as app.py, add GROQ_API_KEY to .streamlit/secrets.toml, then: streamlit run app.py
+
+import ssl
+
+import httpx
+import streamlit as st
+import truststore
+
+st.set_page_config(page_title="Travel Planner Agent", layout="centered")
+st.title("Travel Planner Agent")
+st.caption(
+    "Tell the agent your destination, budget, and travel style — get a day-by-day "
+    "itinerary with hotel picks, food recommendations, and transport options."
+)
+
+_ssl_ctx = truststore.SSLContext(ssl.PROTOCOL_TLS_CLIENT)
+
+
+@st.cache_resource
+def _groq_client():
+    import groq
+
+    return groq.Groq(
+        api_key=st.secrets["GROQ_API_KEY"],
+        http_client=httpx.Client(verify=_ssl_ctx),
+    )
+
+
+_MODEL = "llama-3.3-70b-versatile"
+
+TRAVEL_STYLES = ["Budget Backpacker", "Mid-Range Comfort", "Luxury", "Adventure", "Cultural & Historical", "Family-Friendly", "Digital Nomad"]
+TRAVEL_PACES = ["Relaxed (1-2 activities/day)", "Moderate (3-4 activities/day)", "Packed (5+ activities/day)"]
+
+# ── Trip parameters ────────────────────────────────────────────────────────────
+with st.form("trip_form"):
+    col1, col2 = st.columns(2)
+    with col1:
+        destination = st.text_input("Destination", placeholder="e.g. Tokyo, Japan")
+        num_days = st.number_input("Number of days", min_value=1, max_value=30, value=7)
+        travel_style = st.selectbox("Travel style", TRAVEL_STYLES)
+    with col2:
+        origin = st.text_input("Traveling from", placeholder="e.g. New York, USA")
+        budget_per_day = st.number_input("Daily budget per person (USD)", min_value=0, value=100, step=10)
+        travel_pace = st.selectbox("Travel pace", TRAVEL_PACES)
+
+    num_travelers = st.number_input("Number of travelers", min_value=1, max_value=20, value=2)
+
+    interests = st.multiselect(
+        "Interests (select all that apply)",
+        ["Food & Dining", "History & Museums", "Nature & Outdoors", "Nightlife", "Shopping", "Art & Culture",
+         "Photography", "Sports & Activities", "Beaches", "Architecture", "Local Markets", "Spa & Wellness"],
+        default=["Food & Dining", "History & Museums"],
+    )
+
+    avoid = st.text_input(
+        "Anything to avoid?",
+        placeholder="e.g. touristy crowds, spicy food, long walks",
+    )
+    special_notes = st.text_area(
+        "Special requirements or notes",
+        placeholder="e.g. traveling with elderly parents, vegetarian diet, anniversary trip…",
+        height=80,
+    )
+
+    submitted = st.form_submit_button("Plan My Trip", type="primary", use_container_width=True)
+
+if submitted:
+    if not destination.strip():
+        st.warning("Please enter a destination.")
+        st.stop()
+
+    total_budget = budget_per_day * num_days * num_travelers
+
+    system_msg = (
+        "You are an expert travel planner with deep knowledge of destinations worldwide. "
+        "Create a detailed, practical travel itinerary. Be specific with real place names, "
+        "neighborhoods, and realistic time/cost estimates. "
+        "Do not invent fictional hotels or restaurants — use well-known, real options where possible.\n\n"
+        "Format your response as:\n\n"
+        "## Trip Overview\n[destination highlights, best time to visit context, key logistics]\n\n"
+        "## Day-by-Day Itinerary\n"
+        "### Day 1: [Theme]\n"
+        "**Morning:** ...\n**Afternoon:** ...\n**Evening:** ...\n"
+        "💰 Estimated daily cost: $X-Y per person\n\n"
+        "[Repeat for each day]\n\n"
+        "## Accommodation Recommendations\n[3 options matching the travel style and budget]\n\n"
+        "## Food Guide\n[must-try dishes + 3-5 restaurant/market recommendations]\n\n"
+        "## Getting Around\n[transport options, costs, tips]\n\n"
+        "## Packing Essentials\n[5-7 items specific to this destination/season]\n\n"
+        "## Money-Saving Tips\n[3-5 tips specific to this destination]"
+    )
+
+    user_msg = (
+        f"Plan a {num_days}-day trip to {destination}"
+        + (f" from {origin}" if origin.strip() else "")
+        + f".\n\n"
+        f"Travelers: {num_travelers}\n"
+        f"Daily budget: ${budget_per_day} per person (total budget: ${total_budget})\n"
+        f"Travel style: {travel_style}\n"
+        f"Pace: {travel_pace}\n"
+        f"Interests: {', '.join(interests) if interests else 'General sightseeing'}\n"
+    )
+    if avoid.strip():
+        user_msg += f"Avoid: {avoid}\n"
+    if special_notes.strip():
+        user_msg += f"Special notes: {special_notes}\n"
+
+    with st.spinner(f"Planning your {num_days}-day trip to {destination}…"):
+        try:
+            resp = _groq_client().chat.completions.create(
+                model=_MODEL,
+                messages=[
+                    {"role": "system", "content": system_msg},
+                    {"role": "user", "content": user_msg},
+                ],
+            )
+            itinerary = resp.choices[0].message.content
+
+            st.markdown(f"## Your {num_days}-Day {destination} Itinerary")
+            st.markdown(itinerary)
+
+            st.download_button(
+                "Download Itinerary (.txt)",
+                data=itinerary,
+                file_name=f"{destination.replace(' ', '_').lower()}_itinerary.txt",
+                mime="text/plain",
+            )
+        except Exception as exc:
+            st.error(f"Error generating itinerary: {exc}")
+
+# ── Follow-up Q&A ──────────────────────────────────────────────────────────────
+st.divider()
+st.subheader("Ask Follow-Up Questions")
+st.caption("Refine your itinerary or ask for alternatives.")
+
+if "travel_chat" not in st.session_state:
+    st.session_state.travel_chat = []
+
+for msg in st.session_state.travel_chat:
+    with st.chat_message(msg["role"]):
+        st.markdown(msg["content"])
+
+followup = st.chat_input("What do you want to know or change?")
+
+if followup:
+    st.session_state.travel_chat.append({"role": "user", "content": followup})
+    with st.chat_message("user"):
+        st.markdown(followup)
+
+    context_msg = f"I'm planning a {num_days}-day trip to {destination} with {travel_style} style and ${budget_per_day}/day budget." if destination else "I'm planning a trip."
+
+    system = (
+        "You are an expert travel planner. Answer the user's travel question helpfully and concisely. "
+        f"Context: {context_msg}"
+    )
+    messages = [{"role": "system", "content": system}] + st.session_state.travel_chat[-6:]
+
+    with st.chat_message("assistant"):
+        with st.spinner("Thinking…"):
+            try:
+                resp = _groq_client().chat.completions.create(
+                    model=_MODEL,
+                    messages=messages,
+                )
+                answer = resp.choices[0].message.content
+                st.markdown(answer)
+                st.session_state.travel_chat.append({"role": "assistant", "content": answer})
+            except Exception as exc:
+                st.error(f"Error: {exc}")
+{% endverbatim %}

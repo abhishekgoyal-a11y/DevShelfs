@@ -1,0 +1,258 @@
+{% verbatim %}
+# Mental Model / Learning Coach — Streamlit + Groq
+# Save as app.py, add GROQ_API_KEY to .streamlit/secrets.toml, then: streamlit run app.py
+
+import ssl
+
+import httpx
+import streamlit as st
+import truststore
+
+st.set_page_config(page_title="Mental Model Coach", layout="centered")
+st.title("Mental Model & Learning Coach")
+st.caption(
+    "Apply proven thinking frameworks to your real problems. Get structured analysis, "
+    "reflective prompts, and a journaling exercise to deepen your thinking."
+)
+
+_ssl_ctx = truststore.SSLContext(ssl.PROTOCOL_TLS_CLIENT)
+
+
+@st.cache_resource
+def _groq_client():
+    import groq
+
+    return groq.Groq(
+        api_key=st.secrets["GROQ_API_KEY"],
+        http_client=httpx.Client(verify=_ssl_ctx),
+    )
+
+
+_MODEL = "llama-3.3-70b-versatile"
+
+MENTAL_MODELS = {
+    "First Principles": (
+        "Break down the problem to its most fundamental truths. "
+        "Strip away assumptions and rebuild from the ground up."
+    ),
+    "Second-Order Thinking": (
+        "Analyze not just the immediate consequences, but the consequences of the consequences. "
+        "Ask: 'And then what?'"
+    ),
+    "SWOT Analysis": (
+        "Evaluate Strengths, Weaknesses, Opportunities, and Threats related to the situation."
+    ),
+    "Inversion": (
+        "Instead of asking how to succeed, ask: how could this fail? "
+        "Then work backwards to avoid those failure modes."
+    ),
+    "Occam's Razor": (
+        "Among competing explanations, the simplest one is most likely correct. "
+        "Eliminate unnecessary complexity."
+    ),
+    "The 80/20 Rule (Pareto)": (
+        "Identify the 20% of causes producing 80% of results. "
+        "Focus energy on high-leverage actions."
+    ),
+    "Circle of Competence": (
+        "Define what you know well vs. what you don't. "
+        "Make decisions within your circle; acknowledge the edges."
+    ),
+    "Feynman Technique": (
+        "Explain the concept in simple terms as if teaching a child. "
+        "Where you stumble, you have a gap in understanding."
+    ),
+    "Systems Thinking": (
+        "View the situation as a system of interconnected parts with feedback loops, "
+        "delays, and emergent behavior."
+    ),
+    "Pre-Mortem": (
+        "Imagine the project has already failed. Work backwards to identify "
+        "what could have caused the failure."
+    ),
+    "Jobs To Be Done": (
+        "Focus on the underlying job or outcome the person is trying to accomplish, "
+        "not the surface feature they're asking for."
+    ),
+    "Rubber Duck Debugging": (
+        "Explain the problem out loud in full detail, step by step. "
+        "The act of articulation often reveals the solution."
+    ),
+}
+
+# ── Mode selection ─────────────────────────────────────────────────────────────
+mode = st.radio(
+    "What would you like to do?",
+    ["Apply a Framework to My Problem", "Learn a Mental Model", "Reflective Journal"],
+    horizontal=True,
+)
+
+st.divider()
+
+# ── Mode 1: Apply framework ────────────────────────────────────────────────────
+if mode == "Apply a Framework to My Problem":
+    st.subheader("Apply a Thinking Framework")
+
+    col1, col2 = st.columns([1, 1])
+    with col1:
+        selected_model = st.selectbox("Choose a mental model", list(MENTAL_MODELS.keys()))
+    with col2:
+        goal = st.text_input(
+            "What are you trying to achieve?",
+            placeholder="e.g. decide whether to switch careers",
+        )
+
+    problem = st.text_area(
+        "Describe your situation or problem",
+        height=150,
+        placeholder="Be specific. The more context you give, the more useful the analysis.",
+    )
+
+    if st.button("Analyze with This Framework", type="primary"):
+        if not problem.strip():
+            st.warning("Please describe your problem or situation.")
+        else:
+            model_desc = MENTAL_MODELS[selected_model]
+            system_msg = (
+                f"You are an expert coach skilled in applying mental models to real-world problems. "
+                f"Apply the '{selected_model}' framework to the user's situation.\n\n"
+                f"Framework description: {model_desc}\n\n"
+                "Structure your response as:\n\n"
+                f"## Applying {selected_model}\n\n"
+                "### Framework Explanation\n[2-3 sentences on this model and why it applies here]\n\n"
+                "### Analysis\n[Walk through the framework step-by-step with the user's specific situation]\n\n"
+                "### Key Insights\n[3-5 bullet points of what this reveals]\n\n"
+                "### Recommended Next Actions\n[3 concrete steps based on this analysis]\n\n"
+                "### Reflection Questions\n[3 questions to push thinking further]"
+            )
+            user_msg = f"Situation: {problem}"
+            if goal.strip():
+                user_msg += f"\n\nGoal: {goal}"
+
+            with st.spinner(f"Applying {selected_model}…"):
+                try:
+                    resp = _groq_client().chat.completions.create(
+                        model=_MODEL,
+                        messages=[
+                            {"role": "system", "content": system_msg},
+                            {"role": "user", "content": user_msg},
+                        ],
+                    )
+                    analysis = resp.choices[0].message.content
+                    st.markdown(analysis)
+                    st.download_button(
+                        "Save Analysis (.txt)",
+                        data=analysis,
+                        file_name=f"{selected_model.lower().replace(' ', '_')}_analysis.txt",
+                        mime="text/plain",
+                    )
+                except Exception as exc:
+                    st.error(f"Error: {exc}")
+
+# ── Mode 2: Learn a model ──────────────────────────────────────────────────────
+elif mode == "Learn a Mental Model":
+    st.subheader("Learn a Mental Model")
+    selected_model = st.selectbox("Which model do you want to learn?", list(MENTAL_MODELS.keys()))
+    example_domain = st.text_input(
+        "Apply it to what domain? (optional)",
+        placeholder="e.g. startup strategy, personal finance, engineering",
+    )
+
+    if st.button("Teach Me This Model", type="primary"):
+        system_msg = (
+            "You are a brilliant teacher who makes complex ideas simple and memorable. "
+            f"Teach the '{selected_model}' mental model. Use this format:\n\n"
+            f"## {selected_model}\n\n"
+            "### What It Is\n[Clear 2-3 sentence definition]\n\n"
+            "### The Core Idea\n[One memorable analogy or metaphor]\n\n"
+            "### How to Apply It (Step-by-Step)\n[Numbered steps]\n\n"
+            "### Real-World Examples\n[2-3 concrete examples from different domains]\n\n"
+            "### When to Use It\n[Best situations for this model]\n\n"
+            "### Common Mistakes\n[2-3 ways people misapply this model]\n\n"
+            "### Quick Practice\n[One exercise to try right now]"
+        )
+        user_msg = f"Teach me about {selected_model}."
+        if example_domain.strip():
+            user_msg += f" Use examples from the {example_domain} domain where possible."
+
+        with st.spinner(f"Preparing lesson on {selected_model}…"):
+            try:
+                resp = _groq_client().chat.completions.create(
+                    model=_MODEL,
+                    messages=[
+                        {"role": "system", "content": system_msg},
+                        {"role": "user", "content": user_msg},
+                    ],
+                )
+                st.markdown(resp.choices[0].message.content)
+            except Exception as exc:
+                st.error(f"Error: {exc}")
+
+# ── Mode 3: Reflective journal ─────────────────────────────────────────────────
+elif mode == "Reflective Journal":
+    st.subheader("Guided Reflection")
+    st.caption("The coach will generate thoughtful prompts based on what you share.")
+
+    journal_topic = st.text_area(
+        "What's on your mind? (situation, decision, challenge, or goal)",
+        height=150,
+        placeholder="Describe something you're thinking through, struggling with, or trying to understand…",
+    )
+
+    reflection_depth = st.select_slider(
+        "Reflection depth",
+        options=["Surface (quick check-in)", "Standard (15 min)", "Deep (30 min)"],
+        value="Standard (15 min)",
+    )
+
+    if st.button("Generate Reflection Prompts", type="primary"):
+        if not journal_topic.strip():
+            st.warning("Please share what's on your mind.")
+        else:
+            depth_map = {
+                "Surface (quick check-in)": "3 quick, impactful questions",
+                "Standard (15 min)": "5-6 progressively deeper questions",
+                "Deep (30 min)": "8-10 multi-layered questions covering multiple perspectives",
+            }
+            depth_instruction = depth_map[reflection_depth]
+
+            system_msg = (
+                "You are a thoughtful coach and journal guide. "
+                "Generate reflective journaling prompts tailored to what the user shared. "
+                f"Provide {depth_instruction}.\n\n"
+                "Format:\n\n"
+                "## Your Reflection Prompts\n\n"
+                "[Number each question. Make them open-ended, non-judgmental, and thought-provoking.]\n\n"
+                "## Suggested Mental Models\n[2-3 frameworks that might help think through this situation]\n\n"
+                "## One Insight to Sit With\n[A perspective-shifting observation based on what they shared]"
+            )
+
+            with st.spinner("Crafting your reflection prompts…"):
+                try:
+                    resp = _groq_client().chat.completions.create(
+                        model=_MODEL,
+                        messages=[
+                            {"role": "system", "content": system_msg},
+                            {"role": "user", "content": journal_topic},
+                        ],
+                    )
+                    prompts = resp.choices[0].message.content
+                    st.markdown(prompts)
+
+                    st.divider()
+                    st.subheader("Your Journal Space")
+                    journal_entry = st.text_area(
+                        "Write your reflections here",
+                        height=300,
+                        placeholder="Use the prompts above to guide your writing…",
+                    )
+                    if journal_entry.strip():
+                        st.download_button(
+                            "Save Journal Entry (.txt)",
+                            data=f"Situation:\n{journal_topic}\n\nReflection:\n{journal_entry}",
+                            file_name="journal_entry.txt",
+                            mime="text/plain",
+                        )
+                except Exception as exc:
+                    st.error(f"Error: {exc}")
+{% endverbatim %}

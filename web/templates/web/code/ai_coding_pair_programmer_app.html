@@ -1,0 +1,193 @@
+{% verbatim %}
+# AI Coding Pair Programmer — Streamlit + Groq
+# Save as app.py, add GROQ_API_KEY to .streamlit/secrets.toml, then: streamlit run app.py
+
+import ssl
+
+import httpx
+import streamlit as st
+import truststore
+
+MAX_CODE_CHARS = 8000
+
+st.set_page_config(page_title="AI Coding Pair Programmer", layout="wide")
+st.title("AI Coding Pair Programmer")
+st.caption(
+    "Paste your code or pseudocode and get step-by-step explanations, bug detection, "
+    "fixes, or a fully converted working implementation."
+)
+
+_ssl_ctx = truststore.SSLContext(ssl.PROTOCOL_TLS_CLIENT)
+
+
+@st.cache_resource
+def _groq_client():
+    import groq
+
+    return groq.Groq(
+        api_key=st.secrets["GROQ_API_KEY"],
+        http_client=httpx.Client(verify=_ssl_ctx),
+    )
+
+
+_MODEL = "llama-3.3-70b-versatile"
+
+LANGUAGES = [
+    "Python", "JavaScript", "TypeScript", "Java", "C++", "C#", "Go",
+    "Rust", "Ruby", "PHP", "Swift", "Kotlin", "SQL", "Bash", "Other",
+]
+
+# ── Input panel ────────────────────────────────────────────────────────────────
+col_input, col_output = st.columns([1, 1], gap="large")
+
+with col_input:
+    st.subheader("Your Code")
+    lang = st.selectbox("Language", LANGUAGES)
+    code_input = st.text_area(
+        "Paste code or pseudocode",
+        height=350,
+        placeholder="def fibonacci(n):\n    # TODO: implement\n    pass",
+    )
+    context = st.text_input(
+        "Additional context (optional)",
+        placeholder="e.g. This is part of a web scraper, focus on performance",
+    )
+
+    st.divider()
+    col_b1, col_b2 = st.columns(2)
+    do_explain = col_b1.button("Explain Code", type="primary", use_container_width=True)
+    do_debug = col_b2.button("Find Bugs & Fix", use_container_width=True)
+    col_b3, col_b4 = st.columns(2)
+    do_convert = col_b3.button("Convert Pseudocode", use_container_width=True)
+    do_review = col_b4.button("Code Review", use_container_width=True)
+
+with col_output:
+    st.subheader("Result")
+
+    if not any([do_explain, do_debug, do_convert, do_review]):
+        st.info("Choose an action on the left to get started.")
+
+    if any([do_explain, do_debug, do_convert, do_review]):
+        if not code_input.strip():
+            st.warning("Please paste some code first.")
+            st.stop()
+
+    # ── Explain ────────────────────────────────────────────────────────────────
+    if do_explain:
+        system_msg = (
+            f"You are an expert {lang} developer and patient teacher. "
+            "Explain the provided code step-by-step in simple terms. "
+            "Use this format:\n\n"
+            "## What This Code Does\n[1-2 sentence overview]\n\n"
+            "## Step-by-Step Walkthrough\n[number each logical step]\n\n"
+            "## Key Concepts Used\n[bullet list of concepts with brief explanations]\n\n"
+            "## Potential Gotchas\n[anything a beginner might miss]"
+        )
+        user_msg = f"Language: {lang}\n\nCode:\n```{lang.lower()}\n{code_input[:MAX_CODE_CHARS]}\n```"
+        if context.strip():
+            user_msg += f"\n\nContext: {context}"
+
+        with st.spinner("Analyzing code…"):
+            try:
+                resp = _groq_client().chat.completions.create(
+                    model=_MODEL,
+                    messages=[
+                        {"role": "system", "content": system_msg},
+                        {"role": "user", "content": user_msg},
+                    ],
+                )
+                st.markdown(resp.choices[0].message.content)
+            except Exception as exc:
+                st.error(f"Error: {exc}")
+
+    # ── Debug ──────────────────────────────────────────────────────────────────
+    if do_debug:
+        system_msg = (
+            f"You are a senior {lang} developer specializing in code review and debugging. "
+            "Analyze the code for bugs, errors, and issues. Respond in this format:\n\n"
+            "## Bug Report\n[Summary of issues found, or 'No bugs found' if clean]\n\n"
+            "## Issues Found\n[List each bug with line reference and explanation]\n\n"
+            "## Fixed Code\n```\n[Complete corrected code]\n```\n\n"
+            "## Explanation of Fixes\n[What was changed and why]"
+        )
+        user_msg = f"Language: {lang}\n\nCode to debug:\n```{lang.lower()}\n{code_input[:MAX_CODE_CHARS]}\n```"
+        if context.strip():
+            user_msg += f"\n\nContext: {context}"
+
+        with st.spinner("Debugging code…"):
+            try:
+                resp = _groq_client().chat.completions.create(
+                    model=_MODEL,
+                    messages=[
+                        {"role": "system", "content": system_msg},
+                        {"role": "user", "content": user_msg},
+                    ],
+                )
+                st.markdown(resp.choices[0].message.content)
+            except Exception as exc:
+                st.error(f"Error: {exc}")
+
+    # ── Convert pseudocode ─────────────────────────────────────────────────────
+    if do_convert:
+        system_msg = (
+            f"You are an expert {lang} developer. Convert the pseudocode or description "
+            f"into complete, working, production-quality {lang} code. "
+            "Include all necessary imports. Add brief comments only where the logic is non-obvious. "
+            "Respond in this format:\n\n"
+            f"## {lang} Implementation\n```{lang.lower()}\n[complete working code]\n```\n\n"
+            "## How to Run\n[brief setup and run instructions]\n\n"
+            "## Notes\n[any assumptions made or alternative approaches]"
+        )
+        user_msg = f"Target language: {lang}\n\nPseudocode / description:\n{code_input[:MAX_CODE_CHARS]}"
+        if context.strip():
+            user_msg += f"\n\nAdditional context: {context}"
+
+        with st.spinner("Converting to working code…"):
+            try:
+                resp = _groq_client().chat.completions.create(
+                    model=_MODEL,
+                    messages=[
+                        {"role": "system", "content": system_msg},
+                        {"role": "user", "content": user_msg},
+                    ],
+                )
+                result = resp.choices[0].message.content
+                st.markdown(result)
+                st.download_button(
+                    "Download Code",
+                    data=result,
+                    file_name=f"generated_code.{lang.lower()[:2]}",
+                    mime="text/plain",
+                )
+            except Exception as exc:
+                st.error(f"Error: {exc}")
+
+    # ── Code review ────────────────────────────────────────────────────────────
+    if do_review:
+        system_msg = (
+            f"You are a senior {lang} engineer conducting a thorough code review. "
+            "Evaluate the code across multiple dimensions. Use this format:\n\n"
+            "## Overall Score: [1-10]/10\n\n"
+            "## Code Quality\n[readability, naming, structure]\n\n"
+            "## Performance\n[time/space complexity, bottlenecks]\n\n"
+            "## Security\n[any security concerns]\n\n"
+            "## Best Practices\n[what follows best practices, what doesn't]\n\n"
+            "## Refactored Snippet\n```\n[Show a key improvement as a code example]\n```"
+        )
+        user_msg = f"Language: {lang}\n\nCode:\n```{lang.lower()}\n{code_input[:MAX_CODE_CHARS]}\n```"
+        if context.strip():
+            user_msg += f"\n\nContext: {context}"
+
+        with st.spinner("Reviewing code…"):
+            try:
+                resp = _groq_client().chat.completions.create(
+                    model=_MODEL,
+                    messages=[
+                        {"role": "system", "content": system_msg},
+                        {"role": "user", "content": user_msg},
+                    ],
+                )
+                st.markdown(resp.choices[0].message.content)
+            except Exception as exc:
+                st.error(f"Error: {exc}")
+{% endverbatim %}

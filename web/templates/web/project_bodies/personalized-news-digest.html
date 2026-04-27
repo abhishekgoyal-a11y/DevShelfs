@@ -1,0 +1,259 @@
+{% load static %}
+<div class="glass space-y-10 rounded-3xl p-5 sm:p-8">
+  <div class="space-y-4">
+    <p class="text-sm leading-relaxed text-slate-200/85 sm:text-base">
+      <strong class="text-slate-100">Personalized News Digest</strong> is an intermediate-level project that
+      pulls live news from RSS feeds, summarizes it in your preferred reading style, and delivers it as a
+      coherent daily digest. Select topics, pick a tone, and click once to get &ldquo;what matters today&rdquo;
+      without opening eight different news tabs.
+    </p>
+    <p class="text-sm leading-relaxed text-slate-200/85 sm:text-base">
+      The app fetches articles using <strong class="text-slate-100">feedparser</strong>, assembles the raw
+      headlines and summaries into a structured prompt, and sends them to
+      <strong class="text-slate-100">Groq</strong> for synthesis. Four reading tones are available: beginner-friendly
+      (avoids jargon), technical (precise and data-rich), executive brief (impact-only), and casual (like
+      a friend explaining the news). A final &ldquo;Key Takeaway&rdquo; section surfaces cross-topic insights.
+    </p>
+    <p class="text-sm leading-relaxed text-slate-200/85 sm:text-base">
+      Built with <strong class="text-slate-100">Python</strong>, <strong class="text-slate-100">Streamlit</strong>,
+      <strong class="text-slate-100">feedparser</strong>, and the <strong class="text-slate-100">Groq API</strong>,
+      this project shows how to combine an external data source with an LLM to produce a personalized, daily-use
+      tool.
+    </p>
+    <p class="text-sm leading-relaxed text-slate-200/85 sm:text-base">
+      <strong class="text-slate-100">Purpose:</strong> practice combining live external data with LLM summarization —
+      a pattern used in every news AI, monitoring tool, and executive briefing product.
+    </p>
+    <p class="text-sm leading-relaxed text-slate-200/85 sm:text-base">
+      <strong class="text-slate-100">Typical use:</strong> select Technology and AI topics, choose
+      &ldquo;Executive Brief,&rdquo; hit Generate, download the digest to read during your commute.
+    </p>
+    <p class="text-sm font-medium text-slate-200/90">Key ideas you will touch:</p>
+    <ul class="list-inside list-disc space-y-2 text-sm leading-relaxed text-slate-200/85 sm:text-base">
+      <li>
+        <strong class="text-slate-100">RSS ingestion</strong> — <code class="text-sky-200/90">feedparser.parse()</code>
+        fetches and parses live feeds without an API key.
+      </li>
+      <li>
+        <strong class="text-slate-100">Tone injection</strong> — four tone strings are appended to the system
+        message; the model adapts vocabulary and depth without any branching code.
+      </li>
+      <li>
+        <strong class="text-slate-100">Source attribution</strong> — original article links are listed below
+        the digest so readers can follow up.
+      </li>
+      <li>
+        <strong class="text-slate-100">Custom topic fallback</strong> — a free-text field adds a
+        &ldquo;General Knowledge&rdquo; section clearly labeled as not from a live feed.
+      </li>
+    </ul>
+  </div>
+
+  <div class="space-y-3">
+    <h2 class="text-lg font-semibold tracking-tight text-white">Overall flow</h2>
+    <pre
+      class="overflow-x-auto rounded-2xl border border-white/10 bg-slate-950/60 p-4 text-sm leading-relaxed text-slate-200/90 sm:text-base"
+    ><code class="font-mono whitespace-pre-wrap">User selects topics + tone + story count in sidebar
+      ↓
+Clicks "Generate My Digest"
+      ↓
+feedparser fetches RSS feeds for each selected topic
+      ↓
+Headlines + summaries assembled into a structured prompt
+      ↓
+Groq synthesizes into a themed digest with the chosen tone
+      ↓
+Digest displayed with source links + Download button</code></pre>
+  </div>
+
+  <div class="space-y-4">
+    <h2 class="text-lg font-semibold tracking-tight text-white">Demo</h2>
+    <div
+      class="mx-auto max-w-3xl overflow-hidden rounded-2xl border border-white/10 bg-black shadow-lg shadow-black/40"
+    >
+      <video
+        class="block w-full"
+        controls
+        playsinline
+        preload="metadata"
+        aria-label="Personalized news digest demo"
+      >
+        <source src="{% static 'web/PersonalizedNewsDigest.webm' %}" type="video/webm" />
+        <p class="p-4 text-sm text-slate-400">Your browser does not support embedded WebM video.</p>
+      </video>
+    </div>
+  </div>
+
+  <hr class="border-0 border-t border-white/10" />
+
+  <div class="space-y-4">
+    <h2 class="text-lg font-semibold tracking-tight text-white">Step-by-Step Implementation</h2>
+    <ol class="list-decimal list-outside space-y-5 pl-6 text-sm leading-relaxed text-slate-200/85 sm:text-base">
+      <li>
+        <span class="font-medium text-slate-100">Set up the project</span>
+        <ul class="mt-2 list-disc space-y-1.5 pl-5">
+          <li>Install Python 3.10+, create folder and virtual environment</li>
+        </ul>
+      </li>
+      <li>
+        <span class="font-medium text-slate-100">Install dependencies</span>
+        <ul class="mt-2 list-disc space-y-1.5 pl-5">
+          <li>
+            <code class="text-sky-200/90">streamlit</code>, <code class="text-sky-200/90">groq</code>,
+            <code class="text-sky-200/90">httpx</code>, <code class="text-sky-200/90">truststore</code>,
+            <code class="text-sky-200/90">feedparser</code>
+          </li>
+        </ul>
+      </li>
+      <li>
+        <span class="font-medium text-slate-100">Define RSS feeds and tones</span>
+        <ul class="mt-2 list-disc space-y-1.5 pl-5">
+          <li>
+            A <code class="text-sky-200/90">dict</code> maps topic names to feed URLs;
+            another maps tone names to instruction strings
+          </li>
+          <li>Both dicts drive the UI selectors directly with no separate config file</li>
+        </ul>
+      </li>
+      <li>
+        <span class="font-medium text-slate-100">Build the sidebar preferences</span>
+        <ul class="mt-2 list-disc space-y-1.5 pl-5">
+          <li>
+            <code class="text-sky-200/90">st.multiselect</code> for topics,
+            <code class="text-sky-200/90">st.selectbox</code> for tone,
+            <code class="text-sky-200/90">st.slider</code> for story count
+          </li>
+        </ul>
+      </li>
+      <li>
+        <span class="font-medium text-slate-100">Fetch and parse feeds</span>
+        <ul class="mt-2 list-disc space-y-1.5 pl-5">
+          <li>Loop over selected topics, call <code class="text-sky-200/90">feedparser.parse(url)</code></li>
+          <li>
+            Extract title, summary, and link for each entry; cap summary at
+            <code class="text-sky-200/90">MAX_ARTICLE_CHARS</code>; handle fetch errors silently
+          </li>
+        </ul>
+      </li>
+      <li>
+        <span class="font-medium text-slate-100">Build the digest prompt</span>
+        <ul class="mt-2 list-disc space-y-1.5 pl-5">
+          <li>
+            System message: inject tone instruction, specify per-story format
+            (<strong>title</strong> — 2-3 sentence summary), and request a cross-topic Key Takeaway
+          </li>
+          <li>User message: assemble all articles grouped by topic header</li>
+        </ul>
+      </li>
+      <li>
+        <span class="font-medium text-slate-100">Display and download</span>
+        <ul class="mt-2 list-disc space-y-1.5 pl-5">
+          <li>
+            Render digest with <code class="text-sky-200/90">st.markdown()</code>;
+            list source links below; offer <code class="text-sky-200/90">st.download_button</code>
+          </li>
+        </ul>
+      </li>
+    </ol>
+  </div>
+
+  <hr class="border-0 border-t border-white/10" />
+
+  <div class="space-y-4">
+    <h2 class="text-lg font-semibold tracking-tight text-white">Code implementation</h2>
+    {% include "web/partials/code_block_frame.html" with language="python" code_template="web/code/personalized_news_digest_app.html" pre_class="ds-codeblock-pre code-block m-0 max-h-[min(70vh,36rem)] overflow-x-auto overflow-y-auto p-4 text-[0.8125rem] leading-[1.55] sm:text-sm" only %}
+    <div class="rounded-xl border border-white/10 bg-slate-950/45 px-4 py-3 text-sm leading-relaxed text-slate-200/90">
+      <p>
+        <span class="font-semibold text-slate-100">Complete code</span>
+        <span class="mx-2 text-slate-500">—</span>
+        <a
+          href="{{ project.repoUrl }}"
+          class="font-medium text-sky-200/90 underline-offset-2 hover:text-white hover:underline"
+          target="_blank"
+          rel="noreferrer"
+          >Project link (GitHub)</a
+        >
+      </p>
+    </div>
+  </div>
+
+  <hr class="border-0 border-t border-white/10" />
+
+  <div class="space-y-5">
+    <h2 class="text-lg font-semibold tracking-tight text-white">📖 How the Code Works (Step-by-Step)</h2>
+
+    <hr class="border-0 border-t border-white/10" />
+
+    <section class="space-y-3">
+      <h3 class="text-base font-semibold tracking-tight text-white">1. Feed fetching with feedparser</h3>
+      <ul class="list-disc space-y-1.5 pl-5 text-sm leading-relaxed text-slate-200/85 sm:text-base">
+        <li>
+          <code class="text-sky-200/90">feedparser.parse(url)</code> handles RSS and Atom feeds without
+          manual XML parsing; errors are caught silently so one broken feed does not stop the whole digest.
+        </li>
+        <li>
+          Article summaries are capped at <code class="text-sky-200/90">MAX_ARTICLE_CHARS</code> to keep the
+          total prompt within the model&rsquo;s context window.
+        </li>
+      </ul>
+    </section>
+
+    <hr class="border-0 border-t border-white/10" />
+
+    <section class="space-y-3">
+      <h3 class="text-base font-semibold tracking-tight text-white">2. Tone as a string injection</h3>
+      <ul class="list-disc space-y-1.5 pl-5 text-sm leading-relaxed text-slate-200/85 sm:text-base">
+        <li>
+          Each tone maps to a one-sentence instruction string. That string is inserted into the system message
+          at generation time — no branching code, no separate prompt files.
+        </li>
+      </ul>
+    </section>
+
+    <hr class="border-0 border-t border-white/10" />
+
+    <section class="space-y-3">
+      <h3 class="text-base font-semibold tracking-tight text-white">3. Source attribution</h3>
+      <ul class="list-disc space-y-1.5 pl-5 text-sm leading-relaxed text-slate-200/85 sm:text-base">
+        <li>
+          Article links are stored in <code class="text-sky-200/90">articles_by_topic</code> and rendered as
+          markdown links after the digest, keeping the generated text clean while still giving the reader
+          a path to the original source.
+        </li>
+      </ul>
+    </section>
+  </div>
+
+  <nav class="border-t border-white/10 pt-6" aria-label="Related links">
+    <p class="text-sm font-medium text-slate-200/90">Useful links</p>
+    <ul class="mt-2 space-y-2 text-sm">
+      <li>
+        <a
+          class="font-medium text-sky-200/90 underline-offset-2 hover:text-white hover:underline"
+          href="https://docs.streamlit.io"
+          target="_blank"
+          rel="noopener noreferrer"
+          >Streamlit docs</a
+        >
+      </li>
+      <li>
+        <a
+          class="font-medium text-sky-200/90 underline-offset-2 hover:text-white hover:underline"
+          href="https://feedparser.readthedocs.io/"
+          target="_blank"
+          rel="noopener noreferrer"
+          >feedparser docs</a
+        >
+      </li>
+      <li>
+        <a
+          class="font-medium text-sky-200/90 underline-offset-2 hover:text-white hover:underline"
+          href="https://console.groq.com/docs/overview"
+          target="_blank"
+          rel="noopener noreferrer"
+          >Groq API docs</a
+        >
+      </li>
+    </ul>
+  </nav>
+</div>
