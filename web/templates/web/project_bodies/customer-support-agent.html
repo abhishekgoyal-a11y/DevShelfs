@@ -71,6 +71,66 @@ Groq answers as named agent
 If answer cannot be grounded → escalation message + UI warning flag</code></pre>
   </div>
 
+  <div class="space-y-4">
+    <h2 class="text-lg font-semibold tracking-tight text-white">Quick start — try it in 2 minutes</h2>
+    <div class="space-y-5 text-sm leading-relaxed text-slate-200/85 sm:text-base">
+
+      <div class="space-y-2">
+        <p class="font-medium text-slate-100">Step 1 — Fill the sidebar</p>
+        <ul class="list-disc space-y-1.5 pl-5">
+          <li><strong class="text-slate-100">Product name:</strong> e.g. <code class="text-sky-200/90">Spotify</code> or <code class="text-sky-200/90">My SaaS App</code></li>
+          <li><strong class="text-slate-100">Agent name:</strong> e.g. <code class="text-sky-200/90">Alex</code> (or anything)</li>
+          <li>Paste your FAQ into the text box, for example:</li>
+        </ul>
+        <pre class="overflow-x-auto rounded-2xl border border-white/10 bg-slate-950/60 p-4 text-sm leading-relaxed text-slate-200/90"><code class="font-mono whitespace-pre-wrap">Q: How do I cancel my subscription?
+A: Go to Account Settings > Billing > Cancel Plan. You'll keep access until the end of your billing period.
+
+Q: How do I reset my password?
+A: Click "Forgot Password" on the login page. You'll receive an email within 2 minutes.
+
+Q: What payment methods do you accept?
+A: We accept Visa, Mastercard, PayPal, and UPI.</code></pre>
+      </div>
+
+      <div class="space-y-1.5">
+        <p class="font-medium text-slate-100">Step 2 — Click &ldquo;Build Support KB&rdquo;</p>
+        <p>Wait for the confirmation: <em>&ldquo;KB ready — X chunks indexed.&rdquo;</em></p>
+      </div>
+
+      <div class="space-y-1.5">
+        <p class="font-medium text-slate-100">Step 3 — Chat</p>
+        <p>Type a customer question in the chat box, e.g. <code class="text-sky-200/90">&ldquo;How do I cancel?&rdquo;</code></p>
+        <p>
+          Alex will answer from your docs. Ask something not in the docs (e.g. <code class="text-sky-200/90">&ldquo;What is your refund policy?&rdquo;</code>)
+          and it will say it&rsquo;s escalating to a specialist.
+        </p>
+      </div>
+
+      <p class="rounded-xl border border-white/10 bg-slate-900/50 px-4 py-3 text-slate-200/75">
+        You can also upload a real PDF product manual instead of pasting text — it will index the whole document the same way.
+      </p>
+
+    </div>
+  </div>
+
+  <div class="space-y-4">
+    <h2 class="text-lg font-semibold tracking-tight text-white">Demo</h2>
+    <div
+      class="mx-auto max-w-3xl overflow-hidden rounded-2xl border border-white/10 bg-black shadow-lg shadow-black/40"
+    >
+      <video
+        class="block w-full"
+        controls
+        playsinline
+        preload="metadata"
+        aria-label="Customer support agent demo"
+      >
+        <source src="{% static 'web/CustomerSupportAgent.webm' %}" type="video/webm" />
+        <p class="p-4 text-sm text-slate-400">Your browser does not support embedded WebM video.</p>
+      </video>
+    </div>
+  </div>
+
   <hr class="border-0 border-t border-white/10" />
 
   <div class="space-y-4">
