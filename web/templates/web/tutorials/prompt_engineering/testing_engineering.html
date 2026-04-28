@@ -171,7 +171,7 @@ cost = usage.prompt_tokens * 0.15/1e6   # gpt-4o-mini input
           <h2 id="judge-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">LLM-as-judge</h2>
           <p>For open-ended tasks (summaries, emails, code explanations) there's no single correct answer. Use a second LLM call to score the output against your criteria.</p>
           <div class="rounded-2xl border border-white/10 bg-white/[0.03] p-5">
-            <code class="block font-mono text-xs text-slate-300 whitespace-pre">judge_prompt = """
+            <code class="block font-mono text-xs text-slate-300 whitespace-pre">{% verbatim %}judge_prompt = """
 You are evaluating a customer support response.
 Score it 1–5 on each dimension:
 - Accuracy: does it answer the question correctly?
@@ -184,7 +184,7 @@ Response to evaluate:
 Return JSON: {{"accuracy": int, "tone": int, "brevity": int}}
 """
 
-score = call_llm(judge_prompt.format(response=output), temp=0)</code>
+score = call_llm(judge_prompt.format(response=output), temp=0){% endverbatim %}</code>
           </div>
           <p class="text-sm text-slate-400/90">LLM-as-judge scales to thousands of examples automatically. It's less accurate than human eval but fast enough to catch obvious regressions. Use GPT-4o or Claude 3.5 as the judge for best results.</p>
         </section>
