@@ -1,0 +1,32 @@
+{% verbatim %}# tools.py
+import os
+from tavily import TavilyClient
+
+client = TavilyClient(api_key=os.environ["TAVILY_API_KEY"])
+
+def web_search(query: str) -> str:
+    """Search the web and return a summary of the top results."""
+    results = client.search(query=query, max_results=3)
+    output = []
+    for r in results["results"]:
+        output.append(f"Title: {r['title']}\nURL: {r['url']}\nSnippet: {r['content']}\n")
+    return "\n---\n".join(output)
+
+
+# OpenAI tool definition
+TOOLS = [
+    {
+        "type": "function",
+        "function": {
+            "name": "web_search",
+            "description": "Search the web for up-to-date information on a topic.",
+            "parameters": {
+                "type": "object",
+                "properties": {
+                    "query": {"type": "string", "description": "The search query"}
+                },
+                "required": ["query"],
+            },
+        },
+    }
+]{% endverbatim %}

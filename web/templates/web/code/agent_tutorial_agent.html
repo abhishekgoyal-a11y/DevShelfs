@@ -1,0 +1,44 @@
+{% verbatim %}# agent.py
+import json
+import os
+from openai import OpenAI
+from tools import web_search, TOOLS
+
+openai_client = OpenAI(api_key=os.environ["OPENAI_API_KEY"])
+
+def run_agent(goal: str, max_steps: int = 10) -> str:
+    messages = [
+        {"role": "system", "content": "You are a research assistant. Use the web_search tool to find information, then write a concise summary. When you have enough information, respond directly without calling any more tools."},
+        {"role": "user", "content": goal},
+    ]
+
+    for step in range(max_steps):
+        response = openai_client.chat.completions.create(
+            model="gpt-4o-mini",
+            messages=messages,
+            tools=TOOLS,
+            tool_choice="auto",
+        )
+        msg = response.choices[0].message
+
+        # If no tool call, the agent is done
+        if not msg.tool_calls:
+            return msg.content
+
+        # Execute each tool the agent requested
+        messages.append(msg)
+        for call in msg.tool_calls:
+            args = json.loads(call.function.arguments)
+            result = web_search(**args)
+            messages.append({
+                "role": "tool",
+                "tool_call_id": call.id,
+                "content": result,
+            })
+
+    return "Max steps reached without a final answer."
+
+
+if __name__ == "__main__":
+    goal = input("Research goal: ")
+    print("\n" + run_agent(goal)){% endverbatim %}
