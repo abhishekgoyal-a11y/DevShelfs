@@ -38,15 +38,33 @@
         <section class="space-y-5" aria-labelledby="install-heading">
           <h2 id="install-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">Install Ollama</h2>
           <div class="space-y-3">
-            <div class="rounded-2xl border border-white/10 bg-white/[0.03] p-5 space-y-2">
+            <div class="rounded-2xl border border-white/10 bg-white/[0.03] p-5 space-y-3">
               <h3 class="text-sm font-semibold text-slate-200">macOS</h3>
-              <code class="block font-mono text-xs text-slate-300">brew install ollama</code>
-              <p class="text-xs text-slate-400/90 mt-1">Or download the .dmg from ollama.com — it installs as a menu bar app.</p>
+              <div class="ds-codeblock not-prose rounded-xl overflow-hidden border border-white/10">
+                <div class="ds-codeblock-header flex items-center justify-between px-4 py-2.5 bg-white/[0.05] border-b border-white/10">
+                  <span class="text-xs font-medium text-slate-400">bash</span>
+                  <button class="ds-codeblock-copy flex items-center gap-1.5 text-xs text-slate-400 hover:text-white transition-colors">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                    Copy
+                  </button>
+                </div>
+                <pre class="ds-codeblock-pre overflow-x-auto p-4 text-sm leading-relaxed m-0"><code class="ds-codeblock-source language-bash">brew install ollama</code></pre>
+              </div>
+              <p class="text-xs text-slate-400/90">Or download the .dmg from ollama.com — it installs as a menu bar app.</p>
             </div>
-            <div class="rounded-2xl border border-white/10 bg-white/[0.03] p-5 space-y-2">
+            <div class="rounded-2xl border border-white/10 bg-white/[0.03] p-5 space-y-3">
               <h3 class="text-sm font-semibold text-slate-200">Linux</h3>
-              <code class="block font-mono text-xs text-slate-300">curl -fsSL https://ollama.com/install.sh | sh</code>
-              <p class="text-xs text-slate-400/90 mt-1">Installs the Ollama service and CLI. Starts automatically on boot via systemd.</p>
+              <div class="ds-codeblock not-prose rounded-xl overflow-hidden border border-white/10">
+                <div class="ds-codeblock-header flex items-center justify-between px-4 py-2.5 bg-white/[0.05] border-b border-white/10">
+                  <span class="text-xs font-medium text-slate-400">bash</span>
+                  <button class="ds-codeblock-copy flex items-center gap-1.5 text-xs text-slate-400 hover:text-white transition-colors">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                    Copy
+                  </button>
+                </div>
+                <pre class="ds-codeblock-pre overflow-x-auto p-4 text-sm leading-relaxed m-0"><code class="ds-codeblock-source language-bash">curl -fsSL https://ollama.com/install.sh | sh</code></pre>
+              </div>
+              <p class="text-xs text-slate-400/90">Installs the Ollama service and CLI. Starts automatically on boot via systemd.</p>
             </div>
             <div class="rounded-2xl border border-white/10 bg-white/[0.03] p-5 space-y-2">
               <h3 class="text-sm font-semibold text-slate-200">Windows</h3>
@@ -54,8 +72,15 @@
             </div>
           </div>
           <p class="text-sm text-slate-400/90">After install, verify it works:</p>
-          <div class="rounded-2xl border border-white/10 bg-white/[0.03] p-4">
-            <code class="block font-mono text-xs text-slate-300">ollama --version</code>
+          <div class="ds-codeblock not-prose rounded-2xl overflow-hidden border border-white/10">
+            <div class="ds-codeblock-header flex items-center justify-between px-4 py-2.5 bg-white/[0.05] border-b border-white/10">
+              <span class="text-xs font-medium text-slate-400">bash</span>
+              <button class="ds-codeblock-copy flex items-center gap-1.5 text-xs text-slate-400 hover:text-white transition-colors">
+                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                Copy
+              </button>
+            </div>
+            <pre class="ds-codeblock-pre overflow-x-auto p-4 text-sm leading-relaxed m-0"><code class="ds-codeblock-source language-bash">ollama --version</code></pre>
           </div>
         </section>
 
@@ -63,17 +88,33 @@
           <h2 id="run-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">Pull and run your first model</h2>
           <p>One command downloads the model and starts an interactive chat:</p>
           <div class="rounded-2xl border border-white/10 bg-white/[0.03] p-5 space-y-3">
-            <code class="block font-mono text-xs text-slate-300">ollama run llama3.2</code>
+            <div class="ds-codeblock not-prose rounded-xl overflow-hidden border border-white/10">
+              <div class="ds-codeblock-header flex items-center justify-between px-4 py-2.5 bg-white/[0.05] border-b border-white/10">
+                <span class="text-xs font-medium text-slate-400">bash</span>
+                <button class="ds-codeblock-copy flex items-center gap-1.5 text-xs text-slate-400 hover:text-white transition-colors">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                  Copy
+                </button>
+              </div>
+              <pre class="ds-codeblock-pre overflow-x-auto p-4 text-sm leading-relaxed m-0"><code class="ds-codeblock-source language-bash">ollama run llama3.2</code></pre>
+            </div>
             <p class="text-xs text-slate-400/90">Downloads Llama 3.2 3B (~2 GB) on first run, then opens a chat prompt. Type your message and press Enter. Type <code class="rounded bg-white/10 px-1">/bye</code> to exit.</p>
           </div>
           <div class="space-y-2">
             <p class="text-sm font-semibold text-slate-200">Other useful commands</p>
-            <div class="rounded-2xl border border-white/10 bg-white/[0.03] p-5">
-              <code class="block font-mono text-xs text-slate-300 whitespace-pre">ollama pull llama3.2        # download without running
+            <div class="ds-codeblock not-prose rounded-2xl overflow-hidden border border-white/10">
+              <div class="ds-codeblock-header flex items-center justify-between px-4 py-2.5 bg-white/[0.05] border-b border-white/10">
+                <span class="text-xs font-medium text-slate-400">bash</span>
+                <button class="ds-codeblock-copy flex items-center gap-1.5 text-xs text-slate-400 hover:text-white transition-colors">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                  Copy
+                </button>
+              </div>
+              <pre class="ds-codeblock-pre overflow-x-auto p-4 text-sm leading-relaxed m-0"><code class="ds-codeblock-source language-bash">ollama pull llama3.2        # download without running
 ollama list                 # list downloaded models
 ollama show llama3.2        # model info (size, parameters)
 ollama rm llama3.2          # delete a model
-ollama ps                   # show running models</code>
+ollama ps                   # show running models</code></pre>
             </div>
           </div>
         </section>
@@ -83,31 +124,57 @@ ollama ps                   # show running models</code>
           <p>Ollama exposes a local REST API at <code class="rounded bg-white/10 px-1 text-sm">http://localhost:11434</code>. Use it to integrate Ollama into any application.</p>
 
           <div class="space-y-3">
-            <div class="rounded-2xl border border-white/10 bg-white/[0.03] p-5 space-y-2">
+            <div class="rounded-2xl border border-white/10 bg-white/[0.03] p-5 space-y-3">
               <h3 class="text-sm font-semibold text-slate-200">Generate (single completion)</h3>
-              <code class="block font-mono text-xs text-slate-300 whitespace-pre">curl http://localhost:11434/api/generate -d '{
+              <div class="ds-codeblock not-prose rounded-xl overflow-hidden border border-white/10">
+                <div class="ds-codeblock-header flex items-center justify-between px-4 py-2.5 bg-white/[0.05] border-b border-white/10">
+                  <span class="text-xs font-medium text-slate-400">bash</span>
+                  <button class="ds-codeblock-copy flex items-center gap-1.5 text-xs text-slate-400 hover:text-white transition-colors">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                    Copy
+                  </button>
+                </div>
+                <pre class="ds-codeblock-pre overflow-x-auto p-4 text-sm leading-relaxed m-0"><code class="ds-codeblock-source language-bash">curl http://localhost:11434/api/generate -d '{
   "model": "llama3.2",
   "prompt": "Why is the sky blue?",
   "stream": false
-}'</code>
+}'</code></pre>
+              </div>
             </div>
 
-            <div class="rounded-2xl border border-white/10 bg-white/[0.03] p-5 space-y-2">
+            <div class="rounded-2xl border border-white/10 bg-white/[0.03] p-5 space-y-3">
               <h3 class="text-sm font-semibold text-slate-200">Chat (multi-turn)</h3>
-              <code class="block font-mono text-xs text-slate-300 whitespace-pre">curl http://localhost:11434/api/chat -d '{
+              <div class="ds-codeblock not-prose rounded-xl overflow-hidden border border-white/10">
+                <div class="ds-codeblock-header flex items-center justify-between px-4 py-2.5 bg-white/[0.05] border-b border-white/10">
+                  <span class="text-xs font-medium text-slate-400">bash</span>
+                  <button class="ds-codeblock-copy flex items-center gap-1.5 text-xs text-slate-400 hover:text-white transition-colors">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                    Copy
+                  </button>
+                </div>
+                <pre class="ds-codeblock-pre overflow-x-auto p-4 text-sm leading-relaxed m-0"><code class="ds-codeblock-source language-bash">curl http://localhost:11434/api/chat -d '{
   "model": "llama3.2",
   "messages": [
     {"role": "system", "content": "You are a helpful assistant."},
     {"role": "user", "content": "What is Python?"}
   ],
   "stream": false
-}'</code>
+}'</code></pre>
+              </div>
             </div>
 
-            <div class="rounded-2xl border border-lime-500/20 bg-lime-500/[0.04] p-5 space-y-2">
+            <div class="rounded-2xl border border-lime-500/20 bg-lime-500/[0.04] p-5 space-y-3">
               <h3 class="text-sm font-semibold text-lime-100">OpenAI-compatible endpoint</h3>
               <p class="text-xs text-slate-400/90">Ollama also exposes an OpenAI-compatible API — swap the base URL in any OpenAI client:</p>
-              <code class="block font-mono text-xs text-slate-300 whitespace-pre">from openai import OpenAI
+              <div class="ds-codeblock not-prose rounded-xl overflow-hidden border border-white/10">
+                <div class="ds-codeblock-header flex items-center justify-between px-4 py-2.5 bg-white/[0.05] border-b border-white/10">
+                  <span class="text-xs font-medium text-slate-400">python</span>
+                  <button class="ds-codeblock-copy flex items-center gap-1.5 text-xs text-slate-400 hover:text-white transition-colors">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                    Copy
+                  </button>
+                </div>
+                <pre class="ds-codeblock-pre overflow-x-auto p-4 text-sm leading-relaxed m-0"><code class="ds-codeblock-source language-python">from openai import OpenAI
 
 client = OpenAI(
     base_url="http://localhost:11434/v1",
@@ -118,7 +185,8 @@ response = client.chat.completions.create(
     model="llama3.2",
     messages=[{"role": "user", "content": "Hello!"}],
 )
-print(response.choices[0].message.content)</code>
+print(response.choices[0].message.content)</code></pre>
+              </div>
             </div>
           </div>
         </section>
@@ -127,8 +195,25 @@ print(response.choices[0].message.content)</code>
           <h2 id="python-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">Python client</h2>
           <p>The official <code class="rounded bg-white/10 px-1 text-sm">ollama</code> Python package provides a cleaner interface than raw HTTP.</p>
           <div class="rounded-2xl border border-white/10 bg-white/[0.03] p-5 space-y-3">
-            <code class="block font-mono text-xs text-slate-300 whitespace-pre">pip install ollama</code>
-            <code class="block font-mono text-xs text-slate-300 whitespace-pre mt-3">import ollama
+            <div class="ds-codeblock not-prose rounded-xl overflow-hidden border border-white/10">
+              <div class="ds-codeblock-header flex items-center justify-between px-4 py-2.5 bg-white/[0.05] border-b border-white/10">
+                <span class="text-xs font-medium text-slate-400">bash</span>
+                <button class="ds-codeblock-copy flex items-center gap-1.5 text-xs text-slate-400 hover:text-white transition-colors">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                  Copy
+                </button>
+              </div>
+              <pre class="ds-codeblock-pre overflow-x-auto p-4 text-sm leading-relaxed m-0"><code class="ds-codeblock-source language-bash">pip install ollama</code></pre>
+            </div>
+            <div class="ds-codeblock not-prose rounded-xl overflow-hidden border border-white/10">
+              <div class="ds-codeblock-header flex items-center justify-between px-4 py-2.5 bg-white/[0.05] border-b border-white/10">
+                <span class="text-xs font-medium text-slate-400">python</span>
+                <button class="ds-codeblock-copy flex items-center gap-1.5 text-xs text-slate-400 hover:text-white transition-colors">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                  Copy
+                </button>
+              </div>
+              <pre class="ds-codeblock-pre overflow-x-auto p-4 text-sm leading-relaxed m-0"><code class="ds-codeblock-source language-python">import ollama
 
 # Single completion
 response = ollama.generate(model="llama3.2", prompt="Why is the sky blue?")
@@ -143,15 +228,23 @@ print(response["message"]["content"])
 
 # Streaming
 for chunk in ollama.generate(model="llama3.2", prompt="Count to 5.", stream=True):
-    print(chunk["response"], end="", flush=True)</code>
+    print(chunk["response"], end="", flush=True)</code></pre>
+            </div>
           </div>
         </section>
 
         <section class="space-y-5" aria-labelledby="models-heading">
           <h2 id="models-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">Model library</h2>
           <p>Ollama's model library at <strong class="text-slate-200">ollama.com/library</strong> hosts hundreds of models. Each model has tagged variants for different sizes and quantizations.</p>
-          <div class="rounded-2xl border border-white/10 bg-white/[0.03] p-5">
-            <code class="block font-mono text-xs text-slate-300 whitespace-pre">ollama pull llama3.2           # 3B, default (Q4_K_M)
+          <div class="ds-codeblock not-prose rounded-2xl overflow-hidden border border-white/10">
+            <div class="ds-codeblock-header flex items-center justify-between px-4 py-2.5 bg-white/[0.05] border-b border-white/10">
+              <span class="text-xs font-medium text-slate-400">bash</span>
+              <button class="ds-codeblock-copy flex items-center gap-1.5 text-xs text-slate-400 hover:text-white transition-colors">
+                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                Copy
+              </button>
+            </div>
+            <pre class="ds-codeblock-pre overflow-x-auto p-4 text-sm leading-relaxed m-0"><code class="ds-codeblock-source language-bash">ollama pull llama3.2           # 3B, default (Q4_K_M)
 ollama pull llama3.2:1b        # 1B — faster, less capable
 ollama pull llama3.1:8b        # 8B — stronger reasoning
 ollama pull llama3.1:70b       # 70B — requires ~40 GB RAM
@@ -159,7 +252,7 @@ ollama pull mistral            # Mistral 7B
 ollama pull gemma3             # Google Gemma 3
 ollama pull phi4               # Microsoft Phi-4 14B
 ollama pull qwen2.5:14b        # Alibaba Qwen 2.5 14B
-ollama pull nomic-embed-text   # embedding model</code>
+ollama pull nomic-embed-text   # embedding model</code></pre>
           </div>
           <p class="text-sm text-slate-400/90">The tag after the colon specifies the variant. <code class="rounded bg-white/10 px-1">:latest</code> is the default if no tag is specified.</p>
         </section>
@@ -169,17 +262,35 @@ ollama pull nomic-embed-text   # embedding model</code>
           <p>A Modelfile lets you package a model with a custom system prompt and parameters into a named local variant.</p>
           <div class="rounded-2xl border border-white/10 bg-white/[0.03] p-5 space-y-3">
             <p class="text-xs font-semibold text-slate-400">Modelfile</p>
-            <code class="block font-mono text-xs text-slate-300 whitespace-pre">FROM llama3.2
+            <div class="ds-codeblock not-prose rounded-xl overflow-hidden border border-white/10">
+              <div class="ds-codeblock-header flex items-center justify-between px-4 py-2.5 bg-white/[0.05] border-b border-white/10">
+                <span class="text-xs font-medium text-slate-400">modelfile</span>
+                <button class="ds-codeblock-copy flex items-center gap-1.5 text-xs text-slate-400 hover:text-white transition-colors">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                  Copy
+                </button>
+              </div>
+              <pre class="ds-codeblock-pre overflow-x-auto p-4 text-sm leading-relaxed m-0"><code class="ds-codeblock-source language-text">FROM llama3.2
 
 SYSTEM """
 You are a Python tutor. Explain concepts simply with
 code examples. Never write pseudocode.
 """
 
-PARAMETER temperature 0.3</code>
-            <p class="text-xs font-semibold text-slate-400 mt-3">Build and run</p>
-            <code class="block font-mono text-xs text-slate-300 whitespace-pre">ollama create python-tutor -f Modelfile
-ollama run python-tutor</code>
+PARAMETER temperature 0.3</code></pre>
+            </div>
+            <p class="text-xs font-semibold text-slate-400">Build and run</p>
+            <div class="ds-codeblock not-prose rounded-xl overflow-hidden border border-white/10">
+              <div class="ds-codeblock-header flex items-center justify-between px-4 py-2.5 bg-white/[0.05] border-b border-white/10">
+                <span class="text-xs font-medium text-slate-400">bash</span>
+                <button class="ds-codeblock-copy flex items-center gap-1.5 text-xs text-slate-400 hover:text-white transition-colors">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                  Copy
+                </button>
+              </div>
+              <pre class="ds-codeblock-pre overflow-x-auto p-4 text-sm leading-relaxed m-0"><code class="ds-codeblock-source language-bash">ollama create python-tutor -f Modelfile
+ollama run python-tutor</code></pre>
+            </div>
           </div>
         </section>
 
