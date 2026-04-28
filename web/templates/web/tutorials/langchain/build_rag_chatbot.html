@@ -184,6 +184,7 @@ from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
 from langchain_core.output_parsers import StrOutputParser
 from langchain_core.runnables import RunnablePassthrough
 from langchain_core.runnables.history import RunnableWithMessageHistory
+from operator import itemgetter
 from langchain_community.chat_message_histories import ChatMessageHistory
 
 INDEX_DIR = "faiss_index"
@@ -224,8 +225,9 @@ def format_docs(docs):
 
 chain = (
     {
-        "context":  retriever | format_docs,
-        "question": RunnablePassthrough(),
+        "context":  itemgetter("question") | retriever | format_docs,
+        "question": itemgetter("question"),
+        "history":  itemgetter("history"),
     }
     | prompt
     | llm
@@ -261,7 +263,7 @@ while True:
         break
     if not question:
         continue
-    answer = chat.invoke(question, config=config)
+    answer = chat.invoke({"question": question}, config=config)
     print(f"Bot: {answer}\n")</code></pre>
           </div>
         </section>
@@ -318,6 +320,10 @@ You: quit</code>
             <div class="rounded-2xl border border-amber-500/20 bg-amber-500/[0.05] p-4">
               <h3 class="text-sm font-semibold text-amber-100">Model decommissioned error</h3>
               <p class="text-xs text-slate-400/90 mt-1">Groq retires older models. If you get a <code class="rounded bg-white/10 px-1">model_decommissioned</code> error, change <code class="rounded bg-white/10 px-1">GROQ_MODEL</code> in <code class="rounded bg-white/10 px-1">chatbot.py</code> to a current model from <strong class="text-slate-300">console.groq.com/docs/models</strong>.</p>
+            </div>
+            <div class="rounded-2xl border border-amber-500/20 bg-amber-500/[0.05] p-4">
+              <h3 class="text-sm font-semibold text-amber-100">RunnablePassthrough / missing history variable</h3>
+              <p class="text-xs text-slate-400/90 mt-1">In newer LangChain versions, <code class="rounded bg-white/10 px-1">RunnableWithMessageHistory</code> requires a dict input and does not automatically forward the <code class="rounded bg-white/10 px-1">history</code> key through chain transformations. The fix: use <code class="rounded bg-white/10 px-1">itemgetter("question")</code> and <code class="rounded bg-white/10 px-1">itemgetter("history")</code> in the chain, and pass <code class="rounded bg-white/10 px-1">{"question": question}</code> to <code class="rounded bg-white/10 px-1">.invoke()</code>.</p>
             </div>
             <div class="rounded-2xl border border-amber-500/20 bg-amber-500/[0.05] p-4">
               <h3 class="text-sm font-semibold text-amber-100">Index not found on startup</h3>
