@@ -455,7 +455,7 @@ _TUTORIALS = [
         "read_time": 18,
         "icon": "🔗",
         "icon_gradient": "from-violet-500/40 via-purple-400/20 to-fuchsia-400/25",
-        "url": "#",
+        "url": "/tutorials/langchain/introduction/",
     },
     {
         "title": "RAG Pipeline Tutorial",
@@ -602,6 +602,57 @@ def tutorial_ai_agents_next(request):
         "web/tutorials/ai_agents/whats_next.html",
         {"layout": _layout(request.path), "active_nav": "tutorials"},
     )
+
+
+_LANGCHAIN_SERIES = [
+    {"number": 2, "title": "Core Concepts", "summary": "LLM vs Chat Models, Chains vs Agents, LCEL & Runnable interface, LangGraph intro.", "url": "tutorial_langchain_concepts"},
+    {"number": 3, "title": "Prompt Templates", "summary": "PromptTemplate, ChatPromptTemplate, few-shot prompts, structured outputs, guardrails.", "url": "tutorial_langchain_prompts"},
+    {"number": 4, "title": "Chains & LCEL", "summary": "LLMChain, SequentialChain, and the modern LCEL pipe syntax in depth.", "url": "tutorial_langchain_chains"},
+    {"number": 5, "title": "Memory", "summary": "Conversation memory, summary memory, token limits, and when NOT to use memory.", "url": "tutorial_langchain_memory"},
+    {"number": 6, "title": "Tools & Agents", "summary": "Tool vs Agent distinction, ReAct flow, web search and calculator tool examples.", "url": "tutorial_langchain_agents"},
+    {"number": 7, "title": "RAG Pipeline", "summary": "Chunking, embeddings, FAISS, similarity search, retrieval strategies, common mistakes.", "url": "tutorial_langchain_rag"},
+    {"number": 8, "title": "Build a RAG Chatbot", "summary": "Hands-on: full document Q&A chatbot — load, chunk, embed, store, retrieve, answer.", "url": "tutorial_langchain_build"},
+]
+
+
+def tutorial_langchain_intro(request):
+    return render(
+        request,
+        "web/tutorials/langchain/introduction.html",
+        {
+            "layout": _layout(request.path),
+            "active_nav": "tutorials",
+            "series_pages": _LANGCHAIN_SERIES,
+        },
+    )
+
+
+def tutorial_langchain_concepts(request):
+    return render(request, "web/tutorials/langchain/core_concepts.html", {"layout": _layout(request.path), "active_nav": "tutorials"})
+
+
+def tutorial_langchain_prompts(request):
+    return render(request, "web/tutorials/langchain/prompt_templates.html", {"layout": _layout(request.path), "active_nav": "tutorials"})
+
+
+def tutorial_langchain_chains(request):
+    return render(request, "web/tutorials/langchain/chains_lcel.html", {"layout": _layout(request.path), "active_nav": "tutorials"})
+
+
+def tutorial_langchain_memory(request):
+    return render(request, "web/tutorials/langchain/memory.html", {"layout": _layout(request.path), "active_nav": "tutorials"})
+
+
+def tutorial_langchain_agents(request):
+    return render(request, "web/tutorials/langchain/tools_agents.html", {"layout": _layout(request.path), "active_nav": "tutorials"})
+
+
+def tutorial_langchain_rag(request):
+    return render(request, "web/tutorials/langchain/rag_pipeline.html", {"layout": _layout(request.path), "active_nav": "tutorials"})
+
+
+def tutorial_langchain_build(request):
+    return render(request, "web/tutorials/langchain/build_rag_chatbot.html", {"layout": _layout(request.path), "active_nav": "tutorials"})
 
 
 def tutorials(request):

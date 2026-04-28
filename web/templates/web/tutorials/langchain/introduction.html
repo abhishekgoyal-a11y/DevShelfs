@@ -1,0 +1,149 @@
+{% extends "web/base.html" %}
+{% block title %}Introduction to LangChain — DevShelf Tutorials{% endblock %}
+{% block content %}
+  <div class="space-y-10">
+
+    {# ── Breadcrumb ── #}
+    <div class="flex flex-wrap items-center gap-2 text-sm text-slate-400/90">
+      <a href="{% url 'tutorials' %}" class="font-medium text-emerald-300/90 transition hover:text-emerald-200">Tutorials</a>
+      <span aria-hidden class="text-slate-600">/</span>
+      <a href="{% url 'tutorials' %}?category=ai-agents" class="font-medium text-emerald-300/90 transition hover:text-emerald-200">AI Agents</a>
+      <span aria-hidden class="text-slate-600">/</span>
+      <span class="text-slate-200/90">Introduction</span>
+    </div>
+
+    {# ── Hero ── #}
+    <section class="relative overflow-hidden rounded-3xl border border-violet-400/20 bg-white/[0.06] p-6 shadow-[0_0_0_1px_rgba(255,255,255,0.04)] backdrop-blur-2xl sm:p-8">
+      <div class="pointer-events-none absolute -right-24 top-0 h-72 w-72 rounded-full bg-violet-500/15 blur-3xl"></div>
+      <div class="pointer-events-none absolute -left-20 bottom-0 h-56 w-56 rounded-full bg-fuchsia-500/10 blur-3xl"></div>
+      <div class="relative">
+        <div class="flex flex-wrap items-center gap-3">
+          <span class="rounded-full border border-violet-500/25 bg-violet-500/10 px-2.5 py-1 text-xs font-medium text-violet-300/90">LangChain</span>
+          <span class="rounded-full border border-sky-500/25 bg-sky-500/10 px-2.5 py-1 text-xs font-medium text-sky-300/90">Intermediate</span>
+          <span class="text-xs text-slate-400/80">· 6 min read</span>
+          <span class="ml-auto text-xs font-medium text-slate-400/80">Page 1 of 8</span>
+        </div>
+        <h1 class="mt-4 text-3xl font-semibold tracking-tight text-white sm:text-4xl lg:text-[2.5rem] lg:leading-tight">
+          Introduction to LangChain
+        </h1>
+        <p class="mt-4 max-w-2xl text-sm leading-relaxed text-slate-200/80 sm:text-base">
+          Welcome to the LangChain tutorial series. By the end you will understand the framework inside-out and have built a working RAG chatbot in Python.
+        </p>
+        <div class="mt-6">
+          <div class="mb-1.5 flex items-center justify-between text-xs text-slate-400/80">
+            <span>Series progress</span><span>1 / 8</span>
+          </div>
+          <div class="h-1.5 w-full overflow-hidden rounded-full bg-white/10">
+            <div class="h-full w-[12%] rounded-full bg-violet-400/70"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    {# ── Content ── #}
+    <div class="glass rounded-3xl border border-white/10 p-5 sm:p-8">
+      <article class="mx-auto space-y-12 text-base leading-relaxed text-slate-300/95">
+
+        <section class="space-y-4" aria-labelledby="what-heading">
+          <h2 id="what-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">What is LangChain?</h2>
+          <p>
+            LangChain is a Python (and JavaScript) framework for building applications powered by large language models.
+            It gives you a standard interface for connecting LLMs to external data, tools, memory, and other LLMs —
+            so you are not reinventing the plumbing every time.
+          </p>
+          <p>
+            At its core, LangChain is a set of composable building blocks. You snap them together to create chains,
+            agents, and pipelines that would otherwise take hundreds of lines of boilerplate.
+          </p>
+          <p class="rounded-xl border border-white/10 bg-white/[0.02] px-4 py-3 text-sm">
+            <strong class="text-slate-200">One-line version:</strong> LangChain is the glue between your LLM and everything else — documents, APIs, tools, memory, databases.
+          </p>
+        </section>
+
+        <section class="space-y-4" aria-labelledby="why-heading">
+          <h2 id="why-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">Why use LangChain?</h2>
+          <div class="space-y-3">
+            <div class="rounded-2xl border border-white/10 bg-white/[0.03] p-5">
+              <h3 class="text-sm font-semibold text-white">Without LangChain</h3>
+              <p class="mt-1.5 text-sm text-slate-400/90">You manually handle prompt formatting, API calls, output parsing, tool definitions, memory management, and retrieval logic — every project from scratch.</p>
+            </div>
+            <div class="rounded-2xl border border-violet-500/20 bg-violet-500/[0.05] p-5">
+              <h3 class="text-sm font-semibold text-violet-100">With LangChain</h3>
+              <p class="mt-1.5 text-sm text-slate-400/90">All of that is pre-built. You compose components using a clean, consistent interface — chain a prompt to a model to a parser in three lines.</p>
+            </div>
+          </div>
+        </section>
+
+        <section class="space-y-4" aria-labelledby="prereqs-heading">
+          <h2 id="prereqs-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">Prerequisites</h2>
+          <ul class="list-disc space-y-2 pl-5 marker:text-violet-400/80">
+            <li>Python 3.10+ and basic Python knowledge</li>
+            <li>Familiarity with what an LLM is (GPT-4, Claude, etc.)</li>
+            <li>An OpenAI API key — used for all hands-on examples</li>
+            <li>Completed the AI Agents series or similar background is helpful but not required</li>
+          </ul>
+          <p class="rounded-xl border border-white/10 bg-white/[0.02] px-4 py-3 text-sm">
+            <span class="font-medium text-violet-200">Note:</span> Pages 1–6 are conceptual with short code snippets. You only need a full Python environment for Pages 7 and 8.
+          </p>
+        </section>
+
+        <section class="space-y-4" aria-labelledby="learn-heading">
+          <h2 id="learn-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">What you will learn</h2>
+          <ul class="list-disc space-y-2 pl-5 marker:text-violet-400/80">
+            <li>How LangChain's core abstractions work (models, prompts, chains, agents)</li>
+            <li>How to write and compose prompts with PromptTemplate and LCEL</li>
+            <li>How to add memory to a conversation chain</li>
+            <li>How to give an agent tools and let it reason with them</li>
+            <li>How to build a full RAG pipeline over your own documents</li>
+            <li>How to ship a working document Q&A chatbot end-to-end</li>
+          </ul>
+        </section>
+
+        <section class="space-y-6" aria-labelledby="series-heading">
+          <h2 id="series-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">Series overview</h2>
+          <div class="space-y-3">
+            <div class="flex items-start gap-4 rounded-2xl border border-violet-400/25 bg-violet-500/[0.07] p-4">
+              <span class="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-violet-500/20 text-xs font-bold text-violet-300">1</span>
+              <div>
+                <p class="font-semibold text-white">Introduction <span class="ml-2 text-xs font-normal text-violet-300/80">← You are here</span></p>
+                <p class="mt-0.5 text-sm text-slate-400/90">What LangChain is, why it exists, prerequisites, and series overview.</p>
+              </div>
+            </div>
+            {% for page in series_pages %}
+              <div class="flex items-start gap-4 rounded-2xl border border-white/10 bg-white/[0.02] p-4">
+                <span class="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-white/10 text-xs font-bold text-slate-300">{{ page.number }}</span>
+                <div>
+                  <p class="font-semibold text-slate-200">{{ page.title }}</p>
+                  <p class="mt-0.5 text-sm text-slate-400/90">{{ page.summary }}</p>
+                </div>
+              </div>
+            {% endfor %}
+          </div>
+        </section>
+
+        <section class="rounded-2xl border border-violet-500/20 bg-violet-500/[0.06] p-5 sm:p-6">
+          <h2 class="text-lg font-semibold text-violet-100">Quick summary</h2>
+          <ul class="mt-3 list-disc space-y-1.5 pl-5 text-sm text-slate-300/95 marker:text-violet-400/80">
+            <li>LangChain connects LLMs to data, tools, memory, and other LLMs</li>
+            <li>It provides composable building blocks — no boilerplate per project</li>
+            <li>8 pages covering concepts, prompts, chains, memory, agents, RAG, and a full build</li>
+            <li>Start with Page 2 to understand the core abstractions</li>
+          </ul>
+        </section>
+
+      </article>
+    </div>
+
+    {# ── Navigation ── #}
+    <div class="flex items-center justify-between">
+      <div></div>
+      <a
+        href="{% url 'tutorial_langchain_concepts' %}"
+        class="inline-flex items-center gap-2 rounded-xl border border-violet-400/35 bg-violet-500/10 px-5 py-2.5 text-sm font-semibold text-violet-200 transition hover:border-violet-300/50 hover:bg-violet-500/20 hover:text-white"
+      >
+        Next: Core Concepts <span aria-hidden>→</span>
+      </a>
+    </div>
+
+  </div>
+{% endblock %}
