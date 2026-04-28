@@ -485,7 +485,7 @@ _TUTORIALS = [
         "read_time": 8,
         "icon": "💻",
         "icon_gradient": "from-lime-500/40 via-green-400/20 to-emerald-400/25",
-        "url": "#",
+        "url": "/tutorials/run-llms-locally/introduction/",
     },
     {
         "title": "Build with CrewAI",
@@ -714,6 +714,62 @@ def tutorial_pe_security(request):
 
 def tutorial_pe_testing(request):
     return render(request, "web/tutorials/prompt_engineering/testing_engineering.html", {"layout": _layout(request.path), "active_nav": "tutorials"})
+
+
+_RUN_LLM_SERIES = [
+    {"number": 2, "title": "Ollama", "summary": "Install, pull models, ollama run, REST API, and the model library.", "url": "tutorial_rll_ollama"},
+    {"number": 3, "title": "Open-source Model Landscape", "summary": "Llama 3, Mistral, Gemma, Phi-3, Qwen — size vs quality tradeoffs and use-case guide.", "url": "tutorial_rll_models"},
+    {"number": 4, "title": "Model Selection Strategy", "summary": "Chat vs embedding vs coding models, small vs large tradeoffs, when local is NOT enough.", "url": "tutorial_rll_selection"},
+    {"number": 5, "title": "LM Studio", "summary": "GUI setup, model download, local OpenAI-compatible server — ideal for non-technical users.", "url": "tutorial_rll_lmstudio"},
+    {"number": 6, "title": "Quantization & Performance", "summary": "GGUF vs GPTQ, Q4 vs Q8, GPU offloading, and CPU-only performance tips.", "url": "tutorial_rll_quantization"},
+    {"number": 7, "title": "Limitations of Local Models", "summary": "Hallucination rates, weak reasoning in small models, context limits, maintenance overhead.", "url": "tutorial_rll_limitations"},
+    {"number": 8, "title": "Local Models with LangChain", "summary": "ChatOllama, OpenAI-compatible endpoint, drop-in replacement for GPT in your chains.", "url": "tutorial_rll_langchain"},
+    {"number": 9, "title": "Local RAG Pipeline", "summary": "End-to-end RAG with local embeddings, hybrid search, reranking, and Docker deployment.", "url": "tutorial_rll_rag"},
+]
+
+
+def tutorial_rll_intro(request):
+    return render(
+        request,
+        "web/tutorials/run_llms_locally/introduction.html",
+        {
+            "layout": _layout(request.path),
+            "active_nav": "tutorials",
+            "series_pages": _RUN_LLM_SERIES,
+        },
+    )
+
+
+def tutorial_rll_ollama(request):
+    return render(request, "web/tutorials/run_llms_locally/ollama.html", {"layout": _layout(request.path), "active_nav": "tutorials"})
+
+
+def tutorial_rll_models(request):
+    return render(request, "web/tutorials/run_llms_locally/model_landscape.html", {"layout": _layout(request.path), "active_nav": "tutorials"})
+
+
+def tutorial_rll_selection(request):
+    return render(request, "web/tutorials/run_llms_locally/model_selection.html", {"layout": _layout(request.path), "active_nav": "tutorials"})
+
+
+def tutorial_rll_lmstudio(request):
+    return render(request, "web/tutorials/run_llms_locally/lm_studio.html", {"layout": _layout(request.path), "active_nav": "tutorials"})
+
+
+def tutorial_rll_quantization(request):
+    return render(request, "web/tutorials/run_llms_locally/quantization.html", {"layout": _layout(request.path), "active_nav": "tutorials"})
+
+
+def tutorial_rll_limitations(request):
+    return render(request, "web/tutorials/run_llms_locally/limitations.html", {"layout": _layout(request.path), "active_nav": "tutorials"})
+
+
+def tutorial_rll_langchain(request):
+    return render(request, "web/tutorials/run_llms_locally/langchain_local.html", {"layout": _layout(request.path), "active_nav": "tutorials"})
+
+
+def tutorial_rll_rag(request):
+    return render(request, "web/tutorials/run_llms_locally/local_rag.html", {"layout": _layout(request.path), "active_nav": "tutorials"})
 
 
 def tutorials(request):

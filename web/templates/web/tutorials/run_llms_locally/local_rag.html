@@ -1,0 +1,396 @@
+{% extends "web/base.html" %}
+{% block title %}Local RAG Pipeline — Run LLMs Locally{% endblock %}
+{% block content %}
+  <div class="space-y-10">
+
+    <div class="flex flex-wrap items-center gap-2 text-sm text-slate-400/90">
+      <a href="{% url 'tutorials' %}" class="font-medium text-lime-300/90 transition hover:text-lime-200">Tutorials</a>
+      <span aria-hidden class="text-slate-600">/</span>
+      <a href="{% url 'tutorial_rll_intro' %}" class="font-medium text-lime-300/90 transition hover:text-lime-200">Run LLMs Locally</a>
+      <span aria-hidden class="text-slate-600">/</span>
+      <span class="text-slate-200/90">Local RAG Pipeline</span>
+    </div>
+
+    <section class="relative overflow-hidden rounded-3xl border border-lime-400/20 bg-white/[0.06] p-6 shadow-[0_0_0_1px_rgba(255,255,255,0.04)] backdrop-blur-2xl sm:p-8">
+      <div class="pointer-events-none absolute -right-24 top-0 h-72 w-72 rounded-full bg-lime-500/15 blur-3xl"></div>
+      <div class="pointer-events-none absolute -left-20 bottom-0 h-56 w-56 rounded-full bg-green-500/10 blur-3xl"></div>
+      <div class="relative">
+        <div class="flex flex-wrap items-center gap-3">
+          <span class="rounded-full border border-lime-500/25 bg-lime-500/10 px-2.5 py-1 text-xs font-medium text-lime-300/90">Run LLMs Locally</span>
+          <span class="rounded-full border border-sky-500/25 bg-sky-500/10 px-2.5 py-1 text-xs font-medium text-sky-300/90">Intermediate</span>
+          <span class="text-xs text-slate-400/80">· 14 min read</span>
+          <span class="ml-auto text-xs font-medium text-slate-400/80">Page 9 of 9</span>
+        </div>
+        <h1 class="mt-4 text-3xl font-semibold tracking-tight text-white sm:text-4xl lg:text-[2.5rem] lg:leading-tight">Local RAG Pipeline</h1>
+        <p class="mt-4 max-w-2xl text-sm leading-relaxed text-slate-200/80 sm:text-base">
+          End-to-end RAG with local embeddings — chunking strategies, hybrid search, reranking, and running everything in Docker with zero cloud dependencies.
+        </p>
+        <div class="mt-6">
+          <div class="mb-1.5 flex items-center justify-between text-xs text-slate-400/80"><span>Series progress</span><span>9 / 9</span></div>
+          <div class="h-1.5 w-full overflow-hidden rounded-full bg-white/10"><div class="h-full w-full rounded-full bg-lime-400/70"></div></div>
+        </div>
+      </div>
+    </section>
+
+    <div class="glass rounded-3xl border border-white/10 p-5 sm:p-8">
+      <article class="mx-auto space-y-12 text-base leading-relaxed text-slate-300/95">
+
+        <section class="space-y-5" aria-labelledby="overview-heading">
+          <h2 id="overview-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">What makes a fully local RAG pipeline different</h2>
+          <p>The LangChain RAG tutorial covered the standard pattern: OpenAI embeddings + FAISS + GPT-4. A fully local pipeline replaces every cloud component — embeddings, vector store, and the LLM — with local equivalents. No API keys, no internet, no per-token cost.</p>
+          <div class="rounded-2xl border border-white/10 bg-white/[0.03] p-5">
+            <p class="text-xs font-semibold text-slate-400 mb-3">Architecture comparison</p>
+            <div class="grid gap-3 sm:grid-cols-2">
+              <div class="space-y-1.5">
+                <p class="text-xs font-semibold text-slate-500">Cloud RAG</p>
+                <ul class="space-y-1 text-xs text-slate-400/90">
+                  <li class="flex items-center gap-2"><span class="text-slate-600">→</span> <code class="rounded bg-white/10 px-1">text-embedding-3-small</code> (OpenAI)</li>
+                  <li class="flex items-center gap-2"><span class="text-slate-600">→</span> Pinecone / Weaviate (cloud vector DB)</li>
+                  <li class="flex items-center gap-2"><span class="text-slate-600">→</span> <code class="rounded bg-white/10 px-1">gpt-4o-mini</code> (OpenAI LLM)</li>
+                </ul>
+              </div>
+              <div class="space-y-1.5">
+                <p class="text-xs font-semibold text-lime-300/80">Local RAG (this page)</p>
+                <ul class="space-y-1 text-xs text-slate-400/90">
+                  <li class="flex items-center gap-2"><span class="text-lime-500/70">→</span> <code class="rounded bg-white/10 px-1">nomic-embed-text</code> (Ollama)</li>
+                  <li class="flex items-center gap-2"><span class="text-lime-500/70">→</span> Chroma or FAISS (local)</li>
+                  <li class="flex items-center gap-2"><span class="text-lime-500/70">→</span> <code class="rounded bg-white/10 px-1">llama3.1:8b</code> (Ollama LLM)</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="space-y-5" aria-labelledby="ingest-heading">
+          <h2 id="ingest-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">Step 1 — Ingestion (ingest.py)</h2>
+          <p>The ingestion script loads documents, splits them into chunks, embeds each chunk, and persists the vector store to disk. Run this once whenever your source documents change.</p>
+          <div class="rounded-2xl border border-white/10 bg-white/[0.03] p-5">
+            <code class="block font-mono text-xs text-slate-300 whitespace-pre">pip install langchain-ollama langchain-community chromadb pypdf</code>
+          </div>
+          <div class="rounded-2xl border border-white/10 bg-white/[0.03] p-5">
+            <p class="text-xs font-semibold text-slate-400 mb-3">ingest.py</p>
+            <code class="block font-mono text-xs text-slate-300 whitespace-pre">from pathlib import Path
+from langchain_community.document_loaders import PyPDFLoader, DirectoryLoader
+from langchain_text_splitters import RecursiveCharacterTextSplitter
+from langchain_ollama import OllamaEmbeddings
+from langchain_community.vectorstores import Chroma
+
+DOCS_DIR = "./docs"
+CHROMA_DIR = "./chroma_db"
+EMBED_MODEL = "nomic-embed-text"
+
+def ingest():
+    # Load all PDFs from docs/ directory
+    loader = DirectoryLoader(DOCS_DIR, glob="**/*.pdf", loader_cls=PyPDFLoader)
+    raw_docs = loader.load()
+    print(f"Loaded {len(raw_docs)} pages from {DOCS_DIR}")
+
+    # Split into overlapping chunks
+    splitter = RecursiveCharacterTextSplitter(
+        chunk_size=512,
+        chunk_overlap=64,
+        separators=["\n\n", "\n", ".", " ", ""],
+    )
+    chunks = splitter.split_documents(raw_docs)
+    print(f"Split into {len(chunks)} chunks")
+
+    # Embed with local Ollama model
+    embeddings = OllamaEmbeddings(model=EMBED_MODEL)
+
+    # Persist to disk — reusable across runs
+    vectorstore = Chroma.from_documents(
+        documents=chunks,
+        embedding=embeddings,
+        persist_directory=CHROMA_DIR,
+    )
+    print(f"Stored {len(chunks)} chunks in {CHROMA_DIR}")
+
+if __name__ == "__main__":
+    ingest()</code>
+          </div>
+          <div class="rounded-xl border border-white/10 bg-white/[0.02] px-4 py-3 text-sm">
+            <strong class="text-slate-200">Pull the embedding model first:</strong>
+            <code class="ml-2 rounded bg-white/10 px-1 text-xs">ollama pull nomic-embed-text</code>
+            <span class="text-slate-400/90 ml-2">— only needed once.</span>
+          </div>
+        </section>
+
+        <section class="space-y-5" aria-labelledby="chunking-heading">
+          <h2 id="chunking-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">Chunking strategy matters</h2>
+          <p>The chunk size you choose directly affects retrieval quality. There is no universally correct value — it depends on your document type and query style.</p>
+          <div class="overflow-x-auto rounded-2xl border border-white/10">
+            <table class="w-full text-sm">
+              <thead><tr class="border-b border-white/10 bg-white/[0.04]"><th class="px-4 py-3 text-left font-semibold text-slate-200">Chunk size</th><th class="px-4 py-3 text-left font-semibold text-slate-200">Best for</th><th class="px-4 py-3 text-left font-semibold text-slate-200">Risk</th></tr></thead>
+              <tbody class="divide-y divide-white/5 text-xs">
+                <tr><td class="px-4 py-3 font-mono text-lime-300">128–256 tokens</td><td class="px-4 py-3 text-slate-400/90">Precise fact extraction, Q&A over structured content</td><td class="px-4 py-3 text-slate-400/90">Loses context — answers lack surrounding explanation</td></tr>
+                <tr><td class="px-4 py-3 font-mono text-lime-300">512 tokens</td><td class="px-4 py-3 text-slate-400/90">General-purpose default — articles, documentation, PDFs</td><td class="px-4 py-3 text-slate-400/90">May split mid-sentence without good separators</td></tr>
+                <tr><td class="px-4 py-3 font-mono text-lime-300">1024+ tokens</td><td class="px-4 py-3 text-slate-400/90">Long-form analysis, book chapters, legal documents</td><td class="px-4 py-3 text-slate-400/90">Retrieves irrelevant context alongside relevant content</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="rounded-xl border border-amber-500/20 bg-amber-500/[0.05] px-4 py-3 text-sm">
+            <strong class="text-amber-100">Overlap is not optional.</strong>
+            <span class="text-slate-400/90"> A chunk_overlap of 10–15% of chunk_size (e.g. 64 tokens for 512-token chunks) prevents key sentences from being split across chunks and never retrieved together.</span>
+          </div>
+        </section>
+
+        <section class="space-y-5" aria-labelledby="query-heading">
+          <h2 id="query-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">Step 2 — Query pipeline (rag.py)</h2>
+          <p>The query pipeline loads the persisted Chroma store, retrieves relevant chunks for the user's question, and passes them to the local LLM.</p>
+          <div class="rounded-2xl border border-white/10 bg-white/[0.03] p-5">
+            <p class="text-xs font-semibold text-slate-400 mb-3">rag.py</p>
+            <code class="block font-mono text-xs text-slate-300 whitespace-pre">from langchain_ollama import OllamaEmbeddings, ChatOllama
+from langchain_community.vectorstores import Chroma
+from langchain_core.prompts import ChatPromptTemplate
+from langchain_core.output_parsers import StrOutputParser
+from langchain_core.runnables import RunnablePassthrough
+
+CHROMA_DIR = "./chroma_db"
+EMBED_MODEL = "nomic-embed-text"
+CHAT_MODEL = "llama3.1:8b"
+
+# Load persisted store
+embeddings = OllamaEmbeddings(model=EMBED_MODEL)
+vectorstore = Chroma(persist_directory=CHROMA_DIR, embedding_function=embeddings)
+retriever = vectorstore.as_retriever(search_kwargs={"k": 4})
+
+# RAG prompt — instruct the model to use only the context
+prompt = ChatPromptTemplate.from_messages([
+    ("system", """You are a helpful assistant. Answer the question using ONLY the
+context provided below. If the answer is not in the context, say so clearly.
+
+Context:
+{context}"""),
+    ("human", "{question}"),
+])
+
+llm = ChatOllama(model=CHAT_MODEL, temperature=0)
+
+def format_docs(docs):
+    return "\n\n---\n\n".join(doc.page_content for doc in docs)
+
+rag_chain = (
+    {"context": retriever | format_docs, "question": RunnablePassthrough()}
+    | prompt
+    | llm
+    | StrOutputParser()
+)
+
+if __name__ == "__main__":
+    while True:
+        q = input("\nQuestion (or 'quit'): ").strip()
+        if q.lower() == "quit":
+            break
+        answer = rag_chain.invoke(q)
+        print(f"\nAnswer: {answer}")</code>
+          </div>
+        </section>
+
+        <section class="space-y-5" aria-labelledby="hybrid-heading">
+          <h2 id="hybrid-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">Hybrid search — combining BM25 and vector retrieval</h2>
+          <p>Pure vector search misses exact keyword matches. Hybrid search runs BM25 (keyword) and vector retrieval in parallel, then merges results with Reciprocal Rank Fusion (RRF). This usually outperforms either method alone.</p>
+          <div class="rounded-2xl border border-white/10 bg-white/[0.03] p-5">
+            <code class="block font-mono text-xs text-slate-300 whitespace-pre">pip install rank-bm25 langchain-community</code>
+          </div>
+          <div class="rounded-2xl border border-lime-500/20 bg-lime-500/[0.04] p-5">
+            <code class="block font-mono text-xs text-slate-300 whitespace-pre">from langchain_community.retrievers import BM25Retriever
+from langchain.retrievers import EnsembleRetriever
+
+# BM25 needs the raw text chunks (not the vector store)
+bm25_retriever = BM25Retriever.from_documents(chunks)
+bm25_retriever.k = 4
+
+# Vector retriever from Chroma
+vector_retriever = vectorstore.as_retriever(search_kwargs={"k": 4})
+
+# Ensemble: 40% BM25, 60% vector — tweak weights for your use case
+hybrid_retriever = EnsembleRetriever(
+    retrievers=[bm25_retriever, vector_retriever],
+    weights=[0.4, 0.6],
+)
+
+# Drop-in replacement for the single retriever in rag_chain
+rag_chain = (
+    {"context": hybrid_retriever | format_docs, "question": RunnablePassthrough()}
+    | prompt | llm | StrOutputParser()
+)</code>
+          </div>
+          <p class="text-sm text-slate-400/90">BM25 is particularly effective for product names, error codes, and proper nouns that don't embed well. Adding it costs minimal overhead because it operates on in-memory term frequencies.</p>
+        </section>
+
+        <section class="space-y-5" aria-labelledby="rerank-heading">
+          <h2 id="rerank-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">Reranking — improving precision after retrieval</h2>
+          <p>Retrieval returns the top-k candidates. A reranker re-scores them using a cross-encoder — more accurate than embedding similarity, but too slow to run on the full corpus. The pattern is retrieve-many, rerank-to-few.</p>
+          <div class="rounded-2xl border border-white/10 bg-white/[0.03] p-5">
+            <code class="block font-mono text-xs text-slate-300 whitespace-pre">pip install sentence-transformers</code>
+          </div>
+          <div class="rounded-2xl border border-white/10 bg-white/[0.03] p-5">
+            <code class="block font-mono text-xs text-slate-300 whitespace-pre">from sentence_transformers import CrossEncoder
+from langchain_core.documents import Document
+
+reranker = CrossEncoder("cross-encoder/ms-marco-MiniLM-L-6-v2")
+
+def rerank(query: str, docs: list[Document], top_n: int = 3) -> list[Document]:
+    pairs = [(query, doc.page_content) for doc in docs]
+    scores = reranker.predict(pairs)
+    ranked = sorted(zip(scores, docs), key=lambda x: x[0], reverse=True)
+    return [doc for _, doc in ranked[:top_n]]
+
+# Retrieve 8, rerank to top 3 — keeps context window small
+broad_retriever = vectorstore.as_retriever(search_kwargs={"k": 8})
+
+def retrieve_and_rerank(query):
+    docs = broad_retriever.invoke(query)
+    return rerank(query, docs, top_n=3)
+
+rag_chain = (
+    {"context": (lambda q: format_docs(retrieve_and_rerank(q))),
+     "question": RunnablePassthrough()}
+    | prompt | llm | StrOutputParser()
+)</code>
+          </div>
+          <div class="rounded-xl border border-white/10 bg-white/[0.02] px-4 py-3 text-sm">
+            <strong class="text-slate-200">cross-encoder/ms-marco-MiniLM-L-6-v2</strong>
+            <span class="text-slate-400/90"> — 23 MB, runs fast on CPU, no GPU needed. Larger cross-encoders exist but this is a good default for local pipelines.</span>
+          </div>
+        </section>
+
+        <section class="space-y-5" aria-labelledby="sources-heading">
+          <h2 id="sources-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">Returning source citations</h2>
+          <p>Always show which chunks were used to generate the answer. This lets users verify the response and builds trust — especially important for local models with higher hallucination rates.</p>
+          <div class="rounded-2xl border border-white/10 bg-white/[0.03] p-5">
+            <code class="block font-mono text-xs text-slate-300 whitespace-pre">from langchain_core.runnables import RunnableParallel
+
+rag_with_sources = RunnableParallel(
+    {"answer": rag_chain, "source_docs": retriever}
+)
+
+result = rag_with_sources.invoke("What is gradient descent?")
+
+print("Answer:", result["answer"])
+print("\nSources:")
+for doc in result["source_docs"]:
+    src = doc.metadata.get("source", "unknown")
+    page = doc.metadata.get("page", "?")
+    print(f"  • {src} (page {page})")</code>
+          </div>
+        </section>
+
+        <section class="space-y-5" aria-labelledby="docker-heading">
+          <h2 id="docker-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">Docker deployment</h2>
+          <p>Running Ollama in Docker makes the pipeline reproducible and easy to share. Use the official Ollama image and mount your models directory so you don't re-download models on every container restart.</p>
+          <div class="rounded-2xl border border-white/10 bg-white/[0.03] p-5">
+            <p class="text-xs font-semibold text-slate-400 mb-3">docker-compose.yml</p>
+            <code class="block font-mono text-xs text-slate-300 whitespace-pre">services:
+  ollama:
+    image: ollama/ollama:latest
+    ports:
+      - "11434:11434"
+    volumes:
+      - ~/.ollama:/root/.ollama   # persist downloaded models
+    restart: unless-stopped
+
+  rag-app:
+    build: .
+    depends_on:
+      - ollama
+    environment:
+      - OLLAMA_BASE_URL=http://ollama:11434
+    volumes:
+      - ./docs:/app/docs
+      - ./chroma_db:/app/chroma_db</code>
+          </div>
+          <div class="rounded-2xl border border-white/10 bg-white/[0.03] p-5">
+            <p class="text-xs font-semibold text-slate-400 mb-3">Dockerfile</p>
+            <code class="block font-mono text-xs text-slate-300 whitespace-pre">FROM python:3.11-slim
+WORKDIR /app
+COPY requirements.txt .
+RUN pip install --no-cache-dir -r requirements.txt
+COPY . .
+CMD ["python", "rag.py"]</code>
+          </div>
+          <div class="rounded-2xl border border-white/10 bg-white/[0.03] p-4">
+            <code class="block font-mono text-xs text-slate-300 whitespace-pre"># Start everything, pull models, then ingest
+docker compose up -d
+docker exec rag-app-ollama-1 ollama pull nomic-embed-text
+docker exec rag-app-ollama-1 ollama pull llama3.1:8b
+docker compose run rag-app python ingest.py</code>
+          </div>
+          <div class="rounded-xl border border-white/10 bg-white/[0.02] px-4 py-3 text-sm">
+            <strong class="text-slate-200">GPU in Docker:</strong>
+            <span class="text-slate-400/90"> Add <code class="rounded bg-white/10 px-1">deploy.resources.reservations.devices</code> with <code class="rounded bg-white/10 px-1">driver: nvidia</code> to the ollama service to enable GPU passthrough. Requires the NVIDIA Container Toolkit.</span>
+          </div>
+        </section>
+
+        <section class="space-y-5" aria-labelledby="complete-heading">
+          <h2 id="complete-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">Complete project structure</h2>
+          <div class="rounded-2xl border border-white/10 bg-white/[0.03] p-5">
+            <code class="block font-mono text-xs text-slate-300 whitespace-pre">local-rag/
+├── docs/               # drop PDFs and text files here
+├── chroma_db/          # auto-created by ingest.py
+├── ingest.py           # load → split → embed → persist
+├── rag.py              # retrieve → rerank → answer → cite
+├── requirements.txt
+├── Dockerfile
+└── docker-compose.yml</code>
+          </div>
+          <div class="rounded-2xl border border-white/10 bg-white/[0.03] p-5">
+            <p class="text-xs font-semibold text-slate-400 mb-2">requirements.txt</p>
+            <code class="block font-mono text-xs text-slate-300 whitespace-pre">langchain-ollama
+langchain-community
+langchain-text-splitters
+chromadb
+pypdf
+rank-bm25
+sentence-transformers</code>
+          </div>
+        </section>
+
+        <section class="space-y-4" aria-labelledby="common-heading">
+          <h2 id="common-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">Common failures and fixes</h2>
+          <div class="space-y-3">
+            <div class="rounded-2xl border border-amber-500/20 bg-amber-500/[0.05] p-4">
+              <h3 class="text-sm font-semibold text-amber-100">Model hallucinating despite context</h3>
+              <p class="text-xs text-slate-400/90 mt-1">Your system prompt must explicitly say "answer using ONLY the provided context". Many local models ignore soft instructions — be direct. Add "If the answer is not in the context, say you don't know."</p>
+            </div>
+            <div class="rounded-2xl border border-amber-500/20 bg-amber-500/[0.05] p-4">
+              <h3 class="text-sm font-semibold text-amber-100">Retrieval returns irrelevant chunks</h3>
+              <p class="text-xs text-slate-400/90 mt-1">Usually a chunking problem. Try reducing chunk_size from 1024 to 512. Add reranking. Check that your embedding model is appropriate for the language and domain of your documents.</p>
+            </div>
+            <div class="rounded-2xl border border-amber-500/20 bg-amber-500/[0.05] p-4">
+              <h3 class="text-sm font-semibold text-amber-100">Chroma persistence not loading</h3>
+              <p class="text-xs text-slate-400/90 mt-1">The persist_directory must be the same in both ingest.py and rag.py. Chroma v0.4+ handles persistence automatically — don't call <code class="rounded bg-white/10 px-1">.persist()</code> manually (deprecated).</p>
+            </div>
+            <div class="rounded-2xl border border-amber-500/20 bg-amber-500/[0.05] p-4">
+              <h3 class="text-sm font-semibold text-amber-100">Slow ingestion with large document sets</h3>
+              <p class="text-xs text-slate-400/90 mt-1">Embedding is the bottleneck. Run ingestion in batches. Consider switching to <code class="rounded bg-white/10 px-1">all-minilm</code> (23 MB, faster) for initial iteration, then switch to <code class="rounded bg-white/10 px-1">nomic-embed-text</code> for production quality.</p>
+            </div>
+          </div>
+        </section>
+
+        <section class="rounded-2xl border border-lime-500/20 bg-lime-500/[0.06] p-5 sm:p-6">
+          <h2 class="text-lg font-semibold text-lime-100">Series complete — quick summary</h2>
+          <ul class="mt-3 list-disc space-y-1.5 pl-5 text-sm text-slate-300/95 marker:text-lime-400/80">
+            <li>Full local RAG: <code class="rounded bg-white/10 px-1">OllamaEmbeddings</code> + Chroma (persistent) + <code class="rounded bg-white/10 px-1">ChatOllama</code> — zero cloud cost</li>
+            <li>Chunk size 512 with 10–15% overlap is a reliable default for mixed document types</li>
+            <li>Hybrid search (BM25 + vector + RRF) consistently outperforms vector-only retrieval</li>
+            <li>Reranking with <code class="rounded bg-white/10 px-1">ms-marco-MiniLM-L-6-v2</code>: retrieve 8, pass top 3 to the LLM</li>
+            <li>Always return source citations — local models need more verification, not less</li>
+            <li>Docker Compose with mounted <code class="rounded bg-white/10 px-1">~/.ollama</code> makes the pipeline reproducible and shareable</li>
+          </ul>
+        </section>
+
+      </article>
+    </div>
+
+    <div class="flex items-center justify-between">
+      <a href="{% url 'tutorial_rll_langchain' %}" class="inline-flex items-center gap-2 rounded-xl border border-white/15 bg-white/[0.04] px-5 py-2.5 text-sm font-semibold text-slate-200 transition hover:border-white/25 hover:bg-white/[0.07] hover:text-white">
+        <span aria-hidden>←</span> Local Models with LangChain
+      </a>
+      <a href="{% url 'tutorials' %}" class="inline-flex items-center gap-2 rounded-xl border border-lime-400/35 bg-lime-500/10 px-5 py-2.5 text-sm font-semibold text-lime-200 transition hover:border-lime-300/50 hover:bg-lime-500/20 hover:text-white">
+        All Tutorials <span aria-hidden>→</span>
+      </a>
+    </div>
+
+  </div>
+{% endblock %}

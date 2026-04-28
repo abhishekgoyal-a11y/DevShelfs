@@ -1,0 +1,184 @@
+{% extends "web/base.html" %}
+{% block title %}LM Studio — Run LLMs Locally{% endblock %}
+{% block content %}
+  <div class="space-y-10">
+
+    <div class="flex flex-wrap items-center gap-2 text-sm text-slate-400/90">
+      <a href="{% url 'tutorials' %}" class="font-medium text-lime-300/90 transition hover:text-lime-200">Tutorials</a>
+      <span aria-hidden class="text-slate-600">/</span>
+      <a href="{% url 'tutorial_rll_intro' %}" class="font-medium text-lime-300/90 transition hover:text-lime-200">Run LLMs Locally</a>
+      <span aria-hidden class="text-slate-600">/</span>
+      <span class="text-slate-200/90">LM Studio</span>
+    </div>
+
+    <section class="relative overflow-hidden rounded-3xl border border-lime-400/20 bg-white/[0.06] p-6 shadow-[0_0_0_1px_rgba(255,255,255,0.04)] backdrop-blur-2xl sm:p-8">
+      <div class="pointer-events-none absolute -right-24 top-0 h-72 w-72 rounded-full bg-lime-500/15 blur-3xl"></div>
+      <div class="pointer-events-none absolute -left-20 bottom-0 h-56 w-56 rounded-full bg-green-500/10 blur-3xl"></div>
+      <div class="relative">
+        <div class="flex flex-wrap items-center gap-3">
+          <span class="rounded-full border border-lime-500/25 bg-lime-500/10 px-2.5 py-1 text-xs font-medium text-lime-300/90">Run LLMs Locally</span>
+          <span class="rounded-full border border-emerald-500/25 bg-emerald-500/10 px-2.5 py-1 text-xs font-medium text-emerald-300/90">Beginner</span>
+          <span class="text-xs text-slate-400/80">· 8 min read</span>
+          <span class="ml-auto text-xs font-medium text-slate-400/80">Page 5 of 9</span>
+        </div>
+        <h1 class="mt-4 text-3xl font-semibold tracking-tight text-white sm:text-4xl lg:text-[2.5rem] lg:leading-tight">LM Studio</h1>
+        <p class="mt-4 max-w-2xl text-sm leading-relaxed text-slate-200/80 sm:text-base">
+          The GUI alternative to Ollama — discover models, chat in-app, and expose a local OpenAI-compatible server without touching the command line.
+        </p>
+        <div class="mt-6">
+          <div class="mb-1.5 flex items-center justify-between text-xs text-slate-400/80"><span>Series progress</span><span>5 / 9</span></div>
+          <div class="h-1.5 w-full overflow-hidden rounded-full bg-white/10"><div class="h-full w-[55%] rounded-full bg-lime-400/70"></div></div>
+        </div>
+      </div>
+    </section>
+
+    <div class="glass rounded-3xl border border-white/10 p-5 sm:p-8">
+      <article class="mx-auto space-y-12 text-base leading-relaxed text-slate-300/95">
+
+        <section class="space-y-5" aria-labelledby="what-heading">
+          <h2 id="what-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">What is LM Studio?</h2>
+          <p>LM Studio is a desktop app for macOS, Windows, and Linux that lets you download, manage, and run local LLMs through a graphical interface. No command line required.</p>
+          <div class="grid gap-4 sm:grid-cols-2">
+            <div class="rounded-2xl border border-lime-500/20 bg-lime-500/[0.05] p-5 space-y-2">
+              <h3 class="text-sm font-semibold text-lime-100">Choose LM Studio when…</h3>
+              <ul class="list-disc pl-4 space-y-1 text-xs text-slate-400/90 marker:text-lime-400">
+                <li>You prefer a GUI over the terminal</li>
+                <li>You want to try models visually before integrating them</li>
+                <li>You need to share a local model server with non-technical teammates</li>
+                <li>You want a built-in chat UI with model comparison</li>
+              </ul>
+            </div>
+            <div class="rounded-2xl border border-white/10 bg-white/[0.03] p-5 space-y-2">
+              <h3 class="text-sm font-semibold text-white">Choose Ollama when…</h3>
+              <ul class="list-disc pl-4 space-y-1 text-xs text-slate-400/90 marker:text-slate-500">
+                <li>You're scripting or automating model management</li>
+                <li>You want the simplest CLI experience</li>
+                <li>You're deploying on a headless server</li>
+                <li>You want tighter LangChain integration</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        <section class="space-y-5" aria-labelledby="setup-heading">
+          <h2 id="setup-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">Setup</h2>
+          <div class="space-y-3">
+            <div class="flex items-start gap-4 rounded-2xl border border-white/10 bg-white/[0.02] p-4">
+              <span class="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-lime-500/20 text-xs font-bold text-lime-300">1</span>
+              <div>
+                <p class="text-sm font-semibold text-slate-200">Download</p>
+                <p class="text-xs text-slate-400/90 mt-0.5">Go to lmstudio.ai and download the installer for your OS. Available for macOS (Apple Silicon + Intel), Windows, and Linux.</p>
+              </div>
+            </div>
+            <div class="flex items-start gap-4 rounded-2xl border border-white/10 bg-white/[0.02] p-4">
+              <span class="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-lime-500/20 text-xs font-bold text-lime-300">2</span>
+              <div>
+                <p class="text-sm font-semibold text-slate-200">Discover &amp; download a model</p>
+                <p class="text-xs text-slate-400/90 mt-0.5">Open the Discover tab (magnifying glass icon). Search for a model — e.g. "Llama 3.1". Click the model, choose a variant based on your RAM, and click Download.</p>
+              </div>
+            </div>
+            <div class="flex items-start gap-4 rounded-2xl border border-white/10 bg-white/[0.02] p-4">
+              <span class="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-lime-500/20 text-xs font-bold text-lime-300">3</span>
+              <div>
+                <p class="text-sm font-semibold text-slate-200">Chat in-app</p>
+                <p class="text-xs text-slate-400/90 mt-0.5">Switch to the Chat tab. Select your downloaded model from the dropdown. Type your message and chat immediately — no config required.</p>
+              </div>
+            </div>
+            <div class="flex items-start gap-4 rounded-2xl border border-white/10 bg-white/[0.02] p-4">
+              <span class="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-lime-500/20 text-xs font-bold text-lime-300">4</span>
+              <div>
+                <p class="text-sm font-semibold text-slate-200">Start the local server</p>
+                <p class="text-xs text-slate-400/90 mt-0.5">Go to the Local Server tab (server icon). Select a model, click Start Server. The server runs at <code class="rounded bg-white/10 px-1">http://localhost:1234</code> by default.</p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="space-y-5" aria-labelledby="api-heading">
+          <h2 id="api-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">Using the local server API</h2>
+          <p>LM Studio's local server is fully OpenAI-compatible. Point any OpenAI client at it and it just works.</p>
+          <div class="rounded-2xl border border-white/10 bg-white/[0.03] p-5">
+            <code class="block font-mono text-xs text-slate-300 whitespace-pre">from openai import OpenAI
+
+client = OpenAI(
+    base_url="http://localhost:1234/v1",
+    api_key="lm-studio",  # required but not used
+)
+
+response = client.chat.completions.create(
+    model="llama-3.1-8b-instruct",  # model name shown in LM Studio
+    messages=[
+        {"role": "system", "content": "You are a helpful assistant."},
+        {"role": "user", "content": "What is gradient descent?"},
+    ],
+    temperature=0.3,
+)
+print(response.choices[0].message.content)</code>
+          </div>
+          <p class="text-sm text-slate-400/90">The model name in the API call must match the identifier shown in LM Studio's server panel. This is the same code you'd write for OpenAI — just the <code class="rounded bg-white/10 px-1">base_url</code> changes.</p>
+        </section>
+
+        <section class="space-y-5" aria-labelledby="features-heading">
+          <h2 id="features-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">Key features</h2>
+          <div class="space-y-3">
+            <div class="rounded-2xl border border-white/10 bg-white/[0.03] p-5">
+              <h3 class="text-sm font-semibold text-slate-200">Model variants &amp; quantization picker</h3>
+              <p class="mt-1.5 text-xs text-slate-400/90">LM Studio shows estimated RAM requirements for each variant before you download. It recommends the best quantization for your hardware automatically — no need to know Q4 from Q8 (covered next page).</p>
+            </div>
+            <div class="rounded-2xl border border-white/10 bg-white/[0.03] p-5">
+              <h3 class="text-sm font-semibold text-slate-200">System prompt editor</h3>
+              <p class="mt-1.5 text-xs text-slate-400/90">Edit the system prompt in the Chat sidebar. Changes take effect immediately — great for rapid persona testing without code.</p>
+            </div>
+            <div class="rounded-2xl border border-white/10 bg-white/[0.03] p-5">
+              <h3 class="text-sm font-semibold text-slate-200">Parameter controls</h3>
+              <p class="mt-1.5 text-xs text-slate-400/90">Sliders for temperature, top-p, top-k, repeat penalty, and context length in the Chat sidebar. Tweak and see the effect immediately.</p>
+            </div>
+            <div class="rounded-2xl border border-white/10 bg-white/[0.03] p-5">
+              <h3 class="text-sm font-semibold text-slate-200">Multi-model server</h3>
+              <p class="mt-1.5 text-xs text-slate-400/90">Load multiple models simultaneously (if RAM allows). Your API calls can specify which model to use per request — useful for routing simple tasks to small models and complex tasks to larger ones.</p>
+            </div>
+          </div>
+        </section>
+
+        <section class="space-y-4" aria-labelledby="ollama-vs-heading">
+          <h2 id="ollama-vs-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">LM Studio vs Ollama — at a glance</h2>
+          <div class="overflow-x-auto rounded-2xl border border-white/10">
+            <table class="w-full text-sm">
+              <thead><tr class="border-b border-white/10 bg-white/[0.04]"><th class="px-4 py-2 text-left font-semibold text-slate-200">Feature</th><th class="px-4 py-2 text-center font-semibold text-slate-200">LM Studio</th><th class="px-4 py-2 text-center font-semibold text-slate-200">Ollama</th></tr></thead>
+              <tbody class="divide-y divide-white/5 text-sm text-slate-400/90">
+                <tr><td class="px-4 py-2">GUI interface</td><td class="px-4 py-2 text-center text-lime-300">✓</td><td class="px-4 py-2 text-center text-slate-500">✗</td></tr>
+                <tr><td class="px-4 py-2">CLI / scripting</td><td class="px-4 py-2 text-center text-slate-500">Limited</td><td class="px-4 py-2 text-center text-lime-300">✓</td></tr>
+                <tr><td class="px-4 py-2">OpenAI-compatible API</td><td class="px-4 py-2 text-center text-lime-300">✓</td><td class="px-4 py-2 text-center text-lime-300">✓</td></tr>
+                <tr><td class="px-4 py-2">Built-in chat UI</td><td class="px-4 py-2 text-center text-lime-300">✓</td><td class="px-4 py-2 text-center text-slate-500">✗</td></tr>
+                <tr><td class="px-4 py-2">Headless / server install</td><td class="px-4 py-2 text-center text-slate-500">✗</td><td class="px-4 py-2 text-center text-lime-300">✓</td></tr>
+                <tr><td class="px-4 py-2">LangChain integration</td><td class="px-4 py-2 text-center text-slate-400/90">Via OpenAI compat</td><td class="px-4 py-2 text-center text-lime-300">Native ChatOllama</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <section class="rounded-2xl border border-lime-500/20 bg-lime-500/[0.06] p-5 sm:p-6">
+          <h2 class="text-lg font-semibold text-lime-100">Quick summary</h2>
+          <ul class="mt-3 list-disc space-y-1.5 pl-5 text-sm text-slate-300/95 marker:text-lime-400/80">
+            <li>LM Studio = GUI app for downloading and running local models — no command line</li>
+            <li>Download a model → chat in-app → start local server → use from any OpenAI client</li>
+            <li>Local server runs at <code class="rounded bg-white/10 px-1">localhost:1234/v1</code> — fully OpenAI-compatible</li>
+            <li>Shows RAM requirements before download — picks the best quantization for your hardware</li>
+            <li>Use LM Studio for exploration and non-technical users; Ollama for automation and servers</li>
+          </ul>
+        </section>
+
+      </article>
+    </div>
+
+    <div class="flex items-center justify-between">
+      <a href="{% url 'tutorial_rll_selection' %}" class="inline-flex items-center gap-2 rounded-xl border border-white/15 bg-white/[0.04] px-5 py-2.5 text-sm font-semibold text-slate-200 transition hover:border-white/25 hover:bg-white/[0.07] hover:text-white">
+        <span aria-hidden>←</span> Model Selection
+      </a>
+      <a href="{% url 'tutorial_rll_quantization' %}" class="inline-flex items-center gap-2 rounded-xl border border-lime-400/35 bg-lime-500/10 px-5 py-2.5 text-sm font-semibold text-lime-200 transition hover:border-lime-300/50 hover:bg-lime-500/20 hover:text-white">
+        Next: Quantization &amp; Performance <span aria-hidden>→</span>
+      </a>
+    </div>
+
+  </div>
+{% endblock %}

@@ -1,0 +1,177 @@
+{% extends "web/base.html" %}
+{% block title %}Model Selection Strategy — Run LLMs Locally{% endblock %}
+{% block content %}
+  <div class="space-y-10">
+
+    <div class="flex flex-wrap items-center gap-2 text-sm text-slate-400/90">
+      <a href="{% url 'tutorials' %}" class="font-medium text-lime-300/90 transition hover:text-lime-200">Tutorials</a>
+      <span aria-hidden class="text-slate-600">/</span>
+      <a href="{% url 'tutorial_rll_intro' %}" class="font-medium text-lime-300/90 transition hover:text-lime-200">Run LLMs Locally</a>
+      <span aria-hidden class="text-slate-600">/</span>
+      <span class="text-slate-200/90">Model Selection Strategy</span>
+    </div>
+
+    <section class="relative overflow-hidden rounded-3xl border border-lime-400/20 bg-white/[0.06] p-6 shadow-[0_0_0_1px_rgba(255,255,255,0.04)] backdrop-blur-2xl sm:p-8">
+      <div class="pointer-events-none absolute -right-24 top-0 h-72 w-72 rounded-full bg-lime-500/15 blur-3xl"></div>
+      <div class="pointer-events-none absolute -left-20 bottom-0 h-56 w-56 rounded-full bg-green-500/10 blur-3xl"></div>
+      <div class="relative">
+        <div class="flex flex-wrap items-center gap-3">
+          <span class="rounded-full border border-lime-500/25 bg-lime-500/10 px-2.5 py-1 text-xs font-medium text-lime-300/90">Run LLMs Locally</span>
+          <span class="rounded-full border border-emerald-500/25 bg-emerald-500/10 px-2.5 py-1 text-xs font-medium text-emerald-300/90">Beginner</span>
+          <span class="text-xs text-slate-400/80">· 10 min read</span>
+          <span class="ml-auto text-xs font-medium text-slate-400/80">Page 4 of 9</span>
+        </div>
+        <h1 class="mt-4 text-3xl font-semibold tracking-tight text-white sm:text-4xl lg:text-[2.5rem] lg:leading-tight">Model Selection Strategy</h1>
+        <p class="mt-4 max-w-2xl text-sm leading-relaxed text-slate-200/80 sm:text-base">
+          A decision-driven guide — chat vs embedding vs coding models, size tradeoffs, and when local models are not enough.
+        </p>
+        <div class="mt-6">
+          <div class="mb-1.5 flex items-center justify-between text-xs text-slate-400/80"><span>Series progress</span><span>4 / 9</span></div>
+          <div class="h-1.5 w-full overflow-hidden rounded-full bg-white/10"><div class="h-full w-[44%] rounded-full bg-lime-400/70"></div></div>
+        </div>
+      </div>
+    </section>
+
+    <div class="glass rounded-3xl border border-white/10 p-5 sm:p-8">
+      <article class="mx-auto space-y-12 text-base leading-relaxed text-slate-300/95">
+
+        <section class="space-y-5" aria-labelledby="types-heading">
+          <h2 id="types-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">Model types — not all models are the same</h2>
+          <p>The first selection question is model type — what the model was trained and fine-tuned to do. Using the wrong type for the job produces poor results regardless of size.</p>
+          <div class="space-y-3">
+            <div class="rounded-2xl border border-lime-500/20 bg-lime-500/[0.05] p-5">
+              <h3 class="text-sm font-semibold text-lime-100">Chat / Instruction models</h3>
+              <p class="mt-1.5 text-sm text-slate-400/90">Fine-tuned to follow instructions and have conversations. These are what you use for most applications — Q&A, summarisation, coding assistance, analysis.</p>
+              <p class="text-xs text-slate-500 mt-2">Examples: <code class="rounded bg-white/10 px-1">llama3.1:8b</code>, <code class="rounded bg-white/10 px-1">mistral:7b</code>, <code class="rounded bg-white/10 px-1">phi4:14b</code></p>
+            </div>
+            <div class="rounded-2xl border border-white/10 bg-white/[0.03] p-5">
+              <h3 class="text-sm font-semibold text-white">Embedding models</h3>
+              <p class="mt-1.5 text-sm text-slate-400/90">Convert text into vectors for semantic search and RAG. Do NOT use a chat model for embeddings — dedicated embedding models produce far better vectors and are much faster.</p>
+              <p class="text-xs text-slate-500 mt-2">Examples: <code class="rounded bg-white/10 px-1">nomic-embed-text</code>, <code class="rounded bg-white/10 px-1">mxbai-embed-large</code>, <code class="rounded bg-white/10 px-1">all-minilm</code></p>
+            </div>
+            <div class="rounded-2xl border border-white/10 bg-white/[0.03] p-5">
+              <h3 class="text-sm font-semibold text-white">Code-specialised models</h3>
+              <p class="mt-1.5 text-sm text-slate-400/90">Fine-tuned on large code corpora. Outperform general chat models on code generation, debugging, and code explanation tasks — especially at smaller sizes.</p>
+              <p class="text-xs text-slate-500 mt-2">Examples: <code class="rounded bg-white/10 px-1">qwen2.5-coder:7b</code>, <code class="rounded bg-white/10 px-1">deepseek-coder-v2</code>, <code class="rounded bg-white/10 px-1">codellama:13b</code></p>
+            </div>
+            <div class="rounded-2xl border border-white/10 bg-white/[0.03] p-5">
+              <h3 class="text-sm font-semibold text-white">Reasoning models</h3>
+              <p class="mt-1.5 text-sm text-slate-400/90">Train the model to "think before answering" using extended reasoning chains. Slower and more expensive per call, but significantly better on multi-step logic, maths, and complex problem-solving.</p>
+              <p class="text-xs text-slate-500 mt-2">Examples: <code class="rounded bg-white/10 px-1">qwq:32b</code>, <code class="rounded bg-white/10 px-1">deepseek-r1:14b</code></p>
+            </div>
+          </div>
+        </section>
+
+        <section class="space-y-5" aria-labelledby="size-heading">
+          <h2 id="size-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">Size vs quality tradeoffs</h2>
+          <p>Bigger is not always better — especially locally. The right size depends on your task, hardware, and latency requirements.</p>
+          <div class="overflow-x-auto rounded-2xl border border-white/10">
+            <table class="w-full text-sm">
+              <thead>
+                <tr class="border-b border-white/10 bg-white/[0.04]">
+                  <th class="px-4 py-3 text-left font-semibold text-slate-200">Size</th>
+                  <th class="px-4 py-3 text-left font-semibold text-slate-200">Speed</th>
+                  <th class="px-4 py-3 text-left font-semibold text-slate-200">Quality</th>
+                  <th class="px-4 py-3 text-left font-semibold text-slate-200">Best for</th>
+                </tr>
+              </thead>
+              <tbody class="divide-y divide-white/5">
+                <tr><td class="px-4 py-3 font-medium text-lime-300">1B–3B</td><td class="px-4 py-3 text-slate-400/90">Very fast (&gt;30 t/s)</td><td class="px-4 py-3 text-slate-400/90">Limited reasoning</td><td class="px-4 py-3 text-slate-400/90">Classification, extraction, edge devices</td></tr>
+                <tr><td class="px-4 py-3 font-medium text-lime-300">7B–8B</td><td class="px-4 py-3 text-slate-400/90">Fast (15–30 t/s)</td><td class="px-4 py-3 text-slate-400/90">Good for most tasks</td><td class="px-4 py-3 text-slate-400/90">Everyday assistant, RAG, summarisation</td></tr>
+                <tr><td class="px-4 py-3 font-medium text-lime-300">12B–14B</td><td class="px-4 py-3 text-slate-400/90">Medium (8–15 t/s)</td><td class="px-4 py-3 text-slate-400/90">Strong reasoning</td><td class="px-4 py-3 text-slate-400/90">Code, analysis, complex instructions</td></tr>
+                <tr><td class="px-4 py-3 font-medium text-lime-300">30B–70B</td><td class="px-4 py-3 text-slate-400/90">Slow (2–8 t/s)</td><td class="px-4 py-3 text-slate-400/90">Near GPT-4 on many tasks</td><td class="px-4 py-3 text-slate-400/90">High-quality production use</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="rounded-xl border border-white/10 bg-white/[0.02] px-4 py-3 text-sm">
+            <strong class="text-slate-200">Practical rule:</strong>
+            <span class="text-slate-400/90"> Start with a 7B–8B model. If quality is insufficient, step up to 13B–14B. Only go to 70B if you have 64 GB RAM and speed is not critical. The quality jump from 7B to 13B is often larger than from 13B to 70B.</span>
+          </div>
+        </section>
+
+        <section class="space-y-5" aria-labelledby="decision-heading">
+          <h2 id="decision-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">Decision framework</h2>
+          <div class="space-y-3">
+            <div class="flex items-start gap-4 rounded-2xl border border-white/10 bg-white/[0.02] p-4">
+              <span class="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-lime-500/20 text-xs font-bold text-lime-300">1</span>
+              <div>
+                <p class="text-sm font-semibold text-slate-200">What type of model do I need?</p>
+                <p class="text-xs text-slate-400/90 mt-0.5">Chat → instruction model. Semantic search/RAG → embedding model. Coding → code-specialised. Hard reasoning → reasoning model.</p>
+              </div>
+            </div>
+            <div class="flex items-start gap-4 rounded-2xl border border-white/10 bg-white/[0.02] p-4">
+              <span class="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-lime-500/20 text-xs font-bold text-lime-300">2</span>
+              <div>
+                <p class="text-sm font-semibold text-slate-200">How much RAM do I have?</p>
+                <p class="text-xs text-slate-400/90 mt-0.5">8 GB → 7B (Q4). 16 GB → 13B (Q4) or 7B (Q8). 32 GB → 30B (Q4) or 13B (Q8). 64 GB → 70B (Q4).</p>
+              </div>
+            </div>
+            <div class="flex items-start gap-4 rounded-2xl border border-white/10 bg-white/[0.02] p-4">
+              <span class="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-lime-500/20 text-xs font-bold text-lime-300">3</span>
+              <div>
+                <p class="text-sm font-semibold text-slate-200">Does latency matter?</p>
+                <p class="text-xs text-slate-400/90 mt-0.5">Interactive chat → smaller model. Batch processing → size up for quality. Streaming UI → test token/s for your target model.</p>
+              </div>
+            </div>
+            <div class="flex items-start gap-4 rounded-2xl border border-white/10 bg-white/[0.02] p-4">
+              <span class="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-lime-500/20 text-xs font-bold text-lime-300">4</span>
+              <div>
+                <p class="text-sm font-semibold text-slate-200">Evaluate, don't guess</p>
+                <p class="text-xs text-slate-400/90 mt-0.5">Run your actual prompts on two candidate models. Compare outputs on 10–20 real examples before committing. Benchmarks don't always reflect your specific task.</p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="space-y-5" aria-labelledby="notenough-heading">
+          <h2 id="notenough-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">When local models are NOT enough</h2>
+          <p>Local models are powerful, but they have real ceiling — knowing when to reach for a cloud API saves you from wasted effort.</p>
+          <div class="space-y-3">
+            <div class="rounded-2xl border border-amber-500/20 bg-amber-500/[0.05] p-5">
+              <h3 class="text-sm font-semibold text-amber-100">Complex multi-step reasoning</h3>
+              <p class="mt-1.5 text-xs text-slate-400/90">If your task requires legal analysis, medical diagnosis, financial modelling, or deep strategic reasoning — smaller local models still fall significantly behind GPT-4o and Claude 3.5 Sonnet. Even 70B models have gaps here.</p>
+            </div>
+            <div class="rounded-2xl border border-amber-500/20 bg-amber-500/[0.05] p-5">
+              <h3 class="text-sm font-semibold text-amber-100">Very long contexts</h3>
+              <p class="mt-1.5 text-xs text-slate-400/90">Processing 100k+ token documents locally is slow and often produces poorer results than cloud models. Cloud APIs handle long contexts more gracefully at current model sizes.</p>
+            </div>
+            <div class="rounded-2xl border border-amber-500/20 bg-amber-500/[0.05] p-5">
+              <h3 class="text-sm font-semibold text-amber-100">Production scale with latency SLAs</h3>
+              <p class="mt-1.5 text-xs text-slate-400/90">Serving hundreds of concurrent users from a local machine is not feasible. Cloud APIs are infinitely horizontally scalable; local inference is not.</p>
+            </div>
+            <div class="rounded-2xl border border-amber-500/20 bg-amber-500/[0.05] p-5">
+              <h3 class="text-sm font-semibold text-amber-100">Multimodal tasks</h3>
+              <p class="mt-1.5 text-xs text-slate-400/90">GPT-4o and Claude 3.5 are significantly better at image understanding than most locally available vision models. For vision-heavy applications, cloud models are still ahead.</p>
+            </div>
+          </div>
+          <div class="rounded-xl border border-white/10 bg-white/[0.02] px-4 py-3 text-sm">
+            <strong class="text-slate-200">Hybrid approach:</strong>
+            <span class="text-slate-400/90"> Use local models for development, prototyping, and privacy-sensitive tasks. Use cloud APIs for production where quality, scale, or latency requirements exceed local capabilities.</span>
+          </div>
+        </section>
+
+        <section class="rounded-2xl border border-lime-500/20 bg-lime-500/[0.06] p-5 sm:p-6">
+          <h2 class="text-lg font-semibold text-lime-100">Quick summary</h2>
+          <ul class="mt-3 list-disc space-y-1.5 pl-5 text-sm text-slate-300/95 marker:text-lime-400/80">
+            <li>Choose the right type first: chat / embedding / code / reasoning — wrong type beats wrong size</li>
+            <li>7B–8B is the practical sweet spot for 16 GB RAM; 13B–14B for higher quality</li>
+            <li>Use dedicated embedding models for RAG — never a chat model for embeddings</li>
+            <li>Start small, step up only if quality is insufficient on your actual prompts</li>
+            <li>Go cloud for: complex reasoning, 100k+ contexts, production scale, advanced vision</li>
+          </ul>
+        </section>
+
+      </article>
+    </div>
+
+    <div class="flex items-center justify-between">
+      <a href="{% url 'tutorial_rll_models' %}" class="inline-flex items-center gap-2 rounded-xl border border-white/15 bg-white/[0.04] px-5 py-2.5 text-sm font-semibold text-slate-200 transition hover:border-white/25 hover:bg-white/[0.07] hover:text-white">
+        <span aria-hidden>←</span> Model Landscape
+      </a>
+      <a href="{% url 'tutorial_rll_lmstudio' %}" class="inline-flex items-center gap-2 rounded-xl border border-lime-400/35 bg-lime-500/10 px-5 py-2.5 text-sm font-semibold text-lime-200 transition hover:border-lime-300/50 hover:bg-lime-500/20 hover:text-white">
+        Next: LM Studio <span aria-hidden>→</span>
+      </a>
+    </div>
+
+  </div>
+{% endblock %}
