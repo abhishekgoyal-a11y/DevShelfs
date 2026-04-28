@@ -423,8 +423,98 @@ def openclaw(request):
     )
 
 
+_TUTORIALS = [
+    {
+        "title": "AI Agents Tutorial",
+        "description": "Learn what AI agents are, how they plan and act, and build your first agent from scratch.",
+        "category": "AI Agents",
+        "difficulty": "Beginner",
+        "read_time": 12,
+        "icon": "🤖",
+        "icon_gradient": "from-emerald-500/40 via-teal-400/20 to-cyan-400/25",
+        "url": "#",
+    },
+    {
+        "title": "LangChain Tutorial",
+        "description": "Build LLM-powered apps with chains, agents, and RAG pipelines using LangChain.",
+        "category": "AI Agents",
+        "difficulty": "Intermediate",
+        "read_time": 18,
+        "icon": "🔗",
+        "icon_gradient": "from-violet-500/40 via-purple-400/20 to-fuchsia-400/25",
+        "url": "#",
+    },
+    {
+        "title": "RAG Pipeline Tutorial",
+        "description": "Connect an LLM to your own documents using retrieval-augmented generation.",
+        "category": "RAG & Vector DBs",
+        "difficulty": "Intermediate",
+        "read_time": 15,
+        "icon": "📚",
+        "icon_gradient": "from-amber-500/40 via-orange-400/20 to-yellow-400/25",
+        "url": "#",
+    },
+    {
+        "title": "Prompt Engineering",
+        "description": "Master the techniques that get better, more reliable outputs from any LLM.",
+        "category": "Getting Started",
+        "difficulty": "Beginner",
+        "read_time": 10,
+        "icon": "✍️",
+        "icon_gradient": "from-sky-500/40 via-blue-400/20 to-indigo-400/25",
+        "url": "#",
+    },
+    {
+        "title": "Run LLMs Locally",
+        "description": "Use Ollama to run Llama, Mistral, and other models on your own machine for free.",
+        "category": "LLMs & Models",
+        "difficulty": "Beginner",
+        "read_time": 8,
+        "icon": "💻",
+        "icon_gradient": "from-lime-500/40 via-green-400/20 to-emerald-400/25",
+        "url": "#",
+    },
+    {
+        "title": "Build with CrewAI",
+        "description": "Create multi-agent crews where AI roles collaborate to complete complex tasks.",
+        "category": "AI Agents",
+        "difficulty": "Intermediate",
+        "read_time": 20,
+        "icon": "👥",
+        "icon_gradient": "from-rose-500/40 via-pink-400/20 to-fuchsia-400/25",
+        "url": "#",
+    },
+    {
+        "title": "Flowise Crash Course",
+        "description": "Build and deploy a RAG chatbot visually using Flowise — no code required.",
+        "category": "Developer Tools",
+        "difficulty": "Beginner",
+        "read_time": 14,
+        "icon": "🌊",
+        "icon_gradient": "from-cyan-500/40 via-teal-400/20 to-sky-400/25",
+        "url": "#",
+    },
+    {
+        "title": "Fine-tune a Llama Model",
+        "description": "Fine-tune Meta Llama on your own dataset using LoRA and the Hugging Face ecosystem.",
+        "category": "LLMs & Models",
+        "difficulty": "Advanced",
+        "read_time": 25,
+        "icon": "🦙",
+        "icon_gradient": "from-orange-500/40 via-amber-400/20 to-yellow-400/25",
+        "url": "#",
+    },
+]
+
+
 def tutorials(request):
     active_category = (request.GET.get("category") or "all").lower()
+    if active_category == "all":
+        filtered = _TUTORIALS
+    else:
+        cat_map = {c["slug"]: c["name"] for c in _TUTORIAL_CATEGORIES}
+        cat_name = cat_map.get(active_category, "")
+        filtered = [t for t in _TUTORIALS if t["category"] == cat_name]
     return render(
         request,
         "web/tutorials.html",
@@ -433,7 +523,7 @@ def tutorials(request):
             "active_nav": "tutorials",
             "categories": _TUTORIAL_CATEGORIES,
             "active_category": active_category,
-            "tutorials": [],
+            "tutorials": filtered,
         },
     )
 
