@@ -1,4 +1,5 @@
 {% extends "web/base.html" %}
+{% load static %}
 {% block title %}Build Your First AI Agent — DevShelf Tutorials{% endblock %}
 {% block content %}
   <div class="space-y-10">
@@ -130,6 +131,33 @@
             <li>A <code class="rounded bg-white/10 px-1">fetch_url(url)</code> tool to read a specific webpage in full</li>
           </ul>
           <p class="text-sm text-slate-400/90">The LLM will automatically use whichever tool is most appropriate given the goal.</p>
+        </section>
+
+        {# GitHub link #}
+        <section>
+          <div class="rounded-xl border border-white/10 bg-slate-950/45 px-4 py-3 text-sm leading-relaxed text-slate-200/90">
+            <p>
+              <span class="font-semibold text-slate-100">Complete code</span>
+              <span class="mx-2 text-slate-500">—</span>
+              <a
+                href="https://github.com/abhishekgoyal-a11y/Projects/tree/main/ai-research-agent"
+                class="font-medium text-sky-200/90 underline-offset-2 hover:text-white hover:underline"
+                target="_blank"
+                rel="noreferrer"
+              >Project link (GitHub)</a>
+            </p>
+          </div>
+        </section>
+
+        {# Demo video #}
+        <section class="space-y-3" aria-labelledby="demo-heading">
+          <h2 id="demo-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">Demo</h2>
+          <div class="mx-auto max-w-3xl overflow-hidden rounded-2xl border border-white/10 bg-black shadow-lg shadow-black/40">
+            <video class="block w-full" controls playsinline preload="metadata" aria-label="AI Research Agent demo">
+              <source src="{% static 'web/AiResearchAgent.webm' %}" type="video/webm" />
+              <p class="p-4 text-sm text-slate-400">Your browser does not support embedded WebM video.</p>
+            </video>
+          </div>
         </section>
 
         {# Summary box #}
