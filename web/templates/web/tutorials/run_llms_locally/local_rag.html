@@ -64,12 +64,25 @@
         <section class="space-y-5" aria-labelledby="ingest-heading">
           <h2 id="ingest-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">Step 1 — Ingestion (ingest.py)</h2>
           <p>The ingestion script loads documents, splits them into chunks, embeds each chunk, and persists the vector store to disk. Run this once whenever your source documents change.</p>
-          <div class="rounded-2xl border border-white/10 bg-white/[0.03] p-5">
-            <code class="block font-mono text-xs text-slate-300 whitespace-pre">pip install langchain-ollama langchain-community chromadb pypdf</code>
+          <div class="ds-codeblock not-prose rounded-2xl overflow-hidden border border-white/10">
+            <div class="ds-codeblock-header flex items-center justify-between px-4 py-2.5 bg-white/[0.05] border-b border-white/10">
+              <span class="text-xs font-medium text-slate-400">bash</span>
+              <button class="ds-codeblock-copy flex items-center gap-1.5 text-xs text-slate-400 hover:text-white transition-colors">
+                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                Copy
+              </button>
+            </div>
+            <pre class="ds-codeblock-pre overflow-x-auto p-4 text-sm leading-relaxed m-0"><code class="ds-codeblock-source language-bash">pip install langchain-ollama langchain-community chromadb pypdf</code></pre>
           </div>
-          <div class="rounded-2xl border border-white/10 bg-white/[0.03] p-5">
-            <p class="text-xs font-semibold text-slate-400 mb-3">ingest.py</p>
-            <code class="block font-mono text-xs text-slate-300 whitespace-pre">from pathlib import Path
+          <div class="ds-codeblock not-prose rounded-2xl overflow-hidden border border-white/10">
+            <div class="ds-codeblock-header flex items-center justify-between px-4 py-2.5 bg-white/[0.05] border-b border-white/10">
+              <span class="text-xs font-medium text-slate-400">python</span>
+              <button class="ds-codeblock-copy flex items-center gap-1.5 text-xs text-slate-400 hover:text-white transition-colors">
+                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                Copy
+              </button>
+            </div>
+            <pre class="ds-codeblock-pre overflow-x-auto p-4 text-sm leading-relaxed m-0"><code class="ds-codeblock-source language-python">from pathlib import Path
 from langchain_community.document_loaders import PyPDFLoader, DirectoryLoader
 from langchain_text_splitters import RecursiveCharacterTextSplitter
 from langchain_ollama import OllamaEmbeddings
@@ -106,7 +119,7 @@ def ingest():
     print(f"Stored {len(chunks)} chunks in {CHROMA_DIR}")
 
 if __name__ == "__main__":
-    ingest()</code>
+    ingest()</code></pre>
           </div>
           <div class="rounded-xl border border-white/10 bg-white/[0.02] px-4 py-3 text-sm">
             <strong class="text-slate-200">Pull the embedding model first:</strong>
@@ -137,9 +150,15 @@ if __name__ == "__main__":
         <section class="space-y-5" aria-labelledby="query-heading">
           <h2 id="query-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">Step 2 — Query pipeline (rag.py)</h2>
           <p>The query pipeline loads the persisted Chroma store, retrieves relevant chunks for the user's question, and passes them to the local LLM.</p>
-          <div class="rounded-2xl border border-white/10 bg-white/[0.03] p-5">
-            <p class="text-xs font-semibold text-slate-400 mb-3">rag.py</p>
-            <code class="block font-mono text-xs text-slate-300 whitespace-pre">from langchain_ollama import OllamaEmbeddings, ChatOllama
+          <div class="ds-codeblock not-prose rounded-2xl overflow-hidden border border-white/10">
+            <div class="ds-codeblock-header flex items-center justify-between px-4 py-2.5 bg-white/[0.05] border-b border-white/10">
+              <span class="text-xs font-medium text-slate-400">python</span>
+              <button class="ds-codeblock-copy flex items-center gap-1.5 text-xs text-slate-400 hover:text-white transition-colors">
+                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                Copy
+              </button>
+            </div>
+            <pre class="ds-codeblock-pre overflow-x-auto p-4 text-sm leading-relaxed m-0"><code class="ds-codeblock-source language-python">from langchain_ollama import OllamaEmbeddings, ChatOllama
 from langchain_community.vectorstores import Chroma
 from langchain_core.prompts import ChatPromptTemplate
 from langchain_core.output_parsers import StrOutputParser
@@ -182,18 +201,32 @@ if __name__ == "__main__":
         if q.lower() == "quit":
             break
         answer = rag_chain.invoke(q)
-        print(f"\nAnswer: {answer}")</code>
+        print(f"\nAnswer: {answer}")</code></pre>
           </div>
         </section>
 
         <section class="space-y-5" aria-labelledby="hybrid-heading">
           <h2 id="hybrid-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">Hybrid search — combining BM25 and vector retrieval</h2>
           <p>Pure vector search misses exact keyword matches. Hybrid search runs BM25 (keyword) and vector retrieval in parallel, then merges results with Reciprocal Rank Fusion (RRF). This usually outperforms either method alone.</p>
-          <div class="rounded-2xl border border-white/10 bg-white/[0.03] p-5">
-            <code class="block font-mono text-xs text-slate-300 whitespace-pre">pip install rank-bm25 langchain-community</code>
+          <div class="ds-codeblock not-prose rounded-2xl overflow-hidden border border-white/10">
+            <div class="ds-codeblock-header flex items-center justify-between px-4 py-2.5 bg-white/[0.05] border-b border-white/10">
+              <span class="text-xs font-medium text-slate-400">bash</span>
+              <button class="ds-codeblock-copy flex items-center gap-1.5 text-xs text-slate-400 hover:text-white transition-colors">
+                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                Copy
+              </button>
+            </div>
+            <pre class="ds-codeblock-pre overflow-x-auto p-4 text-sm leading-relaxed m-0"><code class="ds-codeblock-source language-bash">pip install rank-bm25 langchain-community</code></pre>
           </div>
-          <div class="rounded-2xl border border-lime-500/20 bg-lime-500/[0.04] p-5">
-            <code class="block font-mono text-xs text-slate-300 whitespace-pre">from langchain_community.retrievers import BM25Retriever
+          <div class="ds-codeblock not-prose rounded-2xl overflow-hidden border border-lime-500/20">
+            <div class="ds-codeblock-header flex items-center justify-between px-4 py-2.5 bg-lime-500/[0.04] border-b border-lime-500/20">
+              <span class="text-xs font-medium text-slate-400">python</span>
+              <button class="ds-codeblock-copy flex items-center gap-1.5 text-xs text-slate-400 hover:text-white transition-colors">
+                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                Copy
+              </button>
+            </div>
+            <pre class="ds-codeblock-pre overflow-x-auto p-4 text-sm leading-relaxed m-0"><code class="ds-codeblock-source language-python">from langchain_community.retrievers import BM25Retriever
 from langchain.retrievers import EnsembleRetriever
 
 # BM25 needs the raw text chunks (not the vector store)
@@ -213,7 +246,7 @@ hybrid_retriever = EnsembleRetriever(
 rag_chain = (
     {"context": hybrid_retriever | format_docs, "question": RunnablePassthrough()}
     | prompt | llm | StrOutputParser()
-)</code>
+)</code></pre>
           </div>
           <p class="text-sm text-slate-400/90">BM25 is particularly effective for product names, error codes, and proper nouns that don't embed well. Adding it costs minimal overhead because it operates on in-memory term frequencies.</p>
         </section>
@@ -221,11 +254,25 @@ rag_chain = (
         <section class="space-y-5" aria-labelledby="rerank-heading">
           <h2 id="rerank-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">Reranking — improving precision after retrieval</h2>
           <p>Retrieval returns the top-k candidates. A reranker re-scores them using a cross-encoder — more accurate than embedding similarity, but too slow to run on the full corpus. The pattern is retrieve-many, rerank-to-few.</p>
-          <div class="rounded-2xl border border-white/10 bg-white/[0.03] p-5">
-            <code class="block font-mono text-xs text-slate-300 whitespace-pre">pip install sentence-transformers</code>
+          <div class="ds-codeblock not-prose rounded-2xl overflow-hidden border border-white/10">
+            <div class="ds-codeblock-header flex items-center justify-between px-4 py-2.5 bg-white/[0.05] border-b border-white/10">
+              <span class="text-xs font-medium text-slate-400">bash</span>
+              <button class="ds-codeblock-copy flex items-center gap-1.5 text-xs text-slate-400 hover:text-white transition-colors">
+                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                Copy
+              </button>
+            </div>
+            <pre class="ds-codeblock-pre overflow-x-auto p-4 text-sm leading-relaxed m-0"><code class="ds-codeblock-source language-bash">pip install sentence-transformers</code></pre>
           </div>
-          <div class="rounded-2xl border border-white/10 bg-white/[0.03] p-5">
-            <code class="block font-mono text-xs text-slate-300 whitespace-pre">from sentence_transformers import CrossEncoder
+          <div class="ds-codeblock not-prose rounded-2xl overflow-hidden border border-white/10">
+            <div class="ds-codeblock-header flex items-center justify-between px-4 py-2.5 bg-white/[0.05] border-b border-white/10">
+              <span class="text-xs font-medium text-slate-400">python</span>
+              <button class="ds-codeblock-copy flex items-center gap-1.5 text-xs text-slate-400 hover:text-white transition-colors">
+                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                Copy
+              </button>
+            </div>
+            <pre class="ds-codeblock-pre overflow-x-auto p-4 text-sm leading-relaxed m-0"><code class="ds-codeblock-source language-python">from sentence_transformers import CrossEncoder
 from langchain_core.documents import Document
 
 reranker = CrossEncoder("cross-encoder/ms-marco-MiniLM-L-6-v2")
@@ -247,7 +294,7 @@ rag_chain = (
     {"context": (lambda q: format_docs(retrieve_and_rerank(q))),
      "question": RunnablePassthrough()}
     | prompt | llm | StrOutputParser()
-)</code>
+)</code></pre>
           </div>
           <div class="rounded-xl border border-white/10 bg-white/[0.02] px-4 py-3 text-sm">
             <strong class="text-slate-200">cross-encoder/ms-marco-MiniLM-L-6-v2</strong>
@@ -258,8 +305,15 @@ rag_chain = (
         <section class="space-y-5" aria-labelledby="sources-heading">
           <h2 id="sources-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">Returning source citations</h2>
           <p>Always show which chunks were used to generate the answer. This lets users verify the response and builds trust — especially important for local models with higher hallucination rates.</p>
-          <div class="rounded-2xl border border-white/10 bg-white/[0.03] p-5">
-            <code class="block font-mono text-xs text-slate-300 whitespace-pre">from langchain_core.runnables import RunnableParallel
+          <div class="ds-codeblock not-prose rounded-2xl overflow-hidden border border-white/10">
+            <div class="ds-codeblock-header flex items-center justify-between px-4 py-2.5 bg-white/[0.05] border-b border-white/10">
+              <span class="text-xs font-medium text-slate-400">python</span>
+              <button class="ds-codeblock-copy flex items-center gap-1.5 text-xs text-slate-400 hover:text-white transition-colors">
+                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                Copy
+              </button>
+            </div>
+            <pre class="ds-codeblock-pre overflow-x-auto p-4 text-sm leading-relaxed m-0"><code class="ds-codeblock-source language-python">from langchain_core.runnables import RunnableParallel
 
 rag_with_sources = RunnableParallel(
     {"answer": rag_chain, "source_docs": retriever}
@@ -272,16 +326,22 @@ print("\nSources:")
 for doc in result["source_docs"]:
     src = doc.metadata.get("source", "unknown")
     page = doc.metadata.get("page", "?")
-    print(f"  • {src} (page {page})")</code>
+    print(f"  • {src} (page {page})")</code></pre>
           </div>
         </section>
 
         <section class="space-y-5" aria-labelledby="docker-heading">
           <h2 id="docker-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">Docker deployment</h2>
           <p>Running Ollama in Docker makes the pipeline reproducible and easy to share. Use the official Ollama image and mount your models directory so you don't re-download models on every container restart.</p>
-          <div class="rounded-2xl border border-white/10 bg-white/[0.03] p-5">
-            <p class="text-xs font-semibold text-slate-400 mb-3">docker-compose.yml</p>
-            <code class="block font-mono text-xs text-slate-300 whitespace-pre">services:
+          <div class="ds-codeblock not-prose rounded-2xl overflow-hidden border border-white/10">
+            <div class="ds-codeblock-header flex items-center justify-between px-4 py-2.5 bg-white/[0.05] border-b border-white/10">
+              <span class="text-xs font-medium text-slate-400">yaml</span>
+              <button class="ds-codeblock-copy flex items-center gap-1.5 text-xs text-slate-400 hover:text-white transition-colors">
+                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                Copy
+              </button>
+            </div>
+            <pre class="ds-codeblock-pre overflow-x-auto p-4 text-sm leading-relaxed m-0"><code class="ds-codeblock-source language-yaml">services:
   ollama:
     image: ollama/ollama:latest
     ports:
@@ -298,23 +358,36 @@ for doc in result["source_docs"]:
       - OLLAMA_BASE_URL=http://ollama:11434
     volumes:
       - ./docs:/app/docs
-      - ./chroma_db:/app/chroma_db</code>
+      - ./chroma_db:/app/chroma_db</code></pre>
           </div>
-          <div class="rounded-2xl border border-white/10 bg-white/[0.03] p-5">
-            <p class="text-xs font-semibold text-slate-400 mb-3">Dockerfile</p>
-            <code class="block font-mono text-xs text-slate-300 whitespace-pre">FROM python:3.11-slim
+          <div class="ds-codeblock not-prose rounded-2xl overflow-hidden border border-white/10">
+            <div class="ds-codeblock-header flex items-center justify-between px-4 py-2.5 bg-white/[0.05] border-b border-white/10">
+              <span class="text-xs font-medium text-slate-400">dockerfile</span>
+              <button class="ds-codeblock-copy flex items-center gap-1.5 text-xs text-slate-400 hover:text-white transition-colors">
+                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                Copy
+              </button>
+            </div>
+            <pre class="ds-codeblock-pre overflow-x-auto p-4 text-sm leading-relaxed m-0"><code class="ds-codeblock-source language-dockerfile">FROM python:3.11-slim
 WORKDIR /app
 COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 COPY . .
-CMD ["python", "rag.py"]</code>
+CMD ["python", "rag.py"]</code></pre>
           </div>
-          <div class="rounded-2xl border border-white/10 bg-white/[0.03] p-4">
-            <code class="block font-mono text-xs text-slate-300 whitespace-pre"># Start everything, pull models, then ingest
+          <div class="ds-codeblock not-prose rounded-2xl overflow-hidden border border-white/10">
+            <div class="ds-codeblock-header flex items-center justify-between px-4 py-2.5 bg-white/[0.05] border-b border-white/10">
+              <span class="text-xs font-medium text-slate-400">bash</span>
+              <button class="ds-codeblock-copy flex items-center gap-1.5 text-xs text-slate-400 hover:text-white transition-colors">
+                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                Copy
+              </button>
+            </div>
+            <pre class="ds-codeblock-pre overflow-x-auto p-4 text-sm leading-relaxed m-0"><code class="ds-codeblock-source language-bash"># Start everything, pull models, then ingest
 docker compose up -d
 docker exec rag-app-ollama-1 ollama pull nomic-embed-text
 docker exec rag-app-ollama-1 ollama pull llama3.1:8b
-docker compose run rag-app python ingest.py</code>
+docker compose run rag-app python ingest.py</code></pre>
           </div>
           <div class="rounded-xl border border-white/10 bg-white/[0.02] px-4 py-3 text-sm">
             <strong class="text-slate-200">GPU in Docker:</strong>
@@ -324,25 +397,38 @@ docker compose run rag-app python ingest.py</code>
 
         <section class="space-y-5" aria-labelledby="complete-heading">
           <h2 id="complete-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">Complete project structure</h2>
-          <div class="rounded-2xl border border-white/10 bg-white/[0.03] p-5">
-            <code class="block font-mono text-xs text-slate-300 whitespace-pre">local-rag/
+          <div class="ds-codeblock not-prose rounded-2xl overflow-hidden border border-white/10">
+            <div class="ds-codeblock-header flex items-center justify-between px-4 py-2.5 bg-white/[0.05] border-b border-white/10">
+              <span class="text-xs font-medium text-slate-400">text</span>
+              <button class="ds-codeblock-copy flex items-center gap-1.5 text-xs text-slate-400 hover:text-white transition-colors">
+                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                Copy
+              </button>
+            </div>
+            <pre class="ds-codeblock-pre overflow-x-auto p-4 text-sm leading-relaxed m-0"><code class="ds-codeblock-source language-text">local-rag/
 ├── docs/               # drop PDFs and text files here
 ├── chroma_db/          # auto-created by ingest.py
 ├── ingest.py           # load → split → embed → persist
 ├── rag.py              # retrieve → rerank → answer → cite
 ├── requirements.txt
 ├── Dockerfile
-└── docker-compose.yml</code>
+└── docker-compose.yml</code></pre>
           </div>
-          <div class="rounded-2xl border border-white/10 bg-white/[0.03] p-5">
-            <p class="text-xs font-semibold text-slate-400 mb-2">requirements.txt</p>
-            <code class="block font-mono text-xs text-slate-300 whitespace-pre">langchain-ollama
+          <div class="ds-codeblock not-prose rounded-2xl overflow-hidden border border-white/10">
+            <div class="ds-codeblock-header flex items-center justify-between px-4 py-2.5 bg-white/[0.05] border-b border-white/10">
+              <span class="text-xs font-medium text-slate-400">text</span>
+              <button class="ds-codeblock-copy flex items-center gap-1.5 text-xs text-slate-400 hover:text-white transition-colors">
+                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                Copy
+              </button>
+            </div>
+            <pre class="ds-codeblock-pre overflow-x-auto p-4 text-sm leading-relaxed m-0"><code class="ds-codeblock-source language-text">langchain-ollama
 langchain-community
 langchain-text-splitters
 chromadb
 pypdf
 rank-bm25
-sentence-transformers</code>
+sentence-transformers</code></pre>
           </div>
         </section>
 

@@ -38,27 +38,52 @@
         <section class="space-y-5" aria-labelledby="chatollama-heading">
           <h2 id="chatollama-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">ChatOllama — native LangChain integration</h2>
           <p>LangChain provides <code class="rounded bg-white/10 px-1 text-sm">ChatOllama</code> as a first-class model wrapper. It works identically to <code class="rounded bg-white/10 px-1 text-sm">ChatOpenAI</code> — just change the import and model name.</p>
-          <div class="rounded-2xl border border-white/10 bg-white/[0.03] p-5">
-            <code class="block font-mono text-xs text-slate-300 whitespace-pre">pip install langchain-ollama</code>
+          <div class="ds-codeblock not-prose rounded-2xl overflow-hidden border border-white/10">
+            <div class="ds-codeblock-header flex items-center justify-between px-4 py-2.5 bg-white/[0.05] border-b border-white/10">
+              <span class="text-xs font-medium text-slate-400">bash</span>
+              <button class="ds-codeblock-copy flex items-center gap-1.5 text-xs text-slate-400 hover:text-white transition-colors">
+                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                Copy
+              </button>
+            </div>
+            <pre class="ds-codeblock-pre overflow-x-auto p-4 text-sm leading-relaxed m-0"><code class="ds-codeblock-source language-bash">pip install langchain-ollama</code></pre>
           </div>
-          <div class="grid gap-4 sm:grid-cols-2 mt-2">
-            <div class="rounded-2xl border border-white/10 bg-white/[0.03] p-5 space-y-2">
+          <div class="grid gap-4 sm:grid-cols-2 mt-4">
+            <div class="rounded-2xl border border-white/10 bg-white/[0.03] p-5 space-y-3">
               <p class="text-xs font-semibold text-slate-400">Before (OpenAI)</p>
-              <code class="block font-mono text-xs text-slate-300 whitespace-pre">from langchain_openai import ChatOpenAI
+              <div class="ds-codeblock not-prose rounded-xl overflow-hidden border border-white/10">
+                <div class="ds-codeblock-header flex items-center justify-between px-4 py-2.5 bg-white/[0.05] border-b border-white/10">
+                  <span class="text-xs font-medium text-slate-400">python</span>
+                  <button class="ds-codeblock-copy flex items-center gap-1.5 text-xs text-slate-400 hover:text-white transition-colors">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                    Copy
+                  </button>
+                </div>
+                <pre class="ds-codeblock-pre overflow-x-auto p-4 text-sm leading-relaxed m-0"><code class="ds-codeblock-source language-python">from langchain_openai import ChatOpenAI
 
 llm = ChatOpenAI(
     model="gpt-4o-mini",
     temperature=0,
-)</code>
+)</code></pre>
+              </div>
             </div>
-            <div class="rounded-2xl border border-lime-500/20 bg-lime-500/[0.04] p-5 space-y-2">
+            <div class="rounded-2xl border border-lime-500/20 bg-lime-500/[0.04] p-5 space-y-3">
               <p class="text-xs font-semibold text-lime-300">After (Ollama — zero API cost)</p>
-              <code class="block font-mono text-xs text-slate-300 whitespace-pre">from langchain_ollama import ChatOllama
+              <div class="ds-codeblock not-prose rounded-xl overflow-hidden border border-white/10">
+                <div class="ds-codeblock-header flex items-center justify-between px-4 py-2.5 bg-white/[0.05] border-b border-white/10">
+                  <span class="text-xs font-medium text-slate-400">python</span>
+                  <button class="ds-codeblock-copy flex items-center gap-1.5 text-xs text-slate-400 hover:text-white transition-colors">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                    Copy
+                  </button>
+                </div>
+                <pre class="ds-codeblock-pre overflow-x-auto p-4 text-sm leading-relaxed m-0"><code class="ds-codeblock-source language-python">from langchain_ollama import ChatOllama
 
 llm = ChatOllama(
     model="llama3.1:8b",
     temperature=0,
-)</code>
+)</code></pre>
+              </div>
             </div>
           </div>
           <p class="text-sm text-slate-400/90">The rest of your chain — prompts, output parsers, tools, memory — works without any changes. This makes it trivial to switch between local and cloud models.</p>
@@ -66,8 +91,15 @@ llm = ChatOllama(
 
         <section class="space-y-5" aria-labelledby="chain-heading">
           <h2 id="chain-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">Using ChatOllama in a chain</h2>
-          <div class="rounded-2xl border border-white/10 bg-white/[0.03] p-5">
-            <code class="block font-mono text-xs text-slate-300 whitespace-pre">from langchain_ollama import ChatOllama
+          <div class="ds-codeblock not-prose rounded-2xl overflow-hidden border border-white/10">
+            <div class="ds-codeblock-header flex items-center justify-between px-4 py-2.5 bg-white/[0.05] border-b border-white/10">
+              <span class="text-xs font-medium text-slate-400">python</span>
+              <button class="ds-codeblock-copy flex items-center gap-1.5 text-xs text-slate-400 hover:text-white transition-colors">
+                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                Copy
+              </button>
+            </div>
+            <pre class="ds-codeblock-pre overflow-x-auto p-4 text-sm leading-relaxed m-0"><code class="ds-codeblock-source language-python">from langchain_ollama import ChatOllama
 from langchain_core.prompts import ChatPromptTemplate
 from langchain_core.output_parsers import StrOutputParser
 
@@ -81,7 +113,7 @@ prompt = ChatPromptTemplate.from_messages([
 chain = prompt | llm | StrOutputParser()
 
 result = chain.invoke({"text": "Your long document here..."})
-print(result)</code>
+print(result)</code></pre>
           </div>
         </section>
 
@@ -90,9 +122,26 @@ print(result)</code>
           <p>For fully local RAG pipelines, use Ollama's embedding models instead of OpenAI's. This keeps everything on-device at zero cost.</p>
           <div class="rounded-2xl border border-white/10 bg-white/[0.03] p-5 space-y-3">
             <p class="text-xs font-semibold text-slate-400">Pull the embedding model first</p>
-            <code class="block font-mono text-xs text-slate-300">ollama pull nomic-embed-text</code>
+            <div class="ds-codeblock not-prose rounded-xl overflow-hidden border border-white/10">
+              <div class="ds-codeblock-header flex items-center justify-between px-4 py-2.5 bg-white/[0.05] border-b border-white/10">
+                <span class="text-xs font-medium text-slate-400">bash</span>
+                <button class="ds-codeblock-copy flex items-center gap-1.5 text-xs text-slate-400 hover:text-white transition-colors">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                  Copy
+                </button>
+              </div>
+              <pre class="ds-codeblock-pre overflow-x-auto p-4 text-sm leading-relaxed m-0"><code class="ds-codeblock-source language-bash">ollama pull nomic-embed-text</code></pre>
+            </div>
             <p class="text-xs font-semibold text-slate-400 mt-3">Use in LangChain</p>
-            <code class="block font-mono text-xs text-slate-300 whitespace-pre">from langchain_ollama import OllamaEmbeddings
+            <div class="ds-codeblock not-prose rounded-xl overflow-hidden border border-white/10">
+              <div class="ds-codeblock-header flex items-center justify-between px-4 py-2.5 bg-white/[0.05] border-b border-white/10">
+                <span class="text-xs font-medium text-slate-400">python</span>
+                <button class="ds-codeblock-copy flex items-center gap-1.5 text-xs text-slate-400 hover:text-white transition-colors">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                  Copy
+                </button>
+              </div>
+              <pre class="ds-codeblock-pre overflow-x-auto p-4 text-sm leading-relaxed m-0"><code class="ds-codeblock-source language-python">from langchain_ollama import OllamaEmbeddings
 from langchain_community.vectorstores import FAISS
 
 embeddings = OllamaEmbeddings(model="nomic-embed-text")
@@ -105,7 +154,8 @@ vectorstore = FAISS.from_texts(
 )
 
 retriever = vectorstore.as_retriever(search_kwargs={"k": 3})
-docs = retriever.invoke("How do I run models locally?")</code>
+docs = retriever.invoke("How do I run models locally?")</code></pre>
+            </div>
           </div>
           <div class="rounded-xl border border-white/10 bg-white/[0.02] px-4 py-3 text-sm mt-2">
             <strong class="text-slate-200">Recommended local embedding models:</strong>
@@ -116,8 +166,15 @@ docs = retriever.invoke("How do I run models locally?")</code>
         <section class="space-y-5" aria-labelledby="openai-compat-heading">
           <h2 id="openai-compat-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">OpenAI-compatible endpoint (for non-LangChain code)</h2>
           <p>If you're using the OpenAI Python SDK directly (not LangChain), swap the base URL — no other changes needed.</p>
-          <div class="rounded-2xl border border-white/10 bg-white/[0.03] p-5">
-            <code class="block font-mono text-xs text-slate-300 whitespace-pre">from langchain_openai import ChatOpenAI
+          <div class="ds-codeblock not-prose rounded-2xl overflow-hidden border border-white/10">
+            <div class="ds-codeblock-header flex items-center justify-between px-4 py-2.5 bg-white/[0.05] border-b border-white/10">
+              <span class="text-xs font-medium text-slate-400">python</span>
+              <button class="ds-codeblock-copy flex items-center gap-1.5 text-xs text-slate-400 hover:text-white transition-colors">
+                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                Copy
+              </button>
+            </div>
+            <pre class="ds-codeblock-pre overflow-x-auto p-4 text-sm leading-relaxed m-0"><code class="ds-codeblock-source language-python">from langchain_openai import ChatOpenAI
 
 # Point ChatOpenAI at your local Ollama server
 llm = ChatOpenAI(
@@ -128,7 +185,7 @@ llm = ChatOpenAI(
 )
 
 # Works in any existing LangChain chain
-chain = prompt | llm | StrOutputParser()</code>
+chain = prompt | llm | StrOutputParser()</code></pre>
           </div>
           <p class="text-sm text-slate-400/90">This approach lets you reuse existing OpenAI-based LangChain code without adding the <code class="rounded bg-white/10 px-1">langchain-ollama</code> package. Useful when you want to test a chain locally before deploying to OpenAI.</p>
         </section>
@@ -136,8 +193,15 @@ chain = prompt | llm | StrOutputParser()</code>
         <section class="space-y-5" aria-labelledby="switching-heading">
           <h2 id="switching-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">Switching between local and cloud at runtime</h2>
           <p>A common pattern: use local models during development, cloud models in production, controlled by an environment variable.</p>
-          <div class="rounded-2xl border border-lime-500/20 bg-lime-500/[0.04] p-5">
-            <code class="block font-mono text-xs text-slate-300 whitespace-pre">import os
+          <div class="ds-codeblock not-prose rounded-2xl overflow-hidden border border-white/10">
+            <div class="ds-codeblock-header flex items-center justify-between px-4 py-2.5 bg-white/[0.05] border-b border-white/10">
+              <span class="text-xs font-medium text-slate-400">python</span>
+              <button class="ds-codeblock-copy flex items-center gap-1.5 text-xs text-slate-400 hover:text-white transition-colors">
+                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                Copy
+              </button>
+            </div>
+            <pre class="ds-codeblock-pre overflow-x-auto p-4 text-sm leading-relaxed m-0"><code class="ds-codeblock-source language-python">import os
 
 def get_llm(temperature: float = 0):
     if os.getenv("USE_LOCAL_LLM", "false").lower() == "true":
@@ -148,11 +212,18 @@ def get_llm(temperature: float = 0):
         return ChatOpenAI(model="gpt-4o-mini", temperature=temperature)
 
 llm = get_llm()
-chain = prompt | llm | StrOutputParser()</code>
+chain = prompt | llm | StrOutputParser()</code></pre>
           </div>
-          <div class="rounded-2xl border border-white/10 bg-white/[0.03] p-4 mt-2">
-            <code class="block font-mono text-xs text-slate-300 whitespace-pre">USE_LOCAL_LLM=true python app.py   # free, local
-python app.py                        # production, OpenAI</code>
+          <div class="ds-codeblock not-prose rounded-2xl overflow-hidden border border-white/10 mt-3">
+            <div class="ds-codeblock-header flex items-center justify-between px-4 py-2.5 bg-white/[0.05] border-b border-white/10">
+              <span class="text-xs font-medium text-slate-400">bash</span>
+              <button class="ds-codeblock-copy flex items-center gap-1.5 text-xs text-slate-400 hover:text-white transition-colors">
+                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                Copy
+              </button>
+            </div>
+            <pre class="ds-codeblock-pre overflow-x-auto p-4 text-sm leading-relaxed m-0"><code class="ds-codeblock-source language-bash">USE_LOCAL_LLM=true python app.py   # free, local
+python app.py                        # production, OpenAI</code></pre>
           </div>
         </section>
 
@@ -162,8 +233,15 @@ python app.py                        # production, OpenAI</code>
             <code class="rounded bg-white/10 px-1 text-sm">.with_structured_output()</code> works with ChatOllama on models that support JSON mode.
             Not all local models are reliable with structured output — test before depending on it.
           </p>
-          <div class="rounded-2xl border border-white/10 bg-white/[0.03] p-5">
-            <code class="block font-mono text-xs text-slate-300 whitespace-pre">from pydantic import BaseModel
+          <div class="ds-codeblock not-prose rounded-2xl overflow-hidden border border-white/10">
+            <div class="ds-codeblock-header flex items-center justify-between px-4 py-2.5 bg-white/[0.05] border-b border-white/10">
+              <span class="text-xs font-medium text-slate-400">python</span>
+              <button class="ds-codeblock-copy flex items-center gap-1.5 text-xs text-slate-400 hover:text-white transition-colors">
+                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                Copy
+              </button>
+            </div>
+            <pre class="ds-codeblock-pre overflow-x-auto p-4 text-sm leading-relaxed m-0"><code class="ds-codeblock-source language-python">from pydantic import BaseModel
 from langchain_ollama import ChatOllama
 
 class Sentiment(BaseModel):
@@ -175,7 +253,7 @@ structured_llm = llm.with_structured_output(Sentiment)
 
 result = structured_llm.invoke("Review: The product is amazing!")
 print(result.label)       # "Positive"
-print(result.confidence)  # 0.95</code>
+print(result.confidence)  # 0.95</code></pre>
           </div>
           <p class="text-sm text-slate-400/90">Reliability varies by model. Llama 3.1 8B and Mistral 7B handle simple schemas well. Smaller models (3B) are less reliable. Always add validation and a retry fallback for production.</p>
         </section>
