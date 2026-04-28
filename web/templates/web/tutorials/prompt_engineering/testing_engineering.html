@@ -66,8 +66,15 @@
         <section class="space-y-5" aria-labelledby="testcases-heading">
           <h2 id="testcases-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">Writing prompt test cases</h2>
           <p>A test case has three parts: an input, the expected output (or criteria), and a pass/fail assertion.</p>
-          <div class="rounded-2xl border border-white/10 bg-white/[0.03] p-5">
-            <code class="block font-mono text-xs text-slate-300 whitespace-pre">test_cases = [
+          <div class="ds-codeblock not-prose rounded-2xl overflow-hidden border border-white/10">
+            <div class="ds-codeblock-header flex items-center justify-between px-4 py-2.5 bg-white/[0.05] border-b border-white/10">
+              <span class="text-xs font-medium text-slate-400">python</span>
+              <button class="ds-codeblock-copy flex items-center gap-1.5 text-xs text-slate-400 hover:text-white transition-colors">
+                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                Copy
+              </button>
+            </div>
+            <pre class="ds-codeblock-pre overflow-x-auto p-4 text-sm leading-relaxed m-0"><code class="ds-codeblock-source language-python">test_cases = [
     {
         "input":    "The product is amazing, highly recommend!",
         "expected": "Positive",
@@ -89,7 +96,7 @@
         "type":     "exact_match",
         "note":     "edge case — mixed but negative overall",
     },
-]</code>
+]</code></pre>
           </div>
           <p class="text-sm text-slate-400/90">Cover: happy path, edge cases, ambiguous inputs, known failure modes, and adversarial inputs. Aim for 20–50 cases per task — enough to catch regressions, small enough to run cheaply.</p>
         </section>
@@ -114,8 +121,15 @@
         <section class="space-y-5" aria-labelledby="regression-heading">
           <h2 id="regression-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">Regression testing</h2>
           <p>Run the golden dataset against the new prompt before shipping. Compare scores against the previous version. Only ship if the new version doesn't regress.</p>
-          <div class="rounded-2xl border border-white/10 bg-white/[0.03] p-5">
-            <code class="block font-mono text-xs text-slate-300 whitespace-pre">def run_eval(prompt_v, test_cases, llm_fn):
+          <div class="ds-codeblock not-prose rounded-2xl overflow-hidden border border-white/10">
+            <div class="ds-codeblock-header flex items-center justify-between px-4 py-2.5 bg-white/[0.05] border-b border-white/10">
+              <span class="text-xs font-medium text-slate-400">python</span>
+              <button class="ds-codeblock-copy flex items-center gap-1.5 text-xs text-slate-400 hover:text-white transition-colors">
+                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                Copy
+              </button>
+            </div>
+            <pre class="ds-codeblock-pre overflow-x-auto p-4 text-sm leading-relaxed m-0"><code class="ds-codeblock-source language-python">def run_eval(prompt_v, test_cases, llm_fn):
     results = []
     for tc in test_cases:
         output = llm_fn(prompt_v, tc["input"])
@@ -130,8 +144,8 @@ acc_v2, _ = run_eval(prompt_v2, test_cases, call_llm)
 
 print(f"v1 accuracy: {acc_v1:.1%}")
 print(f"v2 accuracy: {acc_v2:.1%}")
-if acc_v2 < acc_v1:
-    print("REGRESSION — do not ship v2")</code>
+if acc_v2 &lt; acc_v1:
+    print("REGRESSION — do not ship v2")</code></pre>
           </div>
         </section>
 
@@ -142,27 +156,54 @@ if acc_v2 < acc_v1:
               <h3 class="text-sm font-semibold text-slate-200">Accuracy</h3>
               <p class="mt-1.5 text-xs text-slate-400/90">% of test cases that produce the expected output. For classification tasks use exact match. For open-ended tasks use LLM-as-judge (see below) or human eval.</p>
             </div>
-            <div class="rounded-2xl border border-white/10 bg-white/[0.03] p-5">
+            <div class="rounded-2xl border border-white/10 bg-white/[0.03] p-5 space-y-3">
               <h3 class="text-sm font-semibold text-slate-200">Consistency</h3>
               <p class="mt-1.5 text-xs text-slate-400/90">Run the same prompt 5× at temperature > 0 and measure variance. High variance = the prompt is ambiguous or the task is under-specified. Target: &lt;10% output variation for production prompts.</p>
-              <code class="mt-2 block font-mono text-xs text-slate-300 whitespace-pre">outputs = [call_llm(prompt, input) for _ in range(5)]
+              <div class="ds-codeblock not-prose rounded-xl overflow-hidden border border-white/10">
+                <div class="ds-codeblock-header flex items-center justify-between px-4 py-2.5 bg-white/[0.05] border-b border-white/10">
+                  <span class="text-xs font-medium text-slate-400">python</span>
+                  <button class="ds-codeblock-copy flex items-center gap-1.5 text-xs text-slate-400 hover:text-white transition-colors">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                    Copy
+                  </button>
+                </div>
+                <pre class="ds-codeblock-pre overflow-x-auto p-4 text-sm leading-relaxed m-0"><code class="ds-codeblock-source language-python">outputs = [call_llm(prompt, input) for _ in range(5)]
 unique = len(set(outputs))
-print(f"{unique}/5 unique answers")</code>
+print(f"{unique}/5 unique answers")</code></pre>
+              </div>
             </div>
-            <div class="rounded-2xl border border-white/10 bg-white/[0.03] p-5">
+            <div class="rounded-2xl border border-white/10 bg-white/[0.03] p-5 space-y-3">
               <h3 class="text-sm font-semibold text-slate-200">Latency</h3>
               <p class="mt-1.5 text-xs text-slate-400/90">Time-to-first-token (TTFT) and total completion time. CoT and long prompts increase latency. Measure p50 and p95 — p95 is what users experience on a bad day.</p>
-              <code class="mt-2 block font-mono text-xs text-slate-300 whitespace-pre">import time
+              <div class="ds-codeblock not-prose rounded-xl overflow-hidden border border-white/10">
+                <div class="ds-codeblock-header flex items-center justify-between px-4 py-2.5 bg-white/[0.05] border-b border-white/10">
+                  <span class="text-xs font-medium text-slate-400">python</span>
+                  <button class="ds-codeblock-copy flex items-center gap-1.5 text-xs text-slate-400 hover:text-white transition-colors">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                    Copy
+                  </button>
+                </div>
+                <pre class="ds-codeblock-pre overflow-x-auto p-4 text-sm leading-relaxed m-0"><code class="ds-codeblock-source language-python">import time
 start = time.perf_counter()
 result = call_llm(prompt, input)
-latency_ms = (time.perf_counter() - start) * 1000</code>
+latency_ms = (time.perf_counter() - start) * 1000</code></pre>
+              </div>
             </div>
-            <div class="rounded-2xl border border-white/10 bg-white/[0.03] p-5">
+            <div class="rounded-2xl border border-white/10 bg-white/[0.03] p-5 space-y-3">
               <h3 class="text-sm font-semibold text-slate-200">Cost</h3>
               <p class="mt-1.5 text-xs text-slate-400/90">Track input + output tokens per call. A longer system prompt means higher input cost on every call. A verbose output means higher output cost. Calculate cost per 1k calls, not per call — the math looks very different at scale.</p>
-              <code class="mt-2 block font-mono text-xs text-slate-300 whitespace-pre">usage = response.usage
-cost = usage.prompt_tokens * 0.15/1e6   # gpt-4o-mini input
-     + usage.completion_tokens * 0.60/1e6  # output</code>
+              <div class="ds-codeblock not-prose rounded-xl overflow-hidden border border-white/10">
+                <div class="ds-codeblock-header flex items-center justify-between px-4 py-2.5 bg-white/[0.05] border-b border-white/10">
+                  <span class="text-xs font-medium text-slate-400">python</span>
+                  <button class="ds-codeblock-copy flex items-center gap-1.5 text-xs text-slate-400 hover:text-white transition-colors">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                    Copy
+                  </button>
+                </div>
+                <pre class="ds-codeblock-pre overflow-x-auto p-4 text-sm leading-relaxed m-0"><code class="ds-codeblock-source language-python">usage = response.usage
+cost = usage.prompt_tokens * 0.15/1e6    # gpt-4o-mini input
+     + usage.completion_tokens * 0.60/1e6  # output</code></pre>
+              </div>
             </div>
           </div>
         </section>
@@ -170,8 +211,15 @@ cost = usage.prompt_tokens * 0.15/1e6   # gpt-4o-mini input
         <section class="space-y-5" aria-labelledby="judge-heading">
           <h2 id="judge-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">LLM-as-judge</h2>
           <p>For open-ended tasks (summaries, emails, code explanations) there's no single correct answer. Use a second LLM call to score the output against your criteria.</p>
-          <div class="rounded-2xl border border-white/10 bg-white/[0.03] p-5">
-            <code class="block font-mono text-xs text-slate-300 whitespace-pre">{% verbatim %}judge_prompt = """
+          <div class="ds-codeblock not-prose rounded-2xl overflow-hidden border border-white/10">
+            <div class="ds-codeblock-header flex items-center justify-between px-4 py-2.5 bg-white/[0.05] border-b border-white/10">
+              <span class="text-xs font-medium text-slate-400">python</span>
+              <button class="ds-codeblock-copy flex items-center gap-1.5 text-xs text-slate-400 hover:text-white transition-colors">
+                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                Copy
+              </button>
+            </div>
+            <pre class="ds-codeblock-pre overflow-x-auto p-4 text-sm leading-relaxed m-0"><code class="ds-codeblock-source language-python">{% verbatim %}judge_prompt = """
 You are evaluating a customer support response.
 Score it 1–5 on each dimension:
 - Accuracy: does it answer the question correctly?
@@ -184,7 +232,7 @@ Response to evaluate:
 Return JSON: {{"accuracy": int, "tone": int, "brevity": int}}
 """
 
-score = call_llm(judge_prompt.format(response=output), temp=0){% endverbatim %}</code>
+score = call_llm(judge_prompt.format(response=output), temp=0){% endverbatim %}</code></pre>
           </div>
           <p class="text-sm text-slate-400/90">LLM-as-judge scales to thousands of examples automatically. It's less accurate than human eval but fast enough to catch obvious regressions. Use GPT-4o or Claude 3.5 as the judge for best results.</p>
         </section>
