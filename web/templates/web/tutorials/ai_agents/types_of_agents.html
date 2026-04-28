@@ -1,0 +1,262 @@
+{% extends "web/base.html" %}
+{% block title %}Types of AI Agents — DevShelf Tutorials{% endblock %}
+{% block content %}
+  <div class="space-y-10">
+
+    {# ── Breadcrumb ── #}
+    <div class="flex flex-wrap items-center gap-2 text-sm text-slate-400/90">
+      <a href="{% url 'tutorials' %}" class="font-medium text-emerald-300/90 transition hover:text-emerald-200">Tutorials</a>
+      <span aria-hidden class="text-slate-600">/</span>
+      <a href="{% url 'tutorials' %}?category=ai-agents" class="font-medium text-emerald-300/90 transition hover:text-emerald-200">AI Agents</a>
+      <span aria-hidden class="text-slate-600">/</span>
+      <span class="text-slate-200/90">Types of AI Agents</span>
+    </div>
+
+    {# ── Hero ── #}
+    <section class="relative overflow-hidden rounded-3xl border border-emerald-400/20 bg-white/[0.06] p-6 shadow-[0_0_0_1px_rgba(255,255,255,0.04)] backdrop-blur-2xl sm:p-8">
+      <div class="pointer-events-none absolute -right-24 top-0 h-72 w-72 rounded-full bg-emerald-500/15 blur-3xl"></div>
+      <div class="pointer-events-none absolute -left-20 bottom-0 h-56 w-56 rounded-full bg-cyan-500/10 blur-3xl"></div>
+      <div class="relative">
+        <div class="flex flex-wrap items-center gap-3">
+          <span class="rounded-full border border-emerald-500/25 bg-emerald-500/10 px-2.5 py-1 text-xs font-medium text-emerald-300/90">AI Agents</span>
+          <span class="rounded-full border border-sky-500/25 bg-sky-500/10 px-2.5 py-1 text-xs font-medium text-sky-300/90">Beginner</span>
+          <span class="text-xs text-slate-400/80">· 10 min read</span>
+          <span class="ml-auto text-xs font-medium text-slate-400/80">Page 5 of 10</span>
+        </div>
+        <h1 class="mt-4 text-3xl font-semibold tracking-tight text-white sm:text-4xl lg:text-[2.5rem] lg:leading-tight">
+          Types of AI Agents
+        </h1>
+        <p class="mt-4 max-w-2xl text-sm leading-relaxed text-slate-200/80 sm:text-base">
+          Not all agents are the same. From simple reflex agents to collaborative multi-agent systems — here is how they differ and when to use each.
+        </p>
+        <div class="mt-6">
+          <div class="mb-1.5 flex items-center justify-between text-xs text-slate-400/80">
+            <span>Series progress</span><span>5 / 10</span>
+          </div>
+          <div class="h-1.5 w-full overflow-hidden rounded-full bg-white/10">
+            <div class="h-full w-[50%] rounded-full bg-emerald-400/70"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    {# ── Content ── #}
+    <div class="glass rounded-3xl border border-white/10 p-5 sm:p-8">
+      <article class="mx-auto space-y-12 text-base leading-relaxed text-slate-300/95">
+
+        <section class="space-y-4" aria-labelledby="overview-heading">
+          <h2 id="overview-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">Agent types at a glance</h2>
+          <p>
+            The term "AI agent" covers a wide spectrum — from a simple rule-follower to a network of cooperating AI
+            models. Choosing the right type for a task determines how well it performs and how much it costs to run.
+          </p>
+          <p>We will cover four types that you will encounter most often in practice:</p>
+        </section>
+
+        <section class="space-y-5" aria-labelledby="reflex-heading">
+          <h2 id="reflex-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">1. Simple reflex agents</h2>
+          <div class="rounded-2xl border border-white/10 bg-white/[0.03] p-5 space-y-3">
+            <p class="text-sm text-slate-400/90">
+              A reflex agent maps inputs directly to outputs using a fixed set of rules. There is no reasoning,
+              no memory, and no planning — just "if this, then that."
+            </p>
+            <p class="text-sm text-slate-400/90">
+              <strong class="text-slate-200">How it works:</strong> Input arrives → match against a rule → execute the
+              associated action. No loop, no history.
+            </p>
+            <p class="text-sm text-slate-400/90">
+              <strong class="text-slate-200">Example:</strong> A customer support bot that responds with a fixed FAQ
+              answer whenever it detects keywords like "refund" or "cancel".
+            </p>
+          </div>
+          <div class="flex gap-6 text-sm">
+            <div>
+              <p class="font-medium text-emerald-300">Strengths</p>
+              <ul class="mt-1.5 list-disc pl-4 text-slate-400/90 space-y-1 marker:text-emerald-400/70">
+                <li>Fast and cheap to run</li>
+                <li>Predictable and easy to debug</li>
+              </ul>
+            </div>
+            <div>
+              <p class="font-medium text-rose-300">Weaknesses</p>
+              <ul class="mt-1.5 list-disc pl-4 text-slate-400/90 space-y-1 marker:text-rose-400/70">
+                <li>Breaks on inputs it was not programmed for</li>
+                <li>No ability to adapt or learn</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        <section class="space-y-5" aria-labelledby="react-heading">
+          <h2 id="react-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">2. ReAct agents</h2>
+          <div class="rounded-2xl border border-white/10 bg-white/[0.03] p-5 space-y-3">
+            <p class="text-sm text-slate-400/90">
+              ReAct (Reason + Act) agents are the most widely used agent type today. The LLM alternates between
+              writing its reasoning ("I should search for X") and calling a tool. The result feeds back into the
+              next reasoning step.
+            </p>
+            <p class="text-sm text-slate-400/90">
+              <strong class="text-slate-200">How it works:</strong> Goal arrives → reason about the next step →
+              call a tool → observe the result → reason again → repeat until done.
+            </p>
+            <p class="text-sm text-slate-400/90">
+              <strong class="text-slate-200">Example:</strong> A research agent that searches the web, reads pages,
+              synthesises findings, and writes a summary — all in one run.
+            </p>
+          </div>
+          <div class="flex gap-6 text-sm">
+            <div>
+              <p class="font-medium text-emerald-300">Strengths</p>
+              <ul class="mt-1.5 list-disc pl-4 text-slate-400/90 space-y-1 marker:text-emerald-400/70">
+                <li>Handles open-ended, multi-step tasks</li>
+                <li>Adapts based on what it finds</li>
+                <li>Transparent — you can read the reasoning trace</li>
+              </ul>
+            </div>
+            <div>
+              <p class="font-medium text-rose-300">Weaknesses</p>
+              <ul class="mt-1.5 list-disc pl-4 text-slate-400/90 space-y-1 marker:text-rose-400/70">
+                <li>Can go off-track on vague goals</li>
+                <li>Costs more tokens per run</li>
+              </ul>
+            </div>
+          </div>
+          <p class="rounded-xl border border-emerald-500/20 bg-emerald-500/[0.05] px-4 py-3 text-sm">
+            <strong class="text-emerald-200">Start here.</strong> If you are building your first agent, use the ReAct pattern. It is well-supported in every framework and works for the majority of tasks.
+          </p>
+        </section>
+
+        <section class="space-y-5" aria-labelledby="autonomous-heading">
+          <h2 id="autonomous-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">3. Autonomous / long-running agents</h2>
+          <div class="rounded-2xl border border-white/10 bg-white/[0.03] p-5 space-y-3">
+            <p class="text-sm text-slate-400/90">
+              These agents run for extended periods — hours, days, or continuously — without human interaction.
+              They have persistent memory, can spawn sub-tasks, and often run on a schedule.
+            </p>
+            <p class="text-sm text-slate-400/90">
+              <strong class="text-slate-200">How it works:</strong> A long-horizon goal is given. The agent breaks it
+              into a queue of sub-tasks, works through them, stores results, and picks up where it left off if interrupted.
+            </p>
+            <p class="text-sm text-slate-400/90">
+              <strong class="text-slate-200">Examples:</strong> AutoGPT, Devin (the AI software engineer), agents that
+              monitor a codebase and open GitHub issues when tests fail.
+            </p>
+          </div>
+          <div class="flex gap-6 text-sm">
+            <div>
+              <p class="font-medium text-emerald-300">Strengths</p>
+              <ul class="mt-1.5 list-disc pl-4 text-slate-400/90 space-y-1 marker:text-emerald-400/70">
+                <li>Can tackle very large, open-ended goals</li>
+                <li>Runs without supervision</li>
+              </ul>
+            </div>
+            <div>
+              <p class="font-medium text-rose-300">Weaknesses</p>
+              <ul class="mt-1.5 list-disc pl-4 text-slate-400/90 space-y-1 marker:text-rose-400/70">
+                <li>Expensive — many tokens, many tool calls</li>
+                <li>Hard to debug and control</li>
+                <li>Errors can compound over many steps</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        <section class="space-y-5" aria-labelledby="multi-agent-heading">
+          <h2 id="multi-agent-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">4. Multi-agent systems</h2>
+          <div class="rounded-2xl border border-white/10 bg-white/[0.03] p-5 space-y-3">
+            <p class="text-sm text-slate-400/90">
+              A multi-agent system is a team of specialised agents working together. One orchestrator agent breaks down
+              the goal and delegates sub-tasks to worker agents, each with its own tools and expertise.
+            </p>
+            <p class="text-sm text-slate-400/90">
+              <strong class="text-slate-200">How it works:</strong> Orchestrator receives goal → assigns tasks to agents
+              (e.g. Researcher, Coder, Writer) → agents complete their part → orchestrator combines results.
+            </p>
+            <p class="text-sm text-slate-400/90">
+              <strong class="text-slate-200">Examples:</strong> CrewAI, AutoGen, Microsoft Magentic-One — teams of agents
+              where one plans and others execute.
+            </p>
+          </div>
+          <div class="flex gap-6 text-sm">
+            <div>
+              <p class="font-medium text-emerald-300">Strengths</p>
+              <ul class="mt-1.5 list-disc pl-4 text-slate-400/90 space-y-1 marker:text-emerald-400/70">
+                <li>Parallelises work across agents</li>
+                <li>Each agent stays focused on one role</li>
+                <li>Scales to complex, multi-domain tasks</li>
+              </ul>
+            </div>
+            <div>
+              <p class="font-medium text-rose-300">Weaknesses</p>
+              <ul class="mt-1.5 list-disc pl-4 text-slate-400/90 space-y-1 marker:text-rose-400/70">
+                <li>More complex to build and orchestrate</li>
+                <li>Coordination bugs are hard to trace</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        <section class="space-y-4" aria-labelledby="when-heading">
+          <h2 id="when-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">Which type should you use?</h2>
+          <div class="overflow-x-auto rounded-2xl border border-white/10">
+            <table class="w-full text-sm">
+              <thead>
+                <tr class="border-b border-white/10 bg-white/[0.04]">
+                  <th class="px-4 py-3 text-left font-semibold text-slate-200">Task type</th>
+                  <th class="px-4 py-3 text-left font-semibold text-emerald-200">Recommended</th>
+                </tr>
+              </thead>
+              <tbody class="divide-y divide-white/5">
+                <tr>
+                  <td class="px-4 py-3 text-slate-400/90">Fixed input, fixed output (e.g. FAQ bot)</td>
+                  <td class="px-4 py-3 text-slate-300">Simple reflex</td>
+                </tr>
+                <tr>
+                  <td class="px-4 py-3 text-slate-400/90">Open-ended research, coding, writing</td>
+                  <td class="px-4 py-3 text-slate-300">ReAct agent</td>
+                </tr>
+                <tr>
+                  <td class="px-4 py-3 text-slate-400/90">Long-running background task</td>
+                  <td class="px-4 py-3 text-slate-300">Autonomous agent</td>
+                </tr>
+                <tr>
+                  <td class="px-4 py-3 text-slate-400/90">Complex task requiring multiple skills</td>
+                  <td class="px-4 py-3 text-slate-300">Multi-agent system</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        {# Summary box #}
+        <section class="rounded-2xl border border-emerald-500/20 bg-emerald-500/[0.06] p-5 sm:p-6">
+          <h2 class="text-lg font-semibold text-emerald-100">Quick summary</h2>
+          <ul class="mt-3 list-disc space-y-1.5 pl-5 text-sm text-slate-300/95 marker:text-emerald-400/80">
+            <li>Simple reflex agents: fast, rule-based, no reasoning — for predictable tasks</li>
+            <li>ReAct agents: most common — reason + act in a loop, good for open-ended tasks</li>
+            <li>Autonomous agents: long-running, unsupervised — powerful but expensive</li>
+            <li>Multi-agent systems: teams of specialised agents for complex, multi-domain work</li>
+          </ul>
+        </section>
+
+      </article>
+    </div>
+
+    {# ── Navigation ── #}
+    <div class="flex items-center justify-between">
+      <a
+        href="{% url 'tutorial_ai_agents_components' %}"
+        class="inline-flex items-center gap-2 rounded-xl border border-white/15 bg-white/[0.04] px-5 py-2.5 text-sm font-semibold text-slate-200 transition hover:border-white/25 hover:bg-white/[0.07] hover:text-white"
+      >
+        <span aria-hidden>←</span> Core Components
+      </a>
+      <a
+        href="{% url 'tutorial_ai_agents_frameworks' %}"
+        class="inline-flex items-center gap-2 rounded-xl border border-emerald-400/35 bg-emerald-500/10 px-5 py-2.5 text-sm font-semibold text-emerald-200 transition hover:border-emerald-300/50 hover:bg-emerald-500/20 hover:text-white"
+      >
+        Next: Agent Frameworks <span aria-hidden>→</span>
+      </a>
+    </div>
+
+  </div>
+{% endblock %}

@@ -103,6 +103,11 @@
             class="rounded-xl px-3 py-2 text-sm font-medium transition-all duration-300 {% if active_nav == "ai" %}glass-strong text-white shadow-glow{% else %}text-slate-200/80 hover:bg-white/5 hover:text-white{% endif %}"
             >AI Tools</a
           >
+          <a
+            href="{% url 'tutorials' %}"
+            class="rounded-xl px-3 py-2 text-sm font-medium transition-all duration-300 {% if active_nav == "tutorials" %}glass-strong text-white shadow-glow{% else %}text-slate-200/80 hover:bg-white/5 hover:text-white{% endif %}"
+            >Tutorials</a
+          >
         </nav>
         <button
           type="button"
@@ -131,6 +136,12 @@
             class="rounded-xl px-3 py-2 text-sm font-medium text-slate-200/80 hover:bg-white/5"
             data-mobile-link
             >AI Tools</a
+          >
+          <a
+            href="{% url 'tutorials' %}"
+            class="rounded-xl px-3 py-2 text-sm font-medium text-slate-200/80 hover:bg-white/5"
+            data-mobile-link
+            >Tutorials</a
           >
         </div>
       </div>
@@ -170,6 +181,10 @@
     ></script>
     <script
       src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-python.min.js"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-bash.min.js"
       crossorigin="anonymous"
     ></script>
     <script>

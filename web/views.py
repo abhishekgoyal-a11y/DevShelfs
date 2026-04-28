@@ -56,7 +56,20 @@ def _layout(path: str) -> str:
         return "hackathons"
     if path.startswith("/contests"):
         return "contests"
+    if path.startswith("/tutorials"):
+        return "tutorials"
     return "default"
+
+
+_TUTORIAL_CATEGORIES = [
+    {"name": "All", "slug": "all"},
+    {"name": "Getting Started", "slug": "getting-started"},
+    {"name": "AI Agents", "slug": "ai-agents"},
+    {"name": "RAG & Vector DBs", "slug": "rag-vector-dbs"},
+    {"name": "LLMs & Models", "slug": "llms-models"},
+    {"name": "Developer Tools", "slug": "developer-tools"},
+    {"name": "Video & Audio", "slug": "video-audio"},
+]
 
 
 _HOME_AI_TOOL_ORDER = (
@@ -407,6 +420,208 @@ def openclaw(request):
         request,
         "web/openclaw.html",
         {"layout": _layout(request.path), "active_nav": "ai"},
+    )
+
+
+_AI_AGENTS_SERIES = [
+    {"number": 2, "title": "What is an AI Agent?", "summary": "Plain-English definition, chatbot vs agent comparison, and real-world analogies.", "url": "tutorial_ai_agents_what_is"},
+    {"number": 3, "title": "How AI Agents Work", "summary": "The agent loop — Perceive → Think → Act → Observe → Repeat — broken down step by step.", "url": "tutorial_ai_agents_how_work"},
+    {"number": 4, "title": "Core Components", "summary": "The four building blocks: LLM, Tools, Memory, and Planning.", "url": "tutorial_ai_agents_components"},
+    {"number": 5, "title": "Types of AI Agents", "summary": "Reflex, ReAct, multi-agent, and autonomous agents — when to use each.", "url": "tutorial_ai_agents_types"},
+    {"number": 6, "title": "Agent Frameworks Overview", "summary": "LangChain, CrewAI, AutoGen, Phidata, Swarm — compared in one place.", "url": "tutorial_ai_agents_frameworks"},
+    {"number": 7, "title": "Build Your First Agent", "summary": "Write and run a simple research agent in Python from scratch.", "url": "tutorial_ai_agents_build"},
+    {"number": 8, "title": "Real-World Use Cases", "summary": "Research, coding, customer support, and data analysis agents with examples.", "url": "tutorial_ai_agents_usecases"},
+    {"number": 9, "title": "Limitations & Best Practices", "summary": "What agents get wrong, token costs, security risks, and production checklist.", "url": "tutorial_ai_agents_limitations"},
+    {"number": 10, "title": "What to Learn Next", "summary": "Series recap and recommended next tutorials to keep building.", "url": "tutorial_ai_agents_next"},
+]
+
+
+_TUTORIALS = [
+    {
+        "title": "AI Agents Tutorial",
+        "description": "Learn what AI agents are, how they plan and act, and build your first agent from scratch.",
+        "category": "AI Agents",
+        "difficulty": "Beginner",
+        "read_time": 12,
+        "icon": "🤖",
+        "icon_gradient": "from-emerald-500/40 via-teal-400/20 to-cyan-400/25",
+        "url": "/tutorials/ai-agents/introduction/",
+    },
+    {
+        "title": "LangChain Tutorial",
+        "description": "Build LLM-powered apps with chains, agents, and RAG pipelines using LangChain.",
+        "category": "AI Agents",
+        "difficulty": "Intermediate",
+        "read_time": 18,
+        "icon": "🔗",
+        "icon_gradient": "from-violet-500/40 via-purple-400/20 to-fuchsia-400/25",
+        "url": "#",
+    },
+    {
+        "title": "RAG Pipeline Tutorial",
+        "description": "Connect an LLM to your own documents using retrieval-augmented generation.",
+        "category": "RAG & Vector DBs",
+        "difficulty": "Intermediate",
+        "read_time": 15,
+        "icon": "📚",
+        "icon_gradient": "from-amber-500/40 via-orange-400/20 to-yellow-400/25",
+        "url": "#",
+    },
+    {
+        "title": "Prompt Engineering",
+        "description": "Master the techniques that get better, more reliable outputs from any LLM.",
+        "category": "Getting Started",
+        "difficulty": "Beginner",
+        "read_time": 10,
+        "icon": "✍️",
+        "icon_gradient": "from-sky-500/40 via-blue-400/20 to-indigo-400/25",
+        "url": "#",
+    },
+    {
+        "title": "Run LLMs Locally",
+        "description": "Use Ollama to run Llama, Mistral, and other models on your own machine for free.",
+        "category": "LLMs & Models",
+        "difficulty": "Beginner",
+        "read_time": 8,
+        "icon": "💻",
+        "icon_gradient": "from-lime-500/40 via-green-400/20 to-emerald-400/25",
+        "url": "#",
+    },
+    {
+        "title": "Build with CrewAI",
+        "description": "Create multi-agent crews where AI roles collaborate to complete complex tasks.",
+        "category": "AI Agents",
+        "difficulty": "Intermediate",
+        "read_time": 20,
+        "icon": "👥",
+        "icon_gradient": "from-rose-500/40 via-pink-400/20 to-fuchsia-400/25",
+        "url": "#",
+    },
+    {
+        "title": "Flowise Crash Course",
+        "description": "Build and deploy a RAG chatbot visually using Flowise — no code required.",
+        "category": "Developer Tools",
+        "difficulty": "Beginner",
+        "read_time": 14,
+        "icon": "🌊",
+        "icon_gradient": "from-cyan-500/40 via-teal-400/20 to-sky-400/25",
+        "url": "#",
+    },
+    {
+        "title": "Fine-tune a Llama Model",
+        "description": "Fine-tune Meta Llama on your own dataset using LoRA and the Hugging Face ecosystem.",
+        "category": "LLMs & Models",
+        "difficulty": "Advanced",
+        "read_time": 25,
+        "icon": "🦙",
+        "icon_gradient": "from-orange-500/40 via-amber-400/20 to-yellow-400/25",
+        "url": "#",
+    },
+]
+
+
+def tutorial_ai_agents_intro(request):
+    return render(
+        request,
+        "web/tutorials/ai_agents/introduction.html",
+        {
+            "layout": _layout(request.path),
+            "active_nav": "tutorials",
+            "series_pages": _AI_AGENTS_SERIES,
+        },
+    )
+
+
+def tutorial_ai_agents_what_is(request):
+    return render(
+        request,
+        "web/tutorials/ai_agents/what_is_an_ai_agent.html",
+        {"layout": _layout(request.path), "active_nav": "tutorials"},
+    )
+
+
+def tutorial_ai_agents_how_work(request):
+    return render(
+        request,
+        "web/tutorials/ai_agents/how_agents_work.html",
+        {"layout": _layout(request.path), "active_nav": "tutorials"},
+    )
+
+
+def tutorial_ai_agents_components(request):
+    return render(
+        request,
+        "web/tutorials/ai_agents/core_components.html",
+        {"layout": _layout(request.path), "active_nav": "tutorials"},
+    )
+
+
+def tutorial_ai_agents_types(request):
+    return render(
+        request,
+        "web/tutorials/ai_agents/types_of_agents.html",
+        {"layout": _layout(request.path), "active_nav": "tutorials"},
+    )
+
+
+def tutorial_ai_agents_frameworks(request):
+    return render(
+        request,
+        "web/tutorials/ai_agents/frameworks.html",
+        {"layout": _layout(request.path), "active_nav": "tutorials"},
+    )
+
+
+def tutorial_ai_agents_build(request):
+    return render(
+        request,
+        "web/tutorials/ai_agents/build_your_first_agent.html",
+        {"layout": _layout(request.path), "active_nav": "tutorials"},
+    )
+
+
+def tutorial_ai_agents_usecases(request):
+    return render(
+        request,
+        "web/tutorials/ai_agents/use_cases.html",
+        {"layout": _layout(request.path), "active_nav": "tutorials"},
+    )
+
+
+def tutorial_ai_agents_limitations(request):
+    return render(
+        request,
+        "web/tutorials/ai_agents/limitations.html",
+        {"layout": _layout(request.path), "active_nav": "tutorials"},
+    )
+
+
+def tutorial_ai_agents_next(request):
+    return render(
+        request,
+        "web/tutorials/ai_agents/whats_next.html",
+        {"layout": _layout(request.path), "active_nav": "tutorials"},
+    )
+
+
+def tutorials(request):
+    active_category = (request.GET.get("category") or "all").lower()
+    if active_category == "all":
+        filtered = _TUTORIALS
+    else:
+        cat_map = {c["slug"]: c["name"] for c in _TUTORIAL_CATEGORIES}
+        cat_name = cat_map.get(active_category, "")
+        filtered = [t for t in _TUTORIALS if t["category"] == cat_name]
+    return render(
+        request,
+        "web/tutorials.html",
+        {
+            "layout": _layout(request.path),
+            "active_nav": "tutorials",
+            "categories": _TUTORIAL_CATEGORIES,
+            "active_category": active_category,
+            "tutorials": filtered,
+        },
     )
 
 

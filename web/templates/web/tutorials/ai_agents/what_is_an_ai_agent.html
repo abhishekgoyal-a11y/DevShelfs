@@ -1,0 +1,224 @@
+{% extends "web/base.html" %}
+{% block title %}What is an AI Agent? — DevShelf Tutorials{% endblock %}
+{% block content %}
+  <div class="space-y-10">
+
+    {# ── Breadcrumb ── #}
+    <div class="flex flex-wrap items-center gap-2 text-sm text-slate-400/90">
+      <a href="{% url 'tutorials' %}" class="font-medium text-emerald-300/90 transition hover:text-emerald-200">Tutorials</a>
+      <span aria-hidden class="text-slate-600">/</span>
+      <a href="{% url 'tutorials' %}?category=ai-agents" class="font-medium text-emerald-300/90 transition hover:text-emerald-200">AI Agents</a>
+      <span aria-hidden class="text-slate-600">/</span>
+      <span class="text-slate-200/90">What is an AI Agent?</span>
+    </div>
+
+    {# ── Hero ── #}
+    <section class="relative overflow-hidden rounded-3xl border border-emerald-400/20 bg-white/[0.06] p-6 shadow-[0_0_0_1px_rgba(255,255,255,0.04)] backdrop-blur-2xl sm:p-8">
+      <div class="pointer-events-none absolute -right-24 top-0 h-72 w-72 rounded-full bg-emerald-500/15 blur-3xl"></div>
+      <div class="pointer-events-none absolute -left-20 bottom-0 h-56 w-56 rounded-full bg-cyan-500/10 blur-3xl"></div>
+      <div class="relative">
+        <div class="flex flex-wrap items-center gap-3">
+          <span class="rounded-full border border-emerald-500/25 bg-emerald-500/10 px-2.5 py-1 text-xs font-medium text-emerald-300/90">AI Agents</span>
+          <span class="rounded-full border border-sky-500/25 bg-sky-500/10 px-2.5 py-1 text-xs font-medium text-sky-300/90">Beginner</span>
+          <span class="text-xs text-slate-400/80">· 8 min read</span>
+          <span class="ml-auto text-xs font-medium text-slate-400/80">Page 2 of 10</span>
+        </div>
+        <h1 class="mt-4 text-3xl font-semibold tracking-tight text-white sm:text-4xl lg:text-[2.5rem] lg:leading-tight">
+          What is an AI Agent?
+        </h1>
+        <p class="mt-4 max-w-2xl text-sm leading-relaxed text-slate-200/80 sm:text-base">
+          A clear, plain-English explanation of what AI agents are, how they differ from regular chatbots, and where you already encounter them in everyday life.
+        </p>
+        <div class="mt-6">
+          <div class="mb-1.5 flex items-center justify-between text-xs text-slate-400/80">
+            <span>Series progress</span><span>2 / 10</span>
+          </div>
+          <div class="h-1.5 w-full overflow-hidden rounded-full bg-white/10">
+            <div class="h-full w-[20%] rounded-full bg-emerald-400/70"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    {# ── Content ── #}
+    <div class="glass rounded-3xl border border-white/10 p-5 sm:p-8">
+      <article class="mx-auto space-y-12 text-base leading-relaxed text-slate-300/95">
+
+        <section class="space-y-4" aria-labelledby="definition-heading">
+          <p>
+            An <strong class="text-slate-200">AI agent</strong> is a program that uses an AI model to perceive its environment,
+            make decisions, and take actions to achieve a goal — on its own, without needing a human to approve every step.
+          </p>
+          <p>
+            That last part is what matters: <em>on its own</em>. A regular AI chatbot waits for your message, generates a response,
+            and stops. An agent keeps going — it decides what to do next, does it, checks the result, and decides again — until
+            the goal is reached or it runs out of steps.
+          </p>
+          <p class="rounded-xl border border-white/10 bg-white/[0.02] px-4 py-3">
+            <strong class="text-slate-200">One-line version:</strong> A chatbot answers your question. An agent completes your task.
+          </p>
+        </section>
+
+        <section class="space-y-6" aria-labelledby="analogy-heading">
+          <h2 id="analogy-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">A real-world analogy</h2>
+          <p>Imagine you ask two different assistants to book you a flight to New York.</p>
+          <div class="grid gap-4 sm:grid-cols-2">
+            <div class="rounded-2xl border border-white/10 bg-white/[0.03] p-5">
+              <h3 class="mb-3 text-base font-semibold text-white">Regular chatbot</h3>
+              <p class="text-sm text-slate-400/90">
+                Gives you step-by-step instructions on how to search for flights yourself. You still have to open the
+                browser, search, compare prices, enter your details, and click purchase.
+              </p>
+              <p class="mt-3 text-sm font-medium text-slate-300">It tells you what to do.</p>
+            </div>
+            <div class="rounded-2xl border border-emerald-500/20 bg-emerald-500/[0.05] p-5">
+              <h3 class="mb-3 text-base font-semibold text-white">AI agent</h3>
+              <p class="text-sm text-slate-400/90">
+                Opens the browser itself, searches multiple airlines, compares options based on your preferences, selects
+                the best flight, fills in your details, and confirms the booking — then reports back.
+              </p>
+              <p class="mt-3 text-sm font-medium text-emerald-300">It does it for you.</p>
+            </div>
+          </div>
+          <p>
+            The agent has the same knowledge as the chatbot — but it also has <em>tools</em> (a browser, a booking system)
+            and the ability to <em>act</em> and <em>iterate</em> until the job is done.
+          </p>
+        </section>
+
+        <section class="space-y-6" aria-labelledby="comparison-heading">
+          <h2 id="comparison-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">Chatbot vs AI agent — side by side</h2>
+          <div class="overflow-x-auto rounded-2xl border border-white/10">
+            <table class="w-full text-sm">
+              <thead>
+                <tr class="border-b border-white/10 bg-white/[0.04]">
+                  <th class="px-4 py-3 text-left font-semibold text-slate-200"></th>
+                  <th class="px-4 py-3 text-left font-semibold text-slate-200">Chatbot</th>
+                  <th class="px-4 py-3 text-left font-semibold text-emerald-200">AI Agent</th>
+                </tr>
+              </thead>
+              <tbody class="divide-y divide-white/5">
+                <tr>
+                  <td class="px-4 py-3 font-medium text-slate-300">Input</td>
+                  <td class="px-4 py-3 text-slate-400/90">Your message</td>
+                  <td class="px-4 py-3 text-slate-400/90">Your goal</td>
+                </tr>
+                <tr>
+                  <td class="px-4 py-3 font-medium text-slate-300">Output</td>
+                  <td class="px-4 py-3 text-slate-400/90">A text response</td>
+                  <td class="px-4 py-3 text-slate-400/90">A completed task</td>
+                </tr>
+                <tr>
+                  <td class="px-4 py-3 font-medium text-slate-300">Actions</td>
+                  <td class="px-4 py-3 text-slate-400/90">None — only generates text</td>
+                  <td class="px-4 py-3 text-slate-400/90">Searches, runs code, calls APIs, writes files</td>
+                </tr>
+                <tr>
+                  <td class="px-4 py-3 font-medium text-slate-300">Memory</td>
+                  <td class="px-4 py-3 text-slate-400/90">Current conversation only</td>
+                  <td class="px-4 py-3 text-slate-400/90">Can persist across sessions</td>
+                </tr>
+                <tr>
+                  <td class="px-4 py-3 font-medium text-slate-300">Steps</td>
+                  <td class="px-4 py-3 text-slate-400/90">One response per message</td>
+                  <td class="px-4 py-3 text-slate-400/90">Multiple steps until goal is reached</td>
+                </tr>
+                <tr>
+                  <td class="px-4 py-3 font-medium text-slate-300">Human involvement</td>
+                  <td class="px-4 py-3 text-slate-400/90">Required for every step</td>
+                  <td class="px-4 py-3 text-slate-400/90">Minimal — only for oversight</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <section class="space-y-6" aria-labelledby="characteristics-heading">
+          <h2 id="characteristics-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">Key characteristics of an AI agent</h2>
+          <p>Not every AI system that "does something" is an agent. A true agent has these four properties:</p>
+          <div class="space-y-3">
+            <div class="rounded-2xl border border-white/10 bg-white/[0.03] p-5">
+              <h3 class="text-base font-semibold text-white">1. Goal-driven</h3>
+              <p class="mt-1.5 text-sm text-slate-400/90">It works toward a defined objective, not just responding to a single prompt. The goal can be short ("summarise this document") or long-running ("monitor this GitHub repo and open issues for failing tests").</p>
+            </div>
+            <div class="rounded-2xl border border-white/10 bg-white/[0.03] p-5">
+              <h3 class="text-base font-semibold text-white">2. Autonomous</h3>
+              <p class="mt-1.5 text-sm text-slate-400/90">It decides its own next action. You do not tell it every step — you give it a goal and the tools to use, and it figures out the sequence of actions needed.</p>
+            </div>
+            <div class="rounded-2xl border border-white/10 bg-white/[0.03] p-5">
+              <h3 class="text-base font-semibold text-white">3. Reactive</h3>
+              <p class="mt-1.5 text-sm text-slate-400/90">It observes the results of its actions and adjusts. If a web search returns irrelevant results, it reformulates the query. If code fails, it reads the error and tries again.</p>
+            </div>
+            <div class="rounded-2xl border border-white/10 bg-white/[0.03] p-5">
+              <h3 class="text-base font-semibold text-white">4. Tool-using</h3>
+              <p class="mt-1.5 text-sm text-slate-400/90">It can call external tools — web search, code execution, databases, APIs — to gather information and take real actions beyond generating text.</p>
+            </div>
+          </div>
+        </section>
+
+        <section class="space-y-4" aria-labelledby="examples-heading">
+          <h2 id="examples-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">Agents you already use without knowing</h2>
+          <p>AI agents are not a new concept — you have probably used several without thinking of them that way:</p>
+          <ul class="list-disc space-y-3 pl-5 marker:text-emerald-400/80">
+            <li>
+              <strong class="text-slate-200">Siri / Google Assistant</strong> — you say "set a reminder for 3pm" and it
+              acts: it does not just tell you how to set a reminder, it sets one.
+            </li>
+            <li>
+              <strong class="text-slate-200">GitHub Copilot Workspace</strong> — you describe a feature, it reads your
+              codebase, plans the changes, writes the code, and opens a PR.
+            </li>
+            <li>
+              <strong class="text-slate-200">Cursor / Windsurf (Cascade)</strong> — you say "add authentication to this
+              app" and the editor plans, writes files, runs tests, and fixes errors autonomously.
+            </li>
+            <li>
+              <strong class="text-slate-200">Perplexity AI</strong> — behind every answer it searches the web, reads
+              multiple pages, synthesises information, and cites sources — all in one automated loop.
+            </li>
+          </ul>
+        </section>
+
+        <section class="space-y-4" aria-labelledby="not-agents-heading">
+          <h2 id="not-agents-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">What is NOT an AI agent</h2>
+          <p>Just as important — things people often call agents that technically are not:</p>
+          <ul class="list-disc space-y-2 pl-5 marker:text-amber-400/80">
+            <li><strong class="text-slate-200">A chatbot with a system prompt</strong> — having a persona does not make it an agent</li>
+            <li><strong class="text-slate-200">A scripted automation</strong> — if the steps are hardcoded, it is a script, not an agent</li>
+            <li><strong class="text-slate-200">An LLM that can call one function</strong> — a single tool call without a decision loop is just function calling</li>
+          </ul>
+          <p>The defining factor is the <em>loop</em>: perceive → decide → act → observe → decide again. Without that, it is not really an agent.</p>
+        </section>
+
+        {# Summary box #}
+        <section class="rounded-2xl border border-emerald-500/20 bg-emerald-500/[0.06] p-5 sm:p-6">
+          <h2 class="text-lg font-semibold text-emerald-100">Quick summary</h2>
+          <ul class="mt-3 list-disc space-y-1.5 pl-5 text-sm text-slate-300/95 marker:text-emerald-400/80">
+            <li>An AI agent completes tasks autonomously — a chatbot only responds to prompts</li>
+            <li>Agents are goal-driven, autonomous, reactive, and tool-using</li>
+            <li>The key difference is the loop: decide → act → observe → repeat</li>
+            <li>You already use agents in products like Cursor, Copilot Workspace, and Perplexity</li>
+          </ul>
+        </section>
+
+      </article>
+    </div>
+
+    {# ── Navigation ── #}
+    <div class="flex items-center justify-between">
+      <a
+        href="{% url 'tutorial_ai_agents_intro' %}"
+        class="inline-flex items-center gap-2 rounded-xl border border-white/15 bg-white/[0.04] px-5 py-2.5 text-sm font-semibold text-slate-200 transition hover:border-white/25 hover:bg-white/[0.07] hover:text-white"
+      >
+        <span aria-hidden>←</span> Introduction
+      </a>
+      <a
+        href="{% url 'tutorial_ai_agents_how_work' %}"
+        class="inline-flex items-center gap-2 rounded-xl border border-emerald-400/35 bg-emerald-500/10 px-5 py-2.5 text-sm font-semibold text-emerald-200 transition hover:border-emerald-300/50 hover:bg-emerald-500/20 hover:text-white"
+      >
+        Next: How Agents Work <span aria-hidden>→</span>
+      </a>
+    </div>
+
+  </div>
+{% endblock %}

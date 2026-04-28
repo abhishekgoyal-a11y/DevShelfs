@@ -1,0 +1,237 @@
+{% extends "web/base.html" %}
+{% block title %}Agent Frameworks Overview — DevShelf Tutorials{% endblock %}
+{% block content %}
+  <div class="space-y-10">
+
+    {# ── Breadcrumb ── #}
+    <div class="flex flex-wrap items-center gap-2 text-sm text-slate-400/90">
+      <a href="{% url 'tutorials' %}" class="font-medium text-emerald-300/90 transition hover:text-emerald-200">Tutorials</a>
+      <span aria-hidden class="text-slate-600">/</span>
+      <a href="{% url 'tutorials' %}?category=ai-agents" class="font-medium text-emerald-300/90 transition hover:text-emerald-200">AI Agents</a>
+      <span aria-hidden class="text-slate-600">/</span>
+      <span class="text-slate-200/90">Agent Frameworks Overview</span>
+    </div>
+
+    {# ── Hero ── #}
+    <section class="relative overflow-hidden rounded-3xl border border-emerald-400/20 bg-white/[0.06] p-6 shadow-[0_0_0_1px_rgba(255,255,255,0.04)] backdrop-blur-2xl sm:p-8">
+      <div class="pointer-events-none absolute -right-24 top-0 h-72 w-72 rounded-full bg-emerald-500/15 blur-3xl"></div>
+      <div class="pointer-events-none absolute -left-20 bottom-0 h-56 w-56 rounded-full bg-cyan-500/10 blur-3xl"></div>
+      <div class="relative">
+        <div class="flex flex-wrap items-center gap-3">
+          <span class="rounded-full border border-emerald-500/25 bg-emerald-500/10 px-2.5 py-1 text-xs font-medium text-emerald-300/90">AI Agents</span>
+          <span class="rounded-full border border-sky-500/25 bg-sky-500/10 px-2.5 py-1 text-xs font-medium text-sky-300/90">Beginner</span>
+          <span class="text-xs text-slate-400/80">· 11 min read</span>
+          <span class="ml-auto text-xs font-medium text-slate-400/80">Page 6 of 10</span>
+        </div>
+        <h1 class="mt-4 text-3xl font-semibold tracking-tight text-white sm:text-4xl lg:text-[2.5rem] lg:leading-tight">
+          Agent Frameworks Overview
+        </h1>
+        <p class="mt-4 max-w-2xl text-sm leading-relaxed text-slate-200/80 sm:text-base">
+          LangChain, CrewAI, AutoGen, Phidata, OpenAI Swarm — what they are, what they solve, and how to pick the right one for your project.
+        </p>
+        <div class="mt-6">
+          <div class="mb-1.5 flex items-center justify-between text-xs text-slate-400/80">
+            <span>Series progress</span><span>6 / 10</span>
+          </div>
+          <div class="h-1.5 w-full overflow-hidden rounded-full bg-white/10">
+            <div class="h-full w-[60%] rounded-full bg-emerald-400/70"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    {# ── Content ── #}
+    <div class="glass rounded-3xl border border-white/10 p-5 sm:p-8">
+      <article class="mx-auto space-y-12 text-base leading-relaxed text-slate-300/95">
+
+        <section class="space-y-4" aria-labelledby="why-heading">
+          <h2 id="why-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">Why use a framework at all?</h2>
+          <p>
+            You can build an agent in plain Python — and on Page 7 you will do exactly that. But frameworks give
+            you pre-built tool integrations, memory management, observability, and agent orchestration so you are
+            not reinventing the wheel for every project.
+          </p>
+          <p class="rounded-xl border border-white/10 bg-white/[0.02] px-4 py-3 text-sm">
+            <strong class="text-slate-200">Rule of thumb:</strong> Build plain Python first so you understand what is happening. Then graduate to a framework when the boilerplate becomes a real burden.
+          </p>
+        </section>
+
+        <section class="space-y-5" aria-labelledby="langchain-heading">
+          <h2 id="langchain-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">LangChain</h2>
+          <div class="rounded-2xl border border-white/10 bg-white/[0.03] p-5 space-y-3">
+            <div class="flex flex-wrap gap-2 text-xs">
+              <span class="rounded-full border border-white/10 bg-white/[0.05] px-2.5 py-1 text-slate-300">Python &amp; JS</span>
+              <span class="rounded-full border border-white/10 bg-white/[0.05] px-2.5 py-1 text-slate-300">Largest ecosystem</span>
+              <span class="rounded-full border border-white/10 bg-white/[0.05] px-2.5 py-1 text-slate-300">Chains + Agents + RAG</span>
+            </div>
+            <p class="text-sm text-slate-400/90">
+              The most widely used LLM framework. LangChain provides "chains" (sequences of LLM calls and tools),
+              pre-built tool integrations (100+ tools), memory modules, and a graph-based orchestration layer called
+              <strong class="text-slate-200">LangGraph</strong> for stateful, multi-step agents.
+            </p>
+            <p class="text-sm text-slate-400/90">
+              <strong class="text-slate-200">Best for:</strong> Teams that want a large ecosystem of integrations, good documentation, and the flexibility to build anything from simple chains to complex agents.
+            </p>
+            <p class="text-sm text-slate-400/90">
+              <strong class="text-slate-200">Watch out for:</strong> Can be over-engineered for simple tasks. The abstraction layers can make debugging harder.
+            </p>
+          </div>
+        </section>
+
+        <section class="space-y-5" aria-labelledby="crewai-heading">
+          <h2 id="crewai-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">CrewAI</h2>
+          <div class="rounded-2xl border border-white/10 bg-white/[0.03] p-5 space-y-3">
+            <div class="flex flex-wrap gap-2 text-xs">
+              <span class="rounded-full border border-white/10 bg-white/[0.05] px-2.5 py-1 text-slate-300">Python</span>
+              <span class="rounded-full border border-white/10 bg-white/[0.05] px-2.5 py-1 text-slate-300">Multi-agent focused</span>
+              <span class="rounded-full border border-white/10 bg-white/[0.05] px-2.5 py-1 text-slate-300">Role-based</span>
+            </div>
+            <p class="text-sm text-slate-400/90">
+              CrewAI is built around the concept of "crews" — teams of agents with defined roles, goals, and backstories.
+              You define agents like "Senior Researcher" and "Technical Writer", assign them tasks, and CrewAI
+              orchestrates how they collaborate.
+            </p>
+            <p class="text-sm text-slate-400/90">
+              <strong class="text-slate-200">Best for:</strong> Workflows that naturally map to human teams — content creation pipelines, research + writing, planning + execution.
+            </p>
+            <p class="text-sm text-slate-400/90">
+              <strong class="text-slate-200">Watch out for:</strong> The role-and-goal abstraction is great for clear tasks but can feel forced for fluid, exploratory work.
+            </p>
+          </div>
+        </section>
+
+        <section class="space-y-5" aria-labelledby="autogen-heading">
+          <h2 id="autogen-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">AutoGen (Microsoft)</h2>
+          <div class="rounded-2xl border border-white/10 bg-white/[0.03] p-5 space-y-3">
+            <div class="flex flex-wrap gap-2 text-xs">
+              <span class="rounded-full border border-white/10 bg-white/[0.05] px-2.5 py-1 text-slate-300">Python</span>
+              <span class="rounded-full border border-white/10 bg-white/[0.05] px-2.5 py-1 text-slate-300">Conversational agents</span>
+              <span class="rounded-full border border-white/10 bg-white/[0.05] px-2.5 py-1 text-slate-300">Human-in-the-loop</span>
+            </div>
+            <p class="text-sm text-slate-400/90">
+              AutoGen (by Microsoft Research) models multi-agent interactions as conversations between agents.
+              Agents can be LLMs, humans, or code executors — any mix. It is excellent for scenarios where
+              you want a human to be one of the participants in the loop.
+            </p>
+            <p class="text-sm text-slate-400/90">
+              <strong class="text-slate-200">Best for:</strong> Research, coding assistants with human oversight, complex back-and-forth workflows between agents.
+            </p>
+            <p class="text-sm text-slate-400/90">
+              <strong class="text-slate-200">Watch out for:</strong> The conversational model can be confusing to debug — tracking which agent said what across many turns.
+            </p>
+          </div>
+        </section>
+
+        <section class="space-y-5" aria-labelledby="phidata-heading">
+          <h2 id="phidata-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">Phidata (now Agno)</h2>
+          <div class="rounded-2xl border border-white/10 bg-white/[0.03] p-5 space-y-3">
+            <div class="flex flex-wrap gap-2 text-xs">
+              <span class="rounded-full border border-white/10 bg-white/[0.05] px-2.5 py-1 text-slate-300">Python</span>
+              <span class="rounded-full border border-white/10 bg-white/[0.05] px-2.5 py-1 text-slate-300">Built-in memory &amp; storage</span>
+              <span class="rounded-full border border-white/10 bg-white/[0.05] px-2.5 py-1 text-slate-300">Production-ready</span>
+            </div>
+            <p class="text-sm text-slate-400/90">
+              Phidata (recently rebranded to Agno) focuses on production-ready agents with built-in memory,
+              storage, and a clean API. It ships with integrations for databases, web search, and file systems
+              out of the box, and includes a UI for testing agents locally.
+            </p>
+            <p class="text-sm text-slate-400/90">
+              <strong class="text-slate-200">Best for:</strong> Developers who want a batteries-included, opinionated framework without stitching together many separate libraries.
+            </p>
+          </div>
+        </section>
+
+        <section class="space-y-5" aria-labelledby="swarm-heading">
+          <h2 id="swarm-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">OpenAI Swarm</h2>
+          <div class="rounded-2xl border border-white/10 bg-white/[0.03] p-5 space-y-3">
+            <div class="flex flex-wrap gap-2 text-xs">
+              <span class="rounded-full border border-white/10 bg-white/[0.05] px-2.5 py-1 text-slate-300">Python</span>
+              <span class="rounded-full border border-white/10 bg-white/[0.05] px-2.5 py-1 text-slate-300">Minimal &amp; educational</span>
+              <span class="rounded-full border border-white/10 bg-white/[0.05] px-2.5 py-1 text-slate-300">Handoffs</span>
+            </div>
+            <p class="text-sm text-slate-400/90">
+              OpenAI Swarm is a lightweight, experimental framework focused on one concept: <strong class="text-slate-200">handoffs</strong>.
+              Agents can transfer control to other agents mid-task. It is intentionally minimal — more a reference
+              implementation than a production framework.
+            </p>
+            <p class="text-sm text-slate-400/90">
+              <strong class="text-slate-200">Best for:</strong> Learning how multi-agent handoffs work. Not recommended for production use.
+            </p>
+          </div>
+        </section>
+
+        <section class="space-y-4" aria-labelledby="compare-heading">
+          <h2 id="compare-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">Framework comparison</h2>
+          <div class="overflow-x-auto rounded-2xl border border-white/10">
+            <table class="w-full text-sm">
+              <thead>
+                <tr class="border-b border-white/10 bg-white/[0.04]">
+                  <th class="px-4 py-3 text-left font-semibold text-slate-200">Framework</th>
+                  <th class="px-4 py-3 text-left font-semibold text-slate-200">Best for</th>
+                  <th class="px-4 py-3 text-left font-semibold text-slate-200">Learning curve</th>
+                </tr>
+              </thead>
+              <tbody class="divide-y divide-white/5">
+                <tr>
+                  <td class="px-4 py-3 font-medium text-slate-300">LangChain</td>
+                  <td class="px-4 py-3 text-slate-400/90">General purpose, large ecosystem</td>
+                  <td class="px-4 py-3 text-slate-400/90">Medium–High</td>
+                </tr>
+                <tr>
+                  <td class="px-4 py-3 font-medium text-slate-300">CrewAI</td>
+                  <td class="px-4 py-3 text-slate-400/90">Role-based multi-agent workflows</td>
+                  <td class="px-4 py-3 text-slate-400/90">Low–Medium</td>
+                </tr>
+                <tr>
+                  <td class="px-4 py-3 font-medium text-slate-300">AutoGen</td>
+                  <td class="px-4 py-3 text-slate-400/90">Conversational agents, human-in-loop</td>
+                  <td class="px-4 py-3 text-slate-400/90">Medium</td>
+                </tr>
+                <tr>
+                  <td class="px-4 py-3 font-medium text-slate-300">Phidata / Agno</td>
+                  <td class="px-4 py-3 text-slate-400/90">Production agents, batteries included</td>
+                  <td class="px-4 py-3 text-slate-400/90">Low</td>
+                </tr>
+                <tr>
+                  <td class="px-4 py-3 font-medium text-slate-300">OpenAI Swarm</td>
+                  <td class="px-4 py-3 text-slate-400/90">Learning handoffs, prototyping</td>
+                  <td class="px-4 py-3 text-slate-400/90">Very Low</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        {# Summary box #}
+        <section class="rounded-2xl border border-emerald-500/20 bg-emerald-500/[0.06] p-5 sm:p-6">
+          <h2 class="text-lg font-semibold text-emerald-100">Quick summary</h2>
+          <ul class="mt-3 list-disc space-y-1.5 pl-5 text-sm text-slate-300/95 marker:text-emerald-400/80">
+            <li>Start in plain Python — frameworks add convenience, not magic</li>
+            <li>LangChain: biggest ecosystem, best for general-purpose agents</li>
+            <li>CrewAI: role-based teams, great for content and research pipelines</li>
+            <li>AutoGen: conversational multi-agent with human-in-the-loop support</li>
+            <li>Phidata/Agno: batteries-included, production-friendly</li>
+          </ul>
+        </section>
+
+      </article>
+    </div>
+
+    {# ── Navigation ── #}
+    <div class="flex items-center justify-between">
+      <a
+        href="{% url 'tutorial_ai_agents_types' %}"
+        class="inline-flex items-center gap-2 rounded-xl border border-white/15 bg-white/[0.04] px-5 py-2.5 text-sm font-semibold text-slate-200 transition hover:border-white/25 hover:bg-white/[0.07] hover:text-white"
+      >
+        <span aria-hidden>←</span> Types of AI Agents
+      </a>
+      <a
+        href="{% url 'tutorial_ai_agents_build' %}"
+        class="inline-flex items-center gap-2 rounded-xl border border-emerald-400/35 bg-emerald-500/10 px-5 py-2.5 text-sm font-semibold text-emerald-200 transition hover:border-emerald-300/50 hover:bg-emerald-500/20 hover:text-white"
+      >
+        Next: Build Your First Agent <span aria-hidden>→</span>
+      </a>
+    </div>
+
+  </div>
+{% endblock %}

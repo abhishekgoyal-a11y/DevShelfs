@@ -1,0 +1,144 @@
+{% extends "web/base.html" %}
+{% block title %}Introduction to AI Agents — DevShelf Tutorials{% endblock %}
+{% block content %}
+  <div class="space-y-10">
+
+    {# ── Breadcrumb ── #}
+    <div class="flex flex-wrap items-center gap-2 text-sm text-slate-400/90">
+      <a href="{% url 'tutorials' %}" class="font-medium text-emerald-300/90 transition hover:text-emerald-200">Tutorials</a>
+      <span aria-hidden class="text-slate-600">/</span>
+      <a href="{% url 'tutorials' %}?category=ai-agents" class="font-medium text-emerald-300/90 transition hover:text-emerald-200">AI Agents</a>
+      <span aria-hidden class="text-slate-600">/</span>
+      <span class="text-slate-200/90">Introduction</span>
+    </div>
+
+    {# ── Hero ── #}
+    <section class="relative overflow-hidden rounded-3xl border border-emerald-400/20 bg-white/[0.06] p-6 shadow-[0_0_0_1px_rgba(255,255,255,0.04)] backdrop-blur-2xl sm:p-8">
+      <div class="pointer-events-none absolute -right-24 top-0 h-72 w-72 rounded-full bg-emerald-500/15 blur-3xl"></div>
+      <div class="pointer-events-none absolute -left-20 bottom-0 h-56 w-56 rounded-full bg-cyan-500/10 blur-3xl"></div>
+      <div class="relative">
+        {# Progress + badges #}
+        <div class="flex flex-wrap items-center gap-3">
+          <span class="rounded-full border border-emerald-500/25 bg-emerald-500/10 px-2.5 py-1 text-xs font-medium text-emerald-300/90">AI Agents</span>
+          <span class="rounded-full border border-sky-500/25 bg-sky-500/10 px-2.5 py-1 text-xs font-medium text-sky-300/90">Beginner</span>
+          <span class="text-xs text-slate-400/80">· 5 min read</span>
+          <span class="ml-auto text-xs font-medium text-slate-400/80">Page 1 of 10</span>
+        </div>
+
+        <h1 class="mt-4 text-3xl font-semibold tracking-tight text-white sm:text-4xl lg:text-[2.5rem] lg:leading-tight">
+          Introduction to AI Agents
+        </h1>
+        <p class="mt-4 max-w-2xl text-sm leading-relaxed text-slate-200/80 sm:text-base">
+          Welcome to the AI Agents tutorial series. By the end of this series you will understand how AI agents work,
+          know the different types, and have built your first working agent in Python.
+        </p>
+
+        {# Progress bar #}
+        <div class="mt-6">
+          <div class="mb-1.5 flex items-center justify-between text-xs text-slate-400/80">
+            <span>Series progress</span>
+            <span>1 / 10</span>
+          </div>
+          <div class="h-1.5 w-full overflow-hidden rounded-full bg-white/10">
+            <div class="h-full w-[10%] rounded-full bg-emerald-400/70"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    {# ── Content ── #}
+    <div class="glass rounded-3xl border border-white/10 p-5 sm:p-8">
+      <article class="mx-auto space-y-12 text-base leading-relaxed text-slate-300/95">
+
+        {# Who this is for #}
+        <section class="space-y-4" aria-labelledby="who-heading">
+          <h2 id="who-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">Who this tutorial is for</h2>
+          <p>
+            This series is for anyone curious about AI agents — developers, students, and builders who want to go beyond
+            using AI chatbots and start <em>building</em> systems that can take actions, use tools, and complete multi-step
+            tasks on their own.
+          </p>
+          <p>You do not need a machine learning background. If you can write basic Python and you know what an API is, you are ready.</p>
+        </section>
+
+        {# Prerequisites #}
+        <section class="space-y-4" aria-labelledby="prereqs-heading">
+          <h2 id="prereqs-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">Prerequisites</h2>
+          <ul class="list-disc space-y-2 pl-5 marker:text-emerald-400/80">
+            <li>Basic Python — you can write functions and install packages with pip</li>
+            <li>A general idea of what an LLM is (ChatGPT, Claude, etc.) — nothing deeper</li>
+            <li>An OpenAI API key, or any other LLM API key, for the hands-on page</li>
+          </ul>
+          <p class="rounded-xl border border-white/10 bg-white/[0.02] px-4 py-3 text-slate-300/95">
+            <span class="mr-1.5 font-medium text-emerald-200">Note:</span>
+            The first six pages are conceptual — no code. You only need a Python environment for Page 7 onward.
+          </p>
+        </section>
+
+        {# What you will learn #}
+        <section class="space-y-4" aria-labelledby="learn-heading">
+          <h2 id="learn-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">What you will learn</h2>
+          <p>By the end of this series you will be able to:</p>
+          <ul class="list-disc space-y-2 pl-5 marker:text-emerald-400/80">
+            <li>Explain what AI agents are and how they differ from regular chatbots</li>
+            <li>Describe the agent loop and each of its components</li>
+            <li>Identify the right agent type and framework for a given task</li>
+            <li>Build and run a simple research agent in Python</li>
+            <li>Know the limitations and risks of agents in production</li>
+          </ul>
+        </section>
+
+        {# Series overview #}
+        <section class="space-y-6" aria-labelledby="series-heading">
+          <h2 id="series-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">Series overview</h2>
+          <p>Here is everything covered across the 10 pages:</p>
+
+          <div class="space-y-3">
+            {# Page 1 — current #}
+            <div class="flex items-start gap-4 rounded-2xl border border-emerald-400/25 bg-emerald-500/[0.07] p-4">
+              <span class="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-emerald-500/20 text-xs font-bold text-emerald-300">1</span>
+              <div>
+                <p class="font-semibold text-white">Introduction <span class="ml-2 text-xs font-normal text-emerald-300/80">← You are here</span></p>
+                <p class="mt-0.5 text-sm text-slate-400/90">Overview, prerequisites, and what you will build.</p>
+              </div>
+            </div>
+
+            {% for page in series_pages %}
+              <div class="flex items-start gap-4 rounded-2xl border border-white/10 bg-white/[0.02] p-4">
+                <span class="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-white/10 text-xs font-bold text-slate-300">{{ page.number }}</span>
+                <div>
+                  <p class="font-semibold text-slate-200">{{ page.title }}</p>
+                  <p class="mt-0.5 text-sm text-slate-400/90">{{ page.summary }}</p>
+                </div>
+              </div>
+            {% endfor %}
+          </div>
+        </section>
+
+        {# Quick summary #}
+        <section class="rounded-2xl border border-emerald-500/20 bg-emerald-500/[0.06] p-5 sm:p-6">
+          <h2 class="text-lg font-semibold text-emerald-100">Quick summary</h2>
+          <ul class="mt-3 list-disc space-y-1.5 pl-5 text-sm text-slate-300/95 marker:text-emerald-400/80">
+            <li>This series teaches AI agents from zero to a working Python implementation</li>
+            <li>You need only basic Python — no ML background required</li>
+            <li>10 pages covering concepts, frameworks, code, and best practices</li>
+            <li>Start with Page 2 to dive straight into what an agent actually is</li>
+          </ul>
+        </section>
+
+      </article>
+    </div>
+
+    {# ── Navigation ── #}
+    <div class="flex items-center justify-between">
+      <div></div>
+      <a
+        href="{% url 'tutorial_ai_agents_what_is' %}"
+        class="inline-flex items-center gap-2 rounded-xl border border-emerald-400/35 bg-emerald-500/10 px-5 py-2.5 text-sm font-semibold text-emerald-200 transition hover:border-emerald-300/50 hover:bg-emerald-500/20 hover:text-white"
+      >
+        Next: What is an AI Agent? <span aria-hidden>→</span>
+      </a>
+    </div>
+
+  </div>
+{% endblock %}

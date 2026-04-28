@@ -1,0 +1,210 @@
+{% extends "web/base.html" %}
+{% block title %}Real-World AI Agent Use Cases — DevShelf Tutorials{% endblock %}
+{% block content %}
+  <div class="space-y-10">
+
+    {# ── Breadcrumb ── #}
+    <div class="flex flex-wrap items-center gap-2 text-sm text-slate-400/90">
+      <a href="{% url 'tutorials' %}" class="font-medium text-emerald-300/90 transition hover:text-emerald-200">Tutorials</a>
+      <span aria-hidden class="text-slate-600">/</span>
+      <a href="{% url 'tutorials' %}?category=ai-agents" class="font-medium text-emerald-300/90 transition hover:text-emerald-200">AI Agents</a>
+      <span aria-hidden class="text-slate-600">/</span>
+      <span class="text-slate-200/90">Real-World Use Cases</span>
+    </div>
+
+    {# ── Hero ── #}
+    <section class="relative overflow-hidden rounded-3xl border border-emerald-400/20 bg-white/[0.06] p-6 shadow-[0_0_0_1px_rgba(255,255,255,0.04)] backdrop-blur-2xl sm:p-8">
+      <div class="pointer-events-none absolute -right-24 top-0 h-72 w-72 rounded-full bg-emerald-500/15 blur-3xl"></div>
+      <div class="pointer-events-none absolute -left-20 bottom-0 h-56 w-56 rounded-full bg-cyan-500/10 blur-3xl"></div>
+      <div class="relative">
+        <div class="flex flex-wrap items-center gap-3">
+          <span class="rounded-full border border-emerald-500/25 bg-emerald-500/10 px-2.5 py-1 text-xs font-medium text-emerald-300/90">AI Agents</span>
+          <span class="rounded-full border border-sky-500/25 bg-sky-500/10 px-2.5 py-1 text-xs font-medium text-sky-300/90">Beginner</span>
+          <span class="text-xs text-slate-400/80">· 10 min read</span>
+          <span class="ml-auto text-xs font-medium text-slate-400/80">Page 8 of 10</span>
+        </div>
+        <h1 class="mt-4 text-3xl font-semibold tracking-tight text-white sm:text-4xl lg:text-[2.5rem] lg:leading-tight">
+          Real-World Use Cases
+        </h1>
+        <p class="mt-4 max-w-2xl text-sm leading-relaxed text-slate-200/80 sm:text-base">
+          Where agents are actually being used today — with concrete examples, the tools each one needs, and how the loop looks in practice.
+        </p>
+        <div class="mt-6">
+          <div class="mb-1.5 flex items-center justify-between text-xs text-slate-400/80">
+            <span>Series progress</span><span>8 / 10</span>
+          </div>
+          <div class="h-1.5 w-full overflow-hidden rounded-full bg-white/10">
+            <div class="h-full w-[80%] rounded-full bg-emerald-400/70"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    {# ── Content ── #}
+    <div class="glass rounded-3xl border border-white/10 p-5 sm:p-8">
+      <article class="mx-auto space-y-12 text-base leading-relaxed text-slate-300/95">
+
+        <section class="space-y-4" aria-labelledby="intro-heading">
+          <h2 id="intro-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">From demos to real work</h2>
+          <p>
+            Agents are no longer just research demos. Companies are running them in production today to handle tasks
+            that used to require teams of people. Here are four of the most proven use cases.
+          </p>
+        </section>
+
+        <section class="space-y-5" aria-labelledby="research-heading">
+          <h2 id="research-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">1. Research and information synthesis</h2>
+          <p>
+            Research agents gather information from multiple sources, synthesise it, and produce structured reports —
+            without a human having to open a single browser tab.
+          </p>
+          <div class="rounded-2xl border border-white/10 bg-white/[0.03] p-5 space-y-4">
+            <div>
+              <p class="text-sm font-semibold text-slate-200 mb-2">Example task</p>
+              <p class="text-sm text-slate-400/90">"Research the competitive landscape for task management apps. List the top 5 products, their pricing, key features, and customer sentiment."</p>
+            </div>
+            <div>
+              <p class="text-sm font-semibold text-slate-200 mb-2">Tools needed</p>
+              <div class="flex flex-wrap gap-2">
+                <span class="rounded-full border border-white/10 bg-white/[0.05] px-2.5 py-1 text-xs text-slate-300">Web search</span>
+                <span class="rounded-full border border-white/10 bg-white/[0.05] px-2.5 py-1 text-xs text-slate-300">URL fetcher</span>
+                <span class="rounded-full border border-white/10 bg-white/[0.05] px-2.5 py-1 text-xs text-slate-300">File writer</span>
+              </div>
+            </div>
+            <div>
+              <p class="text-sm font-semibold text-slate-200 mb-2">How the loop looks</p>
+              <p class="text-sm text-slate-400/90">Search → read competitor pages → search for reviews → read review sites → compile and write report → done.</p>
+            </div>
+          </div>
+          <p class="text-sm text-slate-400/90"><strong class="text-slate-200">Real examples:</strong> Perplexity AI, ChatGPT with Browsing, custom research agents built with LangChain.</p>
+        </section>
+
+        <section class="space-y-5" aria-labelledby="coding-heading">
+          <h2 id="coding-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">2. Coding and software development</h2>
+          <p>
+            Coding agents read your codebase, write new code, run tests, read error messages, and fix bugs — all
+            without you having to tell them every step.
+          </p>
+          <div class="rounded-2xl border border-white/10 bg-white/[0.03] p-5 space-y-4">
+            <div>
+              <p class="text-sm font-semibold text-slate-200 mb-2">Example task</p>
+              <p class="text-sm text-slate-400/90">"Add a user authentication system to this Django app. Use JWT tokens, write tests, and make sure all existing tests still pass."</p>
+            </div>
+            <div>
+              <p class="text-sm font-semibold text-slate-200 mb-2">Tools needed</p>
+              <div class="flex flex-wrap gap-2">
+                <span class="rounded-full border border-white/10 bg-white/[0.05] px-2.5 py-1 text-xs text-slate-300">File reader/writer</span>
+                <span class="rounded-full border border-white/10 bg-white/[0.05] px-2.5 py-1 text-xs text-slate-300">Terminal / bash</span>
+                <span class="rounded-full border border-white/10 bg-white/[0.05] px-2.5 py-1 text-xs text-slate-300">Code search</span>
+              </div>
+            </div>
+            <div>
+              <p class="text-sm font-semibold text-slate-200 mb-2">How the loop looks</p>
+              <p class="text-sm text-slate-400/90">Read existing files → plan changes → write new files → run tests → read failures → fix code → run tests again → done.</p>
+            </div>
+          </div>
+          <p class="text-sm text-slate-400/90"><strong class="text-slate-200">Real examples:</strong> Cursor (Composer mode), GitHub Copilot Workspace, Devin, Claude Code.</p>
+        </section>
+
+        <section class="space-y-5" aria-labelledby="support-heading">
+          <h2 id="support-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">3. Customer support</h2>
+          <p>
+            Support agents handle end-to-end customer queries — looking up order status, processing refunds, escalating
+            to humans when needed — without a support ticket queue.
+          </p>
+          <div class="rounded-2xl border border-white/10 bg-white/[0.03] p-5 space-y-4">
+            <div>
+              <p class="text-sm font-semibold text-slate-200 mb-2">Example task</p>
+              <p class="text-sm text-slate-400/90">"Hi, my order #4821 hasn't arrived yet and it's been 10 days."</p>
+            </div>
+            <div>
+              <p class="text-sm font-semibold text-slate-200 mb-2">Tools needed</p>
+              <div class="flex flex-wrap gap-2">
+                <span class="rounded-full border border-white/10 bg-white/[0.05] px-2.5 py-1 text-xs text-slate-300">Order DB lookup</span>
+                <span class="rounded-full border border-white/10 bg-white/[0.05] px-2.5 py-1 text-xs text-slate-300">Shipping API</span>
+                <span class="rounded-full border border-white/10 bg-white/[0.05] px-2.5 py-1 text-xs text-slate-300">Refund API</span>
+                <span class="rounded-full border border-white/10 bg-white/[0.05] px-2.5 py-1 text-xs text-slate-300">Email sender</span>
+              </div>
+            </div>
+            <div>
+              <p class="text-sm font-semibold text-slate-200 mb-2">How the loop looks</p>
+              <p class="text-sm text-slate-400/90">Look up order → check shipping status → determine it is lost → issue refund → send confirmation email → reply to customer.</p>
+            </div>
+          </div>
+          <p class="text-sm text-slate-400/90"><strong class="text-slate-200">Real examples:</strong> Intercom Fin, Zendesk AI, custom agents deployed by e-commerce companies.</p>
+        </section>
+
+        <section class="space-y-5" aria-labelledby="data-heading">
+          <h2 id="data-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">4. Data analysis</h2>
+          <p>
+            Data agents write and run code to analyse datasets, generate charts, and summarise findings — you describe
+            what you want to know, the agent figures out the queries.
+          </p>
+          <div class="rounded-2xl border border-white/10 bg-white/[0.03] p-5 space-y-4">
+            <div>
+              <p class="text-sm font-semibold text-slate-200 mb-2">Example task</p>
+              <p class="text-sm text-slate-400/90">"Here is our sales CSV. Which products had the highest growth month-over-month in Q3, and which regions drove that growth?"</p>
+            </div>
+            <div>
+              <p class="text-sm font-semibold text-slate-200 mb-2">Tools needed</p>
+              <div class="flex flex-wrap gap-2">
+                <span class="rounded-full border border-white/10 bg-white/[0.05] px-2.5 py-1 text-xs text-slate-300">Python REPL</span>
+                <span class="rounded-full border border-white/10 bg-white/[0.05] px-2.5 py-1 text-xs text-slate-300">File reader</span>
+                <span class="rounded-full border border-white/10 bg-white/[0.05] px-2.5 py-1 text-xs text-slate-300">Chart generator</span>
+              </div>
+            </div>
+            <div>
+              <p class="text-sm font-semibold text-slate-200 mb-2">How the loop looks</p>
+              <p class="text-sm text-slate-400/90">Load CSV → write pandas code → run it → read output → write more code to filter by region → run it → summarise findings.</p>
+            </div>
+          </div>
+          <p class="text-sm text-slate-400/90"><strong class="text-slate-200">Real examples:</strong> ChatGPT Advanced Data Analysis, Julius AI, custom agents used by data teams.</p>
+        </section>
+
+        <section class="space-y-4" aria-labelledby="pickup-heading">
+          <h2 id="pickup-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">A pattern you'll notice</h2>
+          <p>Every use case above follows the same structure:</p>
+          <ol class="list-decimal space-y-2 pl-5 text-sm text-slate-400/90 marker:font-semibold marker:text-emerald-400">
+            <li>A goal that requires <strong class="text-slate-200">real-world data</strong> the LLM does not have in its weights</li>
+            <li>Tools that let the agent <strong class="text-slate-200">fetch or act on that data</strong></li>
+            <li>Multiple steps where each result <strong class="text-slate-200">informs the next action</strong></li>
+          </ol>
+          <p class="text-sm text-slate-400/90">
+            If a task does not require these three things — if a single LLM call with the right prompt would do it —
+            you do not need an agent.
+          </p>
+        </section>
+
+        {# Summary box #}
+        <section class="rounded-2xl border border-emerald-500/20 bg-emerald-500/[0.06] p-5 sm:p-6">
+          <h2 class="text-lg font-semibold text-emerald-100">Quick summary</h2>
+          <ul class="mt-3 list-disc space-y-1.5 pl-5 text-sm text-slate-300/95 marker:text-emerald-400/80">
+            <li>Research: gather, synthesise, and report — without opening a browser</li>
+            <li>Coding: read code, write changes, run tests, fix errors autonomously</li>
+            <li>Support: look up data, take actions (refunds, emails), resolve tickets end-to-end</li>
+            <li>Data analysis: write and run code, read results, summarise findings</li>
+            <li>The common pattern: goal needs real-world data + tools + multi-step reasoning</li>
+          </ul>
+        </section>
+
+      </article>
+    </div>
+
+    {# ── Navigation ── #}
+    <div class="flex items-center justify-between">
+      <a
+        href="{% url 'tutorial_ai_agents_build' %}"
+        class="inline-flex items-center gap-2 rounded-xl border border-white/15 bg-white/[0.04] px-5 py-2.5 text-sm font-semibold text-slate-200 transition hover:border-white/25 hover:bg-white/[0.07] hover:text-white"
+      >
+        <span aria-hidden>←</span> Build Your First Agent
+      </a>
+      <a
+        href="{% url 'tutorial_ai_agents_limitations' %}"
+        class="inline-flex items-center gap-2 rounded-xl border border-emerald-400/35 bg-emerald-500/10 px-5 py-2.5 text-sm font-semibold text-emerald-200 transition hover:border-emerald-300/50 hover:bg-emerald-500/20 hover:text-white"
+      >
+        Next: Limitations &amp; Best Practices <span aria-hidden>→</span>
+      </a>
+    </div>
+
+  </div>
+{% endblock %}
