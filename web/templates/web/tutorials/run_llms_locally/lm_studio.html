@@ -97,8 +97,15 @@
         <section class="space-y-5" aria-labelledby="api-heading">
           <h2 id="api-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">Using the local server API</h2>
           <p>LM Studio's local server is fully OpenAI-compatible. Point any OpenAI client at it and it just works.</p>
-          <div class="rounded-2xl border border-white/10 bg-white/[0.03] p-5">
-            <code class="block font-mono text-xs text-slate-300 whitespace-pre">from openai import OpenAI
+          <div class="ds-codeblock not-prose rounded-2xl overflow-hidden border border-white/10">
+            <div class="ds-codeblock-header flex items-center justify-between px-4 py-2.5 bg-white/[0.05] border-b border-white/10">
+              <span class="text-xs font-medium text-slate-400">python</span>
+              <button class="ds-codeblock-copy flex items-center gap-1.5 text-xs text-slate-400 hover:text-white transition-colors">
+                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                Copy
+              </button>
+            </div>
+            <pre class="ds-codeblock-pre overflow-x-auto p-4 text-sm leading-relaxed m-0"><code class="ds-codeblock-source language-python">from openai import OpenAI
 
 client = OpenAI(
     base_url="http://localhost:1234/v1",
@@ -113,7 +120,7 @@ response = client.chat.completions.create(
     ],
     temperature=0.3,
 )
-print(response.choices[0].message.content)</code>
+print(response.choices[0].message.content)</code></pre>
           </div>
           <p class="text-sm text-slate-400/90">The model name in the API call must match the identifier shown in LM Studio's server panel. This is the same code you'd write for OpenAI — just the <code class="rounded bg-white/10 px-1">base_url</code> changes.</p>
         </section>
