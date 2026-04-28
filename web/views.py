@@ -423,6 +423,19 @@ def openclaw(request):
     )
 
 
+_AI_AGENTS_SERIES = [
+    {"number": 2, "title": "What is an AI Agent?", "summary": "Plain-English definition, chatbot vs agent comparison, and real-world analogies.", "url": "tutorial_ai_agents_what_is"},
+    {"number": 3, "title": "How AI Agents Work", "summary": "The agent loop — Perceive → Think → Act → Observe → Repeat — broken down step by step.", "url": "tutorial_ai_agents_how_work"},
+    {"number": 4, "title": "Core Components", "summary": "The four building blocks: LLM, Tools, Memory, and Planning.", "url": "tutorial_ai_agents_components"},
+    {"number": 5, "title": "Types of AI Agents", "summary": "Reflex, ReAct, multi-agent, and autonomous agents — when to use each.", "url": "tutorial_ai_agents_types"},
+    {"number": 6, "title": "Agent Frameworks Overview", "summary": "LangChain, CrewAI, AutoGen, Phidata, Swarm — compared in one place.", "url": "tutorial_ai_agents_frameworks"},
+    {"number": 7, "title": "Build Your First Agent", "summary": "Write and run a simple research agent in Python from scratch.", "url": "tutorial_ai_agents_build"},
+    {"number": 8, "title": "Real-World Use Cases", "summary": "Research, coding, customer support, and data analysis agents with examples.", "url": "tutorial_ai_agents_usecases"},
+    {"number": 9, "title": "Limitations & Best Practices", "summary": "What agents get wrong, token costs, security risks, and production checklist.", "url": "tutorial_ai_agents_limitations"},
+    {"number": 10, "title": "What to Learn Next", "summary": "Series recap and recommended next tutorials to keep building.", "url": "tutorial_ai_agents_next"},
+]
+
+
 _TUTORIALS = [
     {
         "title": "AI Agents Tutorial",
@@ -432,7 +445,7 @@ _TUTORIALS = [
         "read_time": 12,
         "icon": "🤖",
         "icon_gradient": "from-emerald-500/40 via-teal-400/20 to-cyan-400/25",
-        "url": "#",
+        "url": "/tutorials/ai-agents/introduction/",
     },
     {
         "title": "LangChain Tutorial",
@@ -505,6 +518,90 @@ _TUTORIALS = [
         "url": "#",
     },
 ]
+
+
+def tutorial_ai_agents_intro(request):
+    return render(
+        request,
+        "web/tutorials/ai_agents/introduction.html",
+        {
+            "layout": _layout(request.path),
+            "active_nav": "tutorials",
+            "series_pages": _AI_AGENTS_SERIES,
+        },
+    )
+
+
+def tutorial_ai_agents_what_is(request):
+    return render(
+        request,
+        "web/tutorials/ai_agents/what_is_an_ai_agent.html",
+        {"layout": _layout(request.path), "active_nav": "tutorials"},
+    )
+
+
+def tutorial_ai_agents_how_work(request):
+    return render(
+        request,
+        "web/tutorials/ai_agents/how_agents_work.html",
+        {"layout": _layout(request.path), "active_nav": "tutorials"},
+    )
+
+
+def tutorial_ai_agents_components(request):
+    return render(
+        request,
+        "web/tutorials/ai_agents/core_components.html",
+        {"layout": _layout(request.path), "active_nav": "tutorials"},
+    )
+
+
+def tutorial_ai_agents_types(request):
+    return render(
+        request,
+        "web/tutorials/ai_agents/types_of_agents.html",
+        {"layout": _layout(request.path), "active_nav": "tutorials"},
+    )
+
+
+def tutorial_ai_agents_frameworks(request):
+    return render(
+        request,
+        "web/tutorials/ai_agents/frameworks.html",
+        {"layout": _layout(request.path), "active_nav": "tutorials"},
+    )
+
+
+def tutorial_ai_agents_build(request):
+    return render(
+        request,
+        "web/tutorials/ai_agents/build_your_first_agent.html",
+        {"layout": _layout(request.path), "active_nav": "tutorials"},
+    )
+
+
+def tutorial_ai_agents_usecases(request):
+    return render(
+        request,
+        "web/tutorials/ai_agents/use_cases.html",
+        {"layout": _layout(request.path), "active_nav": "tutorials"},
+    )
+
+
+def tutorial_ai_agents_limitations(request):
+    return render(
+        request,
+        "web/tutorials/ai_agents/limitations.html",
+        {"layout": _layout(request.path), "active_nav": "tutorials"},
+    )
+
+
+def tutorial_ai_agents_next(request):
+    return render(
+        request,
+        "web/tutorials/ai_agents/whats_next.html",
+        {"layout": _layout(request.path), "active_nav": "tutorials"},
+    )
 
 
 def tutorials(request):
