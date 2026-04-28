@@ -42,18 +42,24 @@
           </p>
           <div class="grid gap-4 sm:grid-cols-2">
             <div class="rounded-2xl border border-rose-500/20 bg-rose-500/[0.04] p-5">
-              <h3 class="text-sm font-semibold text-rose-200">Unstructured</h3>
-              <p class="text-xs text-slate-400/90 mt-2">"The product is called Widget Pro, it costs $49, and the rating is 4.2 out of 5 stars based on 312 reviews."</p>
+              <h3 class="text-sm font-semibold text-rose-200 mb-3">Unstructured</h3>
+              <p class="text-xs text-slate-400/90">"The product is called Widget Pro, it costs $49, and the rating is 4.2 out of 5 stars based on 312 reviews."</p>
               <p class="text-xs text-slate-500 mt-2">You must parse this with regex or another LLM call — fragile and expensive.</p>
             </div>
             <div class="rounded-2xl border border-emerald-500/20 bg-emerald-500/[0.04] p-5">
-              <h3 class="text-sm font-semibold text-emerald-200">Structured</h3>
-              <code class="block font-mono text-xs text-slate-300 mt-2 whitespace-pre">{
+              <h3 class="text-sm font-semibold text-emerald-200 mb-3">Structured</h3>
+              <div class="ds-codeblock overflow-hidden rounded-xl border border-white/10 bg-slate-950/90">
+                <div class="flex items-center justify-between gap-3 border-b border-white/10 px-3 py-2">
+                  <span class="font-mono text-[11px] font-medium uppercase tracking-wide text-slate-400">json</span>
+                  <button type="button" class="ds-codeblock-copy rounded-lg border border-white/10 bg-white/[0.06] px-2.5 py-1 text-xs font-semibold text-slate-200 transition hover:border-sky-400/40 hover:bg-white/[0.1] hover:text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-sky-400/50" data-copy-label="Copy" data-copied-label="Copied" aria-label="Copy code to clipboard">Copy</button>
+                </div>
+                <pre class="ds-codeblock-pre code-block m-0 overflow-x-auto p-3 text-[0.8125rem] leading-[1.55]"><code class="whitespace-pre font-mono ds-codeblock-source language-json">{
   "name": "Widget Pro",
   "price": 49,
   "rating": 4.2,
   "reviews": 312
-}</code>
+}</code></pre>
+              </div>
               <p class="text-xs text-slate-500 mt-2">Direct <code class="rounded bg-white/10 px-1">json.loads()</code> — no parsing needed.</p>
             </div>
           </div>
@@ -62,8 +68,12 @@
         <section class="space-y-5" aria-labelledby="schema-heading">
           <h2 id="schema-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">Schema-in-prompt</h2>
           <p>The simplest approach: describe the output schema directly in your prompt. Include field names, types, and constraints.</p>
-          <div class="rounded-2xl border border-white/10 bg-white/[0.03] p-5">
-            <code class="block font-mono text-xs text-slate-300 whitespace-pre">Extract product information from the text below.
+          <div class="ds-codeblock overflow-hidden rounded-2xl border border-white/10 bg-slate-950/90">
+            <div class="flex items-center justify-between gap-3 border-b border-white/10 px-3 py-2">
+              <span class="font-mono text-[11px] font-medium uppercase tracking-wide text-slate-400">text</span>
+              <button type="button" class="ds-codeblock-copy rounded-lg border border-white/10 bg-white/[0.06] px-2.5 py-1 text-xs font-semibold text-slate-200 transition hover:border-sky-400/40 hover:bg-white/[0.1] hover:text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-sky-400/50" data-copy-label="Copy" data-copied-label="Copied" aria-label="Copy code to clipboard">Copy</button>
+            </div>
+            <pre class="ds-codeblock-pre code-block m-0 overflow-x-auto p-4 text-[0.8125rem] leading-[1.55] sm:text-sm"><code class="whitespace-pre font-mono ds-codeblock-source language-text">Extract product information from the text below.
 Return ONLY a JSON object with these exact fields:
 - name: string
 - price: number (USD, no currency symbol)
@@ -73,7 +83,7 @@ Return ONLY a JSON object with these exact fields:
 Text: "Widget Pro sells for $49. Customers love it —
 4.2 stars from 312 reviews."
 
-JSON:</code>
+JSON:</code></pre>
           </div>
           <p class="text-sm text-slate-400/90">Works without any API features. Reliable on GPT-4o and Claude 3+ at temperature 0. Less reliable on smaller models — add few-shot examples for those.</p>
         </section>
@@ -82,21 +92,32 @@ JSON:</code>
           <h2 id="jsonmode-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">JSON mode &amp; structured outputs (API)</h2>
           <p>Modern LLM APIs provide native structured output features that guarantee valid JSON — no prompt tricks needed.</p>
           <div class="space-y-3">
-            <div class="rounded-2xl border border-white/10 bg-white/[0.03] p-5 space-y-3">
-              <h3 class="text-sm font-semibold text-slate-200">OpenAI — JSON mode</h3>
-              <code class="block font-mono text-xs text-slate-300 whitespace-pre">response = client.chat.completions.create(
+            <div class="space-y-3">
+              <p class="text-sm font-semibold text-slate-200">OpenAI — JSON mode</p>
+              <div class="ds-codeblock overflow-hidden rounded-2xl border border-white/10 bg-slate-950/90">
+                <div class="flex items-center justify-between gap-3 border-b border-white/10 px-3 py-2">
+                  <span class="font-mono text-[11px] font-medium uppercase tracking-wide text-slate-400">python</span>
+                  <button type="button" class="ds-codeblock-copy rounded-lg border border-white/10 bg-white/[0.06] px-2.5 py-1 text-xs font-semibold text-slate-200 transition hover:border-sky-400/40 hover:bg-white/[0.1] hover:text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-sky-400/50" data-copy-label="Copy" data-copied-label="Copied" aria-label="Copy code to clipboard">Copy</button>
+                </div>
+                <pre class="ds-codeblock-pre code-block m-0 overflow-x-auto p-4 text-[0.8125rem] leading-[1.55] sm:text-sm"><code class="whitespace-pre font-mono ds-codeblock-source language-python">response = client.chat.completions.create(
     model="gpt-4o-mini",
     response_format={"type": "json_object"},
     messages=[
         {"role": "system", "content": "Return JSON only."},
         {"role": "user", "content": "Extract: name, price from ..."}
     ]
-)</code>
-              <p class="text-xs text-slate-400/90">Guarantees valid JSON. You still need to tell the model what fields to include in your prompt.</p>
+)</code></pre>
+              </div>
+              <p class="text-sm text-slate-400/90">Guarantees valid JSON. You still need to tell the model what fields to include in your prompt.</p>
             </div>
-            <div class="rounded-2xl border border-sky-500/20 bg-sky-500/[0.05] p-5 space-y-3">
-              <h3 class="text-sm font-semibold text-sky-100">OpenAI — Structured Outputs (schema enforcement)</h3>
-              <code class="block font-mono text-xs text-slate-300 whitespace-pre">from pydantic import BaseModel
+            <div class="space-y-3">
+              <p class="text-sm font-semibold text-sky-100">OpenAI — Structured Outputs (schema enforcement)</p>
+              <div class="ds-codeblock overflow-hidden rounded-2xl border border-sky-500/20 bg-slate-950/90">
+                <div class="flex items-center justify-between gap-3 border-b border-white/10 px-3 py-2">
+                  <span class="font-mono text-[11px] font-medium uppercase tracking-wide text-slate-400">python</span>
+                  <button type="button" class="ds-codeblock-copy rounded-lg border border-white/10 bg-white/[0.06] px-2.5 py-1 text-xs font-semibold text-slate-200 transition hover:border-sky-400/40 hover:bg-white/[0.1] hover:text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-sky-400/50" data-copy-label="Copy" data-copied-label="Copied" aria-label="Copy code to clipboard">Copy</button>
+                </div>
+                <pre class="ds-codeblock-pre code-block m-0 overflow-x-auto p-4 text-[0.8125rem] leading-[1.55] sm:text-sm"><code class="whitespace-pre font-mono ds-codeblock-source language-python">from pydantic import BaseModel
 
 class Product(BaseModel):
     name: str
@@ -110,8 +131,9 @@ response = client.beta.chat.completions.parse(
     response_format=Product,
 )
 product = response.choices[0].message.parsed
-print(product.name)   # typed Python object</code>
-              <p class="text-xs text-slate-400/90">Enforces the exact schema — invalid fields are rejected at the API level. You get a typed Pydantic object back.</p>
+print(product.name)   # typed Python object</code></pre>
+              </div>
+              <p class="text-sm text-slate-400/90">Enforces the exact schema — invalid fields are rejected at the API level. You get a typed Pydantic object back.</p>
             </div>
           </div>
         </section>
@@ -119,8 +141,12 @@ print(product.name)   # typed Python object</code>
         <section class="space-y-5" aria-labelledby="pydantic-heading">
           <h2 id="pydantic-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">Adding validation with Pydantic</h2>
           <p>Even with JSON mode, you should validate the output before using it. Pydantic validators run after parsing and can enforce constraints the schema alone can't express.</p>
-          <div class="rounded-2xl border border-white/10 bg-white/[0.03] p-5">
-            <code class="block font-mono text-xs text-slate-300 whitespace-pre">from pydantic import BaseModel, field_validator
+          <div class="ds-codeblock overflow-hidden rounded-2xl border border-white/10 bg-slate-950/90">
+            <div class="flex items-center justify-between gap-3 border-b border-white/10 px-3 py-2">
+              <span class="font-mono text-[11px] font-medium uppercase tracking-wide text-slate-400">python</span>
+              <button type="button" class="ds-codeblock-copy rounded-lg border border-white/10 bg-white/[0.06] px-2.5 py-1 text-xs font-semibold text-slate-200 transition hover:border-sky-400/40 hover:bg-white/[0.1] hover:text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-sky-400/50" data-copy-label="Copy" data-copied-label="Copied" aria-label="Copy code to clipboard">Copy</button>
+            </div>
+            <pre class="ds-codeblock-pre code-block m-0 overflow-x-auto p-4 text-[0.8125rem] leading-[1.55] sm:text-sm"><code class="whitespace-pre font-mono ds-codeblock-source language-python">from pydantic import BaseModel, field_validator
 
 class Product(BaseModel):
     name: str
@@ -138,9 +164,9 @@ class Product(BaseModel):
     @field_validator("price")
     @classmethod
     def positive_price(cls, v):
-        if v < 0:
+        if v &lt; 0:
             raise ValueError("price must be non-negative")
-        return v</code>
+        return v</code></pre>
           </div>
           <p class="text-sm text-slate-400/90">If the model returns a rating of 5.7, Pydantic raises a <code class="rounded bg-white/10 px-1">ValidationError</code> before the bad data reaches your application. Combine with a retry loop to ask the model to fix the output.</p>
         </section>
@@ -148,25 +174,43 @@ class Product(BaseModel):
         <section class="space-y-5" aria-labelledby="formats-heading">
           <h2 id="formats-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">Other structured formats</h2>
           <div class="space-y-3">
-            <div class="rounded-2xl border border-white/10 bg-white/[0.03] p-5">
+            <div class="rounded-2xl border border-white/10 bg-white/[0.03] p-5 space-y-3">
               <h3 class="text-sm font-semibold text-slate-200">Markdown tables</h3>
-              <code class="block font-mono text-xs text-slate-300 mt-2 whitespace-pre">Return the comparison as a markdown table with columns:
-Feature | Tool A | Tool B</code>
-              <p class="text-xs text-slate-400/90 mt-2">Reliable for display. Harder to parse programmatically — use JSON for data processing.</p>
+              <div class="ds-codeblock overflow-hidden rounded-xl border border-white/10 bg-slate-950/90">
+                <div class="flex items-center justify-between gap-3 border-b border-white/10 px-3 py-2">
+                  <span class="font-mono text-[11px] font-medium uppercase tracking-wide text-slate-400">text</span>
+                  <button type="button" class="ds-codeblock-copy rounded-lg border border-white/10 bg-white/[0.06] px-2.5 py-1 text-xs font-semibold text-slate-200 transition hover:border-sky-400/40 hover:bg-white/[0.1] hover:text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-sky-400/50" data-copy-label="Copy" data-copied-label="Copied" aria-label="Copy code to clipboard">Copy</button>
+                </div>
+                <pre class="ds-codeblock-pre code-block m-0 overflow-x-auto p-3 text-[0.8125rem] leading-[1.55]"><code class="whitespace-pre font-mono ds-codeblock-source language-text">Return the comparison as a markdown table with columns:
+Feature | Tool A | Tool B</code></pre>
+              </div>
+              <p class="text-xs text-slate-400/90">Reliable for display. Harder to parse programmatically — use JSON for data processing.</p>
             </div>
-            <div class="rounded-2xl border border-white/10 bg-white/[0.03] p-5">
+            <div class="rounded-2xl border border-white/10 bg-white/[0.03] p-5 space-y-3">
               <h3 class="text-sm font-semibold text-slate-200">Numbered lists with delimiters</h3>
-              <code class="block font-mono text-xs text-slate-300 mt-2 whitespace-pre">Return exactly 5 ideas, one per line, in this format:
-1. [TITLE] — [ONE SENTENCE DESCRIPTION]</code>
-              <p class="text-xs text-slate-400/90 mt-2">Easy to split by line. Good for generating lists you'll display directly.</p>
+              <div class="ds-codeblock overflow-hidden rounded-xl border border-white/10 bg-slate-950/90">
+                <div class="flex items-center justify-between gap-3 border-b border-white/10 px-3 py-2">
+                  <span class="font-mono text-[11px] font-medium uppercase tracking-wide text-slate-400">text</span>
+                  <button type="button" class="ds-codeblock-copy rounded-lg border border-white/10 bg-white/[0.06] px-2.5 py-1 text-xs font-semibold text-slate-200 transition hover:border-sky-400/40 hover:bg-white/[0.1] hover:text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-sky-400/50" data-copy-label="Copy" data-copied-label="Copied" aria-label="Copy code to clipboard">Copy</button>
+                </div>
+                <pre class="ds-codeblock-pre code-block m-0 overflow-x-auto p-3 text-[0.8125rem] leading-[1.55]"><code class="whitespace-pre font-mono ds-codeblock-source language-text">Return exactly 5 ideas, one per line, in this format:
+1. [TITLE] — [ONE SENTENCE DESCRIPTION]</code></pre>
+              </div>
+              <p class="text-xs text-slate-400/90">Easy to split by line. Good for generating lists you'll display directly.</p>
             </div>
-            <div class="rounded-2xl border border-white/10 bg-white/[0.03] p-5">
+            <div class="rounded-2xl border border-white/10 bg-white/[0.03] p-5 space-y-3">
               <h3 class="text-sm font-semibold text-slate-200">XML tags for multi-part responses</h3>
-              <code class="block font-mono text-xs text-slate-300 mt-2 whitespace-pre">Return the analysis in these XML tags:
+              <div class="ds-codeblock overflow-hidden rounded-xl border border-white/10 bg-slate-950/90">
+                <div class="flex items-center justify-between gap-3 border-b border-white/10 px-3 py-2">
+                  <span class="font-mono text-[11px] font-medium uppercase tracking-wide text-slate-400">text</span>
+                  <button type="button" class="ds-codeblock-copy rounded-lg border border-white/10 bg-white/[0.06] px-2.5 py-1 text-xs font-semibold text-slate-200 transition hover:border-sky-400/40 hover:bg-white/[0.1] hover:text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-sky-400/50" data-copy-label="Copy" data-copied-label="Copied" aria-label="Copy code to clipboard">Copy</button>
+                </div>
+                <pre class="ds-codeblock-pre code-block m-0 overflow-x-auto p-3 text-[0.8125rem] leading-[1.55]"><code class="whitespace-pre font-mono ds-codeblock-source language-text">Return the analysis in these XML tags:
 &lt;summary&gt;...&lt;/summary&gt;
 &lt;risks&gt;...&lt;/risks&gt;
-&lt;recommendation&gt;...&lt;/recommendation&gt;</code>
-              <p class="text-xs text-slate-400/90 mt-2">Useful when different sections need different treatment. Anthropic's Claude responds particularly well to XML tags.</p>
+&lt;recommendation&gt;...&lt;/recommendation&gt;</code></pre>
+              </div>
+              <p class="text-xs text-slate-400/90">Useful when different sections need different treatment. Anthropic's Claude responds particularly well to XML tags.</p>
             </div>
           </div>
         </section>

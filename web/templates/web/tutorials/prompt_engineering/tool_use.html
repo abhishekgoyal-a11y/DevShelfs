@@ -72,8 +72,12 @@
         <section class="space-y-5" aria-labelledby="schema-heading">
           <h2 id="schema-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">Writing a tool schema</h2>
           <p>You describe each tool as a JSON schema — the model uses this to decide when and how to call it. Three parts matter most: the name, the description, and the parameters.</p>
-          <div class="rounded-2xl border border-white/10 bg-white/[0.03] p-5">
-            <code class="block font-mono text-xs text-slate-300 whitespace-pre">tools = [
+          <div class="ds-codeblock overflow-hidden rounded-2xl border border-white/10 bg-slate-950/90">
+            <div class="flex items-center justify-between gap-3 border-b border-white/10 px-3 py-2">
+              <span class="font-mono text-[11px] font-medium uppercase tracking-wide text-slate-400">python</span>
+              <button type="button" class="ds-codeblock-copy rounded-lg border border-white/10 bg-white/[0.06] px-2.5 py-1 text-xs font-semibold text-slate-200 transition hover:border-sky-400/40 hover:bg-white/[0.1] hover:text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-sky-400/50" data-copy-label="Copy" data-copied-label="Copied" aria-label="Copy code to clipboard">Copy</button>
+            </div>
+            <pre class="ds-codeblock-pre code-block m-0 overflow-x-auto p-4 text-[0.8125rem] leading-[1.55] sm:text-sm"><code class="whitespace-pre font-mono ds-codeblock-source language-python">tools = [
     {
         "type": "function",
         "function": {
@@ -98,7 +102,7 @@
             }
         }
     }
-]</code>
+]</code></pre>
           </div>
           <div class="space-y-2 mt-2">
             <div class="flex items-start gap-3 rounded-xl border border-white/10 bg-white/[0.02] p-3">
@@ -119,8 +123,12 @@
         <section class="space-y-5" aria-labelledby="loop-heading">
           <h2 id="loop-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">Building the tool loop</h2>
           <p>Function calling is a multi-turn process. Here's the complete pattern using the OpenAI API:</p>
-          <div class="rounded-2xl border border-white/10 bg-white/[0.03] p-5">
-            <code class="block font-mono text-xs text-slate-300 whitespace-pre">import json
+          <div class="ds-codeblock overflow-hidden rounded-2xl border border-white/10 bg-slate-950/90">
+            <div class="flex items-center justify-between gap-3 border-b border-white/10 px-3 py-2">
+              <span class="font-mono text-[11px] font-medium uppercase tracking-wide text-slate-400">python</span>
+              <button type="button" class="ds-codeblock-copy rounded-lg border border-white/10 bg-white/[0.06] px-2.5 py-1 text-xs font-semibold text-slate-200 transition hover:border-sky-400/40 hover:bg-white/[0.1] hover:text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-sky-400/50" data-copy-label="Copy" data-copied-label="Copied" aria-label="Copy code to clipboard">Copy</button>
+            </div>
+            <pre class="ds-codeblock-pre code-block m-0 overflow-x-auto p-4 text-[0.8125rem] leading-[1.55] sm:text-sm"><code class="whitespace-pre font-mono ds-codeblock-source language-python">import json
 from openai import OpenAI
 
 client = OpenAI()
@@ -149,7 +157,7 @@ while True:
             "tool_call_id": tc.id,
             "content": json.dumps(result),
         })
-    # loop continues — model will now generate final answer</code>
+    # loop continues — model will now generate final answer</code></pre>
           </div>
         </section>
 
@@ -179,18 +187,30 @@ while True:
         <section class="space-y-5" aria-labelledby="tips-heading">
           <h2 id="tips-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">Writing better tool descriptions</h2>
           <div class="space-y-3">
-            <div class="rounded-2xl border border-rose-500/20 bg-rose-500/[0.04] p-5">
+            <div class="rounded-2xl border border-rose-500/20 bg-rose-500/[0.04] p-5 space-y-3">
               <h3 class="text-sm font-semibold text-rose-200">Weak description</h3>
-              <code class="block font-mono text-xs text-slate-300 mt-2">"description": "Search for products."</code>
-              <p class="text-xs text-slate-400/90 mt-2">No context on when to call it. The model may call it for everything, or never.</p>
+              <div class="ds-codeblock overflow-hidden rounded-xl border border-white/10 bg-slate-950/90">
+                <div class="flex items-center justify-between gap-3 border-b border-white/10 px-3 py-2">
+                  <span class="font-mono text-[11px] font-medium uppercase tracking-wide text-slate-400">python</span>
+                  <button type="button" class="ds-codeblock-copy rounded-lg border border-white/10 bg-white/[0.06] px-2.5 py-1 text-xs font-semibold text-slate-200 transition hover:border-sky-400/40 hover:bg-white/[0.1] hover:text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-sky-400/50" data-copy-label="Copy" data-copied-label="Copied" aria-label="Copy code to clipboard">Copy</button>
+                </div>
+                <pre class="ds-codeblock-pre code-block m-0 overflow-x-auto p-3 text-[0.8125rem] leading-[1.55]"><code class="whitespace-pre font-mono ds-codeblock-source language-python">"description": "Search for products."</code></pre>
+              </div>
+              <p class="text-xs text-slate-400/90">No context on when to call it. The model may call it for everything, or never.</p>
             </div>
-            <div class="rounded-2xl border border-emerald-500/20 bg-emerald-500/[0.04] p-5">
+            <div class="rounded-2xl border border-emerald-500/20 bg-emerald-500/[0.04] p-5 space-y-3">
               <h3 class="text-sm font-semibold text-emerald-200">Strong description</h3>
-              <code class="block font-mono text-xs text-slate-300 mt-2 whitespace-pre">"description": "Search the product catalogue by keyword or
+              <div class="ds-codeblock overflow-hidden rounded-xl border border-white/10 bg-slate-950/90">
+                <div class="flex items-center justify-between gap-3 border-b border-white/10 px-3 py-2">
+                  <span class="font-mono text-[11px] font-medium uppercase tracking-wide text-slate-400">python</span>
+                  <button type="button" class="ds-codeblock-copy rounded-lg border border-white/10 bg-white/[0.06] px-2.5 py-1 text-xs font-semibold text-slate-200 transition hover:border-sky-400/40 hover:bg-white/[0.1] hover:text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-sky-400/50" data-copy-label="Copy" data-copied-label="Copied" aria-label="Copy code to clipboard">Copy</button>
+                </div>
+                <pre class="ds-codeblock-pre code-block m-0 overflow-x-auto p-3 text-[0.8125rem] leading-[1.55]"><code class="whitespace-pre font-mono ds-codeblock-source language-python">"description": "Search the product catalogue by keyword or
 category. Use this when the user is looking for a specific
 product, asking what's available, or comparing options.
-Do NOT use this for order history or returns."</code>
-              <p class="text-xs text-slate-400/90 mt-2">Tells the model when to call it AND when NOT to. Negative instructions prevent over-calling.</p>
+Do NOT use this for order history or returns."</code></pre>
+              </div>
+              <p class="text-xs text-slate-400/90">Tells the model when to call it AND when NOT to. Negative instructions prevent over-calling.</p>
             </div>
           </div>
         </section>
