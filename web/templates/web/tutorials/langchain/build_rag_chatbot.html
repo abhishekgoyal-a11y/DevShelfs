@@ -182,10 +182,9 @@ from langchain_huggingface import HuggingFaceEmbeddings
 from langchain_community.vectorstores import FAISS
 from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
 from langchain_core.output_parsers import StrOutputParser
-from langchain_core.runnables import RunnablePassthrough
 from langchain_core.runnables.history import RunnableWithMessageHistory
-from operator import itemgetter
 from langchain_community.chat_message_histories import ChatMessageHistory
+from operator import itemgetter
 
 INDEX_DIR = "faiss_index"
 EMBED_MODEL = "all-MiniLM-L6-v2"
@@ -252,7 +251,7 @@ chat = RunnableWithMessageHistory(
 config = {"configurable": {"session_id": "default"}}
 
 # ── Chat loop ─────────────────────────────────────────────
-print(f"RAG Chatbot ({GROQ_MODEL}) — type 'quit' to exit\n")
+print(f"RAG Document Chatbot (Groq / {GROQ_MODEL}) — type 'quit' to exit\n")
 while True:
     try:
         question = input("You: ").strip()
@@ -293,7 +292,7 @@ while True:
             </div>
             <div class="rounded-2xl border border-violet-500/20 bg-violet-500/[0.04] p-4">
               <p class="text-xs font-semibold text-violet-300 mb-2">Example session</p>
-              <code class="block font-mono text-xs text-slate-300 whitespace-pre">RAG Chatbot (llama-3.3-70b-versatile) — type 'quit' to exit
+              <code class="block font-mono text-xs text-slate-300 whitespace-pre">RAG Document Chatbot (Groq / llama-3.3-70b-versatile) — type 'quit' to exit
 
 You: What is the main topic of this document?
 Bot: The document is about ...
