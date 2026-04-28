@@ -1,0 +1,210 @@
+{% extends "web/base.html" %}
+{% block title %}Prompt Patterns Library — Prompt Engineering Tutorial{% endblock %}
+{% block content %}
+  <div class="space-y-10">
+
+    <div class="flex flex-wrap items-center gap-2 text-sm text-slate-400/90">
+      <a href="{% url 'tutorials' %}" class="font-medium text-sky-300/90 transition hover:text-sky-200">Tutorials</a>
+      <span aria-hidden class="text-slate-600">/</span>
+      <a href="{% url 'tutorial_pe_intro' %}" class="font-medium text-sky-300/90 transition hover:text-sky-200">Prompt Engineering</a>
+      <span aria-hidden class="text-slate-600">/</span>
+      <span class="text-slate-200/90">Prompt Patterns Library</span>
+    </div>
+
+    <section class="relative overflow-hidden rounded-3xl border border-sky-400/20 bg-white/[0.06] p-6 shadow-[0_0_0_1px_rgba(255,255,255,0.04)] backdrop-blur-2xl sm:p-8">
+      <div class="pointer-events-none absolute -right-24 top-0 h-72 w-72 rounded-full bg-sky-500/15 blur-3xl"></div>
+      <div class="pointer-events-none absolute -left-20 bottom-0 h-56 w-56 rounded-full bg-blue-500/10 blur-3xl"></div>
+      <div class="relative">
+        <div class="flex flex-wrap items-center gap-3">
+          <span class="rounded-full border border-sky-500/25 bg-sky-500/10 px-2.5 py-1 text-xs font-medium text-sky-300/90">Prompt Engineering</span>
+          <span class="rounded-full border border-sky-500/25 bg-sky-500/10 px-2.5 py-1 text-xs font-medium text-sky-300/90">Intermediate</span>
+          <span class="text-xs text-slate-400/80">· 14 min read</span>
+          <span class="ml-auto text-xs font-medium text-slate-400/80">Page 7 of 10</span>
+        </div>
+        <h1 class="mt-4 text-3xl font-semibold tracking-tight text-white sm:text-4xl lg:text-[2.5rem] lg:leading-tight">Prompt Patterns Library</h1>
+        <p class="mt-4 max-w-2xl text-sm leading-relaxed text-slate-200/80 sm:text-base">
+          Reusable, production-tested patterns: the ICTF template, ReAct, Critic-Refine loop, Planner→Executor, and the Role+Task+Format combo.
+        </p>
+        <div class="mt-6">
+          <div class="mb-1.5 flex items-center justify-between text-xs text-slate-400/80"><span>Series progress</span><span>7 / 10</span></div>
+          <div class="h-1.5 w-full overflow-hidden rounded-full bg-white/10"><div class="h-full w-[70%] rounded-full bg-sky-400/70"></div></div>
+        </div>
+      </div>
+    </section>
+
+    <div class="glass rounded-3xl border border-white/10 p-5 sm:p-8">
+      <article class="mx-auto space-y-12 text-base leading-relaxed text-slate-300/95">
+
+        <section class="space-y-3" aria-labelledby="intro-heading">
+          <h2 id="intro-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">Why patterns?</h2>
+          <p>Prompt engineering concepts only get you so far. Patterns are the reusable templates you reach for in real work — copy, adapt, deploy. Each one solves a recurring problem category.</p>
+        </section>
+
+        <section class="space-y-5" aria-labelledby="ictf-heading">
+          <h2 id="ictf-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">Pattern 1 — Instruction + Context + Constraints + Format (ICTF)</h2>
+          <p>The universal template for single-turn tasks. Cover all four parts and you've eliminated most of the ambiguity that causes bad outputs.</p>
+          <div class="rounded-2xl border border-white/10 bg-white/[0.03] p-5">
+            <code class="block font-mono text-xs text-slate-300 whitespace-pre">[INSTRUCTION]
+Summarise the following customer feedback.
+
+[CONTEXT]
+The customer had a billing issue that was resolved after
+three support emails over five days.
+Feedback: "{feedback_text}"
+
+[CONSTRAINTS]
+- Maximum 3 bullet points
+- Each bullet max 15 words
+- Neutral tone — no sentiment judgement
+
+[FORMAT]
+• [bullet 1]
+• [bullet 2]
+• [bullet 3]</code>
+          </div>
+          <div class="overflow-x-auto rounded-2xl border border-white/10 mt-2">
+            <table class="w-full text-sm">
+              <thead><tr class="border-b border-white/10 bg-white/[0.04]"><th class="px-4 py-2 text-left font-semibold text-slate-200">Part</th><th class="px-4 py-2 text-left font-semibold text-slate-200">What it does</th></tr></thead>
+              <tbody class="divide-y divide-white/5">
+                <tr><td class="px-4 py-2 font-medium text-sky-300">Instruction</td><td class="px-4 py-2 text-slate-400/90">The verb — what action to perform</td></tr>
+                <tr><td class="px-4 py-2 font-medium text-sky-300">Context</td><td class="px-4 py-2 text-slate-400/90">The input data and relevant background</td></tr>
+                <tr><td class="px-4 py-2 font-medium text-sky-300">Constraints</td><td class="px-4 py-2 text-slate-400/90">Rules the output must follow</td></tr>
+                <tr><td class="px-4 py-2 font-medium text-sky-300">Format</td><td class="px-4 py-2 text-slate-400/90">The exact output structure — show it, don't describe it</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <section class="space-y-5" aria-labelledby="react-heading">
+          <h2 id="react-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">Pattern 2 — ReAct (Reason + Act)</h2>
+          <p>For agentic tasks where the model must decide which tool to call, then observe the result, then decide again. Used in most agent frameworks under the hood.</p>
+          <div class="rounded-2xl border border-white/10 bg-white/[0.03] p-5">
+            <code class="block font-mono text-xs text-slate-300 whitespace-pre">You have access to these tools:
+- search(query): searches the web and returns a summary
+- calculator(expr): evaluates a math expression
+
+Answer the user's question by following this loop:
+Thought: [reason about what to do next]
+Action: [tool_name(arguments)]
+Observation: [result from the tool]
+... repeat as needed ...
+Final Answer: [your answer to the user]
+
+Question: What is 15% of the current Bitcoin price in USD?</code>
+          </div>
+          <p class="text-sm text-slate-400/90">The key is the explicit Thought/Action/Observation structure — it forces the model to reason before acting and to incorporate tool results before deciding what to do next.</p>
+        </section>
+
+        <section class="space-y-5" aria-labelledby="critic-heading">
+          <h2 id="critic-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">Pattern 3 — Critic-Refine loop</h2>
+          <p>Generate a first draft, then critique it, then refine. This two-pass approach produces significantly better output than asking for perfection in one shot.</p>
+          <div class="space-y-3">
+            <div class="rounded-2xl border border-white/10 bg-white/[0.03] p-5 space-y-2">
+              <p class="text-xs font-semibold text-slate-400">Pass 1 — Generate</p>
+              <code class="block font-mono text-xs text-slate-300 whitespace-pre">Write a product description for a noise-cancelling headphone
+aimed at remote workers.</code>
+            </div>
+            <div class="rounded-2xl border border-white/10 bg-white/[0.03] p-5 space-y-2">
+              <p class="text-xs font-semibold text-slate-400">Pass 2 — Critique</p>
+              <code class="block font-mono text-xs text-slate-300 whitespace-pre">Here is the draft:
+[draft from pass 1]
+
+Critique this description. Identify:
+1. What is weak or generic?
+2. What benefit is missing?
+3. What word choice could be stronger?</code>
+            </div>
+            <div class="rounded-2xl border border-sky-500/20 bg-sky-500/[0.05] p-5 space-y-2">
+              <p class="text-xs font-semibold text-sky-300">Pass 3 — Refine</p>
+              <code class="block font-mono text-xs text-slate-300 whitespace-pre">Using the critique above, rewrite the product description.
+Address every weakness identified. Keep it under 80 words.</code>
+            </div>
+          </div>
+          <p class="text-sm text-slate-400/90">You can combine all three passes into a single prompt, or run them as separate API calls. The three-call version is slightly better because each pass has full attention on its task.</p>
+        </section>
+
+        <section class="space-y-5" aria-labelledby="planner-heading">
+          <h2 id="planner-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">Pattern 4 — Planner → Executor</h2>
+          <p>Separate planning from execution. One call produces a step-by-step plan; subsequent calls execute each step. This prevents the model from rushing to a conclusion before thinking through the approach.</p>
+          <div class="space-y-3">
+            <div class="rounded-2xl border border-white/10 bg-white/[0.03] p-5 space-y-2">
+              <p class="text-xs font-semibold text-slate-400">Planner call</p>
+              <code class="block font-mono text-xs text-slate-300 whitespace-pre">Task: Write a technical blog post about FAISS vector search.
+
+Before writing, produce a numbered plan:
+- List each section heading
+- One sentence on what each section will cover
+- Identify any code examples needed
+
+Output ONLY the plan. Do not write the post yet.</code>
+            </div>
+            <div class="rounded-2xl border border-sky-500/20 bg-sky-500/[0.05] p-5 space-y-2">
+              <p class="text-xs font-semibold text-sky-300">Executor call (per section)</p>
+              <code class="block font-mono text-xs text-slate-300 whitespace-pre">Plan: [plan from previous call]
+
+Write section 2: "How FAISS indexing works"
+Follow the plan exactly. 150–200 words.</code>
+            </div>
+          </div>
+          <p class="text-sm text-slate-400/90">Planner→Executor is especially powerful for long-form content, complex code tasks, and multi-step analysis where structure matters.</p>
+        </section>
+
+        <section class="space-y-5" aria-labelledby="rtf-heading">
+          <h2 id="rtf-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">Pattern 5 — Role + Task + Format combo</h2>
+          <p>The everyday workhorse for production system prompts. Three lines that cover identity, the job, and the output shape.</p>
+          <div class="rounded-2xl border border-white/10 bg-white/[0.03] p-5">
+            <code class="block font-mono text-xs text-slate-300 whitespace-pre">ROLE:   You are a senior data analyst specialising in e-commerce metrics.
+TASK:   Analyse the sales data below and identify the top 3 underperforming
+        product categories with reasons.
+FORMAT: Return a JSON array of objects with fields: category, revenue_drop_pct,
+        reason (1 sentence), recommendation (1 sentence).</code>
+          </div>
+          <p class="text-sm text-slate-400/90">The explicit labels (ROLE / TASK / FORMAT) help the model parse the structure of your instruction — especially useful when the prompt is long or complex.</p>
+        </section>
+
+        <section class="space-y-5" aria-labelledby="choose-heading">
+          <h2 id="choose-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">Choosing the right pattern</h2>
+          <div class="overflow-x-auto rounded-2xl border border-white/10">
+            <table class="w-full text-sm">
+              <thead>
+                <tr class="border-b border-white/10 bg-white/[0.04]">
+                  <th class="px-4 py-3 text-left font-semibold text-slate-200">Task type</th>
+                  <th class="px-4 py-3 text-left font-semibold text-slate-200">Pattern</th>
+                </tr>
+              </thead>
+              <tbody class="divide-y divide-white/5">
+                <tr><td class="px-4 py-3 text-slate-400/90">Data extraction, summarisation, classification</td><td class="px-4 py-3 font-medium text-sky-300">ICTF</td></tr>
+                <tr><td class="px-4 py-3 text-slate-400/90">Agent with tools, web search, APIs</td><td class="px-4 py-3 font-medium text-sky-300">ReAct</td></tr>
+                <tr><td class="px-4 py-3 text-slate-400/90">Writing, content quality improvement</td><td class="px-4 py-3 font-medium text-sky-300">Critic-Refine</td></tr>
+                <tr><td class="px-4 py-3 text-slate-400/90">Long-form content, complex code, analysis</td><td class="px-4 py-3 font-medium text-sky-300">Planner→Executor</td></tr>
+                <tr><td class="px-4 py-3 text-slate-400/90">System prompt for a product feature</td><td class="px-4 py-3 font-medium text-sky-300">Role+Task+Format</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <section class="rounded-2xl border border-sky-500/20 bg-sky-500/[0.06] p-5 sm:p-6">
+          <h2 class="text-lg font-semibold text-sky-100">Quick summary</h2>
+          <ul class="mt-3 list-disc space-y-1.5 pl-5 text-sm text-slate-300/95 marker:text-sky-400/80">
+            <li><strong class="text-slate-200">ICTF</strong> — universal template: Instruction + Context + Constraints + Format</li>
+            <li><strong class="text-slate-200">ReAct</strong> — Thought/Action/Observation loop for agents with tools</li>
+            <li><strong class="text-slate-200">Critic-Refine</strong> — generate → critique → rewrite for higher output quality</li>
+            <li><strong class="text-slate-200">Planner→Executor</strong> — plan first, execute in steps, prevents rushing to conclusions</li>
+            <li><strong class="text-slate-200">Role+Task+Format</strong> — concise 3-line system prompt for production features</li>
+          </ul>
+        </section>
+
+      </article>
+    </div>
+
+    <div class="flex items-center justify-between">
+      <a href="{% url 'tutorial_pe_structured' %}" class="inline-flex items-center gap-2 rounded-xl border border-white/15 bg-white/[0.04] px-5 py-2.5 text-sm font-semibold text-slate-200 transition hover:border-white/25 hover:bg-white/[0.07] hover:text-white">
+        <span aria-hidden>←</span> Structured Output
+      </a>
+      <a href="{% url 'tutorial_pe_tools' %}" class="inline-flex items-center gap-2 rounded-xl border border-sky-400/35 bg-sky-500/10 px-5 py-2.5 text-sm font-semibold text-sky-200 transition hover:border-sky-300/50 hover:bg-sky-500/20 hover:text-white">
+        Next: Tool Use &amp; Function Calling <span aria-hidden>→</span>
+      </a>
+    </div>
+
+  </div>
+{% endblock %}

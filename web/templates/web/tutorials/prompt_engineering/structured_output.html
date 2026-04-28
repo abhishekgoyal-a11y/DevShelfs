@@ -1,0 +1,220 @@
+{% extends "web/base.html" %}
+{% block title %}Structured Output Prompting — Prompt Engineering Tutorial{% endblock %}
+{% block content %}
+  <div class="space-y-10">
+
+    <div class="flex flex-wrap items-center gap-2 text-sm text-slate-400/90">
+      <a href="{% url 'tutorials' %}" class="font-medium text-sky-300/90 transition hover:text-sky-200">Tutorials</a>
+      <span aria-hidden class="text-slate-600">/</span>
+      <a href="{% url 'tutorial_pe_intro' %}" class="font-medium text-sky-300/90 transition hover:text-sky-200">Prompt Engineering</a>
+      <span aria-hidden class="text-slate-600">/</span>
+      <span class="text-slate-200/90">Structured Output Prompting</span>
+    </div>
+
+    <section class="relative overflow-hidden rounded-3xl border border-sky-400/20 bg-white/[0.06] p-6 shadow-[0_0_0_1px_rgba(255,255,255,0.04)] backdrop-blur-2xl sm:p-8">
+      <div class="pointer-events-none absolute -right-24 top-0 h-72 w-72 rounded-full bg-sky-500/15 blur-3xl"></div>
+      <div class="pointer-events-none absolute -left-20 bottom-0 h-56 w-56 rounded-full bg-blue-500/10 blur-3xl"></div>
+      <div class="relative">
+        <div class="flex flex-wrap items-center gap-3">
+          <span class="rounded-full border border-sky-500/25 bg-sky-500/10 px-2.5 py-1 text-xs font-medium text-sky-300/90">Prompt Engineering</span>
+          <span class="rounded-full border border-sky-500/25 bg-sky-500/10 px-2.5 py-1 text-xs font-medium text-sky-300/90">Intermediate</span>
+          <span class="text-xs text-slate-400/80">· 10 min read</span>
+          <span class="ml-auto text-xs font-medium text-slate-400/80">Page 6 of 10</span>
+        </div>
+        <h1 class="mt-4 text-3xl font-semibold tracking-tight text-white sm:text-4xl lg:text-[2.5rem] lg:leading-tight">Structured Output Prompting</h1>
+        <p class="mt-4 max-w-2xl text-sm leading-relaxed text-slate-200/80 sm:text-base">
+          How to reliably get JSON, tables, markdown, and typed objects from LLMs — using schema-in-prompt, JSON mode, and Pydantic validation.
+        </p>
+        <div class="mt-6">
+          <div class="mb-1.5 flex items-center justify-between text-xs text-slate-400/80"><span>Series progress</span><span>6 / 10</span></div>
+          <div class="h-1.5 w-full overflow-hidden rounded-full bg-white/10"><div class="h-full w-[60%] rounded-full bg-sky-400/70"></div></div>
+        </div>
+      </div>
+    </section>
+
+    <div class="glass rounded-3xl border border-white/10 p-5 sm:p-8">
+      <article class="mx-auto space-y-12 text-base leading-relaxed text-slate-300/95">
+
+        <section class="space-y-5" aria-labelledby="why-heading">
+          <h2 id="why-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">Why structured output matters</h2>
+          <p>
+            Free-text LLM responses are hard to use programmatically. Structured output — JSON, tables, XML — lets you pipe the model's answer directly into your application without fragile string parsing.
+          </p>
+          <div class="grid gap-4 sm:grid-cols-2">
+            <div class="rounded-2xl border border-rose-500/20 bg-rose-500/[0.04] p-5">
+              <h3 class="text-sm font-semibold text-rose-200">Unstructured</h3>
+              <p class="text-xs text-slate-400/90 mt-2">"The product is called Widget Pro, it costs $49, and the rating is 4.2 out of 5 stars based on 312 reviews."</p>
+              <p class="text-xs text-slate-500 mt-2">You must parse this with regex or another LLM call — fragile and expensive.</p>
+            </div>
+            <div class="rounded-2xl border border-emerald-500/20 bg-emerald-500/[0.04] p-5">
+              <h3 class="text-sm font-semibold text-emerald-200">Structured</h3>
+              <code class="block font-mono text-xs text-slate-300 mt-2 whitespace-pre">{
+  "name": "Widget Pro",
+  "price": 49,
+  "rating": 4.2,
+  "reviews": 312
+}</code>
+              <p class="text-xs text-slate-500 mt-2">Direct <code class="rounded bg-white/10 px-1">json.loads()</code> — no parsing needed.</p>
+            </div>
+          </div>
+        </section>
+
+        <section class="space-y-5" aria-labelledby="schema-heading">
+          <h2 id="schema-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">Schema-in-prompt</h2>
+          <p>The simplest approach: describe the output schema directly in your prompt. Include field names, types, and constraints.</p>
+          <div class="rounded-2xl border border-white/10 bg-white/[0.03] p-5">
+            <code class="block font-mono text-xs text-slate-300 whitespace-pre">Extract product information from the text below.
+Return ONLY a JSON object with these exact fields:
+- name: string
+- price: number (USD, no currency symbol)
+- rating: number (0.0–5.0)
+- review_count: integer
+
+Text: "Widget Pro sells for $49. Customers love it —
+4.2 stars from 312 reviews."
+
+JSON:</code>
+          </div>
+          <p class="text-sm text-slate-400/90">Works without any API features. Reliable on GPT-4o and Claude 3+ at temperature 0. Less reliable on smaller models — add few-shot examples for those.</p>
+        </section>
+
+        <section class="space-y-5" aria-labelledby="jsonmode-heading">
+          <h2 id="jsonmode-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">JSON mode &amp; structured outputs (API)</h2>
+          <p>Modern LLM APIs provide native structured output features that guarantee valid JSON — no prompt tricks needed.</p>
+          <div class="space-y-3">
+            <div class="rounded-2xl border border-white/10 bg-white/[0.03] p-5 space-y-3">
+              <h3 class="text-sm font-semibold text-slate-200">OpenAI — JSON mode</h3>
+              <code class="block font-mono text-xs text-slate-300 whitespace-pre">response = client.chat.completions.create(
+    model="gpt-4o-mini",
+    response_format={"type": "json_object"},
+    messages=[
+        {"role": "system", "content": "Return JSON only."},
+        {"role": "user", "content": "Extract: name, price from ..."}
+    ]
+)</code>
+              <p class="text-xs text-slate-400/90">Guarantees valid JSON. You still need to tell the model what fields to include in your prompt.</p>
+            </div>
+            <div class="rounded-2xl border border-sky-500/20 bg-sky-500/[0.05] p-5 space-y-3">
+              <h3 class="text-sm font-semibold text-sky-100">OpenAI — Structured Outputs (schema enforcement)</h3>
+              <code class="block font-mono text-xs text-slate-300 whitespace-pre">from pydantic import BaseModel
+
+class Product(BaseModel):
+    name: str
+    price: float
+    rating: float
+    review_count: int
+
+response = client.beta.chat.completions.parse(
+    model="gpt-4o-mini",
+    messages=[...],
+    response_format=Product,
+)
+product = response.choices[0].message.parsed
+print(product.name)   # typed Python object</code>
+              <p class="text-xs text-slate-400/90">Enforces the exact schema — invalid fields are rejected at the API level. You get a typed Pydantic object back.</p>
+            </div>
+          </div>
+        </section>
+
+        <section class="space-y-5" aria-labelledby="pydantic-heading">
+          <h2 id="pydantic-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">Adding validation with Pydantic</h2>
+          <p>Even with JSON mode, you should validate the output before using it. Pydantic validators run after parsing and can enforce constraints the schema alone can't express.</p>
+          <div class="rounded-2xl border border-white/10 bg-white/[0.03] p-5">
+            <code class="block font-mono text-xs text-slate-300 whitespace-pre">from pydantic import BaseModel, field_validator
+
+class Product(BaseModel):
+    name: str
+    price: float
+    rating: float
+    review_count: int
+
+    @field_validator("rating")
+    @classmethod
+    def valid_rating(cls, v):
+        if not 0.0 <= v <= 5.0:
+            raise ValueError("rating must be between 0 and 5")
+        return v
+
+    @field_validator("price")
+    @classmethod
+    def positive_price(cls, v):
+        if v < 0:
+            raise ValueError("price must be non-negative")
+        return v</code>
+          </div>
+          <p class="text-sm text-slate-400/90">If the model returns a rating of 5.7, Pydantic raises a <code class="rounded bg-white/10 px-1">ValidationError</code> before the bad data reaches your application. Combine with a retry loop to ask the model to fix the output.</p>
+        </section>
+
+        <section class="space-y-5" aria-labelledby="formats-heading">
+          <h2 id="formats-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">Other structured formats</h2>
+          <div class="space-y-3">
+            <div class="rounded-2xl border border-white/10 bg-white/[0.03] p-5">
+              <h3 class="text-sm font-semibold text-slate-200">Markdown tables</h3>
+              <code class="block font-mono text-xs text-slate-300 mt-2 whitespace-pre">Return the comparison as a markdown table with columns:
+Feature | Tool A | Tool B</code>
+              <p class="text-xs text-slate-400/90 mt-2">Reliable for display. Harder to parse programmatically — use JSON for data processing.</p>
+            </div>
+            <div class="rounded-2xl border border-white/10 bg-white/[0.03] p-5">
+              <h3 class="text-sm font-semibold text-slate-200">Numbered lists with delimiters</h3>
+              <code class="block font-mono text-xs text-slate-300 mt-2 whitespace-pre">Return exactly 5 ideas, one per line, in this format:
+1. [TITLE] — [ONE SENTENCE DESCRIPTION]</code>
+              <p class="text-xs text-slate-400/90 mt-2">Easy to split by line. Good for generating lists you'll display directly.</p>
+            </div>
+            <div class="rounded-2xl border border-white/10 bg-white/[0.03] p-5">
+              <h3 class="text-sm font-semibold text-slate-200">XML tags for multi-part responses</h3>
+              <code class="block font-mono text-xs text-slate-300 mt-2 whitespace-pre">Return the analysis in these XML tags:
+&lt;summary&gt;...&lt;/summary&gt;
+&lt;risks&gt;...&lt;/risks&gt;
+&lt;recommendation&gt;...&lt;/recommendation&gt;</code>
+              <p class="text-xs text-slate-400/90 mt-2">Useful when different sections need different treatment. Anthropic's Claude responds particularly well to XML tags.</p>
+            </div>
+          </div>
+        </section>
+
+        <section class="space-y-5" aria-labelledby="tips-heading">
+          <h2 id="tips-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">Reliability tips</h2>
+          <div class="space-y-2">
+            <div class="flex items-start gap-3 rounded-xl border border-white/10 bg-white/[0.02] p-4">
+              <span class="mt-0.5 text-sky-400 text-sm font-bold">1.</span>
+              <p class="text-sm text-slate-400/90">Always set <code class="rounded bg-white/10 px-1">temperature=0</code> when extracting structured data. Variance in sampling = variance in field names and values.</p>
+            </div>
+            <div class="flex items-start gap-3 rounded-xl border border-white/10 bg-white/[0.02] p-4">
+              <span class="mt-0.5 text-sky-400 text-sm font-bold">2.</span>
+              <p class="text-sm text-slate-400/90">Say "Return ONLY the JSON. No explanation, no markdown code block." Models often wrap JSON in backticks — this tells them not to.</p>
+            </div>
+            <div class="flex items-start gap-3 rounded-xl border border-white/10 bg-white/[0.02] p-4">
+              <span class="mt-0.5 text-sky-400 text-sm font-bold">3.</span>
+              <p class="text-sm text-slate-400/90">Provide a JSON example in your prompt for complex schemas. A concrete example beats abstract field descriptions every time.</p>
+            </div>
+            <div class="flex items-start gap-3 rounded-xl border border-white/10 bg-white/[0.02] p-4">
+              <span class="mt-0.5 text-sky-400 text-sm font-bold">4.</span>
+              <p class="text-sm text-slate-400/90">Add fallback handling: <code class="rounded bg-white/10 px-1">json.loads()</code> inside a try/except. If parsing fails, retry with a corrective message: "Your last response was not valid JSON. Try again."</p>
+            </div>
+          </div>
+        </section>
+
+        <section class="rounded-2xl border border-sky-500/20 bg-sky-500/[0.06] p-5 sm:p-6">
+          <h2 class="text-lg font-semibold text-sky-100">Quick summary</h2>
+          <ul class="mt-3 list-disc space-y-1.5 pl-5 text-sm text-slate-300/95 marker:text-sky-400/80">
+            <li>Schema-in-prompt: describe fields and types directly — works without special API features</li>
+            <li>OpenAI JSON mode guarantees valid JSON; Structured Outputs enforces a Pydantic schema</li>
+            <li>Add Pydantic <code class="rounded bg-white/10 px-1">field_validator</code> to enforce constraints beyond what the schema expresses</li>
+            <li>Always use <code class="rounded bg-white/10 px-1">temperature=0</code> for extraction and say "Return ONLY the JSON"</li>
+            <li>XML tags work well for multi-section responses, especially with Claude</li>
+          </ul>
+        </section>
+
+      </article>
+    </div>
+
+    <div class="flex items-center justify-between">
+      <a href="{% url 'tutorial_pe_role' %}" class="inline-flex items-center gap-2 rounded-xl border border-white/15 bg-white/[0.04] px-5 py-2.5 text-sm font-semibold text-slate-200 transition hover:border-white/25 hover:bg-white/[0.07] hover:text-white">
+        <span aria-hidden>←</span> Role &amp; Persona
+      </a>
+      <a href="{% url 'tutorial_pe_patterns' %}" class="inline-flex items-center gap-2 rounded-xl border border-sky-400/35 bg-sky-500/10 px-5 py-2.5 text-sm font-semibold text-sky-200 transition hover:border-sky-300/50 hover:bg-sky-500/20 hover:text-white">
+        Next: Prompt Patterns Library <span aria-hidden>→</span>
+      </a>
+    </div>
+
+  </div>
+{% endblock %}

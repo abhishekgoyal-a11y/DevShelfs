@@ -1,0 +1,222 @@
+{% extends "web/base.html" %}
+{% block title %}Tool Use & Function Calling — Prompt Engineering Tutorial{% endblock %}
+{% block content %}
+  <div class="space-y-10">
+
+    <div class="flex flex-wrap items-center gap-2 text-sm text-slate-400/90">
+      <a href="{% url 'tutorials' %}" class="font-medium text-sky-300/90 transition hover:text-sky-200">Tutorials</a>
+      <span aria-hidden class="text-slate-600">/</span>
+      <a href="{% url 'tutorial_pe_intro' %}" class="font-medium text-sky-300/90 transition hover:text-sky-200">Prompt Engineering</a>
+      <span aria-hidden class="text-slate-600">/</span>
+      <span class="text-slate-200/90">Tool Use &amp; Function Calling</span>
+    </div>
+
+    <section class="relative overflow-hidden rounded-3xl border border-sky-400/20 bg-white/[0.06] p-6 shadow-[0_0_0_1px_rgba(255,255,255,0.04)] backdrop-blur-2xl sm:p-8">
+      <div class="pointer-events-none absolute -right-24 top-0 h-72 w-72 rounded-full bg-sky-500/15 blur-3xl"></div>
+      <div class="pointer-events-none absolute -left-20 bottom-0 h-56 w-56 rounded-full bg-blue-500/10 blur-3xl"></div>
+      <div class="relative">
+        <div class="flex flex-wrap items-center gap-3">
+          <span class="rounded-full border border-sky-500/25 bg-sky-500/10 px-2.5 py-1 text-xs font-medium text-sky-300/90">Prompt Engineering</span>
+          <span class="rounded-full border border-sky-500/25 bg-sky-500/10 px-2.5 py-1 text-xs font-medium text-sky-300/90">Intermediate</span>
+          <span class="text-xs text-slate-400/80">· 13 min read</span>
+          <span class="ml-auto text-xs font-medium text-slate-400/80">Page 8 of 10</span>
+        </div>
+        <h1 class="mt-4 text-3xl font-semibold tracking-tight text-white sm:text-4xl lg:text-[2.5rem] lg:leading-tight">Tool Use &amp; Function Calling</h1>
+        <p class="mt-4 max-w-2xl text-sm leading-relaxed text-slate-200/80 sm:text-base">
+          How function calling works, how to write tool schemas, when tools beat pure prompting, and how to build a reliable tool loop.
+        </p>
+        <div class="mt-6">
+          <div class="mb-1.5 flex items-center justify-between text-xs text-slate-400/80"><span>Series progress</span><span>8 / 10</span></div>
+          <div class="h-1.5 w-full overflow-hidden rounded-full bg-white/10"><div class="h-full w-[80%] rounded-full bg-sky-400/70"></div></div>
+        </div>
+      </div>
+    </section>
+
+    <div class="glass rounded-3xl border border-white/10 p-5 sm:p-8">
+      <article class="mx-auto space-y-12 text-base leading-relaxed text-slate-300/95">
+
+        <section class="space-y-5" aria-labelledby="what-heading">
+          <h2 id="what-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">What is function calling?</h2>
+          <p>
+            Function calling (also called tool use) lets you expose typed functions to the LLM. Instead of asking the model to produce text, you ask it to produce a structured call to one of your functions — with arguments that your code then executes.
+          </p>
+          <div class="rounded-xl border border-white/10 bg-white/[0.02] px-4 py-3 text-sm">
+            <strong class="text-slate-200">Key insight:</strong>
+            <span class="text-slate-400/90"> The LLM does not execute the function. It produces a structured JSON object saying which function to call and with what arguments. Your code runs the function and feeds the result back to the model.</span>
+          </div>
+          <div class="rounded-2xl border border-white/10 bg-white/[0.03] p-5">
+            <div class="space-y-2 text-sm">
+              <div class="flex items-center gap-3">
+                <span class="rounded-full bg-sky-500/20 px-3 py-1 text-xs font-medium text-sky-300">User</span>
+                <span class="text-slate-400/90">"What's the weather in Tokyo?"</span>
+              </div>
+              <div class="flex items-center gap-3 pl-4 text-slate-600 text-xs">↓</div>
+              <div class="flex items-center gap-3">
+                <span class="rounded-full bg-white/10 px-3 py-1 text-xs font-medium text-slate-300">LLM</span>
+                <code class="text-xs text-slate-300">{"function": "get_weather", "args": {"city": "Tokyo"}}</code>
+              </div>
+              <div class="flex items-center gap-3 pl-4 text-slate-600 text-xs">↓</div>
+              <div class="flex items-center gap-3">
+                <span class="rounded-full bg-white/10 px-3 py-1 text-xs font-medium text-slate-300">Your code</span>
+                <span class="text-slate-400/90">executes <code class="rounded bg-white/10 px-1 text-xs">get_weather("Tokyo")</code> → "22°C, cloudy"</span>
+              </div>
+              <div class="flex items-center gap-3 pl-4 text-slate-600 text-xs">↓</div>
+              <div class="flex items-center gap-3">
+                <span class="rounded-full bg-sky-500/20 px-3 py-1 text-xs font-medium text-sky-300">LLM</span>
+                <span class="text-slate-400/90">"The current weather in Tokyo is 22°C and cloudy."</span>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="space-y-5" aria-labelledby="schema-heading">
+          <h2 id="schema-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">Writing a tool schema</h2>
+          <p>You describe each tool as a JSON schema — the model uses this to decide when and how to call it. Three parts matter most: the name, the description, and the parameters.</p>
+          <div class="rounded-2xl border border-white/10 bg-white/[0.03] p-5">
+            <code class="block font-mono text-xs text-slate-300 whitespace-pre">tools = [
+    {
+        "type": "function",
+        "function": {
+            "name": "get_weather",
+            "description": "Get the current weather for a city. "
+                           "Use this when the user asks about weather "
+                           "or temperature in a specific location.",
+            "parameters": {
+                "type": "object",
+                "properties": {
+                    "city": {
+                        "type": "string",
+                        "description": "City name, e.g. 'Tokyo' or 'New York'"
+                    },
+                    "unit": {
+                        "type": "string",
+                        "enum": ["celsius", "fahrenheit"],
+                        "description": "Temperature unit. Default: celsius"
+                    }
+                },
+                "required": ["city"]
+            }
+        }
+    }
+]</code>
+          </div>
+          <div class="space-y-2 mt-2">
+            <div class="flex items-start gap-3 rounded-xl border border-white/10 bg-white/[0.02] p-3">
+              <span class="text-sky-400 text-xs font-bold mt-0.5">Name</span>
+              <p class="text-xs text-slate-400/90">Use snake_case, descriptive verbs: <code class="rounded bg-white/10 px-1">get_weather</code>, <code class="rounded bg-white/10 px-1">search_products</code>, <code class="rounded bg-white/10 px-1">send_email</code>. The name is the model's primary signal for when to call it.</p>
+            </div>
+            <div class="flex items-start gap-3 rounded-xl border border-white/10 bg-white/[0.02] p-3">
+              <span class="text-sky-400 text-xs font-bold mt-0.5">Description</span>
+              <p class="text-xs text-slate-400/90">This is your most important field — explain what the function does AND when to use it. Include example triggers: "Use this when the user asks about…"</p>
+            </div>
+            <div class="flex items-start gap-3 rounded-xl border border-white/10 bg-white/[0.02] p-3">
+              <span class="text-sky-400 text-xs font-bold mt-0.5">Parameters</span>
+              <p class="text-xs text-slate-400/90">Describe each parameter clearly. Use <code class="rounded bg-white/10 px-1">enum</code> to constrain values where possible. Mark required vs optional explicitly.</p>
+            </div>
+          </div>
+        </section>
+
+        <section class="space-y-5" aria-labelledby="loop-heading">
+          <h2 id="loop-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">Building the tool loop</h2>
+          <p>Function calling is a multi-turn process. Here's the complete pattern using the OpenAI API:</p>
+          <div class="rounded-2xl border border-white/10 bg-white/[0.03] p-5">
+            <code class="block font-mono text-xs text-slate-300 whitespace-pre">import json
+from openai import OpenAI
+
+client = OpenAI()
+messages = [{"role": "user", "content": "What's the weather in Tokyo?"}]
+
+while True:
+    response = client.chat.completions.create(
+        model="gpt-4o-mini",
+        tools=tools,
+        messages=messages,
+    )
+    msg = response.choices[0].message
+
+    # No tool call — model has final answer
+    if not msg.tool_calls:
+        print(msg.content)
+        break
+
+    # Execute each tool call
+    messages.append(msg)  # add assistant message with tool_calls
+    for tc in msg.tool_calls:
+        args = json.loads(tc.function.arguments)
+        result = get_weather(**args)  # your function
+        messages.append({
+            "role": "tool",
+            "tool_call_id": tc.id,
+            "content": json.dumps(result),
+        })
+    # loop continues — model will now generate final answer</code>
+          </div>
+        </section>
+
+        <section class="space-y-5" aria-labelledby="vs-heading">
+          <h2 id="vs-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">Tools vs pure prompting</h2>
+          <div class="overflow-x-auto rounded-2xl border border-white/10">
+            <table class="w-full text-sm">
+              <thead>
+                <tr class="border-b border-white/10 bg-white/[0.04]">
+                  <th class="px-4 py-3 text-left font-semibold text-slate-200">Situation</th>
+                  <th class="px-4 py-3 text-left font-semibold text-slate-200">Use</th>
+                </tr>
+              </thead>
+              <tbody class="divide-y divide-white/5">
+                <tr><td class="px-4 py-3 text-slate-400/90">Need real-time or live data (weather, prices, search)</td><td class="px-4 py-3 font-medium text-sky-300">Tools</td></tr>
+                <tr><td class="px-4 py-3 text-slate-400/90">Need exact arithmetic or guaranteed correct computation</td><td class="px-4 py-3 font-medium text-sky-300">Tools</td></tr>
+                <tr><td class="px-4 py-3 text-slate-400/90">Writing, summarisation, content generation</td><td class="px-4 py-3 font-medium text-sky-300">Pure prompting</td></tr>
+                <tr><td class="px-4 py-3 text-slate-400/90">Need to take side-effecting actions (send email, write DB)</td><td class="px-4 py-3 font-medium text-sky-300">Tools</td></tr>
+                <tr><td class="px-4 py-3 text-slate-400/90">Reasoning and analysis over provided text</td><td class="px-4 py-3 font-medium text-sky-300">Pure prompting</td></tr>
+                <tr><td class="px-4 py-3 text-slate-400/90">Classification, extraction from text in the prompt</td><td class="px-4 py-3 font-medium text-sky-300">Pure prompting</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <p class="text-sm text-slate-400/90">Rule of thumb: use tools when the model needs to <em>do</em> something beyond reasoning over text. Use prompting when it just needs to <em>think</em> about text already in the context.</p>
+        </section>
+
+        <section class="space-y-5" aria-labelledby="tips-heading">
+          <h2 id="tips-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">Writing better tool descriptions</h2>
+          <div class="space-y-3">
+            <div class="rounded-2xl border border-rose-500/20 bg-rose-500/[0.04] p-5">
+              <h3 class="text-sm font-semibold text-rose-200">Weak description</h3>
+              <code class="block font-mono text-xs text-slate-300 mt-2">"description": "Search for products."</code>
+              <p class="text-xs text-slate-400/90 mt-2">No context on when to call it. The model may call it for everything, or never.</p>
+            </div>
+            <div class="rounded-2xl border border-emerald-500/20 bg-emerald-500/[0.04] p-5">
+              <h3 class="text-sm font-semibold text-emerald-200">Strong description</h3>
+              <code class="block font-mono text-xs text-slate-300 mt-2 whitespace-pre">"description": "Search the product catalogue by keyword or
+category. Use this when the user is looking for a specific
+product, asking what's available, or comparing options.
+Do NOT use this for order history or returns."</code>
+              <p class="text-xs text-slate-400/90 mt-2">Tells the model when to call it AND when NOT to. Negative instructions prevent over-calling.</p>
+            </div>
+          </div>
+        </section>
+
+        <section class="rounded-2xl border border-sky-500/20 bg-sky-500/[0.06] p-5 sm:p-6">
+          <h2 class="text-lg font-semibold text-sky-100">Quick summary</h2>
+          <ul class="mt-3 list-disc space-y-1.5 pl-5 text-sm text-slate-300/95 marker:text-sky-400/80">
+            <li>Function calling: LLM produces a structured call → your code executes it → result fed back</li>
+            <li>Tool description is your most important field — include when to call it AND when not to</li>
+            <li>The tool loop: call API → check for tool_calls → execute → append result → repeat</li>
+            <li>Use tools for live data, exact computation, and side effects. Use prompting for reasoning over text</li>
+            <li>Use <code class="rounded bg-white/10 px-1">enum</code> in parameters to constrain values the model can pass</li>
+          </ul>
+        </section>
+
+      </article>
+    </div>
+
+    <div class="flex items-center justify-between">
+      <a href="{% url 'tutorial_pe_patterns' %}" class="inline-flex items-center gap-2 rounded-xl border border-white/15 bg-white/[0.04] px-5 py-2.5 text-sm font-semibold text-slate-200 transition hover:border-white/25 hover:bg-white/[0.07] hover:text-white">
+        <span aria-hidden>←</span> Prompt Patterns
+      </a>
+      <a href="{% url 'tutorial_pe_security' %}" class="inline-flex items-center gap-2 rounded-xl border border-sky-400/35 bg-sky-500/10 px-5 py-2.5 text-sm font-semibold text-sky-200 transition hover:border-sky-300/50 hover:bg-sky-500/20 hover:text-white">
+        Next: Security &amp; Guardrails <span aria-hidden>→</span>
+      </a>
+    </div>
+
+  </div>
+{% endblock %}

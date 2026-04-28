@@ -475,7 +475,7 @@ _TUTORIALS = [
         "read_time": 10,
         "icon": "✍️",
         "icon_gradient": "from-sky-500/40 via-blue-400/20 to-indigo-400/25",
-        "url": "#",
+        "url": "/tutorials/prompt-engineering/introduction/",
     },
     {
         "title": "Run LLMs Locally",
@@ -653,6 +653,67 @@ def tutorial_langchain_rag(request):
 
 def tutorial_langchain_build(request):
     return render(request, "web/tutorials/langchain/build_rag_chatbot.html", {"layout": _layout(request.path), "active_nav": "tutorials"})
+
+
+_PROMPT_ENG_SERIES = [
+    {"number": 2, "title": "Prompt Anatomy", "summary": "System/user/assistant roles, tokens, temperature, top-p, and context window limits.", "url": "tutorial_pe_anatomy"},
+    {"number": 3, "title": "Zero-shot & Few-shot", "summary": "Zero-shot prompting, few-shot examples, how many to include, and formatting them well.", "url": "tutorial_pe_zeroshot"},
+    {"number": 4, "title": "Chain-of-Thought", "summary": "When CoT helps vs hurts, hidden vs explicit reasoning, and programmatic alternatives.", "url": "tutorial_pe_cot"},
+    {"number": 5, "title": "Role & Persona Prompting", "summary": "Personas, expert framing, tone control, and audience targeting.", "url": "tutorial_pe_role"},
+    {"number": 6, "title": "Structured Output Prompting", "summary": "JSON/markdown/tables, schema-in-prompt, and combining with Pydantic validation.", "url": "tutorial_pe_structured"},
+    {"number": 7, "title": "Prompt Patterns Library", "summary": "Reusable patterns: Instruction+Context+Format, ReAct, Critic-Refine, Planner→Executor.", "url": "tutorial_pe_patterns"},
+    {"number": 8, "title": "Tool Use & Function Calling", "summary": "Function calling concepts, JSON schema → tool calls, tools vs pure prompting.", "url": "tutorial_pe_tools"},
+    {"number": 9, "title": "Prompt Security & Guardrails", "summary": "Injection attacks, jailbreaks, data leakage, input sanitization, output validation.", "url": "tutorial_pe_security"},
+    {"number": 10, "title": "Prompt Testing & Engineering", "summary": "Test cases, golden datasets, regression testing, accuracy/latency/cost metrics.", "url": "tutorial_pe_testing"},
+]
+
+
+def tutorial_pe_intro(request):
+    return render(
+        request,
+        "web/tutorials/prompt_engineering/introduction.html",
+        {
+            "layout": _layout(request.path),
+            "active_nav": "tutorials",
+            "series_pages": _PROMPT_ENG_SERIES,
+        },
+    )
+
+
+def tutorial_pe_anatomy(request):
+    return render(request, "web/tutorials/prompt_engineering/prompt_anatomy.html", {"layout": _layout(request.path), "active_nav": "tutorials"})
+
+
+def tutorial_pe_zeroshot(request):
+    return render(request, "web/tutorials/prompt_engineering/zero_shot_few_shot.html", {"layout": _layout(request.path), "active_nav": "tutorials"})
+
+
+def tutorial_pe_cot(request):
+    return render(request, "web/tutorials/prompt_engineering/chain_of_thought.html", {"layout": _layout(request.path), "active_nav": "tutorials"})
+
+
+def tutorial_pe_role(request):
+    return render(request, "web/tutorials/prompt_engineering/role_persona.html", {"layout": _layout(request.path), "active_nav": "tutorials"})
+
+
+def tutorial_pe_structured(request):
+    return render(request, "web/tutorials/prompt_engineering/structured_output.html", {"layout": _layout(request.path), "active_nav": "tutorials"})
+
+
+def tutorial_pe_patterns(request):
+    return render(request, "web/tutorials/prompt_engineering/prompt_patterns.html", {"layout": _layout(request.path), "active_nav": "tutorials"})
+
+
+def tutorial_pe_tools(request):
+    return render(request, "web/tutorials/prompt_engineering/tool_use.html", {"layout": _layout(request.path), "active_nav": "tutorials"})
+
+
+def tutorial_pe_security(request):
+    return render(request, "web/tutorials/prompt_engineering/security_guardrails.html", {"layout": _layout(request.path), "active_nav": "tutorials"})
+
+
+def tutorial_pe_testing(request):
+    return render(request, "web/tutorials/prompt_engineering/testing_engineering.html", {"layout": _layout(request.path), "active_nav": "tutorials"})
 
 
 def tutorials(request):
