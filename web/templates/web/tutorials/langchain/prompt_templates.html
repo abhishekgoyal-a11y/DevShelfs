@@ -1,0 +1,193 @@
+{% extends "web/base.html" %}
+{% block title %}Prompt Templates — LangChain Tutorial{% endblock %}
+{% block content %}
+  <div class="space-y-10">
+
+    <div class="flex flex-wrap items-center gap-2 text-sm text-slate-400/90">
+      <a href="{% url 'tutorials' %}" class="font-medium text-violet-300/90 transition hover:text-violet-200">Tutorials</a>
+      <span aria-hidden class="text-slate-600">/</span>
+      <a href="{% url 'tutorial_langchain_intro' %}" class="font-medium text-violet-300/90 transition hover:text-violet-200">LangChain</a>
+      <span aria-hidden class="text-slate-600">/</span>
+      <span class="text-slate-200/90">Prompt Templates</span>
+    </div>
+
+    <section class="relative overflow-hidden rounded-3xl border border-violet-400/20 bg-white/[0.06] p-6 shadow-[0_0_0_1px_rgba(255,255,255,0.04)] backdrop-blur-2xl sm:p-8">
+      <div class="pointer-events-none absolute -right-24 top-0 h-72 w-72 rounded-full bg-violet-500/15 blur-3xl"></div>
+      <div class="pointer-events-none absolute -left-20 bottom-0 h-56 w-56 rounded-full bg-fuchsia-500/10 blur-3xl"></div>
+      <div class="relative">
+        <div class="flex flex-wrap items-center gap-3">
+          <span class="rounded-full border border-violet-500/25 bg-violet-500/10 px-2.5 py-1 text-xs font-medium text-violet-300/90">LangChain</span>
+          <span class="rounded-full border border-sky-500/25 bg-sky-500/10 px-2.5 py-1 text-xs font-medium text-sky-300/90">Intermediate</span>
+          <span class="text-xs text-slate-400/80">· 11 min read</span>
+          <span class="ml-auto text-xs font-medium text-slate-400/80">Page 3 of 8</span>
+        </div>
+        <h1 class="mt-4 text-3xl font-semibold tracking-tight text-white sm:text-4xl lg:text-[2.5rem] lg:leading-tight">Prompt Templates</h1>
+        <p class="mt-4 max-w-2xl text-sm leading-relaxed text-slate-200/80 sm:text-base">
+          PromptTemplate, ChatPromptTemplate, few-shot prompts, structured outputs, guardrails, and debugging tips.
+        </p>
+        <div class="mt-6">
+          <div class="mb-1.5 flex items-center justify-between text-xs text-slate-400/80"><span>Series progress</span><span>3 / 8</span></div>
+          <div class="h-1.5 w-full overflow-hidden rounded-full bg-white/10"><div class="h-full w-[37%] rounded-full bg-violet-400/70"></div></div>
+        </div>
+      </div>
+    </section>
+
+    <div class="glass rounded-3xl border border-white/10 p-5 sm:p-8">
+      <article class="mx-auto space-y-12 text-base leading-relaxed text-slate-300/95">
+
+        <section class="space-y-5" aria-labelledby="pt-heading">
+          <h2 id="pt-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">PromptTemplate</h2>
+          <p>A <code class="rounded bg-white/10 px-1 text-sm">PromptTemplate</code> is a string with named placeholders. You fill them in at runtime.</p>
+          <div class="rounded-2xl border border-white/10 bg-white/[0.03] p-5 space-y-3">
+            <code class="block font-mono text-xs text-slate-300 whitespace-pre">from langchain_core.prompts import PromptTemplate
+
+template = PromptTemplate.from_template(
+    "You are a helpful assistant. Answer this question: {question}"
+)
+
+prompt = template.invoke({"question": "What is LangChain?"})</code>
+          </div>
+          <p class="text-sm text-slate-400/90">Use <code class="rounded bg-white/10 px-1">PromptTemplate</code> when working with plain LLMs (text-in). For chat models, use <code class="rounded bg-white/10 px-1">ChatPromptTemplate</code>.</p>
+        </section>
+
+        <section class="space-y-5" aria-labelledby="cpt-heading">
+          <h2 id="cpt-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">ChatPromptTemplate</h2>
+          <p>Chat models expect a list of messages. <code class="rounded bg-white/10 px-1 text-sm">ChatPromptTemplate</code> lets you template that list with variables.</p>
+          <div class="rounded-2xl border border-white/10 bg-white/[0.03] p-5">
+            <code class="block font-mono text-xs text-slate-300 whitespace-pre">from langchain_core.prompts import ChatPromptTemplate
+
+prompt = ChatPromptTemplate.from_messages([
+    ("system", "You are an expert in {topic}. Be concise."),
+    ("human", "{question}"),
+])
+
+chain = prompt | llm | StrOutputParser()
+chain.invoke({"topic": "Python", "question": "What is a decorator?"})</code>
+          </div>
+          <p class="text-sm text-slate-400/90">The <code class="rounded bg-white/10 px-1">system</code> message sets the context; the <code class="rounded bg-white/10 px-1">human</code> message is the user's input. Both accept variables.</p>
+        </section>
+
+        <section class="space-y-5" aria-labelledby="fewshot-heading">
+          <h2 id="fewshot-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">Few-shot prompts</h2>
+          <p>Show the model examples of the input/output pattern you expect. This significantly improves output quality for structured tasks.</p>
+          <div class="rounded-2xl border border-white/10 bg-white/[0.03] p-5">
+            <code class="block font-mono text-xs text-slate-300 whitespace-pre">from langchain_core.prompts import FewShotChatMessagePromptTemplate
+
+examples = [
+    {"input": "happy", "output": "sad"},
+    {"input": "tall",  "output": "short"},
+]
+
+example_prompt = ChatPromptTemplate.from_messages([
+    ("human", "{input}"), ("ai", "{output}")
+])
+
+few_shot_prompt = FewShotChatMessagePromptTemplate(
+    examples=examples,
+    example_prompt=example_prompt,
+)
+
+final_prompt = ChatPromptTemplate.from_messages([
+    ("system", "Give the antonym of the word."),
+    few_shot_prompt,
+    ("human", "{input}"),
+])</code>
+          </div>
+        </section>
+
+        <section class="space-y-5" aria-labelledby="structured-heading">
+          <h2 id="structured-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">Structured outputs (JSON mode)</h2>
+          <p>
+            Instead of parsing free text, you can tell the model to return a specific JSON schema every time.
+            LangChain's <code class="rounded bg-white/10 px-1 text-sm">.with_structured_output()</code> handles this cleanly using Pydantic.
+          </p>
+          <div class="rounded-2xl border border-white/10 bg-white/[0.03] p-5 space-y-4">
+            <code class="block font-mono text-xs text-slate-300 whitespace-pre">from pydantic import BaseModel
+from langchain_openai import ChatOpenAI
+
+class MovieReview(BaseModel):
+    title: str
+    rating: int      # 1–10
+    summary: str
+
+llm = ChatOpenAI(model="gpt-4o-mini")
+structured_llm = llm.with_structured_output(MovieReview)
+
+result = structured_llm.invoke("Review the movie Inception")
+print(result.title)    # "Inception"
+print(result.rating)   # 9
+print(result.summary)  # "A mind-bending thriller..."</code>
+          </div>
+          <p class="text-sm text-slate-400/90">The model is forced to output valid JSON matching your Pydantic schema. No output parsing needed — you get a typed Python object back.</p>
+        </section>
+
+        <section class="space-y-5" aria-labelledby="guardrails-heading">
+          <h2 id="guardrails-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">Guardrails & validation</h2>
+          <p>Structured outputs give you implicit validation — if the model's output does not match the schema, LangChain raises an error. For explicit guardrails, add validators to your Pydantic model:</p>
+          <div class="rounded-2xl border border-white/10 bg-white/[0.03] p-5">
+            <code class="block font-mono text-xs text-slate-300 whitespace-pre">from pydantic import BaseModel, field_validator
+
+class MovieReview(BaseModel):
+    title: str
+    rating: int
+    summary: str
+
+    @field_validator("rating")
+    @classmethod
+    def rating_in_range(cls, v):
+        if not 1 <= v <= 10:
+            raise ValueError("Rating must be between 1 and 10")
+        return v</code>
+          </div>
+          <p class="text-sm text-slate-400/90">If the model returns a rating of 11, the validator rejects it before it reaches your code. Combine with LangChain's <code class="rounded bg-white/10 px-1">.with_retry()</code> to automatically ask the model to try again.</p>
+        </section>
+
+        <section class="space-y-5" aria-labelledby="debug-heading">
+          <h2 id="debug-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">Prompt debugging tips</h2>
+          <div class="space-y-3">
+            <div class="rounded-2xl border border-white/10 bg-white/[0.03] p-5">
+              <h3 class="text-sm font-semibold text-white">1. Print the rendered prompt before sending</h3>
+              <code class="mt-2 block font-mono text-xs text-slate-300">print(prompt.invoke({"topic": "Python", "question": "..."}))</code>
+              <p class="mt-1.5 text-xs text-slate-400/90">Always verify the prompt looks exactly as intended before debugging the model's output.</p>
+            </div>
+            <div class="rounded-2xl border border-white/10 bg-white/[0.03] p-5">
+              <h3 class="text-sm font-semibold text-white">2. Enable verbose mode</h3>
+              <code class="mt-2 block font-mono text-xs text-slate-300">from langchain.globals import set_verbose<br/>set_verbose(True)</code>
+              <p class="mt-1.5 text-xs text-slate-400/90">Prints every prompt and response to the console as they happen. Turn off in production.</p>
+            </div>
+            <div class="rounded-2xl border border-white/10 bg-white/[0.03] p-5">
+              <h3 class="text-sm font-semibold text-white">3. Use LangSmith for tracing</h3>
+              <p class="mt-1.5 text-xs text-slate-400/90">Set <code class="rounded bg-white/10 px-1">LANGCHAIN_TRACING_V2=true</code> and <code class="rounded bg-white/10 px-1">LANGCHAIN_API_KEY</code> to get a full trace of every chain run in the LangSmith UI — inputs, outputs, latency, token counts.</p>
+            </div>
+            <div class="rounded-2xl border border-white/10 bg-white/[0.03] p-5">
+              <h3 class="text-sm font-semibold text-white">4. Test prompts in isolation</h3>
+              <p class="mt-1.5 text-xs text-slate-400/90">Before adding a prompt to a chain, invoke it standalone with <code class="rounded bg-white/10 px-1">llm.invoke(prompt.invoke({...}))</code>. Isolate whether the issue is the prompt or the chain.</p>
+            </div>
+          </div>
+        </section>
+
+        <section class="rounded-2xl border border-violet-500/20 bg-violet-500/[0.06] p-5 sm:p-6">
+          <h2 class="text-lg font-semibold text-violet-100">Quick summary</h2>
+          <ul class="mt-3 list-disc space-y-1.5 pl-5 text-sm text-slate-300/95 marker:text-violet-400/80">
+            <li>Use <code class="rounded bg-white/10 px-1">ChatPromptTemplate</code> for all modern chat models</li>
+            <li>Few-shot examples dramatically improve output quality for structured tasks</li>
+            <li><code class="rounded bg-white/10 px-1">.with_structured_output(PydanticModel)</code> returns typed Python objects, no parsing needed</li>
+            <li>Add <code class="rounded bg-white/10 px-1">field_validator</code> to enforce output constraints and combine with <code class="rounded bg-white/10 px-1">.with_retry()</code></li>
+            <li>Debug with <code class="rounded bg-white/10 px-1">set_verbose(True)</code> locally and LangSmith in production</li>
+          </ul>
+        </section>
+
+      </article>
+    </div>
+
+    <div class="flex items-center justify-between">
+      <a href="{% url 'tutorial_langchain_concepts' %}" class="inline-flex items-center gap-2 rounded-xl border border-white/15 bg-white/[0.04] px-5 py-2.5 text-sm font-semibold text-slate-200 transition hover:border-white/25 hover:bg-white/[0.07] hover:text-white">
+        <span aria-hidden>←</span> Core Concepts
+      </a>
+      <a href="{% url 'tutorial_langchain_chains' %}" class="inline-flex items-center gap-2 rounded-xl border border-violet-400/35 bg-violet-500/10 px-5 py-2.5 text-sm font-semibold text-violet-200 transition hover:border-violet-300/50 hover:bg-violet-500/20 hover:text-white">
+        Next: Chains &amp; LCEL <span aria-hidden>→</span>
+      </a>
+    </div>
+
+  </div>
+{% endblock %}

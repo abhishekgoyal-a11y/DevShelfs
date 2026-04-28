@@ -1,0 +1,239 @@
+{% extends "web/base.html" %}
+{% block title %}Memory — LangChain Tutorial{% endblock %}
+{% block content %}
+  <div class="space-y-10">
+
+    <div class="flex flex-wrap items-center gap-2 text-sm text-slate-400/90">
+      <a href="{% url 'tutorials' %}" class="font-medium text-violet-300/90 transition hover:text-violet-200">Tutorials</a>
+      <span aria-hidden class="text-slate-600">/</span>
+      <a href="{% url 'tutorial_langchain_intro' %}" class="font-medium text-violet-300/90 transition hover:text-violet-200">LangChain</a>
+      <span aria-hidden class="text-slate-600">/</span>
+      <span class="text-slate-200/90">Memory</span>
+    </div>
+
+    <section class="relative overflow-hidden rounded-3xl border border-violet-400/20 bg-white/[0.06] p-6 shadow-[0_0_0_1px_rgba(255,255,255,0.04)] backdrop-blur-2xl sm:p-8">
+      <div class="pointer-events-none absolute -right-24 top-0 h-72 w-72 rounded-full bg-violet-500/15 blur-3xl"></div>
+      <div class="pointer-events-none absolute -left-20 bottom-0 h-56 w-56 rounded-full bg-fuchsia-500/10 blur-3xl"></div>
+      <div class="relative">
+        <div class="flex flex-wrap items-center gap-3">
+          <span class="rounded-full border border-violet-500/25 bg-violet-500/10 px-2.5 py-1 text-xs font-medium text-violet-300/90">LangChain</span>
+          <span class="rounded-full border border-sky-500/25 bg-sky-500/10 px-2.5 py-1 text-xs font-medium text-sky-300/90">Intermediate</span>
+          <span class="text-xs text-slate-400/80">· 11 min read</span>
+          <span class="ml-auto text-xs font-medium text-slate-400/80">Page 5 of 8</span>
+        </div>
+        <h1 class="mt-4 text-3xl font-semibold tracking-tight text-white sm:text-4xl lg:text-[2.5rem] lg:leading-tight">Memory</h1>
+        <p class="mt-4 max-w-2xl text-sm leading-relaxed text-slate-200/80 sm:text-base">
+          How to give a chain conversation history — buffer, summary, and token-window strategies — and when not to use memory at all.
+        </p>
+        <div class="mt-6">
+          <div class="mb-1.5 flex items-center justify-between text-xs text-slate-400/80"><span>Series progress</span><span>5 / 8</span></div>
+          <div class="h-1.5 w-full overflow-hidden rounded-full bg-white/10"><div class="h-full w-[62%] rounded-full bg-violet-400/70"></div></div>
+        </div>
+      </div>
+    </section>
+
+    <div class="glass rounded-3xl border border-white/10 p-5 sm:p-8">
+      <article class="mx-auto space-y-12 text-base leading-relaxed text-slate-300/95">
+
+        <section class="space-y-5" aria-labelledby="why-heading">
+          <h2 id="why-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">Why memory?</h2>
+          <p>
+            LLMs are stateless by default — every call is independent. If you ask "What did I just say?", the model has no idea.
+            Memory lets you inject previous conversation turns into the prompt so the model can refer back to them.
+          </p>
+          <div class="rounded-xl border border-white/10 bg-white/[0.02] px-4 py-3 text-sm">
+            <strong class="text-slate-200">The core idea:</strong> before every LLM call, prepend a summary or transcript of the conversation so far. The model "remembers" because it reads its own history.
+          </div>
+        </section>
+
+        <section class="space-y-5" aria-labelledby="buffer-heading">
+          <h2 id="buffer-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">ConversationBufferMemory</h2>
+          <p>The simplest approach — store the full message history and replay it every time. Works well for short conversations.</p>
+          <div class="rounded-2xl border border-white/10 bg-white/[0.03] p-5">
+            <code class="block font-mono text-xs text-slate-300 whitespace-pre">from langchain.memory import ConversationBufferMemory
+from langchain.chains import ConversationChain
+from langchain_openai import ChatOpenAI
+
+llm = ChatOpenAI(model="gpt-4o-mini")
+memory = ConversationBufferMemory()
+
+conversation = ConversationChain(llm=llm, memory=memory)
+
+conversation.invoke("Hi, my name is Alice.")
+conversation.invoke("What's my name?")  # → "Your name is Alice."</code>
+          </div>
+          <p class="text-sm text-slate-400/90">Every message is appended to the buffer. On the next call, the full history is injected into the prompt before the new message. Simple — but the prompt grows unboundedly.</p>
+        </section>
+
+        <section class="space-y-5" aria-labelledby="modern-heading">
+          <h2 id="modern-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">The modern LCEL approach — RunnableWithMessageHistory</h2>
+          <p>
+            The <code class="rounded bg-white/10 px-1 text-sm">ConversationChain</code> pattern is legacy. With LCEL, you attach history via
+            <code class="rounded bg-white/10 px-1 text-sm">RunnableWithMessageHistory</code> — cleaner and more flexible.
+          </p>
+          <div class="rounded-2xl border border-white/10 bg-white/[0.03] p-5 space-y-3">
+            <code class="block font-mono text-xs text-slate-300 whitespace-pre">from langchain_core.runnables.history import RunnableWithMessageHistory
+from langchain_community.chat_message_histories import ChatMessageHistory
+from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
+
+store = {}  # session_id → ChatMessageHistory
+
+def get_history(session_id: str):
+    if session_id not in store:
+        store[session_id] = ChatMessageHistory()
+    return store[session_id]
+
+prompt = ChatPromptTemplate.from_messages([
+    ("system", "You are a helpful assistant."),
+    MessagesPlaceholder(variable_name="history"),
+    ("human", "{input}"),
+])
+
+chain = prompt | llm | StrOutputParser()
+
+with_history = RunnableWithMessageHistory(
+    chain,
+    get_history,
+    input_messages_key="input",
+    history_messages_key="history",
+)
+
+cfg = {"configurable": {"session_id": "user-123"}}
+with_history.invoke({"input": "My name is Alice."}, config=cfg)
+with_history.invoke({"input": "What's my name?"}, config=cfg)</code>
+          </div>
+          <p class="text-sm text-slate-400/90">Each session gets its own history store. You can swap the in-memory store for Redis, DynamoDB, or any persistent backend by implementing the same interface.</p>
+        </section>
+
+        <section class="space-y-5" aria-labelledby="summary-heading">
+          <h2 id="summary-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">ConversationSummaryMemory</h2>
+          <p>Instead of storing every message, summarise the conversation so far using another LLM call. The prompt stays short regardless of conversation length.</p>
+          <div class="rounded-2xl border border-white/10 bg-white/[0.03] p-5">
+            <code class="block font-mono text-xs text-slate-300 whitespace-pre">from langchain.memory import ConversationSummaryMemory
+
+memory = ConversationSummaryMemory(llm=llm)
+
+conversation = ConversationChain(llm=llm, memory=memory, verbose=True)
+
+conversation.invoke("I'm planning a trip to Japan.")
+conversation.invoke("I want to visit Kyoto and Tokyo.")
+conversation.invoke("What did we discuss?")</code>
+          </div>
+          <div class="grid gap-4 sm:grid-cols-2 mt-2">
+            <div class="rounded-xl border border-green-500/20 bg-green-500/[0.04] px-4 py-3 text-sm">
+              <p class="font-medium text-green-200 mb-1">Pros</p>
+              <ul class="list-disc pl-4 space-y-1 text-slate-400/90 text-xs marker:text-green-400">
+                <li>Prompt length stays constant</li>
+                <li>Works for very long conversations</li>
+              </ul>
+            </div>
+            <div class="rounded-xl border border-rose-500/20 bg-rose-500/[0.04] px-4 py-3 text-sm">
+              <p class="font-medium text-rose-200 mb-1">Cons</p>
+              <ul class="list-disc pl-4 space-y-1 text-slate-400/90 text-xs marker:text-rose-400">
+                <li>Extra LLM call per turn (cost + latency)</li>
+                <li>Summarisation loses detail</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        <section class="space-y-5" aria-labelledby="token-heading">
+          <h2 id="token-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">ConversationTokenBufferMemory</h2>
+          <p>A sliding window that keeps as many recent messages as will fit within a token budget. When the limit is reached, old messages are dropped.</p>
+          <div class="rounded-2xl border border-white/10 bg-white/[0.03] p-5">
+            <code class="block font-mono text-xs text-slate-300 whitespace-pre">from langchain.memory import ConversationTokenBufferMemory
+
+memory = ConversationTokenBufferMemory(
+    llm=llm,
+    max_token_limit=500,   # keep the most recent messages that fit
+)
+
+conversation = ConversationChain(llm=llm, memory=memory)</code>
+          </div>
+          <p class="text-sm text-slate-400/90">Good middle ground — predictable prompt size without the extra LLM call that summary memory requires. Older context is lost, but recent turns are always preserved.</p>
+        </section>
+
+        <section class="space-y-5" aria-labelledby="comparison-heading">
+          <h2 id="comparison-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">Choosing a memory strategy</h2>
+          <div class="overflow-x-auto rounded-2xl border border-white/10">
+            <table class="w-full text-sm">
+              <thead>
+                <tr class="border-b border-white/10 bg-white/[0.04]">
+                  <th class="px-4 py-3 text-left font-semibold text-slate-200">Strategy</th>
+                  <th class="px-4 py-3 text-left font-semibold text-slate-200">Best for</th>
+                  <th class="px-4 py-3 text-left font-semibold text-slate-200">Watch out for</th>
+                </tr>
+              </thead>
+              <tbody class="divide-y divide-white/5">
+                <tr>
+                  <td class="px-4 py-3 font-medium text-violet-300">BufferMemory</td>
+                  <td class="px-4 py-3 text-slate-400/90">Short conversations, demos</td>
+                  <td class="px-4 py-3 text-slate-400/90">Prompt grows without bound</td>
+                </tr>
+                <tr>
+                  <td class="px-4 py-3 font-medium text-violet-300">TokenBufferMemory</td>
+                  <td class="px-4 py-3 text-slate-400/90">Predictable cost, recent context matters</td>
+                  <td class="px-4 py-3 text-slate-400/90">Early context is silently dropped</td>
+                </tr>
+                <tr>
+                  <td class="px-4 py-3 font-medium text-violet-300">SummaryMemory</td>
+                  <td class="px-4 py-3 text-slate-400/90">Long conversations, big-picture recall</td>
+                  <td class="px-4 py-3 text-slate-400/90">Extra LLM call; detail loss</td>
+                </tr>
+                <tr>
+                  <td class="px-4 py-3 font-medium text-violet-300">RunnableWithMessageHistory</td>
+                  <td class="px-4 py-3 text-slate-400/90">Production LCEL apps, multi-user</td>
+                  <td class="px-4 py-3 text-slate-400/90">Need a persistent backend for scale</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <section class="space-y-5" aria-labelledby="dont-use-heading">
+          <h2 id="dont-use-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">When <em>not</em> to use memory</h2>
+          <p>Memory is not always the right tool. Before reaching for it, consider these cases where you should skip it entirely.</p>
+          <div class="space-y-3">
+            <div class="rounded-2xl border border-amber-500/20 bg-amber-500/[0.05] p-5">
+              <h3 class="text-sm font-semibold text-amber-100">Single-shot pipelines</h3>
+              <p class="mt-1.5 text-sm text-slate-400/90">If your chain processes one document or one request with no back-and-forth, memory adds overhead with zero benefit. Summarisation chains, classification pipelines, and batch jobs don't need it.</p>
+            </div>
+            <div class="rounded-2xl border border-amber-500/20 bg-amber-500/[0.05] p-5">
+              <h3 class="text-sm font-semibold text-amber-100">The context window is large enough</h3>
+              <p class="mt-1.5 text-sm text-slate-400/90">Modern models (GPT-4o, Claude 3.5) have context windows of 128k–200k tokens. For many use cases, you can just pass the full conversation without any memory management and it fits fine.</p>
+            </div>
+            <div class="rounded-2xl border border-amber-500/20 bg-amber-500/[0.05] p-5">
+              <h3 class="text-sm font-semibold text-amber-100">You need exact recall, not fuzzy summarisation</h3>
+              <p class="mt-1.5 text-sm text-slate-400/90">If precise past details matter (contract terms, exact numbers), summary memory will lose them. Use a database and retrieve the exact record instead of relying on the LLM to remember it.</p>
+            </div>
+            <div class="rounded-2xl border border-amber-500/20 bg-amber-500/[0.05] p-5">
+              <h3 class="text-sm font-semibold text-amber-100">Stateless API endpoints</h3>
+              <p class="mt-1.5 text-sm text-slate-400/90">If your backend handles many users, in-process memory (like <code class="rounded bg-white/10 px-1">ConversationBufferMemory</code>) won't survive server restarts and can't scale across multiple instances. Use a proper persistent store or pass history from the client.</p>
+            </div>
+          </div>
+        </section>
+
+        <section class="rounded-2xl border border-violet-500/20 bg-violet-500/[0.06] p-5 sm:p-6">
+          <h2 class="text-lg font-semibold text-violet-100">Quick summary</h2>
+          <ul class="mt-3 list-disc space-y-1.5 pl-5 text-sm text-slate-300/95 marker:text-violet-400/80">
+            <li>LLMs are stateless — memory works by prepending conversation history to every prompt</li>
+            <li><code class="rounded bg-white/10 px-1">BufferMemory</code> is simplest; <code class="rounded bg-white/10 px-1">TokenBufferMemory</code> caps cost; <code class="rounded bg-white/10 px-1">SummaryMemory</code> handles long conversations</li>
+            <li>For LCEL, use <code class="rounded bg-white/10 px-1">RunnableWithMessageHistory</code> with a persistent backend in production</li>
+            <li>Skip memory for single-shot pipelines, large-context models, exact-recall needs, and stateless APIs</li>
+          </ul>
+        </section>
+
+      </article>
+    </div>
+
+    <div class="flex items-center justify-between">
+      <a href="{% url 'tutorial_langchain_chains' %}" class="inline-flex items-center gap-2 rounded-xl border border-white/15 bg-white/[0.04] px-5 py-2.5 text-sm font-semibold text-slate-200 transition hover:border-white/25 hover:bg-white/[0.07] hover:text-white">
+        <span aria-hidden>←</span> Chains &amp; LCEL
+      </a>
+      <a href="{% url 'tutorial_langchain_agents' %}" class="inline-flex items-center gap-2 rounded-xl border border-violet-400/35 bg-violet-500/10 px-5 py-2.5 text-sm font-semibold text-violet-200 transition hover:border-violet-300/50 hover:bg-violet-500/20 hover:text-white">
+        Next: Tools &amp; Agents <span aria-hidden>→</span>
+      </a>
+    </div>
+
+  </div>
+{% endblock %}

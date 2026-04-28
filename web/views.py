@@ -455,7 +455,7 @@ _TUTORIALS = [
         "read_time": 18,
         "icon": "🔗",
         "icon_gradient": "from-violet-500/40 via-purple-400/20 to-fuchsia-400/25",
-        "url": "#",
+        "url": "/tutorials/langchain/introduction/",
     },
     {
         "title": "RAG Pipeline Tutorial",
@@ -475,7 +475,7 @@ _TUTORIALS = [
         "read_time": 10,
         "icon": "✍️",
         "icon_gradient": "from-sky-500/40 via-blue-400/20 to-indigo-400/25",
-        "url": "#",
+        "url": "/tutorials/prompt-engineering/introduction/",
     },
     {
         "title": "Run LLMs Locally",
@@ -485,7 +485,7 @@ _TUTORIALS = [
         "read_time": 8,
         "icon": "💻",
         "icon_gradient": "from-lime-500/40 via-green-400/20 to-emerald-400/25",
-        "url": "#",
+        "url": "/tutorials/run-llms-locally/introduction/",
     },
     {
         "title": "Build with CrewAI",
@@ -602,6 +602,174 @@ def tutorial_ai_agents_next(request):
         "web/tutorials/ai_agents/whats_next.html",
         {"layout": _layout(request.path), "active_nav": "tutorials"},
     )
+
+
+_LANGCHAIN_SERIES = [
+    {"number": 2, "title": "Core Concepts", "summary": "LLM vs Chat Models, Chains vs Agents, LCEL & Runnable interface, LangGraph intro.", "url": "tutorial_langchain_concepts"},
+    {"number": 3, "title": "Prompt Templates", "summary": "PromptTemplate, ChatPromptTemplate, few-shot prompts, structured outputs, guardrails.", "url": "tutorial_langchain_prompts"},
+    {"number": 4, "title": "Chains & LCEL", "summary": "LLMChain, SequentialChain, and the modern LCEL pipe syntax in depth.", "url": "tutorial_langchain_chains"},
+    {"number": 5, "title": "Memory", "summary": "Conversation memory, summary memory, token limits, and when NOT to use memory.", "url": "tutorial_langchain_memory"},
+    {"number": 6, "title": "Tools & Agents", "summary": "Tool vs Agent distinction, ReAct flow, web search and calculator tool examples.", "url": "tutorial_langchain_agents"},
+    {"number": 7, "title": "RAG Pipeline", "summary": "Chunking, embeddings, FAISS, similarity search, retrieval strategies, common mistakes.", "url": "tutorial_langchain_rag"},
+    {"number": 8, "title": "Build a RAG Chatbot", "summary": "Hands-on: full document Q&A chatbot — load, chunk, embed, store, retrieve, answer.", "url": "tutorial_langchain_build"},
+]
+
+
+def tutorial_langchain_intro(request):
+    return render(
+        request,
+        "web/tutorials/langchain/introduction.html",
+        {
+            "layout": _layout(request.path),
+            "active_nav": "tutorials",
+            "series_pages": _LANGCHAIN_SERIES,
+        },
+    )
+
+
+def tutorial_langchain_concepts(request):
+    return render(request, "web/tutorials/langchain/core_concepts.html", {"layout": _layout(request.path), "active_nav": "tutorials"})
+
+
+def tutorial_langchain_prompts(request):
+    return render(request, "web/tutorials/langchain/prompt_templates.html", {"layout": _layout(request.path), "active_nav": "tutorials"})
+
+
+def tutorial_langchain_chains(request):
+    return render(request, "web/tutorials/langchain/chains_lcel.html", {"layout": _layout(request.path), "active_nav": "tutorials"})
+
+
+def tutorial_langchain_memory(request):
+    return render(request, "web/tutorials/langchain/memory.html", {"layout": _layout(request.path), "active_nav": "tutorials"})
+
+
+def tutorial_langchain_agents(request):
+    return render(request, "web/tutorials/langchain/tools_agents.html", {"layout": _layout(request.path), "active_nav": "tutorials"})
+
+
+def tutorial_langchain_rag(request):
+    return render(request, "web/tutorials/langchain/rag_pipeline.html", {"layout": _layout(request.path), "active_nav": "tutorials"})
+
+
+def tutorial_langchain_build(request):
+    return render(request, "web/tutorials/langchain/build_rag_chatbot.html", {"layout": _layout(request.path), "active_nav": "tutorials"})
+
+
+_PROMPT_ENG_SERIES = [
+    {"number": 2, "title": "Prompt Anatomy", "summary": "System/user/assistant roles, tokens, temperature, top-p, and context window limits.", "url": "tutorial_pe_anatomy"},
+    {"number": 3, "title": "Zero-shot & Few-shot", "summary": "Zero-shot prompting, few-shot examples, how many to include, and formatting them well.", "url": "tutorial_pe_zeroshot"},
+    {"number": 4, "title": "Chain-of-Thought", "summary": "When CoT helps vs hurts, hidden vs explicit reasoning, and programmatic alternatives.", "url": "tutorial_pe_cot"},
+    {"number": 5, "title": "Role & Persona Prompting", "summary": "Personas, expert framing, tone control, and audience targeting.", "url": "tutorial_pe_role"},
+    {"number": 6, "title": "Structured Output Prompting", "summary": "JSON/markdown/tables, schema-in-prompt, and combining with Pydantic validation.", "url": "tutorial_pe_structured"},
+    {"number": 7, "title": "Prompt Patterns Library", "summary": "Reusable patterns: Instruction+Context+Format, ReAct, Critic-Refine, Planner→Executor.", "url": "tutorial_pe_patterns"},
+    {"number": 8, "title": "Tool Use & Function Calling", "summary": "Function calling concepts, JSON schema → tool calls, tools vs pure prompting.", "url": "tutorial_pe_tools"},
+    {"number": 9, "title": "Prompt Security & Guardrails", "summary": "Injection attacks, jailbreaks, data leakage, input sanitization, output validation.", "url": "tutorial_pe_security"},
+    {"number": 10, "title": "Prompt Testing & Engineering", "summary": "Test cases, golden datasets, regression testing, accuracy/latency/cost metrics.", "url": "tutorial_pe_testing"},
+]
+
+
+def tutorial_pe_intro(request):
+    return render(
+        request,
+        "web/tutorials/prompt_engineering/introduction.html",
+        {
+            "layout": _layout(request.path),
+            "active_nav": "tutorials",
+            "series_pages": _PROMPT_ENG_SERIES,
+        },
+    )
+
+
+def tutorial_pe_anatomy(request):
+    return render(request, "web/tutorials/prompt_engineering/prompt_anatomy.html", {"layout": _layout(request.path), "active_nav": "tutorials"})
+
+
+def tutorial_pe_zeroshot(request):
+    return render(request, "web/tutorials/prompt_engineering/zero_shot_few_shot.html", {"layout": _layout(request.path), "active_nav": "tutorials"})
+
+
+def tutorial_pe_cot(request):
+    return render(request, "web/tutorials/prompt_engineering/chain_of_thought.html", {"layout": _layout(request.path), "active_nav": "tutorials"})
+
+
+def tutorial_pe_role(request):
+    return render(request, "web/tutorials/prompt_engineering/role_persona.html", {"layout": _layout(request.path), "active_nav": "tutorials"})
+
+
+def tutorial_pe_structured(request):
+    return render(request, "web/tutorials/prompt_engineering/structured_output.html", {"layout": _layout(request.path), "active_nav": "tutorials"})
+
+
+def tutorial_pe_patterns(request):
+    return render(request, "web/tutorials/prompt_engineering/prompt_patterns.html", {"layout": _layout(request.path), "active_nav": "tutorials"})
+
+
+def tutorial_pe_tools(request):
+    return render(request, "web/tutorials/prompt_engineering/tool_use.html", {"layout": _layout(request.path), "active_nav": "tutorials"})
+
+
+def tutorial_pe_security(request):
+    return render(request, "web/tutorials/prompt_engineering/security_guardrails.html", {"layout": _layout(request.path), "active_nav": "tutorials"})
+
+
+def tutorial_pe_testing(request):
+    return render(request, "web/tutorials/prompt_engineering/testing_engineering.html", {"layout": _layout(request.path), "active_nav": "tutorials"})
+
+
+_RUN_LLM_SERIES = [
+    {"number": 2, "title": "Ollama", "summary": "Install, pull models, ollama run, REST API, and the model library.", "url": "tutorial_rll_ollama"},
+    {"number": 3, "title": "Open-source Model Landscape", "summary": "Llama 3, Mistral, Gemma, Phi-3, Qwen — size vs quality tradeoffs and use-case guide.", "url": "tutorial_rll_models"},
+    {"number": 4, "title": "Model Selection Strategy", "summary": "Chat vs embedding vs coding models, small vs large tradeoffs, when local is NOT enough.", "url": "tutorial_rll_selection"},
+    {"number": 5, "title": "LM Studio", "summary": "GUI setup, model download, local OpenAI-compatible server — ideal for non-technical users.", "url": "tutorial_rll_lmstudio"},
+    {"number": 6, "title": "Quantization & Performance", "summary": "GGUF vs GPTQ, Q4 vs Q8, GPU offloading, and CPU-only performance tips.", "url": "tutorial_rll_quantization"},
+    {"number": 7, "title": "Limitations of Local Models", "summary": "Hallucination rates, weak reasoning in small models, context limits, maintenance overhead.", "url": "tutorial_rll_limitations"},
+    {"number": 8, "title": "Local Models with LangChain", "summary": "ChatOllama, OpenAI-compatible endpoint, drop-in replacement for GPT in your chains.", "url": "tutorial_rll_langchain"},
+    {"number": 9, "title": "Local RAG Pipeline", "summary": "End-to-end RAG with local embeddings, hybrid search, reranking, and Docker deployment.", "url": "tutorial_rll_rag"},
+]
+
+
+def tutorial_rll_intro(request):
+    return render(
+        request,
+        "web/tutorials/run_llms_locally/introduction.html",
+        {
+            "layout": _layout(request.path),
+            "active_nav": "tutorials",
+            "series_pages": _RUN_LLM_SERIES,
+        },
+    )
+
+
+def tutorial_rll_ollama(request):
+    return render(request, "web/tutorials/run_llms_locally/ollama.html", {"layout": _layout(request.path), "active_nav": "tutorials"})
+
+
+def tutorial_rll_models(request):
+    return render(request, "web/tutorials/run_llms_locally/model_landscape.html", {"layout": _layout(request.path), "active_nav": "tutorials"})
+
+
+def tutorial_rll_selection(request):
+    return render(request, "web/tutorials/run_llms_locally/model_selection.html", {"layout": _layout(request.path), "active_nav": "tutorials"})
+
+
+def tutorial_rll_lmstudio(request):
+    return render(request, "web/tutorials/run_llms_locally/lm_studio.html", {"layout": _layout(request.path), "active_nav": "tutorials"})
+
+
+def tutorial_rll_quantization(request):
+    return render(request, "web/tutorials/run_llms_locally/quantization.html", {"layout": _layout(request.path), "active_nav": "tutorials"})
+
+
+def tutorial_rll_limitations(request):
+    return render(request, "web/tutorials/run_llms_locally/limitations.html", {"layout": _layout(request.path), "active_nav": "tutorials"})
+
+
+def tutorial_rll_langchain(request):
+    return render(request, "web/tutorials/run_llms_locally/langchain_local.html", {"layout": _layout(request.path), "active_nav": "tutorials"})
+
+
+def tutorial_rll_rag(request):
+    return render(request, "web/tutorials/run_llms_locally/local_rag.html", {"layout": _layout(request.path), "active_nav": "tutorials"})
 
 
 def tutorials(request):

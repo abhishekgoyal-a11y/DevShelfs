@@ -1,0 +1,284 @@
+{% extends "web/base.html" %}
+{% block title %}RAG Pipeline — LangChain Tutorial{% endblock %}
+{% block content %}
+  <div class="space-y-10">
+
+    <div class="flex flex-wrap items-center gap-2 text-sm text-slate-400/90">
+      <a href="{% url 'tutorials' %}" class="font-medium text-violet-300/90 transition hover:text-violet-200">Tutorials</a>
+      <span aria-hidden class="text-slate-600">/</span>
+      <a href="{% url 'tutorial_langchain_intro' %}" class="font-medium text-violet-300/90 transition hover:text-violet-200">LangChain</a>
+      <span aria-hidden class="text-slate-600">/</span>
+      <span class="text-slate-200/90">RAG Pipeline</span>
+    </div>
+
+    <section class="relative overflow-hidden rounded-3xl border border-violet-400/20 bg-white/[0.06] p-6 shadow-[0_0_0_1px_rgba(255,255,255,0.04)] backdrop-blur-2xl sm:p-8">
+      <div class="pointer-events-none absolute -right-24 top-0 h-72 w-72 rounded-full bg-violet-500/15 blur-3xl"></div>
+      <div class="pointer-events-none absolute -left-20 bottom-0 h-56 w-56 rounded-full bg-fuchsia-500/10 blur-3xl"></div>
+      <div class="relative">
+        <div class="flex flex-wrap items-center gap-3">
+          <span class="rounded-full border border-violet-500/25 bg-violet-500/10 px-2.5 py-1 text-xs font-medium text-violet-300/90">LangChain</span>
+          <span class="rounded-full border border-sky-500/25 bg-sky-500/10 px-2.5 py-1 text-xs font-medium text-sky-300/90">Intermediate</span>
+          <span class="text-xs text-slate-400/80">· 15 min read</span>
+          <span class="ml-auto text-xs font-medium text-slate-400/80">Page 7 of 8</span>
+        </div>
+        <h1 class="mt-4 text-3xl font-semibold tracking-tight text-white sm:text-4xl lg:text-[2.5rem] lg:leading-tight">RAG Pipeline</h1>
+        <p class="mt-4 max-w-2xl text-sm leading-relaxed text-slate-200/80 sm:text-base">
+          How Retrieval-Augmented Generation works, chunking strategies, embeddings, vector stores, retrieval patterns, and the most common mistakes.
+        </p>
+        <div class="mt-6">
+          <div class="mb-1.5 flex items-center justify-between text-xs text-slate-400/80"><span>Series progress</span><span>7 / 8</span></div>
+          <div class="h-1.5 w-full overflow-hidden rounded-full bg-white/10"><div class="h-full w-[87%] rounded-full bg-violet-400/70"></div></div>
+        </div>
+      </div>
+    </section>
+
+    <div class="glass rounded-3xl border border-white/10 p-5 sm:p-8">
+      <article class="mx-auto space-y-12 text-base leading-relaxed text-slate-300/95">
+
+        <section class="space-y-5" aria-labelledby="what-heading">
+          <h2 id="what-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">What is RAG?</h2>
+          <p>
+            RAG (Retrieval-Augmented Generation) is the technique of fetching relevant documents from your own data and injecting them into the prompt before asking the LLM to answer.
+            Instead of the model hallucinating from training data, it answers from documents you provide at query time.
+          </p>
+          <div class="rounded-2xl border border-white/10 bg-white/[0.03] p-5">
+            <div class="space-y-2 text-sm">
+              <div class="flex items-center gap-3">
+                <span class="rounded-full bg-violet-500/20 px-3 py-1 text-xs font-medium text-violet-300">User question</span>
+                <span class="text-slate-600">→</span>
+                <span class="rounded-full bg-white/10 px-3 py-1 text-xs font-medium text-slate-300">Embed question</span>
+                <span class="text-slate-600">→</span>
+                <span class="rounded-full bg-white/10 px-3 py-1 text-xs font-medium text-slate-300">Search vector store</span>
+              </div>
+              <div class="flex items-center gap-3 pl-8">
+                <span class="text-slate-600">↓</span>
+              </div>
+              <div class="flex items-center gap-3">
+                <span class="rounded-full bg-white/10 px-3 py-1 text-xs font-medium text-slate-300">Top-k docs</span>
+                <span class="text-slate-600">→</span>
+                <span class="rounded-full bg-white/10 px-3 py-1 text-xs font-medium text-slate-300">Inject into prompt</span>
+                <span class="text-slate-600">→</span>
+                <span class="rounded-full bg-violet-500/20 px-3 py-1 text-xs font-medium text-violet-300">LLM answers</span>
+              </div>
+            </div>
+          </div>
+          <p class="text-sm text-slate-400/90">RAG is the foundation of most enterprise LLM applications — document Q&A, internal knowledge bases, customer support bots, and code search.</p>
+        </section>
+
+        <section class="space-y-5" aria-labelledby="load-heading">
+          <h2 id="load-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">Step 1 — Load documents</h2>
+          <p>LangChain provides loaders for dozens of file formats. They all return a list of <code class="rounded bg-white/10 px-1 text-sm">Document</code> objects with <code class="rounded bg-white/10 px-1 text-sm">page_content</code> and <code class="rounded bg-white/10 px-1 text-sm">metadata</code>.</p>
+          <div class="rounded-2xl border border-white/10 bg-white/[0.03] p-5">
+            <code class="block font-mono text-xs text-slate-300 whitespace-pre">from langchain_community.document_loaders import (
+    PyPDFLoader,
+    TextLoader,
+    WebBaseLoader,
+)
+
+# Load a PDF
+loader = PyPDFLoader("report.pdf")
+docs = loader.load()   # list of Document objects, one per page
+
+# Load a webpage
+loader = WebBaseLoader("https://example.com/docs")
+docs = loader.load()
+
+# Load a plain text file
+loader = TextLoader("notes.txt")
+docs = loader.load()</code>
+          </div>
+          <p class="text-sm text-slate-400/90">Each <code class="rounded bg-white/10 px-1">Document</code> has <code class="rounded bg-white/10 px-1">.page_content</code> (the text) and <code class="rounded bg-white/10 px-1">.metadata</code> (source, page number, etc.).</p>
+        </section>
+
+        <section class="space-y-5" aria-labelledby="chunk-heading">
+          <h2 id="chunk-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">Step 2 — Chunk the text</h2>
+          <p>LLMs have context limits, and embeddings work best on focused passages — not entire documents. You split documents into smaller chunks before embedding.</p>
+          <div class="rounded-2xl border border-white/10 bg-white/[0.03] p-5 space-y-3">
+            <code class="block font-mono text-xs text-slate-300 whitespace-pre">from langchain_text_splitters import RecursiveCharacterTextSplitter
+
+splitter = RecursiveCharacterTextSplitter(
+    chunk_size=500,       # characters per chunk
+    chunk_overlap=50,     # overlap to preserve context across chunk boundaries
+)
+
+chunks = splitter.split_documents(docs)</code>
+          </div>
+
+          <div class="space-y-3">
+            <p class="text-sm font-semibold text-slate-200">Chunking strategies compared</p>
+            <div class="overflow-x-auto rounded-2xl border border-white/10">
+              <table class="w-full text-sm">
+                <thead>
+                  <tr class="border-b border-white/10 bg-white/[0.04]">
+                    <th class="px-4 py-3 text-left font-semibold text-slate-200">Strategy</th>
+                    <th class="px-4 py-3 text-left font-semibold text-slate-200">How it splits</th>
+                    <th class="px-4 py-3 text-left font-semibold text-slate-200">Best for</th>
+                  </tr>
+                </thead>
+                <tbody class="divide-y divide-white/5">
+                  <tr>
+                    <td class="px-4 py-3 font-medium text-violet-300">RecursiveCharacter</td>
+                    <td class="px-4 py-3 text-slate-400/90">Tries paragraphs → sentences → words → characters</td>
+                    <td class="px-4 py-3 text-slate-400/90">General prose — the default choice</td>
+                  </tr>
+                  <tr>
+                    <td class="px-4 py-3 font-medium text-violet-300">Character</td>
+                    <td class="px-4 py-3 text-slate-400/90">Splits on a fixed separator (e.g. "\n\n")</td>
+                    <td class="px-4 py-3 text-slate-400/90">Structured text with clear delimiters</td>
+                  </tr>
+                  <tr>
+                    <td class="px-4 py-3 font-medium text-violet-300">Token</td>
+                    <td class="px-4 py-3 text-slate-400/90">Splits by token count using the model's tokenizer</td>
+                    <td class="px-4 py-3 text-slate-400/90">When exact token budgets matter</td>
+                  </tr>
+                  <tr>
+                    <td class="px-4 py-3 font-medium text-violet-300">Markdown / HTML</td>
+                    <td class="px-4 py-3 text-slate-400/90">Splits on headings, sections, tags</td>
+                    <td class="px-4 py-3 text-slate-400/90">Docs, wikis, structured markup</td>
+                  </tr>
+                  <tr>
+                    <td class="px-4 py-3 font-medium text-violet-300">Semantic</td>
+                    <td class="px-4 py-3 text-slate-400/90">Splits where sentence embeddings shift topic</td>
+                    <td class="px-4 py-3 text-slate-400/90">High-quality retrieval, slower preprocessing</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <p class="text-sm text-slate-400/90"><code class="rounded bg-white/10 px-1">chunk_overlap</code> prevents answers from being split across boundaries — 10–15% of <code class="rounded bg-white/10 px-1">chunk_size</code> is a good starting point.</p>
+        </section>
+
+        <section class="space-y-5" aria-labelledby="embed-heading">
+          <h2 id="embed-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">Step 3 — Embed and store</h2>
+          <p>An embedding model converts each text chunk into a numeric vector. Similar chunks produce similar vectors — this is what enables semantic search.</p>
+          <div class="rounded-2xl border border-white/10 bg-white/[0.03] p-5">
+            <code class="block font-mono text-xs text-slate-300 whitespace-pre">from langchain_openai import OpenAIEmbeddings
+from langchain_community.vectorstores import FAISS
+
+embeddings = OpenAIEmbeddings(model="text-embedding-3-small")
+
+# embed all chunks and store in FAISS (in-memory, no server needed)
+vectorstore = FAISS.from_documents(chunks, embeddings)
+
+# save to disk so you don't re-embed every time
+vectorstore.save_local("faiss_index")
+
+# load later
+vectorstore = FAISS.load_local("faiss_index", embeddings,
+                                allow_dangerous_deserialization=True)</code>
+          </div>
+          <div class="rounded-xl border border-white/10 bg-white/[0.02] px-4 py-3 text-sm mt-2">
+            <strong class="text-slate-200">FAISS vs Chroma vs Pinecone:</strong>
+            <span class="text-slate-400/90"> FAISS is great for local development (no server). Chroma is easy to set up with persistence. Pinecone / Weaviate / Qdrant are cloud-hosted for production scale.</span>
+          </div>
+        </section>
+
+        <section class="space-y-5" aria-labelledby="retrieve-heading">
+          <h2 id="retrieve-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">Step 4 — Retrieve</h2>
+          <p>A retriever takes a query string and returns the most relevant chunks. The default is similarity search (cosine distance between embeddings).</p>
+          <div class="rounded-2xl border border-white/10 bg-white/[0.03] p-5">
+            <code class="block font-mono text-xs text-slate-300 whitespace-pre">retriever = vectorstore.as_retriever(
+    search_type="similarity",  # or "mmr"
+    search_kwargs={"k": 4},    # return top-4 chunks
+)
+
+docs = retriever.invoke("What is the refund policy?")</code>
+          </div>
+          <div class="space-y-3 mt-2">
+            <div class="rounded-2xl border border-white/10 bg-white/[0.03] p-4">
+              <h3 class="text-sm font-semibold text-slate-200">MMR — Maximum Marginal Relevance</h3>
+              <p class="text-xs text-slate-400/90 mt-1">Instead of returning the top-k most similar chunks (which may all say the same thing), MMR balances relevance with diversity. Use <code class="rounded bg-white/10 px-1">search_type="mmr"</code> when your chunks have redundant content.</p>
+            </div>
+            <div class="rounded-2xl border border-white/10 bg-white/[0.03] p-4">
+              <h3 class="text-sm font-semibold text-slate-200">Multi-query retrieval</h3>
+              <p class="text-xs text-slate-400/90 mt-1">Generate multiple phrasings of the user's question and retrieve for each. Useful when the user's phrasing doesn't match how the document was written.</p>
+              <code class="mt-2 block font-mono text-xs text-slate-300">from langchain.retrievers import MultiQueryRetriever
+retriever = MultiQueryRetriever.from_llm(retriever=base_retriever, llm=llm)</code>
+            </div>
+          </div>
+        </section>
+
+        <section class="space-y-5" aria-labelledby="chain-heading">
+          <h2 id="chain-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">Step 5 — Answer with a RAG chain</h2>
+          <p>Combine the retriever and LLM into an LCEL chain that fetches context and answers in one call.</p>
+          <div class="rounded-2xl border border-white/10 bg-white/[0.03] p-5">
+            <code class="block font-mono text-xs text-slate-300 whitespace-pre">from langchain_core.prompts import ChatPromptTemplate
+from langchain_core.runnables import RunnablePassthrough
+from langchain_core.output_parsers import StrOutputParser
+
+prompt = ChatPromptTemplate.from_template("""
+You are an assistant. Answer the question using only the context below.
+If the answer is not in the context, say "I don't know."
+
+Context:
+{context}
+
+Question: {question}
+""")
+
+def format_docs(docs):
+    return "\n\n".join(doc.page_content for doc in docs)
+
+rag_chain = (
+    {"context": retriever | format_docs, "question": RunnablePassthrough()}
+    | prompt
+    | llm
+    | StrOutputParser()
+)
+
+answer = rag_chain.invoke("What is the refund policy?")</code>
+          </div>
+        </section>
+
+        <section class="space-y-5" aria-labelledby="mistakes-heading">
+          <h2 id="mistakes-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">Common mistakes</h2>
+          <div class="space-y-3">
+            <div class="rounded-2xl border border-rose-500/20 bg-rose-500/[0.04] p-5">
+              <h3 class="text-sm font-semibold text-rose-200">Chunks that are too large</h3>
+              <p class="mt-1.5 text-xs text-slate-400/90">A 2,000-token chunk dilutes the signal. The embedding captures the average meaning of the whole chunk, so precise facts get lost. Start with 300–600 characters and tune from there.</p>
+            </div>
+            <div class="rounded-2xl border border-rose-500/20 bg-rose-500/[0.04] p-5">
+              <h3 class="text-sm font-semibold text-rose-200">Chunks that are too small</h3>
+              <p class="mt-1.5 text-xs text-slate-400/90">50-character chunks lose surrounding context. The retrieved chunk may contain the answer but not enough context for the LLM to interpret it correctly. Overlap helps but doesn't fix fundamentally tiny chunks.</p>
+            </div>
+            <div class="rounded-2xl border border-rose-500/20 bg-rose-500/[0.04] p-5">
+              <h3 class="text-sm font-semibold text-rose-200">Re-embedding on every startup</h3>
+              <p class="mt-1.5 text-xs text-slate-400/90">Save your FAISS index with <code class="rounded bg-white/10 px-1">.save_local()</code> and reload it. Re-embedding a large document set on every restart is slow and wastes API credits.</p>
+            </div>
+            <div class="rounded-2xl border border-rose-500/20 bg-rose-500/[0.04] p-5">
+              <h3 class="text-sm font-semibold text-rose-200">Using k=1 (only one retrieved chunk)</h3>
+              <p class="mt-1.5 text-xs text-slate-400/90">The answer may span multiple chunks. Start with k=4 or k=5, then reduce if the context window is too full. More chunks = higher chance of finding the answer, at the cost of a larger prompt.</p>
+            </div>
+            <div class="rounded-2xl border border-rose-500/20 bg-rose-500/[0.04] p-5">
+              <h3 class="text-sm font-semibold text-rose-200">Not telling the model to say "I don't know"</h3>
+              <p class="mt-1.5 text-xs text-slate-400/90">Without explicit instruction, the model fills gaps with training data. Add <em>"If the answer is not in the context, say I don't know"</em> to your system prompt.</p>
+            </div>
+          </div>
+        </section>
+
+        <section class="rounded-2xl border border-violet-500/20 bg-violet-500/[0.06] p-5 sm:p-6">
+          <h2 class="text-lg font-semibold text-violet-100">Quick summary</h2>
+          <ul class="mt-3 list-disc space-y-1.5 pl-5 text-sm text-slate-300/95 marker:text-violet-400/80">
+            <li>RAG: embed your docs, find relevant chunks at query time, inject them into the prompt</li>
+            <li>Use <code class="rounded bg-white/10 px-1">RecursiveCharacterTextSplitter</code> with chunk_size 300–600 and 10–15% overlap as a starting point</li>
+            <li>FAISS is great for local dev; use Pinecone / Chroma for persistent production stores</li>
+            <li>MMR retrieval adds diversity; multi-query retrieval handles phrasing mismatches</li>
+            <li>Always tell the model to say "I don't know" when the answer isn't in the context</li>
+            <li>Save your vector index to disk — never re-embed the same documents twice</li>
+          </ul>
+        </section>
+
+      </article>
+    </div>
+
+    <div class="flex items-center justify-between">
+      <a href="{% url 'tutorial_langchain_agents' %}" class="inline-flex items-center gap-2 rounded-xl border border-white/15 bg-white/[0.04] px-5 py-2.5 text-sm font-semibold text-slate-200 transition hover:border-white/25 hover:bg-white/[0.07] hover:text-white">
+        <span aria-hidden>←</span> Tools &amp; Agents
+      </a>
+      <a href="{% url 'tutorial_langchain_build' %}" class="inline-flex items-center gap-2 rounded-xl border border-violet-400/35 bg-violet-500/10 px-5 py-2.5 text-sm font-semibold text-violet-200 transition hover:border-violet-300/50 hover:bg-violet-500/20 hover:text-white">
+        Next: Build a RAG Chatbot <span aria-hidden>→</span>
+      </a>
+    </div>
+
+  </div>
+{% endblock %}

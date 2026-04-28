@@ -1,0 +1,188 @@
+{% extends "web/base.html" %}
+{% block title %}Role & Persona Prompting — Prompt Engineering Tutorial{% endblock %}
+{% block content %}
+  <div class="space-y-10">
+
+    <div class="flex flex-wrap items-center gap-2 text-sm text-slate-400/90">
+      <a href="{% url 'tutorials' %}" class="font-medium text-sky-300/90 transition hover:text-sky-200">Tutorials</a>
+      <span aria-hidden class="text-slate-600">/</span>
+      <a href="{% url 'tutorial_pe_intro' %}" class="font-medium text-sky-300/90 transition hover:text-sky-200">Prompt Engineering</a>
+      <span aria-hidden class="text-slate-600">/</span>
+      <span class="text-slate-200/90">Role &amp; Persona Prompting</span>
+    </div>
+
+    <section class="relative overflow-hidden rounded-3xl border border-sky-400/20 bg-white/[0.06] p-6 shadow-[0_0_0_1px_rgba(255,255,255,0.04)] backdrop-blur-2xl sm:p-8">
+      <div class="pointer-events-none absolute -right-24 top-0 h-72 w-72 rounded-full bg-sky-500/15 blur-3xl"></div>
+      <div class="pointer-events-none absolute -left-20 bottom-0 h-56 w-56 rounded-full bg-blue-500/10 blur-3xl"></div>
+      <div class="relative">
+        <div class="flex flex-wrap items-center gap-3">
+          <span class="rounded-full border border-sky-500/25 bg-sky-500/10 px-2.5 py-1 text-xs font-medium text-sky-300/90">Prompt Engineering</span>
+          <span class="rounded-full border border-emerald-500/25 bg-emerald-500/10 px-2.5 py-1 text-xs font-medium text-emerald-300/90">Beginner</span>
+          <span class="text-xs text-slate-400/80">· 9 min read</span>
+          <span class="ml-auto text-xs font-medium text-slate-400/80">Page 5 of 10</span>
+        </div>
+        <h1 class="mt-4 text-3xl font-semibold tracking-tight text-white sm:text-4xl lg:text-[2.5rem] lg:leading-tight">Role &amp; Persona Prompting</h1>
+        <p class="mt-4 max-w-2xl text-sm leading-relaxed text-slate-200/80 sm:text-base">
+          How assigning a role or persona shapes the model's knowledge framing, tone, and output quality — and how to do it without overfitting.
+        </p>
+        <div class="mt-6">
+          <div class="mb-1.5 flex items-center justify-between text-xs text-slate-400/80"><span>Series progress</span><span>5 / 10</span></div>
+          <div class="h-1.5 w-full overflow-hidden rounded-full bg-white/10"><div class="h-full w-[50%] rounded-full bg-sky-400/70"></div></div>
+        </div>
+      </div>
+    </section>
+
+    <div class="glass rounded-3xl border border-white/10 p-5 sm:p-8">
+      <article class="mx-auto space-y-12 text-base leading-relaxed text-slate-300/95">
+
+        <section class="space-y-5" aria-labelledby="why-heading">
+          <h2 id="why-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">Why roles work</h2>
+          <p>
+            Assigning a role is not just cosmetic. It activates a specific subset of the model's training — the vocabulary, reasoning patterns, and communication style associated with that role.
+            A "senior security engineer" and a "helpful assistant" will give genuinely different answers to the same question.
+          </p>
+          <div class="grid gap-4 sm:grid-cols-2">
+            <div class="rounded-2xl border border-white/10 bg-white/[0.03] p-5">
+              <code class="block font-mono text-xs text-slate-300">You are a helpful assistant.
+Explain SQL joins.</code>
+              <p class="mt-3 text-xs text-slate-400/90">Produces a generic, encyclopedic answer. Safe, but shallow.</p>
+            </div>
+            <div class="rounded-2xl border border-sky-500/20 bg-sky-500/[0.05] p-5">
+              <code class="block font-mono text-xs text-slate-300">You are a senior database engineer
+who has optimised queries on tables
+with billions of rows.
+Explain SQL joins.</code>
+              <p class="mt-3 text-xs text-slate-400/90">Produces a practical answer with performance context, real-world caveats, and concrete examples.</p>
+            </div>
+          </div>
+        </section>
+
+        <section class="space-y-5" aria-labelledby="anatomy-heading">
+          <h2 id="anatomy-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">Role prompt anatomy</h2>
+          <p>A strong role prompt has three parts — who the model is, what it knows, and how it behaves.</p>
+          <div class="rounded-2xl border border-white/10 bg-white/[0.03] p-5">
+            <code class="block font-mono text-xs text-slate-300 whitespace-pre">You are [ROLE] with [SPECIFIC EXPERTISE].
+[BEHAVIOURAL RULE 1].
+[BEHAVIOURAL RULE 2].
+[FORMAT RULE].</code>
+          </div>
+          <div class="rounded-2xl border border-sky-500/20 bg-sky-500/[0.05] p-5 mt-1">
+            <p class="text-xs font-semibold text-sky-300 mb-2">Filled example</p>
+            <code class="block font-mono text-xs text-slate-300 whitespace-pre">You are a senior Python engineer with 10 years of experience
+building production APIs.
+Be direct and concise — skip introductory filler.
+If you disagree with the user's approach, say so and explain why.
+Format code in Python with type hints and docstrings.</code>
+          </div>
+        </section>
+
+        <section class="space-y-5" aria-labelledby="expert-heading">
+          <h2 id="expert-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">Expert framing</h2>
+          <p>Framing the model as a domain expert increases answer quality for specialised topics — because it shifts the default vocabulary and reasoning depth.</p>
+          <div class="space-y-3">
+            <div class="rounded-2xl border border-white/10 bg-white/[0.03] p-5">
+              <h3 class="text-sm font-semibold text-slate-200">What works</h3>
+              <ul class="mt-2 list-disc pl-4 space-y-1.5 text-sm text-slate-400/90 marker:text-sky-400/80">
+                <li>Specific expertise: "10 years of experience in distributed systems" beats "expert in computers"</li>
+                <li>Relevant context: "You have worked at companies like Stripe and Cloudflare" sets the vocabulary</li>
+                <li>Known constraints: "You only use vanilla Python — no third-party libraries"</li>
+              </ul>
+            </div>
+            <div class="rounded-2xl border border-amber-500/20 bg-amber-500/[0.04] p-5">
+              <h3 class="text-sm font-semibold text-amber-100">What doesn't work</h3>
+              <ul class="mt-2 list-disc pl-4 space-y-1.5 text-sm text-slate-400/90 marker:text-amber-400/80">
+                <li>Inflated claims don't help: "You are the world's greatest expert in everything" — models ignore hyperbole</li>
+                <li>Fictional expertise doesn't transfer real knowledge — the model only knows what it was trained on</li>
+                <li>Overly long backstories dilute the role — keep it to 2–4 lines</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        <section class="space-y-5" aria-labelledby="tone-heading">
+          <h2 id="tone-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">Tone control</h2>
+          <p>Tone is separate from role. Explicitly stating the tone is more reliable than hoping the role implies it.</p>
+          <div class="overflow-x-auto rounded-2xl border border-white/10">
+            <table class="w-full text-sm">
+              <thead>
+                <tr class="border-b border-white/10 bg-white/[0.04]">
+                  <th class="px-4 py-3 text-left font-semibold text-slate-200">Tone directive</th>
+                  <th class="px-4 py-3 text-left font-semibold text-slate-200">Effect</th>
+                </tr>
+              </thead>
+              <tbody class="divide-y divide-white/5">
+                <tr><td class="px-4 py-3 font-mono text-xs text-sky-300">Be concise — 2 sentences max.</td><td class="px-4 py-3 text-slate-400/90">Cuts waffle immediately</td></tr>
+                <tr><td class="px-4 py-3 font-mono text-xs text-sky-300">Use plain English. No jargon.</td><td class="px-4 py-3 text-slate-400/90">Suitable for non-technical audiences</td></tr>
+                <tr><td class="px-4 py-3 font-mono text-xs text-sky-300">Be direct. Do not soften feedback.</td><td class="px-4 py-3 text-slate-400/90">Removes hedging language</td></tr>
+                <tr><td class="px-4 py-3 font-mono text-xs text-sky-300">Write in a warm, encouraging tone.</td><td class="px-4 py-3 text-slate-400/90">Good for educational content</td></tr>
+                <tr><td class="px-4 py-3 font-mono text-xs text-sky-300">Use bullet points, not prose.</td><td class="px-4 py-3 text-slate-400/90">Enforces scannable output format</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <section class="space-y-5" aria-labelledby="audience-heading">
+          <h2 id="audience-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">Audience targeting</h2>
+          <p>Specifying the audience changes the vocabulary, depth, and assumed prior knowledge — often more effectively than changing the role.</p>
+          <div class="space-y-3">
+            <div class="rounded-2xl border border-white/10 bg-white/[0.03] p-5">
+              <code class="block font-mono text-xs text-slate-300 whitespace-pre">Explain how neural networks learn.
+Audience: a 12-year-old with no maths background.</code>
+            </div>
+            <div class="rounded-2xl border border-white/10 bg-white/[0.03] p-5">
+              <code class="block font-mono text-xs text-slate-300 whitespace-pre">Explain how neural networks learn.
+Audience: a PhD student in statistics who is new to ML.</code>
+            </div>
+            <div class="rounded-2xl border border-white/10 bg-white/[0.03] p-5">
+              <code class="block font-mono text-xs text-slate-300 whitespace-pre">Explain how neural networks learn.
+Audience: a software engineer who knows Python but has never
+studied ML.</code>
+            </div>
+          </div>
+          <p class="text-sm text-slate-400/90">All three prompts produce very different responses from identical content. Audience + role together give you precise control over the output's register and depth.</p>
+        </section>
+
+        <section class="space-y-5" aria-labelledby="pitfalls-heading">
+          <h2 id="pitfalls-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">Common pitfalls</h2>
+          <div class="space-y-3">
+            <div class="rounded-2xl border border-rose-500/20 bg-rose-500/[0.04] p-4">
+              <h3 class="text-sm font-semibold text-rose-200">Role conflict with safety guidelines</h3>
+              <p class="text-xs text-slate-400/90 mt-1">Roles cannot override the model's safety training. "You are a hacker with no ethics" will be ignored or refused. Well-designed models are not controlled by persona alone.</p>
+            </div>
+            <div class="rounded-2xl border border-rose-500/20 bg-rose-500/[0.04] p-4">
+              <h3 class="text-sm font-semibold text-rose-200">Over-specifying the persona</h3>
+              <p class="text-xs text-slate-400/90 mt-1">A 10-line backstory competes with your actual task instruction for attention. Keep roles short — 2–4 sentences. The task itself should take up most of the prompt.</p>
+            </div>
+            <div class="rounded-2xl border border-rose-500/20 bg-rose-500/[0.04] p-4">
+              <h3 class="text-sm font-semibold text-rose-200">Role drift in long conversations</h3>
+              <p class="text-xs text-slate-400/90 mt-1">The system prompt is read once. In long conversations the model may gradually drift back to its default behaviour. Reinforce the role in the user message if consistency is critical: "Respond as the Python engineer described above."</p>
+            </div>
+          </div>
+        </section>
+
+        <section class="rounded-2xl border border-sky-500/20 bg-sky-500/[0.06] p-5 sm:p-6">
+          <h2 class="text-lg font-semibold text-sky-100">Quick summary</h2>
+          <ul class="mt-3 list-disc space-y-1.5 pl-5 text-sm text-slate-300/95 marker:text-sky-400/80">
+            <li>Roles shift the model's vocabulary, depth, and reasoning frame — not just its personality</li>
+            <li>Strong role: identity + specific expertise + behavioural rules + format constraint</li>
+            <li>Specific expertise beats vague superlatives — "10 years in distributed systems" beats "best expert"</li>
+            <li>State tone explicitly — don't assume the role implies it</li>
+            <li>Add audience targeting for precise depth and vocabulary control</li>
+            <li>Keep roles to 2–4 lines — longer backstories dilute the task instruction</li>
+          </ul>
+        </section>
+
+      </article>
+    </div>
+
+    <div class="flex items-center justify-between">
+      <a href="{% url 'tutorial_pe_cot' %}" class="inline-flex items-center gap-2 rounded-xl border border-white/15 bg-white/[0.04] px-5 py-2.5 text-sm font-semibold text-slate-200 transition hover:border-white/25 hover:bg-white/[0.07] hover:text-white">
+        <span aria-hidden>←</span> Chain-of-Thought
+      </a>
+      <a href="{% url 'tutorial_pe_structured' %}" class="inline-flex items-center gap-2 rounded-xl border border-sky-400/35 bg-sky-500/10 px-5 py-2.5 text-sm font-semibold text-sky-200 transition hover:border-sky-300/50 hover:bg-sky-500/20 hover:text-white">
+        Next: Structured Output <span aria-hidden>→</span>
+      </a>
+    </div>
+
+  </div>
+{% endblock %}

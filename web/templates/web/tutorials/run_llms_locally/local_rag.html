@@ -1,0 +1,622 @@
+{% extends "web/base.html" %}
+{% block title %}Local RAG Pipeline — Run LLMs Locally{% endblock %}
+{% block content %}
+  <div class="space-y-10">
+
+    <div class="flex flex-wrap items-center gap-2 text-sm text-slate-400/90">
+      <a href="{% url 'tutorials' %}" class="font-medium text-lime-300/90 transition hover:text-lime-200">Tutorials</a>
+      <span aria-hidden class="text-slate-600">/</span>
+      <a href="{% url 'tutorial_rll_intro' %}" class="font-medium text-lime-300/90 transition hover:text-lime-200">Run LLMs Locally</a>
+      <span aria-hidden class="text-slate-600">/</span>
+      <span class="text-slate-200/90">Local RAG Pipeline</span>
+    </div>
+
+    <section class="relative overflow-hidden rounded-3xl border border-lime-400/20 bg-white/[0.06] p-6 shadow-[0_0_0_1px_rgba(255,255,255,0.04)] backdrop-blur-2xl sm:p-8">
+      <div class="pointer-events-none absolute -right-24 top-0 h-72 w-72 rounded-full bg-lime-500/15 blur-3xl"></div>
+      <div class="pointer-events-none absolute -left-20 bottom-0 h-56 w-56 rounded-full bg-green-500/10 blur-3xl"></div>
+      <div class="relative">
+        <div class="flex flex-wrap items-center gap-3">
+          <span class="rounded-full border border-lime-500/25 bg-lime-500/10 px-2.5 py-1 text-xs font-medium text-lime-300/90">Run LLMs Locally</span>
+          <span class="rounded-full border border-sky-500/25 bg-sky-500/10 px-2.5 py-1 text-xs font-medium text-sky-300/90">Intermediate</span>
+          <span class="text-xs text-slate-400/80">· 18 min read</span>
+          <span class="ml-auto text-xs font-medium text-slate-400/80">Page 9 of 9</span>
+        </div>
+        <h1 class="mt-4 text-3xl font-semibold tracking-tight text-white sm:text-4xl lg:text-[2.5rem] lg:leading-tight">Local RAG Pipeline</h1>
+        <p class="mt-4 max-w-2xl text-sm leading-relaxed text-slate-200/80 sm:text-base">
+          Build a fully local question-answering system over your documents — no cloud dependencies, no API costs, complete privacy. End-to-end walkthrough with working code.
+        </p>
+        <div class="mt-6">
+          <div class="mb-1.5 flex items-center justify-between text-xs text-slate-400/80"><span>Series progress</span><span>9 / 9</span></div>
+          <div class="h-1.5 w-full overflow-hidden rounded-full bg-white/10"><div class="h-full w-full rounded-full bg-lime-400/70"></div></div>
+        </div>
+      </div>
+    </section>
+
+    <div class="glass rounded-3xl border border-white/10 p-5 sm:p-8">
+      <article class="mx-auto space-y-12 text-base leading-relaxed text-slate-300/95">
+
+        <section class="space-y-5" aria-labelledby="what-heading">
+          <h2 id="what-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">What you're building</h2>
+          <p>A command-line chatbot that answers questions about your documents — PDFs, text files, anything. You load documents once, then query them instantly using a local LLM. No internet required, no API keys, complete privacy.</p>
+          <p class="text-sm text-slate-400/90">By the end, you'll have two Python scripts:
+            <code class="rounded bg-white/10 px-1">ingest.py</code> (loads and indexes documents) and
+            <code class="rounded bg-white/10 px-1">rag.py</code> (queries them). You'll run ingest once, rag as many times as you want.</p>
+        </section>
+
+        <section class="space-y-5" aria-labelledby="prereq-heading">
+          <h2 id="prereq-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">Prerequisites</h2>
+          <div class="space-y-3">
+            <div class="rounded-2xl border border-white/10 bg-white/[0.03] p-5">
+              <h3 class="text-sm font-semibold text-slate-200">Python</h3>
+              <p class="mt-1.5 text-xs text-slate-400/90">Python 3.10+. Check your version: <code class="rounded bg-white/10 px-1">python --version</code></p>
+            </div>
+            <div class="rounded-2xl border border-white/10 bg-white/[0.03] p-5">
+              <h3 class="text-sm font-semibold text-slate-200">Ollama running locally</h3>
+              <p class="mt-1.5 text-xs text-slate-400/90">Download and install from <a href="https://ollama.ai" class="text-lime-300 hover:text-lime-200">ollama.ai</a>. Then start it with <code class="rounded bg-white/10 px-1">ollama serve</code> in a separate terminal — it runs on port 11434 by default. Leave it running for the entire tutorial.</p>
+            </div>
+            <div class="rounded-2xl border border-white/10 bg-white/[0.03] p-5">
+              <h3 class="text-sm font-semibold text-slate-200">Hardware</h3>
+              <p class="mt-1.5 text-xs text-slate-400/90"><strong>CPU-only:</strong> 8GB RAM minimum (16GB recommended). <strong>GPU:</strong> 4GB VRAM is enough. This tutorial uses <code class="rounded bg-white/10 px-1">nomic-embed-text</code> (686 MB) + <code class="rounded bg-white/10 px-1">llama3.1:8b</code> (4.7 GB), which fit on most machines.</p>
+            </div>
+          </div>
+        </section>
+
+        <section class="space-y-5" aria-labelledby="setup-heading">
+          <h2 id="setup-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">Project setup</h2>
+          <div class="space-y-3">
+            <div class="rounded-2xl border border-white/10 bg-white/[0.03] p-5">
+              <p class="text-xs font-semibold text-slate-400 mb-3">1. Create a project directory and install dependencies</p>
+              <div class="ds-codeblock not-prose rounded-2xl overflow-hidden border border-white/10">
+                <div class="ds-codeblock-header flex items-center justify-between px-4 py-2.5 bg-white/[0.05] border-b border-white/10">
+                  <span class="text-xs font-medium text-slate-400">bash</span>
+                  <button class="ds-codeblock-copy flex items-center gap-1.5 text-xs text-slate-400 hover:text-white transition-colors">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                    Copy
+                  </button>
+                </div>
+                <pre class="ds-codeblock-pre overflow-x-auto p-4 text-sm leading-relaxed m-0"><code class="ds-codeblock-source language-bash">mkdir local-rag && cd local-rag
+pip install langchain-ollama langchain-community langchain-text-splitters chromadb pypdf</code></pre>
+              </div>
+            </div>
+            <div class="rounded-2xl border border-white/10 bg-white/[0.03] p-5">
+              <p class="text-xs font-semibold text-slate-400 mb-3">2. Create the project structure</p>
+              <div class="ds-codeblock not-prose rounded-2xl overflow-hidden border border-white/10">
+                <div class="ds-codeblock-header flex items-center justify-between px-4 py-2.5 bg-white/[0.05] border-b border-white/10">
+                  <span class="text-xs font-medium text-slate-400">text</span>
+                  <button class="ds-codeblock-copy flex items-center gap-1.5 text-xs text-slate-400 hover:text-white transition-colors">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                    Copy
+                  </button>
+                </div>
+                <pre class="ds-codeblock-pre overflow-x-auto p-4 text-sm leading-relaxed m-0"><code class="ds-codeblock-source language-text">local-rag/
+├── docs/          ← Put your PDFs here
+├── ingest.py      ← Run once to index documents
+├── rag.py         ← Run repeatedly to query
+└── chroma_db/     ← Created automatically by ingest.py</code></pre>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="space-y-5" aria-labelledby="download-heading">
+          <h2 id="download-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">Download the models you'll need</h2>
+          <p>Before running any code, pull the two models that the pipeline uses: an embedding model (for converting text to numbers) and a chat model (for generating answers).</p>
+          <div class="ds-codeblock not-prose rounded-2xl overflow-hidden border border-white/10">
+            <div class="ds-codeblock-header flex items-center justify-between px-4 py-2.5 bg-white/[0.05] border-b border-white/10">
+              <span class="text-xs font-medium text-slate-400">bash</span>
+              <button class="ds-codeblock-copy flex items-center gap-1.5 text-xs text-slate-400 hover:text-white transition-colors">
+                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                Copy
+              </button>
+            </div>
+            <pre class="ds-codeblock-pre overflow-x-auto p-4 text-sm leading-relaxed m-0"><code class="ds-codeblock-source language-bash">ollama pull nomic-embed-text    # 686 MB, 1-2 min
+ollama pull llama3.1:8b         # 4.7 GB, 5-10 min depending on connection</code></pre>
+          </div>
+          <div class="rounded-xl border border-white/10 bg-white/[0.02] px-4 py-3 text-sm">
+            <strong class="text-slate-200">Make sure Ollama is still running</strong>
+            <span class="text-slate-400/90 ml-2">from the <code class="rounded bg-white/10 px-1">ollama serve</code> terminal. If it's not, these commands will fail.</span>
+          </div>
+        </section>
+
+        <section class="space-y-5" aria-labelledby="ingest-heading">
+          <h2 id="ingest-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">Step 1: Create ingest.py (indexes your documents)</h2>
+          <p>This script reads PDFs from the <code class="rounded bg-white/10 px-1">docs/</code> folder, splits them into chunks, embeds them with the local model, and saves the vector store to disk for reuse.</p>
+          <div class="ds-codeblock not-prose rounded-2xl overflow-hidden border border-white/10">
+            <div class="ds-codeblock-header flex items-center justify-between px-4 py-2.5 bg-white/[0.05] border-b border-white/10">
+              <span class="text-xs font-medium text-slate-400">python</span>
+              <button class="ds-codeblock-copy flex items-center gap-1.5 text-xs text-slate-400 hover:text-white transition-colors">
+                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                Copy
+              </button>
+            </div>
+            <pre class="ds-codeblock-pre overflow-x-auto p-4 text-sm leading-relaxed m-0"><code class="ds-codeblock-source language-python">from langchain_community.document_loaders import PyPDFLoader, DirectoryLoader
+from langchain_text_splitters import RecursiveCharacterTextSplitter
+from langchain_ollama import OllamaEmbeddings
+from langchain_community.vectorstores import Chroma
+
+DOCS_DIR = "./docs"
+CHROMA_DIR = "./chroma_db"
+EMBED_MODEL = "nomic-embed-text"
+
+def ingest():
+    # Load all PDFs from docs/ directory
+    loader = DirectoryLoader(DOCS_DIR, glob="**/*.pdf", loader_cls=PyPDFLoader)
+    raw_docs = loader.load()
+    print(f"Loaded {len(raw_docs)} pages from {DOCS_DIR}")
+
+    # Split into overlapping chunks (512 tokens = good default)
+    splitter = RecursiveCharacterTextSplitter(
+        chunk_size=512,
+        chunk_overlap=64,
+        separators=["\n\n", "\n", ".", " ", ""],
+    )
+    chunks = splitter.split_documents(raw_docs)
+    print(f"Split into {len(chunks)} chunks")
+
+    # Embed with local model
+    embeddings = OllamaEmbeddings(model=EMBED_MODEL)
+
+    # Save to disk — reusable across runs
+    vectorstore = Chroma.from_documents(
+        documents=chunks,
+        embedding=embeddings,
+        persist_directory=CHROMA_DIR,
+    )
+    print(f"Stored {len(chunks)} chunks in {CHROMA_DIR}")
+
+if __name__ == "__main__":
+    ingest()</code></pre>
+          </div>
+          <div class="space-y-3 mt-4">
+            <p class="text-xs font-semibold text-slate-400">How to run:</p>
+            <div class="rounded-xl border border-white/10 bg-white/[0.02] px-4 py-3 text-sm">
+              <ol class="list-decimal pl-5 space-y-1.5 text-slate-400/90">
+                <li>Create <code class="rounded bg-white/10 px-1">docs/</code> folder and add one or more PDFs</li>
+                <li>Run: <code class="rounded bg-white/10 px-1">python ingest.py</code></li>
+                <li>Wait for indexing to complete (1–5 min depending on document size)</li>
+                <li>You'll see: <code class="rounded bg-white/10 px-1">Stored 127 chunks in ./chroma_db</code></li>
+              </ol>
+            </div>
+          </div>
+        </section>
+
+        <section class="space-y-5" aria-labelledby="query-heading">
+          <h2 id="query-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">Step 2: Create rag.py (query your documents)</h2>
+          <p>This script loads the vector store and runs a loop that lets you ask questions. It retrieves relevant chunks and sends them to the local LLM, which generates answers.</p>
+          <div class="ds-codeblock not-prose rounded-2xl overflow-hidden border border-white/10">
+            <div class="ds-codeblock-header flex items-center justify-between px-4 py-2.5 bg-white/[0.05] border-b border-white/10">
+              <span class="text-xs font-medium text-slate-400">python</span>
+              <button class="ds-codeblock-copy flex items-center gap-1.5 text-xs text-slate-400 hover:text-white transition-colors">
+                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                Copy
+              </button>
+            </div>
+            <pre class="ds-codeblock-pre overflow-x-auto p-4 text-sm leading-relaxed m-0"><code class="ds-codeblock-source language-python">from langchain_ollama import OllamaEmbeddings, ChatOllama
+from langchain_community.vectorstores import Chroma
+from langchain_core.prompts import ChatPromptTemplate
+from langchain_core.output_parsers import StrOutputParser
+from langchain_core.runnables import RunnablePassthrough
+
+CHROMA_DIR = "./chroma_db"
+EMBED_MODEL = "nomic-embed-text"
+CHAT_MODEL = "llama3.1:8b"
+
+# Load the vector store from disk
+embeddings = OllamaEmbeddings(model=EMBED_MODEL)
+vectorstore = Chroma(persist_directory=CHROMA_DIR, embedding_function=embeddings)
+retriever = vectorstore.as_retriever(search_kwargs={"k": 4})
+
+# System prompt — tells the LLM to use only the provided context
+prompt = ChatPromptTemplate.from_messages([
+    ("system", """You are a helpful assistant. Answer the question using ONLY the
+context provided below. If the answer is not in the context, say so clearly.
+
+Context:
+{context}"""),
+    ("human", "{question}"),
+])
+
+llm = ChatOllama(model=CHAT_MODEL, temperature=0)
+
+def format_docs(docs):
+    return "\n\n---\n\n".join(doc.page_content for doc in docs)
+
+# RAG chain: retrieve → format → prompt → LLM → output
+rag_chain = (
+    {"context": retriever | format_docs, "question": RunnablePassthrough()}
+    | prompt
+    | llm
+    | StrOutputParser()
+)
+
+if __name__ == "__main__":
+    while True:
+        q = input("\nQuestion (or 'quit'): ").strip()
+        if q.lower() == "quit":
+            break
+        answer = rag_chain.invoke(q)
+        print(f"\nAnswer: {answer}")</code></pre>
+          </div>
+          <div class="space-y-3 mt-4">
+            <p class="text-xs font-semibold text-slate-400">How to run:</p>
+            <div class="rounded-xl border border-white/10 bg-white/[0.02] px-4 py-3 text-sm">
+              <ol class="list-decimal pl-5 space-y-1.5 text-slate-400/90">
+                <li>Ensure you've run <code class="rounded bg-white/10 px-1">ingest.py</code> first</li>
+                <li>Run: <code class="rounded bg-white/10 px-1">python rag.py</code></li>
+                <li>Type a question, press Enter, wait for the answer</li>
+                <li>Type <code class="rounded bg-white/10 px-1">quit</code> to exit</li>
+              </ol>
+            </div>
+          </div>
+        </section>
+
+        <section class="space-y-5" aria-labelledby="example-heading">
+          <h2 id="example-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">Expected output and example interaction</h2>
+          <div class="space-y-3">
+            <div class="rounded-2xl border border-white/10 bg-white/[0.03] p-5">
+              <p class="text-xs font-semibold text-slate-400 mb-3">Sample ingest.py output:</p>
+              <div class="ds-codeblock not-prose rounded-2xl overflow-hidden border border-white/10">
+                <div class="ds-codeblock-header flex items-center justify-between px-4 py-2.5 bg-white/[0.05] border-b border-white/10">
+                  <span class="text-xs font-medium text-slate-400">text</span>
+                  <button class="ds-codeblock-copy flex items-center gap-1.5 text-xs text-slate-400 hover:text-white transition-colors">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                    Copy
+                  </button>
+                </div>
+                <pre class="ds-codeblock-pre overflow-x-auto p-4 text-sm leading-relaxed m-0"><code class="ds-codeblock-source language-text">$ python ingest.py
+Loaded 15 pages from ./docs
+Split into 127 chunks
+Stored 127 chunks in ./chroma_db</code></pre>
+              </div>
+            </div>
+            <div class="rounded-2xl border border-white/10 bg-white/[0.03] p-5">
+              <p class="text-xs font-semibold text-slate-400 mb-3">Sample rag.py interaction:</p>
+              <div class="ds-codeblock not-prose rounded-2xl overflow-hidden border border-white/10">
+                <div class="ds-codeblock-header flex items-center justify-between px-4 py-2.5 bg-white/[0.05] border-b border-white/10">
+                  <span class="text-xs font-medium text-slate-400">text</span>
+                  <button class="ds-codeblock-copy flex items-center gap-1.5 text-xs text-slate-400 hover:text-white transition-colors">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                    Copy
+                  </button>
+                </div>
+                <pre class="ds-codeblock-pre overflow-x-auto p-4 text-sm leading-relaxed m-0"><code class="ds-codeblock-source language-text">$ python rag.py
+
+Question (or 'quit'): What is the main topic of the document?
+Answer: The document discusses machine learning fundamentals, including supervised and
+unsupervised learning approaches, with emphasis on neural networks.
+
+Question (or 'quit'): How does gradient descent work?
+Answer: Gradient descent is an optimization algorithm that iteratively updates model
+parameters in the direction of steepest descent to minimize the loss function...</code></pre>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="space-y-5" aria-labelledby="modular-heading">
+          <h2 id="modular-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">Next: Enhance your pipeline (optional)</h2>
+          <p>The basic setup above works. The sections below add optional improvements — use them only if you need better quality.</p>
+        </section>
+
+        <section class="space-y-5" aria-labelledby="chunking-heading">
+          <h2 id="chunking-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">Enhancement 1: Optimize chunking for your documents</h2>
+          <p>The default chunk size of 512 tokens is a safe starting point, but different documents benefit from different sizes. The key insight: there's a tradeoff between precision (small chunks) and context (large chunks).</p>
+          <div class="overflow-x-auto rounded-2xl border border-white/10">
+            <table class="w-full text-sm">
+              <thead><tr class="border-b border-white/10 bg-white/[0.04]"><th class="px-4 py-3 text-left font-semibold text-slate-200">Chunk size</th><th class="px-4 py-3 text-left font-semibold text-slate-200">Best for</th><th class="px-4 py-3 text-left font-semibold text-slate-200">How to adjust</th></tr></thead>
+              <tbody class="divide-y divide-white/5 text-xs">
+                <tr><td class="px-4 py-3 font-mono text-lime-300">128–256 tokens</td><td class="px-4 py-3 text-slate-400/90">Precise Q&A, facts, structured content</td><td class="px-4 py-3 text-slate-400/90">In ingest.py, change <code class="rounded bg-white/10 px-1">chunk_size=256</code></td></tr>
+                <tr><td class="px-4 py-3 font-mono text-lime-300">512 tokens (default)</td><td class="px-4 py-3 text-slate-400/90">General-purpose, mixed documents</td><td class="px-4 py-3 text-slate-400/90">Use as-is. This is the safe choice.</td></tr>
+                <tr><td class="px-4 py-3 font-mono text-lime-300">1024+ tokens</td><td class="px-4 py-3 text-slate-400/90">Long-form content, narratives, books</td><td class="px-4 py-3 text-slate-400/90">Change <code class="rounded bg-white/10 px-1">chunk_size=1024</code></td></tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="rounded-xl border border-amber-500/20 bg-amber-500/[0.05] px-4 py-3 text-sm">
+            <strong class="text-amber-100">Always keep chunk_overlap at 10–15% of chunk_size.</strong>
+            <span class="text-slate-400/90"> For 512-token chunks, use overlap=64. This prevents key sentences from being split and never retrieved together.</span>
+          </div>
+        </section>
+
+        <section class="space-y-5" aria-labelledby="hybrid-heading">
+          <h2 id="hybrid-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">Enhancement 2: Hybrid search (keyword + semantic)</h2>
+          <p>Vector search excels at semantic similarity but misses exact keyword matches. Hybrid search runs both in parallel, then merges results with Reciprocal Rank Fusion (RRF). This usually outperforms either method alone and is especially effective for product names, error codes, and proper nouns.</p>
+          <p class="text-sm text-slate-400/90"><strong>How to enable:</strong> Replace only the retriever setup in rag.py. Everything else stays the same.</p>
+          <div class="space-y-3">
+            <p class="text-xs font-semibold text-slate-400">First, install the BM25 library:</p>
+            <div class="ds-codeblock not-prose rounded-2xl overflow-hidden border border-white/10">
+              <div class="ds-codeblock-header flex items-center justify-between px-4 py-2.5 bg-white/[0.05] border-b border-white/10">
+                <span class="text-xs font-medium text-slate-400">bash</span>
+                <button class="ds-codeblock-copy flex items-center gap-1.5 text-xs text-slate-400 hover:text-white transition-colors">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                  Copy
+                </button>
+              </div>
+              <pre class="ds-codeblock-pre overflow-x-auto p-4 text-sm leading-relaxed m-0"><code class="ds-codeblock-source language-bash">pip install rank-bm25</code></pre>
+            </div>
+          </div>
+          <div class="space-y-3 mt-3">
+            <p class="text-xs font-semibold text-slate-400">Then replace the retriever setup in rag.py with this:</p>
+            <div class="ds-codeblock not-prose rounded-2xl overflow-hidden border border-lime-500/20">
+              <div class="ds-codeblock-header flex items-center justify-between px-4 py-2.5 bg-lime-500/[0.04] border-b border-lime-500/20">
+                <span class="text-xs font-medium text-slate-400">python</span>
+                <button class="ds-codeblock-copy flex items-center gap-1.5 text-xs text-slate-400 hover:text-white transition-colors">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                  Copy
+                </button>
+              </div>
+              <pre class="ds-codeblock-pre overflow-x-auto p-4 text-sm leading-relaxed m-0"><code class="ds-codeblock-source language-python"># Import at the top
+from langchain_community.retrievers import BM25Retriever
+from langchain.retrievers import EnsembleRetriever
+
+# Load the vector store
+embeddings = OllamaEmbeddings(model=EMBED_MODEL)
+vectorstore = Chroma(persist_directory=CHROMA_DIR, embedding_function=embeddings)
+
+# BM25 needs chunks (re-embed from your documents)
+from langchain_community.document_loaders import DirectoryLoader, PyPDFLoader
+loader = DirectoryLoader("./docs", glob="**/*.pdf", loader_cls=PyPDFLoader)
+raw_docs = loader.load()
+splitter = RecursiveCharacterTextSplitter(chunk_size=512, chunk_overlap=64)
+chunks = splitter.split_documents(raw_docs)
+
+# Create both retrievers
+bm25_retriever = BM25Retriever.from_documents(chunks)
+bm25_retriever.k = 4
+vector_retriever = vectorstore.as_retriever(search_kwargs={"k": 4})
+
+# Ensemble: 40% keyword, 60% semantic (adjust weights for your use case)
+retriever = EnsembleRetriever(
+    retrievers=[bm25_retriever, vector_retriever],
+    weights=[0.4, 0.6],
+)</code></pre>
+            </div>
+          </div>
+        </section>
+
+        <section class="space-y-5" aria-labelledby="rerank-heading">
+          <h2 id="rerank-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">Enhancement 3: Reranking (improve answer quality)</h2>
+          <p>Retrieval returns top-k candidates — but not all are equally relevant. A reranker uses a smaller, cross-encoder model to re-score results for higher precision. The pattern: retrieve many, rerank to few. This costs minimal overhead and significantly improves quality.</p>
+          <div class="space-y-3">
+            <p class="text-xs font-semibold text-slate-400">Install and integrate:</p>
+            <div class="ds-codeblock not-prose rounded-2xl overflow-hidden border border-white/10">
+              <div class="ds-codeblock-header flex items-center justify-between px-4 py-2.5 bg-white/[0.05] border-b border-white/10">
+                <span class="text-xs font-medium text-slate-400">bash</span>
+                <button class="ds-codeblock-copy flex items-center gap-1.5 text-xs text-slate-400 hover:text-white transition-colors">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                  Copy
+                </button>
+              </div>
+              <pre class="ds-codeblock-pre overflow-x-auto p-4 text-sm leading-relaxed m-0"><code class="ds-codeblock-source language-bash">pip install sentence-transformers</code></pre>
+            </div>
+          </div>
+          <div class="space-y-3 mt-3">
+            <p class="text-xs font-semibold text-slate-400">Add this to rag.py before the rag_chain definition:</p>
+            <div class="ds-codeblock not-prose rounded-2xl overflow-hidden border border-white/10">
+              <div class="ds-codeblock-header flex items-center justify-between px-4 py-2.5 bg-white/[0.05] border-b border-white/10">
+                <span class="text-xs font-medium text-slate-400">python</span>
+                <button class="ds-codeblock-copy flex items-center gap-1.5 text-xs text-slate-400 hover:text-white transition-colors">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                  Copy
+                </button>
+              </div>
+              <pre class="ds-codeblock-pre overflow-x-auto p-4 text-sm leading-relaxed m-0"><code class="ds-codeblock-source language-python">from sentence_transformers import CrossEncoder
+from langchain_core.documents import Document
+
+reranker = CrossEncoder("cross-encoder/ms-marco-MiniLM-L-6-v2")
+
+def rerank(query: str, docs: list[Document], top_n: int = 3) -> list[Document]:
+    pairs = [(query, doc.page_content) for doc in docs]
+    scores = reranker.predict(pairs)
+    ranked = sorted(zip(scores, docs), key=lambda x: x[0], reverse=True)
+    return [doc for _, doc in ranked[:top_n]]
+
+# Retrieve 8, rerank to top 3
+broad_retriever = vectorstore.as_retriever(search_kwargs={"k": 8})
+
+def retrieve_and_rerank(query):
+    docs = broad_retriever.invoke(query)
+    return rerank(query, docs, top_n=3)
+
+# Update rag_chain to use reranking
+rag_chain = (
+    {"context": (lambda q: format_docs(retrieve_and_rerank(q))),
+     "question": RunnablePassthrough()}
+    | prompt | llm | StrOutputParser()
+)</code></pre>
+            </div>
+          </div>
+          <div class="rounded-xl border border-white/10 bg-white/[0.02] px-4 py-3 text-sm">
+            <strong class="text-slate-200">cross-encoder/ms-marco-MiniLM-L-6-v2</strong>
+            <span class="text-slate-400/90"> is 23 MB and runs on CPU. It's a good default for local pipelines.</span>
+          </div>
+        </section>
+
+        <section class="space-y-5" aria-labelledby="sources-heading">
+          <h2 id="sources-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">Enhancement 4: Return source citations</h2>
+          <p>Always show which document chunks were used. This builds trust and lets users verify answers — especially important for local models that may hallucinate more than cloud models.</p>
+          <div class="space-y-3">
+            <p class="text-xs font-semibold text-slate-400">Replace the main block of rag.py with this:</p>
+            <div class="ds-codeblock not-prose rounded-2xl overflow-hidden border border-white/10">
+              <div class="ds-codeblock-header flex items-center justify-between px-4 py-2.5 bg-white/[0.05] border-b border-white/10">
+                <span class="text-xs font-medium text-slate-400">python</span>
+                <button class="ds-codeblock-copy flex items-center gap-1.5 text-xs text-slate-400 hover:text-white transition-colors">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                  Copy
+                </button>
+              </div>
+              <pre class="ds-codeblock-pre overflow-x-auto p-4 text-sm leading-relaxed m-0"><code class="ds-codeblock-source language-python">from langchain_core.runnables import RunnableParallel
+
+# Add this after the rag_chain definition
+rag_with_sources = RunnableParallel(
+    {"answer": rag_chain, "source_docs": retriever}
+)
+
+if __name__ == "__main__":
+    while True:
+        q = input("\nQuestion (or 'quit'): ").strip()
+        if q.lower() == "quit":
+            break
+        result = rag_with_sources.invoke(q)
+
+        print(f"\nAnswer: {result['answer']}")
+        print("\nSources:")
+        for doc in result["source_docs"]:
+            src = doc.metadata.get("source", "unknown")
+            page = doc.metadata.get("page", "?")
+            print(f"  • {src} (page {page})")</code></pre>
+            </div>
+          </div>
+        </section>
+
+        <section class="space-y-5" aria-labelledby="docker-heading">
+          <h2 id="docker-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">Deployment: Docker (when to use)</h2>
+          <p><strong>Use Docker if:</strong> You want to share this with team members, run it on a server, or ensure reproducibility. <strong>Skip if:</strong> You're just testing locally on your laptop.</p>
+          <p class="text-sm text-slate-400/90">Docker packages your code + Python + all dependencies into a container. You run <code class="rounded bg-white/10 px-1">docker compose</code> instead of managing Ollama and Python separately.</p>
+          <div class="space-y-3">
+            <p class="text-xs font-semibold text-slate-400">Create docker-compose.yml in your project root:</p>
+            <div class="ds-codeblock not-prose rounded-2xl overflow-hidden border border-white/10">
+              <div class="ds-codeblock-header flex items-center justify-between px-4 py-2.5 bg-white/[0.05] border-b border-white/10">
+                <span class="text-xs font-medium text-slate-400">yaml</span>
+                <button class="ds-codeblock-copy flex items-center gap-1.5 text-xs text-slate-400 hover:text-white transition-colors">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                  Copy
+                </button>
+              </div>
+              <pre class="ds-codeblock-pre overflow-x-auto p-4 text-sm leading-relaxed m-0"><code class="ds-codeblock-source language-yaml">services:
+  ollama:
+    image: ollama/ollama:latest
+    ports:
+      - "11434:11434"
+    volumes:
+      - ~/.ollama:/root/.ollama   # persist models so you don't re-download
+    restart: unless-stopped
+
+  rag-app:
+    build: .
+    depends_on:
+      - ollama
+    environment:
+      - OLLAMA_BASE_URL=http://ollama:11434
+    volumes:
+      - ./docs:/app/docs
+      - ./chroma_db:/app/chroma_db</code></pre>
+            </div>
+          </div>
+          <div class="space-y-3 mt-3">
+            <p class="text-xs font-semibold text-slate-400">Create Dockerfile in your project root:</p>
+            <div class="ds-codeblock not-prose rounded-2xl overflow-hidden border border-white/10">
+              <div class="ds-codeblock-header flex items-center justify-between px-4 py-2.5 bg-white/[0.05] border-b border-white/10">
+                <span class="text-xs font-medium text-slate-400">dockerfile</span>
+                <button class="ds-codeblock-copy flex items-center gap-1.5 text-xs text-slate-400 hover:text-white transition-colors">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                  Copy
+                </button>
+              </div>
+              <pre class="ds-codeblock-pre overflow-x-auto p-4 text-sm leading-relaxed m-0"><code class="ds-codeblock-source language-dockerfile">FROM python:3.11-slim
+WORKDIR /app
+COPY requirements.txt .
+RUN pip install --no-cache-dir -r requirements.txt
+COPY . .
+CMD ["python", "rag.py"]</code></pre>
+            </div>
+          </div>
+          <div class="space-y-3 mt-3">
+            <p class="text-xs font-semibold text-slate-400">Create requirements.txt:</p>
+            <div class="ds-codeblock not-prose rounded-2xl overflow-hidden border border-white/10">
+              <div class="ds-codeblock-header flex items-center justify-between px-4 py-2.5 bg-white/[0.05] border-b border-white/10">
+                <span class="text-xs font-medium text-slate-400">text</span>
+                <button class="ds-codeblock-copy flex items-center gap-1.5 text-xs text-slate-400 hover:text-white transition-colors">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                  Copy
+                </button>
+              </div>
+              <pre class="ds-codeblock-pre overflow-x-auto p-4 text-sm leading-relaxed m-0"><code class="ds-codeblock-source language-text">langchain-ollama
+langchain-community
+langchain-text-splitters
+chromadb
+pypdf</code></pre>
+            </div>
+          </div>
+          <div class="space-y-3 mt-3">
+            <p class="text-xs font-semibold text-slate-400">Run the entire stack:</p>
+            <div class="ds-codeblock not-prose rounded-2xl overflow-hidden border border-white/10">
+              <div class="ds-codeblock-header flex items-center justify-between px-4 py-2.5 bg-white/[0.05] border-b border-white/10">
+                <span class="text-xs font-medium text-slate-400">bash</span>
+                <button class="ds-codeblock-copy flex items-center gap-1.5 text-xs text-slate-400 hover:text-white transition-colors">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                  Copy
+                </button>
+              </div>
+              <pre class="ds-codeblock-pre overflow-x-auto p-4 text-sm leading-relaxed m-0"><code class="ds-codeblock-source language-bash"># Start Ollama and the app
+docker compose up -d
+
+# Pull models (run in one of the containers)
+docker compose exec ollama ollama pull nomic-embed-text
+docker compose exec ollama ollama pull llama3.1:8b
+
+# Run ingestion
+docker compose exec rag-app python ingest.py
+
+# Run the chatbot
+docker compose exec rag-app python rag.py</code></pre>
+            </div>
+          </div>
+        </section>
+
+        <section class="space-y-4" aria-labelledby="troubleshoot-heading">
+          <h2 id="troubleshoot-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">Troubleshooting</h2>
+          <div class="space-y-3">
+            <div class="rounded-2xl border border-amber-500/20 bg-amber-500/[0.05] p-4">
+              <h3 class="text-sm font-semibold text-amber-100">"Connection refused" or "Cannot connect to Ollama"</h3>
+              <p class="text-xs text-slate-400/90 mt-1"><strong>Fix:</strong> Make sure Ollama is running. Open a terminal and run <code class="rounded bg-white/10 px-1">ollama serve</code>. Leave it running while using the RAG pipeline.</p>
+            </div>
+            <div class="rounded-2xl border border-amber-500/20 bg-amber-500/[0.05] p-4">
+              <h3 class="text-sm font-semibold text-amber-100">Model not found / "no such model" error</h3>
+              <p class="text-xs text-slate-400/90 mt-1"><strong>Fix:</strong> Pull the models first. Run: <code class="rounded bg-white/10 px-1">ollama pull nomic-embed-text</code> and <code class="rounded bg-white/10 px-1">ollama pull llama3.1:8b</code></p>
+            </div>
+            <div class="rounded-2xl border border-amber-500/20 bg-amber-500/[0.05] p-4">
+              <h3 class="text-sm font-semibold text-amber-100">Empty docs/ folder or no PDFs found</h3>
+              <p class="text-xs text-slate-400/90 mt-1"><strong>Fix:</strong> Create a <code class="rounded bg-white/10 px-1">docs/</code> folder in your project directory and add PDF files to it before running ingest.py. Check that files are actually in the folder: <code class="rounded bg-white/10 px-1">ls docs/</code></p>
+            </div>
+            <div class="rounded-2xl border border-amber-500/20 bg-amber-500/[0.05] p-4">
+              <h3 class="text-sm font-semibold text-amber-100">Answers are irrelevant or hallucinated</h3>
+              <p class="text-xs text-slate-400/90 mt-1"><strong>Diagnosis:</strong> The system prompt tells the model to use only context, but local models may ignore this. <strong>Fixes:</strong> (1) Try stronger language: change "answer using ONLY the context" to "NEVER use knowledge outside the context. If it's not in the context, say 'I don't know'". (2) Check your documents — are they relevant to your questions? (3) Try smaller chunk_size (256 instead of 512).</p>
+            </div>
+            <div class="rounded-2xl border border-amber-500/20 bg-amber-500/[0.05] p-4">
+              <h3 class="text-sm font-semibold text-amber-100">Slow performance / waiting forever for answers</h3>
+              <p class="text-xs text-slate-400/90 mt-1"><strong>Causes:</strong> llama3.1:8b is large and slow on CPU. <strong>Quick fixes:</strong> (1) Use a smaller model: <code class="rounded bg-white/10 px-1">ollama pull mistral:7b</code> then change CHAT_MODEL in rag.py. (2) Run on GPU if available. (3) For CPU, reduce context window: change retriever to search_kwargs={"k": 2} instead of 4.</p>
+            </div>
+            <div class="rounded-2xl border border-amber-500/20 bg-amber-500/[0.05] p-4">
+              <h3 class="text-sm font-semibold text-amber-100">Chroma persists from old data after re-indexing</h3>
+              <p class="text-xs text-slate-400/90 mt-1"><strong>Fix:</strong> Chroma appends to the existing database. If you re-run ingest.py with new documents, you'll have duplicates. Delete <code class="rounded bg-white/10 px-1">chroma_db/</code> folder before re-ingesting: <code class="rounded bg-white/10 px-1">rm -rf chroma_db/</code></p>
+            </div>
+          </div>
+        </section>
+
+        <section class="rounded-2xl border border-lime-500/20 bg-lime-500/[0.06] p-5 sm:p-6">
+          <h2 class="text-lg font-semibold text-lime-100">Quick summary</h2>
+          <ul class="mt-3 list-disc space-y-1.5 pl-5 text-sm text-slate-300/95 marker:text-lime-400/80">
+            <li><strong>Goal:</strong> Build a local Q&A system over your documents</li>
+            <li><strong>Setup:</strong> pip install dependencies, create docs/ folder, run <code class="rounded bg-white/10 px-1">ollama serve</code></li>
+            <li><strong>Two scripts:</strong> ingest.py (run once) and rag.py (run anytime to query)</li>
+            <li><strong>Default works:</strong> 512-token chunks, vector search, llama3.1:8b LLM</li>
+            <li><strong>Optional enhancements:</strong> Chunk size tuning, hybrid search, reranking, source citations</li>
+            <li><strong>Docker:</strong> Use if sharing with others or deploying to servers</li>
+            <li><strong>If stuck:</strong> Check Ollama is running, models are pulled, and docs/ has files</li>
+          </ul>
+        </section>
+
+      </article>
+    </div>
+
+    <div class="flex items-center justify-between">
+      <a href="{% url 'tutorial_rll_langchain' %}" class="inline-flex items-center gap-2 rounded-xl border border-white/15 bg-white/[0.04] px-5 py-2.5 text-sm font-semibold text-slate-200 transition hover:border-white/25 hover:bg-white/[0.07] hover:text-white">
+        <span aria-hidden>←</span> Local Models with LangChain
+      </a>
+      <a href="{% url 'tutorials' %}" class="inline-flex items-center gap-2 rounded-xl border border-lime-400/35 bg-lime-500/10 px-5 py-2.5 text-sm font-semibold text-lime-200 transition hover:border-lime-300/50 hover:bg-lime-500/20 hover:text-white">
+        All Tutorials <span aria-hidden>→</span>
+      </a>
+    </div>
+
+  </div>
+{% endblock %}
