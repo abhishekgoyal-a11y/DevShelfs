@@ -56,7 +56,20 @@ def _layout(path: str) -> str:
         return "hackathons"
     if path.startswith("/contests"):
         return "contests"
+    if path.startswith("/tutorials"):
+        return "tutorials"
     return "default"
+
+
+_TUTORIAL_CATEGORIES = [
+    {"name": "All", "slug": "all"},
+    {"name": "Getting Started", "slug": "getting-started"},
+    {"name": "AI Agents", "slug": "ai-agents"},
+    {"name": "RAG & Vector DBs", "slug": "rag-vector-dbs"},
+    {"name": "LLMs & Models", "slug": "llms-models"},
+    {"name": "Developer Tools", "slug": "developer-tools"},
+    {"name": "Video & Audio", "slug": "video-audio"},
+]
 
 
 _HOME_AI_TOOL_ORDER = (
@@ -407,6 +420,21 @@ def openclaw(request):
         request,
         "web/openclaw.html",
         {"layout": _layout(request.path), "active_nav": "ai"},
+    )
+
+
+def tutorials(request):
+    active_category = (request.GET.get("category") or "all").lower()
+    return render(
+        request,
+        "web/tutorials.html",
+        {
+            "layout": _layout(request.path),
+            "active_nav": "tutorials",
+            "categories": _TUTORIAL_CATEGORIES,
+            "active_category": active_category,
+            "tutorials": [],
+        },
     )
 
 

@@ -36,6 +36,7 @@ urlpatterns = [
     path("ai-tools/openclaw", views.openclaw, name="openclaw"),
     path("ai-tools/category/<slug:category_slug>/", views.ai_tools_category, name="ai_tools_category"),
     path("ai-tools/", views.ai_tools_list, name="ai_tools"),
+    path("tutorials/", views.tutorials, name="tutorials"),
     path("hackathons/", views.hackathons, name="hackathons"),
     path("contests/", views.contests, name="contests"),
 ]
