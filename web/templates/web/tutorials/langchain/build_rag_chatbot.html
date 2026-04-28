@@ -1,4 +1,5 @@
 {% extends "web/base.html" %}
+{% load static %}
 {% block title %}Build a RAG Chatbot — LangChain Tutorial{% endblock %}
 {% block content %}
   <div class="space-y-10">
@@ -328,6 +329,16 @@ You: quit</code>
               <h3 class="text-sm font-semibold text-amber-100">Index not found on startup</h3>
               <p class="text-xs text-slate-400/90 mt-1">You must run <code class="rounded bg-white/10 px-1">python3 ingest.py your_doc.pdf</code> before <code class="rounded bg-white/10 px-1">chatbot.py</code>. The <code class="rounded bg-white/10 px-1">faiss_index/</code> directory must exist in the same folder.</p>
             </div>
+          </div>
+        </section>
+
+        <section class="space-y-3" aria-labelledby="demo-heading">
+          <h2 id="demo-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">Demo</h2>
+          <div class="mx-auto max-w-3xl overflow-hidden rounded-2xl border border-white/10 bg-black shadow-lg shadow-black/40">
+            <video class="block w-full" controls playsinline preload="metadata" aria-label="RAG Document Chatbot demo">
+              <source src="{% static 'web/RagDocumentChatbot.webm' %}" type="video/webm" />
+              <p class="p-4 text-sm text-slate-400">Your browser does not support embedded WebM video.</p>
+            </video>
           </div>
         </section>
 
