@@ -1,0 +1,314 @@
+{% extends "web/base.html" %}
+{% block title %}Core Concepts — RAG Pipeline Tutorial{% endblock %}
+{% block content %}
+  <div class="space-y-10">
+    {# ── Breadcrumb ── #}
+    <div class="flex flex-wrap items-center gap-2 text-sm text-slate-400/90">
+      <a href="{% url 'tutorials' %}" class="font-medium text-violet-300/90 transition hover:text-violet-200">Tutorials</a>
+      <span aria-hidden class="text-slate-600">/</span>
+      <a href="{% url 'tutorials' %}?category=rag-vector-dbs" class="font-medium text-violet-300/90 transition hover:text-violet-200">RAG & Vector DBs</a>
+      <span aria-hidden class="text-slate-600">/</span>
+      <span class="text-slate-200/90">Core Concepts</span>
+    </div>
+
+    {# ── Hero ── #}
+    <section class="relative overflow-hidden rounded-3xl border border-violet-400/20 bg-white/[0.06] p-6 shadow-[0_0_0_1px_rgba(255,255,255,0.04)] backdrop-blur-2xl sm:p-8">
+      <div class="pointer-events-none absolute -right-24 top-0 h-72 w-72 rounded-full bg-violet-500/15 blur-3xl"></div>
+      <div class="pointer-events-none absolute -left-20 bottom-0 h-56 w-56 rounded-full bg-fuchsia-500/10 blur-3xl"></div>
+      <div class="relative">
+        <div class="flex flex-wrap items-center gap-3">
+          <span class="rounded-full border border-violet-500/25 bg-violet-500/10 px-2.5 py-1 text-xs font-medium text-violet-300/90">RAG Pipeline</span>
+          <span class="rounded-full border border-sky-500/25 bg-sky-500/10 px-2.5 py-1 text-xs font-medium text-sky-300/90">Beginner</span>
+          <span class="text-xs text-slate-400/80">· 12 min read</span>
+          <span class="ml-auto text-xs font-medium text-slate-400/80">Page 2 of 23</span>
+        </div>
+        <h1 class="mt-4 text-3xl font-semibold tracking-tight text-white sm:text-4xl lg:text-[2.5rem] lg:leading-tight">Core Concepts</h1>
+        <p class="mt-4 max-w-2xl text-sm leading-relaxed text-slate-200/80 sm:text-base">
+          Understand embeddings, vector search, semantic similarity, and how the RAG architecture works end-to-end.
+        </p>
+        <div class="mt-6">
+          <div class="mb-1.5 flex items-center justify-between text-xs text-slate-400/80"><span>Series progress</span><span>2 / 23</span></div>
+          <div class="h-1.5 w-full overflow-hidden rounded-full bg-white/10"><div class="h-full w-[9%] rounded-full bg-violet-400/70"></div></div>
+        </div>
+      </div>
+    </section>
+
+    {# ── Content ── #}
+    <div class="glass rounded-3xl border border-white/10 p-5 sm:p-8">
+      <article class="mx-auto space-y-12 text-base leading-relaxed text-slate-300/95">
+
+        <section class="space-y-5" aria-labelledby="embeddings-heading">
+          <h2 id="embeddings-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">1. Embeddings: Text as Vectors</h2>
+          <p>
+            An <strong>embedding</strong> is a numerical representation of text. Instead of storing "The cat sat on the mat" as a string, we convert it to a list of numbers that capture its meaning.
+          </p>
+          <div class="rounded-2xl border border-white/10 bg-white/[0.03] p-5">
+            <div class="ds-codeblock overflow-hidden rounded-2xl border border-white/10 bg-slate-950/90">
+  <div class="flex items-center justify-between gap-3 border-b border-white/10 px-3 py-2">
+    <span class="font-mono text-[11px] font-medium uppercase tracking-wide text-slate-400">Python</span>
+    <button type="button" class="ds-codeblock-copy rounded-lg border border-white/10 bg-white/[0.06] px-2.5 py-1 text-xs font-semibold text-slate-200 transition hover:border-sky-400/40 hover:bg-white/[0.1] hover:text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-sky-400/50" data-copy-label="Copy" data-copied-label="Copied" aria-label="Copy code to clipboard">Copy</button>
+  </div>
+  <pre class="ds-codeblock-pre code-block m-0 overflow-x-auto p-4 text-[0.8125rem] leading-[1.55] sm:text-sm language-python" tabindex="0"><code class="whitespace-pre-wrap font-mono ds-codeblock-source language-python">Text: "The cat sat on the mat"
+↓
+Embedding: [0.23, -0.41, 0.15, 0.89, ..., 0.05]
+           (1536 numbers for OpenAI's text-embedding-3-small)</code></pre>
+</div>
+          </div>
+
+          <p class="text-sm text-slate-400">
+            <strong>Why embeddings?</strong> Because embeddings capture <strong>semantic meaning</strong>. Similar texts have similar embeddings, even if they use different words.
+          </p>
+
+          <div class="rounded-2xl border border-sky-500/20 bg-sky-500/5 p-4">
+            <p class="text-sm text-slate-300">
+              <strong>Example:</strong> "The cat sat on the mat" and "A feline rested on the carpet" have <strong>different words but similar embeddings</strong> because they mean the same thing. This is why embeddings enable semantic search.
+            </p>
+          </div>
+
+          <div class="space-y-3 mt-4">
+            <p class="font-semibold text-white">Key Properties:</p>
+            <div class="space-y-2 text-sm text-slate-300">
+              <div class="flex items-start gap-3">
+                <span class="rounded-full bg-violet-500/20 px-2.5 py-0.5 text-xs font-medium text-violet-300 flex-shrink-0">1</span>
+                <p><strong>Fixed dimension:</strong> Always the same length (e.g., 1536). You can compute distances.</p>
+              </div>
+              <div class="flex items-start gap-3">
+                <span class="rounded-full bg-violet-500/20 px-2.5 py-0.5 text-xs font-medium text-violet-300 flex-shrink-0">2</span>
+                <p><strong>Semantic:</strong> Similar meanings → similar vectors. "Dog" is closer to "cat" than to "pizza".</p>
+              </div>
+              <div class="flex items-start gap-3">
+                <span class="rounded-full bg-violet-500/20 px-2.5 py-0.5 text-xs font-medium text-violet-300 flex-shrink-0">3</span>
+                <p><strong>Language-agnostic:</strong> Multilingual embeddings work across languages.</p>
+              </div>
+              <div class="flex items-start gap-3">
+                <span class="rounded-full bg-violet-500/20 px-2.5 py-0.5 text-xs font-medium text-violet-300 flex-shrink-0">4</span>
+                <p><strong>Deterministic:</strong> Same text always produces the same embedding (within the same model).</p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="space-y-5" aria-labelledby="similarity-heading">
+          <h2 id="similarity-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">2. Vector Similarity: Finding Neighbors</h2>
+          <p>
+            Once you have vectors, you can measure how similar two pieces of text are by computing the <strong>distance between their embeddings</strong>.
+          </p>
+
+          <div class="space-y-4">
+            <div class="rounded-2xl border border-white/10 bg-white/[0.03] p-5">
+              <p class="font-semibold text-white mb-3">Cosine Similarity (Most Common)</p>
+              <p class="text-sm text-slate-300 mb-3">Measures the angle between two vectors. Range: -1 to 1 (but typically 0 to 1 for text).</p>
+              <div class="ds-codeblock overflow-hidden rounded-2xl border border-white/10 bg-slate-950/90">
+  <div class="flex items-center justify-between gap-3 border-b border-white/10 px-3 py-2">
+    <span class="font-mono text-[11px] font-medium uppercase tracking-wide text-slate-400">Python</span>
+    <button type="button" class="ds-codeblock-copy rounded-lg border border-white/10 bg-white/[0.06] px-2.5 py-1 text-xs font-semibold text-slate-200 transition hover:border-sky-400/40 hover:bg-white/[0.1] hover:text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-sky-400/50" data-copy-label="Copy" data-copied-label="Copied" aria-label="Copy code to clipboard">Copy</button>
+  </div>
+  <pre class="ds-codeblock-pre code-block m-0 overflow-x-auto p-4 text-[0.8125rem] leading-[1.55] sm:text-sm language-python" tabindex="0"><code class="whitespace-pre-wrap font-mono ds-codeblock-source language-python">similarity = (A · B) / (||A|| × ||B||)
+
+Example:
+Text A: "Python programming language"
+Text B: "Python is great for coding"
+Cosine Similarity: 0.92 (very similar!)
+
+Text C: "What's the weather?"
+Cosine Similarity to A: 0.15 (not similar)</code></pre>
+</div>
+            </div>
+
+            <div class="rounded-2xl border border-white/10 bg-white/[0.03] p-5">
+              <p class="font-semibold text-white mb-3">Euclidean Distance (L2)</p>
+              <p class="text-sm text-slate-300 mb-3">Straight-line distance between vectors. Lower is more similar. Slower but works well for some use cases.</p>
+            </div>
+
+            <div class="rounded-2xl border border-white/10 bg-white/[0.03] p-5">
+              <p class="font-semibold text-white mb-3">Manhattan Distance (L1)</p>
+              <p class="text-sm text-slate-300 mb-3">Sum of absolute differences. Used for sparse vectors. Faster but less accurate for dense embeddings.</p>
+            </div>
+          </div>
+
+          <div class="rounded-2xl border border-blue-500/20 bg-blue-500/5 p-4 mt-4">
+            <p class="text-sm text-slate-300">
+              <strong>For RAG: Use cosine similarity.</strong> It's the standard, fast, and works best with normalized embeddings. Most vector databases default to it.
+            </p>
+          </div>
+        </section>
+
+        <section class="space-y-5" aria-labelledby="vectordb-heading">
+          <h2 id="vectordb-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">3. Vector Databases: Searching at Scale</h2>
+          <p>
+            Brute-force similarity search is slow. With a million documents, comparing your query to every embedding takes seconds. Vector databases use smart indexing to search in milliseconds.
+          </p>
+
+          <div class="rounded-2xl border border-white/10 bg-white/[0.03] p-5 space-y-3">
+            <p class="font-semibold text-white">How Vector DBs Work:</p>
+            <div class="space-y-2 text-sm text-slate-300">
+              <p><strong>1. Indexing:</strong> When you add documents, embeddings are indexed using algorithms like:</p>
+              <ul class="list-disc list-inside space-y-1 ml-2">
+                <li><strong>HNSW</strong> (Hierarchical Navigable Small World) — Fast, approximate, most popular</li>
+                <li><strong>IVF</strong> (Inverted File) — Clusters vectors, faster for large datasets</li>
+                <li><strong>LSH</strong> (Locality Sensitive Hashing) — For approximate nearest neighbors</li>
+              </ul>
+            </div>
+            <div class="space-y-2 text-sm text-slate-300">
+              <p><strong>2. Querying:</strong> When you search, the DB uses the index to find similar vectors without comparing all of them.</p>
+              <code class="block font-mono text-xs text-slate-300 whitespace-pre bg-black/20 p-2 rounded mt-2">query_embedding = embed("How do I use Python?")
+# Instead of comparing to 1M docs,
+# find ~100 candidates using index
+# Then return top-10 by similarity
+top_10_docs = vector_db.search(query_embedding, k=10)</code>
+            </div>
+          </div>
+
+          <p class="text-sm text-slate-400 mt-4">
+            <strong>Speed tradeoff:</strong> Approximate search (HNSW) is much faster but might miss the truly best match. Exact search is slow. RAG typically uses approximate.
+          </p>
+        </section>
+
+        <section class="space-y-5" aria-labelledby="architecture-heading">
+          <h2 id="architecture-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">4. The RAG Architecture</h2>
+          <p>Now let's see how all these pieces fit together:</p>
+
+          <div class="space-y-4">
+            <div class="rounded-2xl border border-white/10 bg-white/[0.03] p-5">
+              <p class="font-semibold text-white mb-4">Phase 1: Indexing (Offline, happens once or periodically)</p>
+              <div class="ds-codeblock overflow-hidden rounded-2xl border border-white/10 bg-slate-950/90">
+  <div class="flex items-center justify-between gap-3 border-b border-white/10 px-3 py-2">
+    <span class="font-mono text-[11px] font-medium uppercase tracking-wide text-slate-400">Python</span>
+    <button type="button" class="ds-codeblock-copy rounded-lg border border-white/10 bg-white/[0.06] px-2.5 py-1 text-xs font-semibold text-slate-200 transition hover:border-sky-400/40 hover:bg-white/[0.1] hover:text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-sky-400/50" data-copy-label="Copy" data-copied-label="Copied" aria-label="Copy code to clipboard">Copy</button>
+  </div>
+  <pre class="ds-codeblock-pre code-block m-0 overflow-x-auto p-4 text-[0.8125rem] leading-[1.55] sm:text-sm language-python" tabindex="0"><code class="whitespace-pre-wrap font-mono ds-codeblock-source language-python">Step 1: Load Documents
+documents = ["tax_guide.pdf", "FAQ.html", "policies.txt", ...]
+
+Step 2: Chunk Them
+chunks = [
+  "A tax deduction is...",
+  "Common deductions include...",
+  "Self-employed people can...",
+  ...
+]  # Each chunk ~500 tokens
+
+Step 3: Embed Chunks
+embeddings = [
+  [0.23, -0.41, 0.15, ...],  # for chunk 1
+  [0.19, -0.38, 0.22, ...],  # for chunk 2
+  ...
+]
+
+Step 4: Store in Vector DB
+vector_db.add(chunks, embeddings)
+# Now ready for search!</code></pre>
+</div>
+            </div>
+
+            <div class="rounded-2xl border border-white/10 bg-white/[0.03] p-5">
+              <p class="font-semibold text-white mb-4">Phase 2: Querying (Online, happens per request)</p>
+              <div class="ds-codeblock overflow-hidden rounded-2xl border border-white/10 bg-slate-950/90">
+  <div class="flex items-center justify-between gap-3 border-b border-white/10 px-3 py-2">
+    <span class="font-mono text-[11px] font-medium uppercase tracking-wide text-slate-400">Python</span>
+    <button type="button" class="ds-codeblock-copy rounded-lg border border-white/10 bg-white/[0.06] px-2.5 py-1 text-xs font-semibold text-slate-200 transition hover:border-sky-400/40 hover:bg-white/[0.1] hover:text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-sky-400/50" data-copy-label="Copy" data-copied-label="Copied" aria-label="Copy code to clipboard">Copy</button>
+  </div>
+  <pre class="ds-codeblock-pre code-block m-0 overflow-x-auto p-4 text-[0.8125rem] leading-[1.55] sm:text-sm language-python" tabindex="0"><code class="whitespace-pre-wrap font-mono ds-codeblock-source language-python">Step 1: Embed Query
+user_query = "How do I maximize tax deductions?"
+query_embedding = embed(user_query)
+
+Step 2: Search Vector DB
+similar_chunks = vector_db.search(query_embedding, k=5)
+# Returns top-5 most similar chunks with scores
+
+Step 3: Build Prompt
+prompt = f"""
+Answer the question using these documents:
+
+{similar_chunks}
+
+Question: {user_query}
+Answer:
+"""
+
+Step 4: Call LLM
+answer = llm.generate(prompt)
+# LLM now has ground truth to answer from</code></pre>
+</div>
+            </div>
+          </div>
+
+          <div class="rounded-2xl border border-sky-500/20 bg-sky-500/5 p-4 mt-4">
+            <p class="text-sm text-slate-300">
+              <strong>Key insight:</strong> Indexing happens once (or periodically). Querying happens for every user request. Both are critical, but retrieval speed matters more for users.
+            </p>
+          </div>
+        </section>
+
+        <section class="space-y-5" aria-labelledby="why-effective-heading">
+          <h2 id="why-effective-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">Why RAG Works</h2>
+          <p>
+            RAG solves LLM hallucinations by providing <strong>grounding</strong> — anchoring answers in real documents. The LLM works better with context.
+          </p>
+
+          <div class="space-y-3">
+            <div class="rounded-2xl border border-white/10 bg-white/[0.03] p-4">
+              <p class="font-semibold text-white text-sm mb-2">Without RAG (Hallucination Risk)</p>
+              <code class="block font-mono text-xs text-slate-300 whitespace-pre bg-black/20 p-2 rounded">User: "What's the tax deduction limit for 2024?"
+LLM: "The limit is $15,000... (confidently wrong)"
+
+Problem: Model was trained on 2023 data, guesses about 2024.</code>
+            </div>
+
+            <div class="rounded-2xl border border-white/10 bg-white/[0.03] p-4">
+              <p class="font-semibold text-white text-sm mb-2">With RAG (Grounded Answer)</p>
+              <code class="block font-mono text-xs text-slate-300 whitespace-pre bg-black/20 p-2 rounded">User: "What's the tax deduction limit for 2024?"
+Retrieved: "2024 Tax Deduction Limits: $14,600 for single..."
+LLM: "The limit for 2024 is $14,600. (Based on retrieved docs)"
+
+Result: Accurate, up-to-date, cited sources.</code>
+            </div>
+          </div>
+        </section>
+
+        <section class="space-y-5" aria-labelledby="tradeoffs-heading">
+          <h2 id="tradeoffs-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">RAG Tradeoffs</h2>
+
+          <div class="space-y-3">
+            <div class="rounded-2xl border border-green-500/20 bg-green-500/5 p-4">
+              <p class="font-semibold text-green-300 mb-2">✓ Advantages</p>
+              <ul class="space-y-1 text-sm text-slate-300">
+                <li>• Current information: Works with today's data, no retraining</li>
+                <li>• Sourceable: Cite which documents the answer came from</li>
+                <li>• Scalable: Add 1M documents without model changes</li>
+                <li>• Cost-effective: No expensive fine-tuning</li>
+                <li>• Reduces hallucinations: Answers grounded in facts</li>
+              </ul>
+            </div>
+
+            <div class="rounded-2xl border border-red-500/20 bg-red-500/5 p-4">
+              <p class="font-semibold text-red-300 mb-2">❌ Limitations</p>
+              <ul class="space-y-1 text-sm text-slate-300">
+                <li>• Imperfect retrieval: Wrong documents retrieved first</li>
+                <li>• Latency: Search + LLM generation takes ~500-2000ms</li>
+                <li>• Context limits: LLM can only see top-K documents</li>
+                <li>• Cost per query: Embedding + LLM calls add up</li>
+                <li>• Still hallucinates: LLM invents facts despite good docs</li>
+              </ul>
+        </section>
+
+      </article>
+    </div>
+
+    {# ── Navigation ── #}
+    <div class="flex items-center justify-between">
+      <a
+        href="{% url 'tutorial_rag_pipeline_intro' %}"
+        class="inline-flex items-center gap-2 rounded-xl border border-violet-400/35 bg-violet-500/10 px-5 py-2.5 text-sm font-semibold text-violet-200 transition hover:border-violet-300/50 hover:bg-violet-500/20 hover:text-white"
+      >
+        <span aria-hidden>←</span> Previous
+      </a>
+      <a
+        href="{% url 'tutorial_rag_pipeline_document_ingestion' %}"
+        class="inline-flex items-center gap-2 rounded-xl border border-violet-400/35 bg-violet-500/10 px-5 py-2.5 text-sm font-semibold text-violet-200 transition hover:border-violet-300/50 hover:bg-violet-500/20 hover:text-white"
+      >
+        Next: Document Ingestion <span aria-hidden>→</span>
+      </a>
+      </div>
+
+  </div>
+{% endblock %}

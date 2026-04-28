@@ -1,0 +1,202 @@
+{% extends "web/base.html" %}
+{% block title %}Limitations & Best Practices — DevShelf Tutorials{% endblock %}
+{% block content %}
+  <div class="space-y-10">
+
+    {# ── Breadcrumb ── #}
+    <div class="flex flex-wrap items-center gap-2 text-sm text-slate-400/90">
+      <a href="{% url 'tutorials' %}" class="font-medium text-emerald-300/90 transition hover:text-emerald-200">Tutorials</a>
+      <span aria-hidden class="text-slate-600">/</span>
+      <a href="{% url 'tutorials' %}?category=ai-agents" class="font-medium text-emerald-300/90 transition hover:text-emerald-200">AI Agents</a>
+      <span aria-hidden class="text-slate-600">/</span>
+      <span class="text-slate-200/90">Limitations &amp; Best Practices</span>
+    </div>
+
+    {# ── Hero ── #}
+    <section class="relative overflow-hidden rounded-3xl border border-emerald-400/20 bg-white/[0.06] p-6 shadow-[0_0_0_1px_rgba(255,255,255,0.04)] backdrop-blur-2xl sm:p-8">
+      <div class="pointer-events-none absolute -right-24 top-0 h-72 w-72 rounded-full bg-emerald-500/15 blur-3xl"></div>
+      <div class="pointer-events-none absolute -left-20 bottom-0 h-56 w-56 rounded-full bg-cyan-500/10 blur-3xl"></div>
+      <div class="relative">
+        <div class="flex flex-wrap items-center gap-3">
+          <span class="rounded-full border border-emerald-500/25 bg-emerald-500/10 px-2.5 py-1 text-xs font-medium text-emerald-300/90">AI Agents</span>
+          <span class="rounded-full border border-amber-500/25 bg-amber-500/10 px-2.5 py-1 text-xs font-medium text-amber-300/90">Important</span>
+          <span class="text-xs text-slate-400/80">· 11 min read</span>
+          <span class="ml-auto text-xs font-medium text-slate-400/80">Page 9 of 10</span>
+        </div>
+        <h1 class="mt-4 text-3xl font-semibold tracking-tight text-white sm:text-4xl lg:text-[2.5rem] lg:leading-tight">
+          Limitations &amp; Best Practices
+        </h1>
+        <p class="mt-4 max-w-2xl text-sm leading-relaxed text-slate-200/80 sm:text-base">
+          What agents get wrong, the risks of putting them in production, and the checklist every agent builder should follow before shipping.
+        </p>
+        <div class="mt-6">
+          <div class="mb-1.5 flex items-center justify-between text-xs text-slate-400/80">
+            <span>Series progress</span><span>9 / 10</span>
+          </div>
+          <div class="h-1.5 w-full overflow-hidden rounded-full bg-white/10">
+            <div class="h-full w-[90%] rounded-full bg-emerald-400/70"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    {# ── Content ── #}
+    <div class="glass rounded-3xl border border-white/10 p-5 sm:p-8">
+      <article class="mx-auto space-y-12 text-base leading-relaxed text-slate-300/95">
+
+        <section class="space-y-4" aria-labelledby="reality-heading">
+          <h2 id="reality-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">Agents are powerful — and brittle</h2>
+          <p>
+            Every agent you have seen in demos looks impressive. Production is different. Understanding where agents
+            fail is the most important thing you can learn before shipping one.
+          </p>
+        </section>
+
+        <section class="space-y-5" aria-labelledby="limits-heading">
+          <h2 id="limits-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">Core limitations</h2>
+          <div class="space-y-3">
+            <div class="rounded-2xl border border-rose-500/20 bg-rose-500/[0.04] p-5">
+              <h3 class="text-sm font-semibold text-rose-200">Hallucination compounds over steps</h3>
+              <p class="mt-1.5 text-sm text-slate-400/90">
+                An LLM can hallucinate in a single call. In an agent loop, that hallucination can be used as
+                input for the next step — which builds on the wrong premise — and so on. Errors compound.
+                A 10-step agent with a 5% hallucination rate per step has a much higher total error rate than
+                a single call.
+              </p>
+            </div>
+            <div class="rounded-2xl border border-rose-500/20 bg-rose-500/[0.04] p-5">
+              <h3 class="text-sm font-semibold text-rose-200">Context window limits</h3>
+              <p class="mt-1.5 text-sm text-slate-400/90">
+                Every tool result, every reasoning step, every prior message gets added to the context window.
+                Long agent runs can fill the window and force the agent to drop earlier information — which
+                can break tasks that depend on earlier context.
+              </p>
+            </div>
+            <div class="rounded-2xl border border-rose-500/20 bg-rose-500/[0.04] p-5">
+              <h3 class="text-sm font-semibold text-rose-200">Cost and latency</h3>
+              <p class="mt-1.5 text-sm text-slate-400/90">
+                An agent that makes 10 LLM calls costs 10x more than a single call. Each tool call adds latency.
+                A task that takes 2 seconds as a simple prompt can take 30–60 seconds as an agent. Always
+                ask: does this actually need an agent, or can a well-crafted single prompt do it?
+              </p>
+            </div>
+            <div class="rounded-2xl border border-rose-500/20 bg-rose-500/[0.04] p-5">
+              <h3 class="text-sm font-semibold text-rose-200">Infinite loops and stuck states</h3>
+              <p class="mt-1.5 text-sm text-slate-400/90">
+                An agent that cannot complete a task may try the same failing tool call repeatedly rather
+                than stopping. Without a hard step limit, it will run until you run out of budget.
+              </p>
+            </div>
+            <div class="rounded-2xl border border-rose-500/20 bg-rose-500/[0.04] p-5">
+              <h3 class="text-sm font-semibold text-rose-200">Irreversible actions</h3>
+              <p class="mt-1.5 text-sm text-slate-400/90">
+                If an agent has tools that send emails, delete files, post to APIs, or charge customers —
+                a mistake cannot be undone. This is the most dangerous class of agent failure.
+              </p>
+            </div>
+          </div>
+        </section>
+
+        <section class="space-y-5" aria-labelledby="practices-heading">
+          <h2 id="practices-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">Best practices</h2>
+
+          <div class="space-y-3">
+            <div class="rounded-2xl border border-emerald-500/20 bg-emerald-500/[0.04] p-5">
+              <h3 class="text-sm font-semibold text-emerald-200">Always set a max step limit</h3>
+              <p class="mt-1.5 text-sm text-slate-400/90">
+                Every agent run should have a hard maximum number of iterations. 10–20 steps is enough for
+                most tasks. If the agent has not finished in that many steps, it should fail gracefully and
+                report what it managed to do.
+              </p>
+            </div>
+            <div class="rounded-2xl border border-emerald-500/20 bg-emerald-500/[0.04] p-5">
+              <h3 class="text-sm font-semibold text-emerald-200">Start with read-only tools</h3>
+              <p class="mt-1.5 text-sm text-slate-400/90">
+                Build and test your agent using only tools that read data — search, fetch URL, read file.
+                Add write/action tools (send email, delete record) only after the agent is reliable and you
+                have added guardrails.
+              </p>
+            </div>
+            <div class="rounded-2xl border border-emerald-500/20 bg-emerald-500/[0.04] p-5">
+              <h3 class="text-sm font-semibold text-emerald-200">Log every step</h3>
+              <p class="mt-1.5 text-sm text-slate-400/90">
+                Store the full trace — every LLM call, every tool input, every tool output. When something
+                goes wrong (and it will), this is the only way to debug it. LangSmith, Helicone, and
+                Langfuse are popular tracing tools.
+              </p>
+            </div>
+            <div class="rounded-2xl border border-emerald-500/20 bg-emerald-500/[0.04] p-5">
+              <h3 class="text-sm font-semibold text-emerald-200">Confirm before irreversible actions</h3>
+              <p class="mt-1.5 text-sm text-slate-400/90">
+                For any tool that takes an action that cannot be undone, add a human-in-the-loop step.
+                The agent pauses, shows the planned action, and only proceeds if a human approves it.
+              </p>
+            </div>
+            <div class="rounded-2xl border border-emerald-500/20 bg-emerald-500/[0.04] p-5">
+              <h3 class="text-sm font-semibold text-emerald-200">Write narrow, specific system prompts</h3>
+              <p class="mt-1.5 text-sm text-slate-400/90">
+                Vague system prompts produce unpredictable agents. Tell the agent exactly what it is,
+                what tools it has, what it should do when it is stuck, and when it should stop.
+                The more specific the prompt, the more predictable the behaviour.
+              </p>
+            </div>
+            <div class="rounded-2xl border border-emerald-500/20 bg-emerald-500/[0.04] p-5">
+              <h3 class="text-sm font-semibold text-emerald-200">Eval your agent, not just your model</h3>
+              <p class="mt-1.5 text-sm text-slate-400/90">
+                Standard LLM evals measure a single response. Agent evals measure a full run: did it
+                complete the task, how many steps did it take, did it call the right tools in the right order?
+                Build a small set of test cases with known correct outcomes before going to production.
+              </p>
+            </div>
+          </div>
+        </section>
+
+        <section class="space-y-4" aria-labelledby="checklist-heading">
+          <h2 id="checklist-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">Production readiness checklist</h2>
+          <div class="rounded-2xl border border-white/10 bg-white/[0.03] p-5">
+            <ul class="space-y-2.5 text-sm text-slate-400/90">
+              <li class="flex items-start gap-2.5"><span class="mt-0.5 text-emerald-400">✓</span> Hard step limit set (e.g. max 15 iterations)</li>
+              <li class="flex items-start gap-2.5"><span class="mt-0.5 text-emerald-400">✓</span> Full trace logging enabled on every run</li>
+              <li class="flex items-start gap-2.5"><span class="mt-0.5 text-emerald-400">✓</span> All write/action tools require human confirmation</li>
+              <li class="flex items-start gap-2.5"><span class="mt-0.5 text-emerald-400">✓</span> System prompt reviewed for specificity and scope</li>
+              <li class="flex items-start gap-2.5"><span class="mt-0.5 text-emerald-400">✓</span> At least 10 test cases with known expected outcomes</li>
+              <li class="flex items-start gap-2.5"><span class="mt-0.5 text-emerald-400">✓</span> Cost-per-run estimated and budget limit set</li>
+              <li class="flex items-start gap-2.5"><span class="mt-0.5 text-emerald-400">✓</span> Graceful error handling when tools fail or time out</li>
+              <li class="flex items-start gap-2.5"><span class="mt-0.5 text-emerald-400">✓</span> Fallback to human if agent cannot complete task</li>
+            </ul>
+          </div>
+        </section>
+
+        {# Summary box #}
+        <section class="rounded-2xl border border-emerald-500/20 bg-emerald-500/[0.06] p-5 sm:p-6">
+          <h2 class="text-lg font-semibold text-emerald-100">Quick summary</h2>
+          <ul class="mt-3 list-disc space-y-1.5 pl-5 text-sm text-slate-300/95 marker:text-emerald-400/80">
+            <li>Hallucinations compound — each step can build on the last mistake</li>
+            <li>Always set a step limit, log everything, start with read-only tools</li>
+            <li>Never allow irreversible actions without human confirmation</li>
+            <li>Specific system prompts produce predictable agents — vague prompts do not</li>
+            <li>Eval full runs, not just single LLM responses</li>
+          </ul>
+        </section>
+
+      </article>
+    </div>
+
+    {# ── Navigation ── #}
+    <div class="flex items-center justify-between">
+      <a
+        href="{% url 'tutorial_ai_agents_usecases' %}"
+        class="inline-flex items-center gap-2 rounded-xl border border-white/15 bg-white/[0.04] px-5 py-2.5 text-sm font-semibold text-slate-200 transition hover:border-white/25 hover:bg-white/[0.07] hover:text-white"
+      >
+        <span aria-hidden>←</span> Real-World Use Cases
+      </a>
+      <a
+        href="{% url 'tutorial_ai_agents_next' %}"
+        class="inline-flex items-center gap-2 rounded-xl border border-emerald-400/35 bg-emerald-500/10 px-5 py-2.5 text-sm font-semibold text-emerald-200 transition hover:border-emerald-300/50 hover:bg-emerald-500/20 hover:text-white"
+      >
+        Next: What to Learn Next <span aria-hidden>→</span>
+      </a>
+    </div>
+
+  </div>
+{% endblock %}

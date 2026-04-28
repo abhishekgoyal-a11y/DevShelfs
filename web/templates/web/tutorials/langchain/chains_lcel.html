@@ -1,0 +1,245 @@
+{% extends "web/base.html" %}
+{% block title %}Chains & LCEL — LangChain Tutorial{% endblock %}
+{% block content %}
+  <div class="space-y-10">
+
+    <div class="flex flex-wrap items-center gap-2 text-sm text-slate-400/90">
+      <a href="{% url 'tutorials' %}" class="font-medium text-violet-300/90 transition hover:text-violet-200">Tutorials</a>
+      <span aria-hidden class="text-slate-600">/</span>
+      <a href="{% url 'tutorial_langchain_intro' %}" class="font-medium text-violet-300/90 transition hover:text-violet-200">LangChain</a>
+      <span aria-hidden class="text-slate-600">/</span>
+      <span class="text-slate-200/90">Chains &amp; LCEL</span>
+    </div>
+
+    <section class="relative overflow-hidden rounded-3xl border border-violet-400/20 bg-white/[0.06] p-6 shadow-[0_0_0_1px_rgba(255,255,255,0.04)] backdrop-blur-2xl sm:p-8">
+      <div class="pointer-events-none absolute -right-24 top-0 h-72 w-72 rounded-full bg-violet-500/15 blur-3xl"></div>
+      <div class="pointer-events-none absolute -left-20 bottom-0 h-56 w-56 rounded-full bg-fuchsia-500/10 blur-3xl"></div>
+      <div class="relative">
+        <div class="flex flex-wrap items-center gap-3">
+          <span class="rounded-full border border-violet-500/25 bg-violet-500/10 px-2.5 py-1 text-xs font-medium text-violet-300/90">LangChain</span>
+          <span class="rounded-full border border-sky-500/25 bg-sky-500/10 px-2.5 py-1 text-xs font-medium text-sky-300/90">Intermediate</span>
+          <span class="text-xs text-slate-400/80">· 12 min read</span>
+          <span class="ml-auto text-xs font-medium text-slate-400/80">Page 4 of 8</span>
+        </div>
+        <h1 class="mt-4 text-3xl font-semibold tracking-tight text-white sm:text-4xl lg:text-[2.5rem] lg:leading-tight">Chains &amp; LCEL</h1>
+        <p class="mt-4 max-w-2xl text-sm leading-relaxed text-slate-200/80 sm:text-base">
+          The old LLMChain and SequentialChain patterns, the modern LCEL pipe syntax, parallel steps, streaming, and when to reach for each.
+        </p>
+        <div class="mt-6">
+          <div class="mb-1.5 flex items-center justify-between text-xs text-slate-400/80"><span>Series progress</span><span>4 / 8</span></div>
+          <div class="h-1.5 w-full overflow-hidden rounded-full bg-white/10"><div class="h-full w-[50%] rounded-full bg-violet-400/70"></div></div>
+        </div>
+      </div>
+    </section>
+
+    <div class="glass rounded-3xl border border-white/10 p-5 sm:p-8">
+      <article class="mx-auto space-y-12 text-base leading-relaxed text-slate-300/95">
+
+        <section class="space-y-5" aria-labelledby="legacy-heading">
+          <h2 id="legacy-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">The old way — LLMChain</h2>
+          <p>Before LCEL, you built chains by passing components as constructor arguments. You will still see this pattern in older tutorials and documentation.</p>
+          <div class="rounded-2xl border border-white/10 bg-white/[0.03] p-5">
+            <code class="block font-mono text-xs text-slate-300 whitespace-pre">from langchain.chains import LLMChain
+from langchain_openai import ChatOpenAI
+from langchain_core.prompts import ChatPromptTemplate
+
+llm = ChatOpenAI(model="gpt-4o-mini")
+prompt = ChatPromptTemplate.from_messages([
+    ("system", "You are a helpful assistant."),
+    ("human", "{question}"),
+])
+
+chain = LLMChain(llm=llm, prompt=prompt)
+result = chain.invoke({"question": "What is LangChain?"})
+print(result["text"])</code>
+          </div>
+          <p class="text-sm text-slate-400/90">The problem: every chain type had a slightly different API, different input/output keys, and different ways to compose. It became messy quickly.</p>
+        </section>
+
+        <section class="space-y-5" aria-labelledby="sequential-heading">
+          <h2 id="sequential-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">SequentialChain</h2>
+          <p>To run two chains in sequence — where the output of the first becomes the input of the second — you used <code class="rounded bg-white/10 px-1 text-sm">SequentialChain</code>.</p>
+          <div class="rounded-2xl border border-white/10 bg-white/[0.03] p-5">
+            <code class="block font-mono text-xs text-slate-300 whitespace-pre">from langchain.chains import SimpleSequentialChain
+
+chain1 = LLMChain(llm=llm, prompt=summarise_prompt)
+chain2 = LLMChain(llm=llm, prompt=translate_prompt)
+
+pipeline = SimpleSequentialChain(chains=[chain1, chain2])
+result = pipeline.invoke("A long English article...")</code>
+          </div>
+          <p class="text-sm text-slate-400/90">Works, but fragile. If you need to pass extra values or skip a step based on a condition, you quickly hit the limits of this pattern.</p>
+        </section>
+
+        <section class="space-y-5" aria-labelledby="lcel-heading">
+          <h2 id="lcel-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">The modern way — LCEL</h2>
+          <p>
+            LCEL (LangChain Expression Language) replaces all the old chain classes with a single, unified composition model.
+            The <code class="rounded bg-white/10 px-1 text-sm">|</code> operator connects any two <em>Runnables</em> — and every LangChain component implements the Runnable interface.
+          </p>
+          <div class="rounded-2xl border border-white/10 bg-white/[0.03] p-5 space-y-4">
+            <p class="text-xs font-semibold uppercase tracking-wide text-slate-400">Basic chain</p>
+            <code class="block font-mono text-xs text-slate-300 whitespace-pre">from langchain_core.output_parsers import StrOutputParser
+
+chain = prompt | llm | StrOutputParser()
+result = chain.invoke({"question": "What is LangChain?"})</code>
+          </div>
+          <p class="text-sm text-slate-400/90">
+            The output of <code class="rounded bg-white/10 px-1">prompt</code> (a list of messages) is passed directly into <code class="rounded bg-white/10 px-1">llm</code>.
+            The output of <code class="rounded bg-white/10 px-1">llm</code> (an <code class="rounded bg-white/10 px-1">AIMessage</code>) is passed into <code class="rounded bg-white/10 px-1">StrOutputParser</code>, which extracts the text.
+          </p>
+          <div class="rounded-2xl border border-violet-500/20 bg-violet-500/[0.05] p-5 space-y-3">
+            <p class="text-sm font-semibold text-violet-100">Two-step pipeline with LCEL</p>
+            <code class="block font-mono text-xs text-slate-300 whitespace-pre">summarise_chain = summarise_prompt | llm | StrOutputParser()
+translate_chain = translate_prompt | llm | StrOutputParser()
+
+pipeline = summarise_chain | translate_chain
+result = pipeline.invoke({"text": "A long English article..."})</code>
+            <p class="text-xs text-slate-400/90">Chains compose into longer chains — the output of one is the input of the next, no glue code needed.</p>
+          </div>
+        </section>
+
+        <section class="space-y-5" aria-labelledby="passthrough-heading">
+          <h2 id="passthrough-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">RunnablePassthrough &amp; RunnableParallel</h2>
+          <p>Sometimes you need to forward input values alongside LLM outputs, or run two chains at the same time. LCEL has built-in helpers for both.</p>
+
+          <div class="space-y-3">
+            <div class="rounded-2xl border border-white/10 bg-white/[0.03] p-5 space-y-3">
+              <h3 class="text-sm font-semibold text-slate-200">RunnablePassthrough — forward the original input</h3>
+              <code class="block font-mono text-xs text-slate-300 whitespace-pre">from langchain_core.runnables import RunnablePassthrough
+
+chain = (
+    {"context": retriever, "question": RunnablePassthrough()}
+    | prompt
+    | llm
+    | StrOutputParser()
+)</code>
+              <p class="text-xs text-slate-400/90"><code class="rounded bg-white/10 px-1">RunnablePassthrough()</code> passes the original input value through unchanged. Here the user's question is forwarded into the prompt alongside the retrieved context.</p>
+            </div>
+
+            <div class="rounded-2xl border border-white/10 bg-white/[0.03] p-5 space-y-3">
+              <h3 class="text-sm font-semibold text-slate-200">RunnableParallel — run steps in parallel</h3>
+              <code class="block font-mono text-xs text-slate-300 whitespace-pre">from langchain_core.runnables import RunnableParallel
+
+parallel = RunnableParallel({
+    "joke":    joke_chain,
+    "poem":    poem_chain,
+})
+
+result = parallel.invoke({"topic": "cats"})
+print(result["joke"])
+print(result["poem"])</code>
+              <p class="text-xs text-slate-400/90">Both chains run concurrently. The result is a dict with both outputs. Total latency is max(joke_time, poem_time), not the sum.</p>
+            </div>
+          </div>
+        </section>
+
+        <section class="space-y-5" aria-labelledby="streaming-heading">
+          <h2 id="streaming-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">Streaming</h2>
+          <p>Every LCEL chain supports streaming out of the box. Replace <code class="rounded bg-white/10 px-1 text-sm">.invoke()</code> with <code class="rounded bg-white/10 px-1 text-sm">.stream()</code> and iterate over the chunks as they arrive.</p>
+          <div class="rounded-2xl border border-white/10 bg-white/[0.03] p-5">
+            <code class="block font-mono text-xs text-slate-300 whitespace-pre">chain = prompt | llm | StrOutputParser()
+
+for chunk in chain.stream({"question": "Explain transformers"}):
+    print(chunk, end="", flush=True)</code>
+          </div>
+          <p class="text-sm text-slate-400/90">Tokens print to the terminal as they arrive — no waiting for the full response. This is how you build streaming chat UIs with LangChain. For async use, call <code class="rounded bg-white/10 px-1">.astream()</code> instead.</p>
+        </section>
+
+        <section class="space-y-5" aria-labelledby="batch-heading">
+          <h2 id="batch-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">Batch processing</h2>
+          <p>To run a chain over many inputs at once, use <code class="rounded bg-white/10 px-1 text-sm">.batch()</code>. LangChain handles concurrency automatically.</p>
+          <div class="rounded-2xl border border-white/10 bg-white/[0.03] p-5">
+            <code class="block font-mono text-xs text-slate-300 whitespace-pre">questions = [
+    {"question": "What is Python?"},
+    {"question": "What is Rust?"},
+    {"question": "What is Go?"},
+]
+
+results = chain.batch(questions)  # runs concurrently</code>
+          </div>
+          <p class="text-sm text-slate-400/90">By default LangChain runs up to 5 concurrent calls. Pass <code class="rounded bg-white/10 px-1">max_concurrency=N</code> to <code class="rounded bg-white/10 px-1">.batch()</code> to override.</p>
+        </section>
+
+        <section class="space-y-5" aria-labelledby="interface-heading">
+          <h2 id="interface-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">The full Runnable interface</h2>
+          <div class="overflow-x-auto rounded-2xl border border-white/10">
+            <table class="w-full text-sm">
+              <thead>
+                <tr class="border-b border-white/10 bg-white/[0.04]">
+                  <th class="px-4 py-3 text-left font-semibold text-slate-200">Method</th>
+                  <th class="px-4 py-3 text-left font-semibold text-slate-200">What it does</th>
+                  <th class="px-4 py-3 text-left font-semibold text-slate-200">Async variant</th>
+                </tr>
+              </thead>
+              <tbody class="divide-y divide-white/5">
+                <tr>
+                  <td class="px-4 py-3 font-medium text-violet-300 font-mono text-xs">.invoke()</td>
+                  <td class="px-4 py-3 text-slate-400/90">Single input → single output</td>
+                  <td class="px-4 py-3 text-slate-400/90 font-mono text-xs">.ainvoke()</td>
+                </tr>
+                <tr>
+                  <td class="px-4 py-3 font-medium text-violet-300 font-mono text-xs">.stream()</td>
+                  <td class="px-4 py-3 text-slate-400/90">Single input → iterator of chunks</td>
+                  <td class="px-4 py-3 text-slate-400/90 font-mono text-xs">.astream()</td>
+                </tr>
+                <tr>
+                  <td class="px-4 py-3 font-medium text-violet-300 font-mono text-xs">.batch()</td>
+                  <td class="px-4 py-3 text-slate-400/90">List of inputs → list of outputs (concurrent)</td>
+                  <td class="px-4 py-3 text-slate-400/90 font-mono text-xs">.abatch()</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <p class="text-sm text-slate-400/90">Because every component shares this interface, you can swap any component in a chain without changing any other code.</p>
+        </section>
+
+        <section class="space-y-5" aria-labelledby="when-heading">
+          <h2 id="when-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">When to use chains vs agents</h2>
+          <div class="grid gap-4 sm:grid-cols-2">
+            <div class="rounded-2xl border border-white/10 bg-white/[0.03] p-5 space-y-2">
+              <h3 class="text-sm font-semibold text-white">Use a chain when…</h3>
+              <ul class="list-disc space-y-1.5 pl-4 text-sm text-slate-400/90 marker:text-violet-400/80">
+                <li>The steps are fixed and known at build time</li>
+                <li>You need predictable, deterministic behavior</li>
+                <li>Latency and cost are critical</li>
+                <li>You're building a production pipeline</li>
+              </ul>
+            </div>
+            <div class="rounded-2xl border border-violet-500/20 bg-violet-500/[0.05] p-5 space-y-2">
+              <h3 class="text-sm font-semibold text-violet-100">Use an agent when…</h3>
+              <ul class="list-disc space-y-1.5 pl-4 text-sm text-slate-400/90 marker:text-violet-400/80">
+                <li>The steps depend on what the LLM discovers</li>
+                <li>You need the model to decide which tool to call</li>
+                <li>The task is open-ended or exploratory</li>
+                <li>You're prototyping or building an assistant</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        <section class="rounded-2xl border border-violet-500/20 bg-violet-500/[0.06] p-5 sm:p-6">
+          <h2 class="text-lg font-semibold text-violet-100">Quick summary</h2>
+          <ul class="mt-3 list-disc space-y-1.5 pl-5 text-sm text-slate-300/95 marker:text-violet-400/80">
+            <li><code class="rounded bg-white/10 px-1">LLMChain</code> and <code class="rounded bg-white/10 px-1">SequentialChain</code> are legacy — still work but avoid in new code</li>
+            <li>LCEL: <code class="rounded bg-white/10 px-1">prompt | llm | parser</code> — composable, uniform, no glue code</li>
+            <li><code class="rounded bg-white/10 px-1">RunnablePassthrough</code> forwards original inputs; <code class="rounded bg-white/10 px-1">RunnableParallel</code> runs branches concurrently</li>
+            <li>Every chain supports <code class="rounded bg-white/10 px-1">.invoke()</code>, <code class="rounded bg-white/10 px-1">.stream()</code>, <code class="rounded bg-white/10 px-1">.batch()</code> and their async variants</li>
+            <li>Use chains for fixed steps; use agents when the LLM must decide the steps at runtime</li>
+          </ul>
+        </section>
+
+      </article>
+    </div>
+
+    <div class="flex items-center justify-between">
+      <a href="{% url 'tutorial_langchain_prompts' %}" class="inline-flex items-center gap-2 rounded-xl border border-white/15 bg-white/[0.04] px-5 py-2.5 text-sm font-semibold text-slate-200 transition hover:border-white/25 hover:bg-white/[0.07] hover:text-white">
+        <span aria-hidden>←</span> Prompt Templates
+      </a>
+      <a href="{% url 'tutorial_langchain_memory' %}" class="inline-flex items-center gap-2 rounded-xl border border-violet-400/35 bg-violet-500/10 px-5 py-2.5 text-sm font-semibold text-violet-200 transition hover:border-violet-300/50 hover:bg-violet-500/20 hover:text-white">
+        Next: Memory <span aria-hidden>→</span>
+      </a>
+    </div>
+
+  </div>
+{% endblock %}

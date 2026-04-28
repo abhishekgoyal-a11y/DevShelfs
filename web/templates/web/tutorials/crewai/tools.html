@@ -1,0 +1,208 @@
+{% extends "web/base.html" %}
+{% block title %}Tools & Custom Tools — Build with CrewAI{% endblock %}
+{% block content %}
+  <div class="space-y-10">
+    {# ── Breadcrumb ── #}
+    <div class="flex flex-wrap items-center gap-2 text-sm text-slate-400/90">
+      <a href="{% url 'tutorials' %}" class="font-medium text-violet-300/90 transition hover:text-violet-200">Tutorials</a>
+      <span aria-hidden class="text-slate-600">/</span>
+      <a href="{% url 'tutorials' %}?category=ai-agents" class="font-medium text-violet-300/90 transition hover:text-violet-200">AI Agents</a>
+      <span aria-hidden class="text-slate-600">/</span>
+      <span class="text-slate-200/90">Tools & Custom Tools</span>
+    </div>
+
+    {# ── Hero ── #}
+    <section class="relative overflow-hidden rounded-3xl border border-violet-400/20 bg-white/[0.06] p-6 shadow-[0_0_0_1px_rgba(255,255,255,0.04)] backdrop-blur-2xl sm:p-8">
+      <div class="pointer-events-none absolute -right-24 top-0 h-72 w-72 rounded-full bg-violet-500/15 blur-3xl"></div>
+      <div class="pointer-events-none absolute -left-20 bottom-0 h-56 w-56 rounded-full bg-fuchsia-500/10 blur-3xl"></div>
+      <div class="relative">
+        <div class="flex flex-wrap items-center gap-3">
+          <span class="rounded-full border border-violet-500/25 bg-violet-500/10 px-2.5 py-1 text-xs font-medium text-violet-300/90">Build with CrewAI</span>
+          <span class="rounded-full border border-amber-500/25 bg-amber-500/10 px-2.5 py-1 text-xs font-medium text-amber-300/90">Intermediate</span>
+          <span class="text-xs text-slate-400/80">· 15 min read</span>
+          <span class="ml-auto text-xs font-medium text-slate-400/80">Page 7 of 15</span>
+        </div>
+        <h1 class="mt-4 text-3xl font-semibold tracking-tight text-white sm:text-4xl lg:text-[2.5rem] lg:leading-tight">Tools & Custom Tools</h1>
+        <p class="mt-4 max-w-2xl text-sm leading-relaxed text-slate-200/80 sm:text-base">
+          Built-in tools, the @tool decorator, BaseTool subclasses for stateful tools, error handling, and the rules that keep agents from drowning in tools.
+        </p>
+        <div class="mt-6">
+          <div class="mb-1.5 flex items-center justify-between text-xs text-slate-400/80"><span>Series progress</span><span>7 / 15</span></div>
+          <div class="h-1.5 w-full overflow-hidden rounded-full bg-white/10"><div class="h-full w-[47%] rounded-full bg-violet-400/70"></div></div>
+        </div>
+      </div>
+    </section>
+
+    {# ── Content ── #}
+    <div class="glass rounded-3xl border border-white/10 p-5 sm:p-8">
+      <article class="mx-auto space-y-12 text-base leading-relaxed text-slate-300/95">
+
+        <section class="space-y-5" aria-labelledby="why-heading">
+          <h2 id="why-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">Why Tools Matter</h2>
+          <p>An LLM alone can only reason over what's in its prompt. <strong>Tools</strong> let agents take action: search the web, read a file, query a database, hit an API.</p>
+        </section>
+
+        <section class="space-y-5" aria-labelledby="builtin-heading">
+          <h2 id="builtin-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">Built-in Tools</h2>
+          <p>Install <code class="rounded bg-white/[0.06] px-1.5 py-0.5 font-mono text-xs">crewai-tools</code> and you get a dozen ready-to-use tools.</p>
+          <div class="rounded-2xl border border-white/10 bg-white/[0.03] p-5">
+            <p class="font-semibold text-white mb-3">Common built-ins</p>
+            <div class="ds-codeblock overflow-hidden rounded-2xl border border-white/10 bg-slate-950/90">
+  <div class="flex items-center justify-between gap-3 border-b border-white/10 px-3 py-2">
+    <span class="font-mono text-[11px] font-medium uppercase tracking-wide text-slate-400">PYTHON</span>
+    <button type="button" class="ds-codeblock-copy rounded-lg border border-white/10 bg-white/[0.06] px-2.5 py-1 text-xs font-semibold text-slate-200 transition hover:border-sky-400/40 hover:bg-white/[0.1] hover:text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-sky-400/50" data-copy-label="Copy" data-copied-label="Copied" aria-label="Copy code to clipboard">Copy</button>
+  </div>
+  <pre class="ds-codeblock-pre code-block m-0 overflow-x-auto p-4 text-[0.8125rem] leading-[1.55] sm:text-sm language-python" tabindex="0"><code class="whitespace-pre-wrap font-mono ds-codeblock-source language-python">from crewai_tools import (
+    SerperDevTool,         # Google search via Serper API
+    ScrapeWebsiteTool,     # fetch + parse HTML
+    FileReadTool,          # read a local file
+    DirectoryReadTool,     # list a folder
+    PDFSearchTool,         # search a PDF semantically
+    CSVSearchTool,         # search rows in a CSV
+)
+
+search = SerperDevTool()
+scraper = ScrapeWebsiteTool()
+file_reader = FileReadTool()
+
+researcher = Agent(
+    role="Web Research Analyst",
+    goal="Find current info on {topic}",
+    backstory="...",
+    tools=[search, scraper],
+)</code></pre>
+</div>
+          </div>
+        </section>
+
+        <section class="space-y-5" aria-labelledby="custom-heading">
+          <h2 id="custom-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">Custom Tools with @tool</h2>
+          <p>Anything you can write as a Python function, you can give to an agent. The docstring becomes the tool's description — write it carefully, the model uses it to decide when to call.</p>
+          <div class="rounded-2xl border border-white/10 bg-white/[0.03] p-5">
+            <p class="font-semibold text-white mb-3">Custom tool</p>
+            <div class="ds-codeblock overflow-hidden rounded-2xl border border-white/10 bg-slate-950/90">
+  <div class="flex items-center justify-between gap-3 border-b border-white/10 px-3 py-2">
+    <span class="font-mono text-[11px] font-medium uppercase tracking-wide text-slate-400">PYTHON</span>
+    <button type="button" class="ds-codeblock-copy rounded-lg border border-white/10 bg-white/[0.06] px-2.5 py-1 text-xs font-semibold text-slate-200 transition hover:border-sky-400/40 hover:bg-white/[0.1] hover:text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-sky-400/50" data-copy-label="Copy" data-copied-label="Copied" aria-label="Copy code to clipboard">Copy</button>
+  </div>
+  <pre class="ds-codeblock-pre code-block m-0 overflow-x-auto p-4 text-[0.8125rem] leading-[1.55] sm:text-sm language-python" tabindex="0"><code class="whitespace-pre-wrap font-mono ds-codeblock-source language-python">from crewai.tools import tool
+import requests
+
+@tool("Get current stock price")
+def get_stock_price(ticker: str) -> str:
+    """Fetch the latest stock price for a US ticker symbol.
+
+    Args:
+        ticker: Uppercase ticker symbol, e.g. AAPL, MSFT.
+
+    Returns:
+        A short string: "AAPL: $187.32 (+0.4%)"
+    """
+    resp = requests.get(f"https://api.example.com/quote/{ticker}").json()
+    return f"{ticker}: ${resp[\'price\']} ({resp[\'change_pct\']}%)"
+
+analyst = Agent(
+    role="Equity Analyst",
+    goal="Answer questions about US stocks",
+    backstory="You are precise and use real-time data.",
+    tools=[get_stock_price],
+)</code></pre>
+</div>
+          </div>
+          <div class="rounded-2xl border border-sky-500/20 bg-sky-500/5 p-4">
+            <p class="text-sm text-slate-300"><strong>💡 Tip:</strong> The function's <em>docstring</em> is what the LLM sees. Spend time on it — it's a prompt.</p>
+          </div>
+        </section>
+
+        <section class="space-y-5" aria-labelledby="basetool-heading">
+          <h2 id="basetool-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">Class-Based Tools (BaseTool)</h2>
+          <p>For tools that need state (DB connection pool, auth token), subclass <code class="rounded bg-white/[0.06] px-1.5 py-0.5 font-mono text-xs">BaseTool</code>:</p>
+          <div class="rounded-2xl border border-white/10 bg-white/[0.03] p-5">
+            <p class="font-semibold text-white mb-3">Stateful custom tool</p>
+            <div class="ds-codeblock overflow-hidden rounded-2xl border border-white/10 bg-slate-950/90">
+  <div class="flex items-center justify-between gap-3 border-b border-white/10 px-3 py-2">
+    <span class="font-mono text-[11px] font-medium uppercase tracking-wide text-slate-400">PYTHON</span>
+    <button type="button" class="ds-codeblock-copy rounded-lg border border-white/10 bg-white/[0.06] px-2.5 py-1 text-xs font-semibold text-slate-200 transition hover:border-sky-400/40 hover:bg-white/[0.1] hover:text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-sky-400/50" data-copy-label="Copy" data-copied-label="Copied" aria-label="Copy code to clipboard">Copy</button>
+  </div>
+  <pre class="ds-codeblock-pre code-block m-0 overflow-x-auto p-4 text-[0.8125rem] leading-[1.55] sm:text-sm language-python" tabindex="0"><code class="whitespace-pre-wrap font-mono ds-codeblock-source language-python">from crewai.tools import BaseTool
+from pydantic import BaseModel, Field
+
+class QueryInput(BaseModel):
+    sql: str = Field(..., description="A read-only SELECT query")
+
+class PostgresQueryTool(BaseTool):
+    name: str = "Run a SELECT query against the analytics DB"
+    description: str = "Execute read-only SQL. Only SELECT statements allowed."
+    args_schema: type[BaseModel] = QueryInput
+
+    def __init__(self, conn):
+        super().__init__()
+        self._conn = conn
+
+    def _run(self, sql: str) -> str:
+        if not sql.strip().lower().startswith("select"):
+            return "Error: only SELECT queries are allowed."
+        with self._conn.cursor() as cur:
+            cur.execute(sql)
+            return str(cur.fetchall()[:50])</code></pre>
+</div>
+          </div>
+        </section>
+
+        <section class="space-y-5" aria-labelledby="errors-heading">
+          <h2 id="errors-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">Handling Tool Errors</h2>
+          <p>Tools throw real exceptions. Wrap risky calls — a raised exception aborts the agent's turn, but a returned error string lets the agent retry or recover.</p>
+          <div class="rounded-2xl border border-white/10 bg-white/[0.03] p-5">
+            <p class="font-semibold text-white mb-3">Defensive tool</p>
+            <div class="ds-codeblock overflow-hidden rounded-2xl border border-white/10 bg-slate-950/90">
+  <div class="flex items-center justify-between gap-3 border-b border-white/10 px-3 py-2">
+    <span class="font-mono text-[11px] font-medium uppercase tracking-wide text-slate-400">PYTHON</span>
+    <button type="button" class="ds-codeblock-copy rounded-lg border border-white/10 bg-white/[0.06] px-2.5 py-1 text-xs font-semibold text-slate-200 transition hover:border-sky-400/40 hover:bg-white/[0.1] hover:text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-sky-400/50" data-copy-label="Copy" data-copied-label="Copied" aria-label="Copy code to clipboard">Copy</button>
+  </div>
+  <pre class="ds-codeblock-pre code-block m-0 overflow-x-auto p-4 text-[0.8125rem] leading-[1.55] sm:text-sm language-python" tabindex="0"><code class="whitespace-pre-wrap font-mono ds-codeblock-source language-python">@tool("Search internal wiki")
+def wiki_search(query: str) -> str:
+    """Search the internal Confluence wiki. Returns top 3 page titles."""
+    try:
+        results = wiki_client.search(query, limit=3)
+        if not results:
+            return "No matches found."
+        return "\n".join(f"- {r.title}: {r.url}" for r in results)
+    except TimeoutError:
+        return "Wiki is slow right now. Try again in 10 seconds."
+    except Exception as e:
+        return f"Wiki error: {e}. Try a different query."</code></pre>
+</div>
+          </div>
+        </section>
+
+        <section class="space-y-5" aria-labelledby="rules-heading">
+          <h2 id="rules-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">Rules of Thumb</h2>
+          <ul class="list-disc space-y-2 pl-5 marker:text-violet-400/80">
+            <li><strong>Keep agents to 2–4 tools.</strong> Bigger toolsets confuse the model.</li>
+            <li><strong>Name and document for the LLM, not the human.</strong> The model picks tools by name + description.</li>
+            <li><strong>Return strings, not raw objects.</strong> The LLM only sees the string.</li>
+            <li><strong>Cap output size.</strong> A tool that returns 50KB blows the context window. Truncate to ~2KB.</li>
+          </ul>
+        </section>
+
+      </article>
+    </div>
+
+    {# ── Navigation ── #}
+    <div class="flex items-center justify-between">
+      <a
+        href="{% url 'tutorial_crewai_tasks' %}"
+        class="inline-flex items-center gap-2 rounded-xl border border-violet-400/35 bg-violet-500/10 px-5 py-2.5 text-sm font-semibold text-violet-200 transition hover:border-violet-300/50 hover:bg-violet-500/20 hover:text-white"
+      >
+        <span aria-hidden>←</span> Previous
+      </a>
+      <a
+        href="{% url 'tutorial_crewai_processes' %}"
+        class="inline-flex items-center gap-2 rounded-xl border border-violet-400/35 bg-violet-500/10 px-5 py-2.5 text-sm font-semibold text-violet-200 transition hover:border-violet-300/50 hover:bg-violet-500/20 hover:text-white"
+      >
+        Next: Process Types <span aria-hidden>→</span>
+      </a>
+    </div>
+
+  </div>
+{% endblock %}

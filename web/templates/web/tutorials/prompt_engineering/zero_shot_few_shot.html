@@ -1,0 +1,191 @@
+{% extends "web/base.html" %}
+{% block title %}Zero-shot & Few-shot Prompting — Prompt Engineering Tutorial{% endblock %}
+{% block content %}
+  <div class="space-y-10">
+
+    <div class="flex flex-wrap items-center gap-2 text-sm text-slate-400/90">
+      <a href="{% url 'tutorials' %}" class="font-medium text-sky-300/90 transition hover:text-sky-200">Tutorials</a>
+      <span aria-hidden class="text-slate-600">/</span>
+      <a href="{% url 'tutorial_pe_intro' %}" class="font-medium text-sky-300/90 transition hover:text-sky-200">Prompt Engineering</a>
+      <span aria-hidden class="text-slate-600">/</span>
+      <span class="text-slate-200/90">Zero-shot &amp; Few-shot</span>
+    </div>
+
+    <section class="relative overflow-hidden rounded-3xl border border-sky-400/20 bg-white/[0.06] p-6 shadow-[0_0_0_1px_rgba(255,255,255,0.04)] backdrop-blur-2xl sm:p-8">
+      <div class="pointer-events-none absolute -right-24 top-0 h-72 w-72 rounded-full bg-sky-500/15 blur-3xl"></div>
+      <div class="pointer-events-none absolute -left-20 bottom-0 h-56 w-56 rounded-full bg-blue-500/10 blur-3xl"></div>
+      <div class="relative">
+        <div class="flex flex-wrap items-center gap-3">
+          <span class="rounded-full border border-sky-500/25 bg-sky-500/10 px-2.5 py-1 text-xs font-medium text-sky-300/90">Prompt Engineering</span>
+          <span class="rounded-full border border-emerald-500/25 bg-emerald-500/10 px-2.5 py-1 text-xs font-medium text-emerald-300/90">Beginner</span>
+          <span class="text-xs text-slate-400/80">· 10 min read</span>
+          <span class="ml-auto text-xs font-medium text-slate-400/80">Page 3 of 10</span>
+        </div>
+        <h1 class="mt-4 text-3xl font-semibold tracking-tight text-white sm:text-4xl lg:text-[2.5rem] lg:leading-tight">Zero-shot &amp; Few-shot Prompting</h1>
+        <p class="mt-4 max-w-2xl text-sm leading-relaxed text-slate-200/80 sm:text-base">
+          The two most fundamental prompting techniques — how they work, when to use each, and how to write few-shot examples that actually help.
+        </p>
+        <div class="mt-6">
+          <div class="mb-1.5 flex items-center justify-between text-xs text-slate-400/80"><span>Series progress</span><span>3 / 10</span></div>
+          <div class="h-1.5 w-full overflow-hidden rounded-full bg-white/10"><div class="h-full w-[30%] rounded-full bg-sky-400/70"></div></div>
+        </div>
+      </div>
+    </section>
+
+    <div class="glass rounded-3xl border border-white/10 p-5 sm:p-8">
+      <article class="mx-auto space-y-12 text-base leading-relaxed text-slate-300/95">
+
+        <section class="space-y-5" aria-labelledby="zs-heading">
+          <h2 id="zs-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">Zero-shot prompting</h2>
+          <p>Zero-shot means giving the model a task with no examples — just instructions. You rely entirely on the model's training to understand what you want.</p>
+          <div class="rounded-2xl border border-white/10 bg-white/[0.03] p-5 space-y-3">
+            <p class="text-xs font-semibold uppercase tracking-wide text-slate-400">Example</p>
+            <code class="block font-mono text-xs text-slate-300 whitespace-pre">Classify the sentiment of this review as Positive, Negative, or Neutral.
+
+Review: "The delivery was late but the product itself is great."
+Sentiment:</code>
+          </div>
+          <p class="text-sm text-slate-400/90">Zero-shot works well when the task is common and well-defined. Modern frontier models (GPT-4o, Claude 3.5, Gemini 1.5) handle most standard tasks zero-shot reliably.</p>
+          <div class="rounded-xl border border-white/10 bg-white/[0.02] px-4 py-3 text-sm">
+            <strong class="text-slate-200">When zero-shot fails:</strong>
+            <span class="text-slate-400/90"> the task is ambiguous, requires a non-standard output format, or the model's default behaviour doesn't match what you need. This is when few-shot examples help.</span>
+          </div>
+        </section>
+
+        <section class="space-y-5" aria-labelledby="fs-heading">
+          <h2 id="fs-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">Few-shot prompting</h2>
+          <p>Few-shot means including 2–5 input/output examples before your actual query. The model learns the pattern from the examples and applies it to the new input.</p>
+          <div class="rounded-2xl border border-white/10 bg-white/[0.03] p-5">
+            <code class="block font-mono text-xs text-slate-300 whitespace-pre">Classify the sentiment of product reviews.
+
+Review: "Absolutely love it, works perfectly." → Positive
+Review: "Stopped working after two days." → Negative
+Review: "It's okay, nothing special." → Neutral
+
+Review: "The delivery was late but the product itself is great."
+Sentiment:</code>
+          </div>
+          <p class="text-sm text-slate-400/90">The model now has a clear format, a clear label set, and a calibrated sense of what "Neutral" means versus "Positive." This significantly reduces ambiguous outputs.</p>
+        </section>
+
+        <section class="space-y-5" aria-labelledby="howmany-heading">
+          <h2 id="howmany-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">How many examples?</h2>
+          <div class="space-y-3">
+            <div class="rounded-2xl border border-white/10 bg-white/[0.03] p-5">
+              <h3 class="text-sm font-semibold text-slate-200">1–2 examples</h3>
+              <p class="mt-1.5 text-xs text-slate-400/90">Good for simple format fixes — showing the model the output structure you expect. Fast and cheap.</p>
+            </div>
+            <div class="rounded-2xl border border-sky-500/20 bg-sky-500/[0.04] p-5">
+              <h3 class="text-sm font-semibold text-sky-100">3–5 examples (sweet spot)</h3>
+              <p class="mt-1.5 text-xs text-slate-400/90">Enough to demonstrate variety and edge cases without wasting context. This is where few-shot delivers the best quality-per-token ratio.</p>
+            </div>
+            <div class="rounded-2xl border border-white/10 bg-white/[0.03] p-5">
+              <h3 class="text-sm font-semibold text-slate-200">10+ examples</h3>
+              <p class="mt-1.5 text-xs text-slate-400/90">Diminishing returns. More examples burn context and increase cost. If you need this many, consider fine-tuning instead.</p>
+            </div>
+          </div>
+        </section>
+
+        <section class="space-y-5" aria-labelledby="write-heading">
+          <h2 id="write-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">Writing good few-shot examples</h2>
+          <div class="space-y-3">
+            <div class="rounded-2xl border border-white/10 bg-white/[0.03] p-5">
+              <h3 class="text-sm font-semibold text-slate-200">Cover your edge cases</h3>
+              <p class="mt-1.5 text-xs text-slate-400/90">Don't just include easy examples. If "Neutral" is hard to distinguish from "Positive," include a borderline case in your examples so the model understands where you draw the line.</p>
+            </div>
+            <div class="rounded-2xl border border-white/10 bg-white/[0.03] p-5">
+              <h3 class="text-sm font-semibold text-slate-200">Keep examples consistent in format</h3>
+              <p class="mt-1.5 text-xs text-slate-400/90">The model copies the exact format of your examples. If some examples use "→" and others use ":", the model will alternate unpredictably. Pick one format and stick to it throughout.</p>
+            </div>
+            <div class="rounded-2xl border border-white/10 bg-white/[0.03] p-5">
+              <h3 class="text-sm font-semibold text-slate-200">Order matters — put hardest last</h3>
+              <p class="mt-1.5 text-xs text-slate-400/90">The model attends more to examples near the end of the prompt. Place your most representative or tricky example closest to the actual query.</p>
+            </div>
+            <div class="rounded-2xl border border-white/10 bg-white/[0.03] p-5">
+              <h3 class="text-sm font-semibold text-slate-200">Use real data, not made-up examples</h3>
+              <p class="mt-1.5 text-xs text-slate-400/90">Synthetic examples often miss the distribution of your real inputs. Pull examples from your actual dataset — they reflect the phrasing and edge cases the model will actually encounter.</p>
+            </div>
+          </div>
+        </section>
+
+        <section class="space-y-5" aria-labelledby="compare-heading">
+          <h2 id="compare-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">Zero-shot vs Few-shot — when to use each</h2>
+          <div class="overflow-x-auto rounded-2xl border border-white/10">
+            <table class="w-full text-sm">
+              <thead>
+                <tr class="border-b border-white/10 bg-white/[0.04]">
+                  <th class="px-4 py-3 text-left font-semibold text-slate-200">Situation</th>
+                  <th class="px-4 py-3 text-left font-semibold text-slate-200">Use</th>
+                </tr>
+              </thead>
+              <tbody class="divide-y divide-white/5">
+                <tr>
+                  <td class="px-4 py-3 text-slate-400/90">Standard task, modern frontier model</td>
+                  <td class="px-4 py-3 font-medium text-sky-300">Zero-shot</td>
+                </tr>
+                <tr>
+                  <td class="px-4 py-3 text-slate-400/90">Custom output format or schema</td>
+                  <td class="px-4 py-3 font-medium text-sky-300">Few-shot</td>
+                </tr>
+                <tr>
+                  <td class="px-4 py-3 text-slate-400/90">Non-obvious classification labels</td>
+                  <td class="px-4 py-3 font-medium text-sky-300">Few-shot</td>
+                </tr>
+                <tr>
+                  <td class="px-4 py-3 text-slate-400/90">Smaller / open-source models</td>
+                  <td class="px-4 py-3 font-medium text-sky-300">Few-shot</td>
+                </tr>
+                <tr>
+                  <td class="px-4 py-3 text-slate-400/90">High token cost, simple task</td>
+                  <td class="px-4 py-3 font-medium text-sky-300">Zero-shot</td>
+                </tr>
+                <tr>
+                  <td class="px-4 py-3 text-slate-400/90">Inconsistent outputs despite clear instructions</td>
+                  <td class="px-4 py-3 font-medium text-sky-300">Few-shot</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <section class="space-y-5" aria-labelledby="dynamic-heading">
+          <h2 id="dynamic-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">Dynamic few-shot selection</h2>
+          <p>In production, you often have a large library of examples and want to dynamically select the most relevant ones for each query — rather than hardcoding the same examples every time.</p>
+          <div class="rounded-2xl border border-white/10 bg-white/[0.03] p-5">
+            <code class="block font-mono text-xs text-slate-300 whitespace-pre">from langchain_core.prompts import FewShotChatMessagePromptTemplate
+from langchain_community.vectorstores import FAISS
+from langchain_core.example_selectors import SemanticSimilarityExampleSelector
+
+# Select the 3 most similar examples to the current input
+selector = SemanticSimilarityExampleSelector.from_examples(
+    examples, embeddings, vectorstore_cls=FAISS, k=3
+)</code>
+          </div>
+          <p class="text-sm text-slate-400/90">Semantic example selection improves quality and keeps token usage under control. Relevant examples beat random ones every time.</p>
+        </section>
+
+        <section class="rounded-2xl border border-sky-500/20 bg-sky-500/[0.06] p-5 sm:p-6">
+          <h2 class="text-lg font-semibold text-sky-100">Quick summary</h2>
+          <ul class="mt-3 list-disc space-y-1.5 pl-5 text-sm text-slate-300/95 marker:text-sky-400/80">
+            <li>Zero-shot: task + instruction only. Works for standard tasks on frontier models</li>
+            <li>Few-shot: 2–5 examples before your query. Use when format matters or outputs are inconsistent</li>
+            <li>Sweet spot is 3–5 examples — cover edge cases, keep format consistent, put hardest last</li>
+            <li>Use real examples from your data, not synthetic ones</li>
+            <li>For production with many examples, use semantic selection to pick the most relevant ones</li>
+          </ul>
+        </section>
+
+      </article>
+    </div>
+
+    <div class="flex items-center justify-between">
+      <a href="{% url 'tutorial_pe_anatomy' %}" class="inline-flex items-center gap-2 rounded-xl border border-white/15 bg-white/[0.04] px-5 py-2.5 text-sm font-semibold text-slate-200 transition hover:border-white/25 hover:bg-white/[0.07] hover:text-white">
+        <span aria-hidden>←</span> Prompt Anatomy
+      </a>
+      <a href="{% url 'tutorial_pe_cot' %}" class="inline-flex items-center gap-2 rounded-xl border border-sky-400/35 bg-sky-500/10 px-5 py-2.5 text-sm font-semibold text-sky-200 transition hover:border-sky-300/50 hover:bg-sky-500/20 hover:text-white">
+        Next: Chain-of-Thought <span aria-hidden>→</span>
+      </a>
+    </div>
+
+  </div>
+{% endblock %}

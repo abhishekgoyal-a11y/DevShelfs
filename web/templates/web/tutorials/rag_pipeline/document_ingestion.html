@@ -1,0 +1,300 @@
+{% extends "web/base.html" %}
+{% block title %}Document Ingestion — RAG Pipeline Tutorial{% endblock %}
+{% block content %}
+  <div class="space-y-10">
+    {# ── Breadcrumb ── #}
+    <div class="flex flex-wrap items-center gap-2 text-sm text-slate-400/90">
+      <a href="{% url 'tutorials' %}" class="font-medium text-violet-300/90 transition hover:text-violet-200">Tutorials</a>
+      <span aria-hidden class="text-slate-600">/</span>
+      <a href="{% url 'tutorials' %}?category=rag-vector-dbs" class="font-medium text-violet-300/90 transition hover:text-violet-200">RAG & Vector DBs</a>
+      <span aria-hidden class="text-slate-600">/</span>
+      <span class="text-slate-200/90">Document Ingestion</span>
+    </div>
+
+    {# ── Hero ── #}
+    <section class="relative overflow-hidden rounded-3xl border border-violet-400/20 bg-white/[0.06] p-6 shadow-[0_0_0_1px_rgba(255,255,255,0.04)] backdrop-blur-2xl sm:p-8">
+      <div class="pointer-events-none absolute -right-24 top-0 h-72 w-72 rounded-full bg-violet-500/15 blur-3xl"></div>
+      <div class="pointer-events-none absolute -left-20 bottom-0 h-56 w-56 rounded-full bg-fuchsia-500/10 blur-3xl"></div>
+      <div class="relative">
+        <div class="flex flex-wrap items-center gap-3">
+          <span class="rounded-full border border-violet-500/25 bg-violet-500/10 px-2.5 py-1 text-xs font-medium text-violet-300/90">RAG Pipeline</span>
+          <span class="rounded-full border border-sky-500/25 bg-sky-500/10 px-2.5 py-1 text-xs font-medium text-sky-300/90">Beginner</span>
+          <span class="text-xs text-slate-400/80">· 10 min read</span>
+          <span class="ml-auto text-xs font-medium text-slate-400/80">Page 3 of 23</span>
+        </div>
+        <h1 class="mt-4 text-3xl font-semibold tracking-tight text-white sm:text-4xl lg:text-[2.5rem] lg:leading-tight">Document Ingestion</h1>
+        <p class="mt-4 max-w-2xl text-sm leading-relaxed text-slate-200/80 sm:text-base">
+          Loading documents from various sources, extracting metadata, handling different file formats, and preprocessing data for RAG.
+        </p>
+        <div class="mt-6">
+          <div class="mb-1.5 flex items-center justify-between text-xs text-slate-400/80"><span>Series progress</span><span>3 / 23</span></div>
+          <div class="h-1.5 w-full overflow-hidden rounded-full bg-white/10"><div class="h-full w-[13%] rounded-full bg-violet-400/70"></div></div>
+        </div>
+      </div>
+    </section>
+
+    {# ── Content ── #}
+    <div class="glass rounded-3xl border border-white/10 p-5 sm:p-8">
+      <article class="mx-auto space-y-12 text-base leading-relaxed text-slate-300/95">
+
+        <section class="space-y-5" aria-labelledby="overview-heading">
+          <h2 id="overview-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">Overview: Data Sources</h2>
+          <p>
+            RAG requires pulling documents from various sources. They can be:
+          </p>
+          <div class="grid grid-cols-2 gap-3 mt-4">
+            <div class="rounded-lg border border-white/10 bg-white/[0.03] p-3">
+              <p class="font-semibold text-white text-sm">File-based</p>
+              <p class="text-xs text-slate-300">PDFs, Word, TXT, JSON, CSV, HTML</p>
+            </div>
+            <div class="rounded-lg border border-white/10 bg-white/[0.03] p-3">
+              <p class="font-semibold text-white text-sm">Web-based</p>
+              <p class="text-xs text-slate-300">Websites, APIs, URLs</p>
+            </div>
+            <div class="rounded-lg border border-white/10 bg-white/[0.03] p-3">
+              <p class="font-semibold text-white text-sm">Database</p>
+              <p class="text-xs text-slate-300">PostgreSQL, MySQL, MongoDB</p>
+            </div>
+            <div class="rounded-lg border border-white/10 bg-white/[0.03] p-3">
+              <p class="font-semibold text-white text-sm">Knowledge</p>
+              <p class="text-xs text-slate-300">Notion, Confluence, Google Docs</p>
+            </div>
+          </div>
+        </section>
+
+        <section class="space-y-5" aria-labelledby="loading-heading">
+          <h2 id="loading-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">Loading Documents</h2>
+          <p>
+            LangChain and LlamaIndex provide loaders for dozens of formats. They all return <code class="rounded bg-white/10 px-1 text-sm">Document</code> objects with <code class="rounded bg-white/10 px-1 text-sm">page_content</code> and <code class="rounded bg-white/10 px-1 text-sm">metadata</code>.
+          </p>
+
+          <div class="space-y-4">
+            <div class="rounded-2xl border border-white/10 bg-white/[0.03] p-5">
+              <p class="font-semibold text-white mb-3">LangChain Example</p>
+              <div class="ds-codeblock overflow-hidden rounded-2xl border border-white/10 bg-slate-950/90">
+  <div class="flex items-center justify-between gap-3 border-b border-white/10 px-3 py-2">
+    <span class="font-mono text-[11px] font-medium uppercase tracking-wide text-slate-400">Python</span>
+    <button type="button" class="ds-codeblock-copy rounded-lg border border-white/10 bg-white/[0.06] px-2.5 py-1 text-xs font-semibold text-slate-200 transition hover:border-sky-400/40 hover:bg-white/[0.1] hover:text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-sky-400/50" data-copy-label="Copy" data-copied-label="Copied" aria-label="Copy code to clipboard">Copy</button>
+  </div>
+  <pre class="ds-codeblock-pre code-block m-0 overflow-x-auto p-4 text-[0.8125rem] leading-[1.55] sm:text-sm language-python" tabindex="0"><code class="whitespace-pre-wrap font-mono ds-codeblock-source language-python">from langchain_community.document_loaders import (
+    PyPDFLoader,
+    TextLoader,
+    WebBaseLoader,
+    UnstructuredExcelLoader
+)
+
+# Load a PDF
+loader = PyPDFLoader("report.pdf")
+docs = loader.load()  # Returns list of Document objects
+
+# Load a webpage
+loader = WebBaseLoader("https://example.com/docs")
+docs = loader.load()
+
+# Load plain text
+loader = TextLoader("notes.txt")
+docs = loader.load()
+
+# Load Excel
+loader = UnstructuredExcelLoader("data.xlsx")
+docs = loader.load()</code></pre>
+</div>
+            </div>
+
+            <div class="rounded-2xl border border-white/10 bg-white/[0.03] p-5">
+              <p class="font-semibold text-white mb-3">Document Structure</p>
+              <div class="ds-codeblock overflow-hidden rounded-2xl border border-white/10 bg-slate-950/90">
+  <div class="flex items-center justify-between gap-3 border-b border-white/10 px-3 py-2">
+    <span class="font-mono text-[11px] font-medium uppercase tracking-wide text-slate-400">YAML</span>
+    <button type="button" class="ds-codeblock-copy rounded-lg border border-white/10 bg-white/[0.06] px-2.5 py-1 text-xs font-semibold text-slate-200 transition hover:border-sky-400/40 hover:bg-white/[0.1] hover:text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-sky-400/50" data-copy-label="Copy" data-copied-label="Copied" aria-label="Copy code to clipboard">Copy</button>
+  </div>
+  <pre class="ds-codeblock-pre code-block m-0 overflow-x-auto p-4 text-[0.8125rem] leading-[1.55] sm:text-sm language-yaml" tabindex="0"><code class="whitespace-pre-wrap font-mono ds-codeblock-source language-yaml">Document {
+  page_content: "Tax deductions include...",
+  metadata: {
+    "source": "tax_guide.pdf",
+    "page": 3,
+    "author": "IRS",
+    "date": "2024-01-01"
+  }
+}</code></pre>
+</div>
+            </div>
+          </div>
+        </section>
+
+        <section class="space-y-5" aria-labelledby="metadata-heading">
+          <h2 id="metadata-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">Extracting and Enriching Metadata</h2>
+          <p>
+            Metadata is crucial for filtering, attribution, and debugging. Always preserve and enhance it.
+          </p>
+
+          <div class="rounded-2xl border border-white/10 bg-white/[0.03] p-5 space-y-3">
+            <p class="font-semibold text-white">Key Metadata to Preserve:</p>
+            <div class="space-y-2 text-sm text-slate-300">
+              <div class="flex items-start gap-3">
+                <span class="rounded bg-violet-500/20 px-2 py-0.5 text-xs font-medium text-violet-300 flex-shrink-0">source</span>
+                <p>Where the document came from (filename, URL, table name)</p>
+              </div>
+              <div class="flex items-start gap-3">
+                <span class="rounded bg-violet-500/20 px-2 py-0.5 text-xs font-medium text-violet-300 flex-shrink-0">timestamp</span>
+                <p>When it was created/modified (for versioning)</p>
+              </div>
+              <div class="flex items-start gap-3">
+                <span class="rounded bg-violet-500/20 px-2 py-0.5 text-xs font-medium text-violet-300 flex-shrink-0">author</span>
+                <p>Who created it (for trust/permissions)</p>
+              </div>
+              <div class="flex items-start gap-3">
+                <span class="rounded bg-violet-500/20 px-2 py-0.5 text-xs font-medium text-violet-300 flex-shrink-0">category</span>
+                <p>Type/topic (FAQ, policy, research, etc)</p>
+              </div>
+              <div class="flex items-start gap-3">
+                <span class="rounded bg-violet-500/20 px-2 py-0.5 text-xs font-medium text-violet-300 flex-shrink-0">permissions</span>
+                <p>Who can access it (for multi-tenant RAG)</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="rounded-2xl border border-blue-500/20 bg-blue-500/5 p-4 mt-4">
+            <p class="text-sm text-slate-300">
+              <strong>Pro tip:</strong> Add a <code class="bg-black/30 px-1 rounded text-xs">chunk_id</code> field when chunking. It helps trace which chunk led to the final answer and enables precise deletions during updates.
+            </p>
+          </div>
+        </section>
+
+        <section class="space-y-5" aria-labelledby="handling-heading">
+          <h2 id="handling-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">Handling Different File Formats</h2>
+
+          <div class="space-y-3">
+            <div class="rounded-2xl border border-white/10 bg-white/[0.03] p-5">
+              <p class="font-semibold text-white mb-3">📄 PDFs</p>
+              <p class="text-sm text-slate-300 mb-3"><strong>Challenge:</strong> Images, tables, forms, multiple columns.</p>
+              <code class="block font-mono text-xs text-slate-300 whitespace-pre bg-black/20 p-2 rounded mb-3">from langchain_community.document_loaders import PyPDFLoader
+loader = PyPDFLoader("document.pdf")
+docs = loader.load()
+# Problem: Loses formatting, images as "Document page X"</code>
+              <p class="text-xs text-slate-400"><strong>Better:</strong> Use PyMuPDF or pdfplumber for layout-aware extraction. For scanned PDFs, use OCR (pytesseract).</p>
+            </div>
+
+            <div class="rounded-2xl border border-white/10 bg-white/[0.03] p-5">
+              <p class="font-semibold text-white mb-3">📊 Excel / CSV</p>
+              <p class="text-sm text-slate-300 mb-3"><strong>Challenge:</strong> Tabular data, headers, types.</p>
+              <code class="block font-mono text-xs text-slate-300 whitespace-pre bg-black/20 p-2 rounded mb-3">import pandas as pd
+df = pd.read_csv("data.csv")
+# Convert to documents
+docs = [
+  Document(
+    page_content=f"Name: {row['name']}, Age: {row['age']}",
+    metadata={"source": "data.csv", "row": i}
+  )
+  for i, row in df.iterrows()
+]</code>
+              <p class="text-xs text-slate-400"><strong>Tip:</strong> For structured data, consider storing in a database and querying by filters, not RAG.</p>
+            </div>
+
+            <div class="rounded-2xl border border-white/10 bg-white/[0.03] p-5">
+              <p class="font-semibold text-white mb-3">🌐 Web Pages</p>
+              <p class="text-sm text-slate-300 mb-3"><strong>Challenge:</strong> HTML/CSS noise, JavaScript content, dynamic pages.</p>
+              <code class="block font-mono text-xs text-slate-300 whitespace-pre bg-black/20 p-2 rounded mb-3">from langchain_community.document_loaders import WebBaseLoader
+loader = WebBaseLoader("https://example.com/docs")
+docs = loader.load()
+# Often includes navigation, ads, etc.</code>
+              <p class="text-xs text-slate-400"><strong>Better:</strong> Use BeautifulSoup to clean HTML. Extract only main content. For JavaScript-heavy sites, use Playwright.</p>
+            </div>
+
+            <div class="rounded-2xl border border-white/10 bg-white/[0.03] p-5">
+              <p class="font-semibold text-white mb-3">🗄️ Databases</p>
+              <p class="text-sm text-slate-300 mb-3"><strong>Challenge:</strong> Queries, joins, permissions, realtime updates.</p>
+              <code class="block font-mono text-xs text-slate-300 whitespace-pre bg-black/20 p-2 rounded mb-3">import psycopg2
+conn = psycopg2.connect("dbname=mydb")
+cursor = conn.cursor()
+cursor.execute("SELECT * FROM articles")
+docs = [
+  Document(
+    page_content=row['content'],
+    metadata={"id": row['id'], "title": row['title']}
+  )
+  for row in cursor.fetchall()
+]</code>
+              <p class="text-xs text-slate-400"><strong>Note:</strong> Keep chunk_id aligned with DB row IDs for easy deletion on update.</p>
+            </div>
+          </div>
+        </section>
+
+        <section class="space-y-5" aria-labelledby="preprocessing-heading">
+          <h2 id="preprocessing-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">Preprocessing & Cleaning</h2>
+          <p>Raw documents often contain noise that hurts embedding quality. Clean them before ingestion.</p>
+
+          <div class="rounded-2xl border border-white/10 bg-white/[0.03] p-5">
+            <div class="ds-codeblock overflow-hidden rounded-2xl border border-white/10 bg-slate-950/90">
+  <div class="flex items-center justify-between gap-3 border-b border-white/10 px-3 py-2">
+    <span class="font-mono text-[11px] font-medium uppercase tracking-wide text-slate-400">Python</span>
+    <button type="button" class="ds-codeblock-copy rounded-lg border border-white/10 bg-white/[0.06] px-2.5 py-1 text-xs font-semibold text-slate-200 transition hover:border-sky-400/40 hover:bg-white/[0.1] hover:text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-sky-400/50" data-copy-label="Copy" data-copied-label="Copied" aria-label="Copy code to clipboard">Copy</button>
+  </div>
+  <pre class="ds-codeblock-pre code-block m-0 overflow-x-auto p-4 text-[0.8125rem] leading-[1.55] sm:text-sm language-python" tabindex="0"><code class="whitespace-pre-wrap font-mono ds-codeblock-source language-python">import re
+
+def clean_text(text):
+    # Remove extra whitespace
+    text = re.sub(r'\s+', ' ', text).strip()
+
+    # Remove URLs (optional, depends on use case)
+    text = re.sub(r'https?://\S+', '', text)
+
+    # Remove email addresses (optional)
+    text = re.sub(r'\S+@\S+', '', text)
+
+    # Remove special characters (keep some for code)
+    text = re.sub(r'[^\w\s\.\,\!\?\-]', '', text)
+
+    return text
+
+# Apply to documents
+for doc in documents:
+    doc.page_content = clean_text(doc.page_content)</code></pre>
+</div>
+          </div>
+
+          <div class="space-y-3 mt-4">
+            <p class="font-semibold text-white text-sm">Common Issues to Fix:</p>
+            <div class="space-y-2 text-sm text-slate-300">
+              <div class="flex items-start gap-3">
+                <span class="text-violet-300">•</span>
+                <p><strong>Extra whitespace/newlines</strong> from PDF extraction</p>
+              </div>
+              <div class="flex items-start gap-3">
+                <span class="text-violet-300">•</span>
+                <p><strong>Page headers/footers</strong> repeated on every page</p>
+              </div>
+              <div class="flex items-start gap-3">
+                <span class="text-violet-300">•</span>
+                <p><strong>Navigation text</strong> from web pages (menu items, etc)</p>
+              </div>
+              <div class="flex items-start gap-3">
+                <span class="text-violet-300">•</span>
+                <p><strong>Encoding issues</strong> (special characters, mojibake)</p>
+              </div>
+              <div class="flex items-start gap-3">
+                <span class="text-violet-300">•</span>
+                <p><strong>Private information</strong> that shouldn't be indexed</p>
+        </section>
+
+      </article>
+    </div>
+
+    {# ── Navigation ── #}
+    <div class="flex items-center justify-between">
+      <a
+        href="{% url 'tutorial_rag_pipeline_core_concepts' %}"
+        class="inline-flex items-center gap-2 rounded-xl border border-violet-400/35 bg-violet-500/10 px-5 py-2.5 text-sm font-semibold text-violet-200 transition hover:border-violet-300/50 hover:bg-violet-500/20 hover:text-white"
+      >
+        <span aria-hidden>←</span> Previous
+      </a>
+      <a
+        href="{% url 'tutorial_rag_pipeline_chunking' %}"
+        class="inline-flex items-center gap-2 rounded-xl border border-violet-400/35 bg-violet-500/10 px-5 py-2.5 text-sm font-semibold text-violet-200 transition hover:border-violet-300/50 hover:bg-violet-500/20 hover:text-white"
+      >
+        Next: Chunking Strategies <span aria-hidden>→</span>
+      </a>
+      </div>
+
+  </div>
+{% endblock %}

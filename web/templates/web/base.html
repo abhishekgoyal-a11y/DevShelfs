@@ -103,6 +103,11 @@
             class="rounded-xl px-3 py-2 text-sm font-medium transition-all duration-300 {% if active_nav == "ai" %}glass-strong text-white shadow-glow{% else %}text-slate-200/80 hover:bg-white/5 hover:text-white{% endif %}"
             >AI Tools</a
           >
+          <a
+            href="{% url 'tutorials' %}"
+            class="rounded-xl px-3 py-2 text-sm font-medium transition-all duration-300 {% if active_nav == "tutorials" %}glass-strong text-white shadow-glow{% else %}text-slate-200/80 hover:bg-white/5 hover:text-white{% endif %}"
+            >Tutorials</a
+          >
         </nav>
         <button
           type="button"
@@ -131,6 +136,12 @@
             class="rounded-xl px-3 py-2 text-sm font-medium text-slate-200/80 hover:bg-white/5"
             data-mobile-link
             >AI Tools</a
+          >
+          <a
+            href="{% url 'tutorials' %}"
+            class="rounded-xl px-3 py-2 text-sm font-medium text-slate-200/80 hover:bg-white/5"
+            data-mobile-link
+            >Tutorials</a
           >
         </div>
       </div>
@@ -172,6 +183,26 @@
       src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-python.min.js"
       crossorigin="anonymous"
     ></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-bash.min.js"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-yaml.min.js"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-json.min.js"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-markdown.min.js"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-sql.min.js"
+      crossorigin="anonymous"
+    ></script>
     <script>
       (function () {
         if (typeof Prism === "undefined") return;
@@ -186,7 +217,14 @@
     </script>
     <script>
       (function () {
+        // Handle copy buttons (.ds-codeblock-copy)
         document.querySelectorAll(".ds-codeblock-copy").forEach(function (btn) {
+          // Initialize button text
+          var copyLabel = btn.getAttribute("data-copy-label") || "Copy";
+          if (!btn.textContent.trim()) {
+            btn.textContent = copyLabel;
+          }
+
           btn.addEventListener("click", function () {
             var root = btn.closest(".ds-codeblock");
             if (!root) return;
@@ -215,6 +253,69 @@
               setState(false);
             }
           });
+        });
+
+        // Handle new-style copy buttons (.copy-button)
+        document.querySelectorAll(".copy-button").forEach(function (btn) {
+          // Initialize button text
+          var copyLabel = btn.getAttribute("data-copy-label") || "Copy";
+          btn.textContent = copyLabel;
+
+          btn.addEventListener("click", function () {
+            var root = btn.closest(".code-wrapper");
+            if (!root) return;
+            var codeEl = root.querySelector("pre code.ds-codeblock-source");
+            if (!codeEl) return;
+            var text = (codeEl.textContent || "").replace(/\n$/, "");
+            var copyLabel = btn.getAttribute("data-copy-label") || "Copy";
+            var copiedLabel = btn.getAttribute("data-copied-label") || "Copied";
+
+            function setState(copied) {
+              btn.textContent = copied ? copiedLabel : copyLabel;
+              btn.classList.toggle("copied", copied);
+              btn.setAttribute("aria-label", copied ? "Copied to clipboard" : "Copy code to clipboard");
+            }
+
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+              navigator.clipboard.writeText(text).then(
+                function () {
+                  setState(true);
+                  window.setTimeout(function () {
+                    setState(false);
+                  }, 2000);
+                },
+                function () {
+                  setState(false);
+                }
+              );
+            } else {
+              setState(false);
+            }
+          });
+        });
+      })();
+    </script>
+    <script>
+      (function () {
+        var toggleBtn = document.getElementById("toggle-series");
+        var toggleText = document.getElementById("toggle-text");
+        var toggleIcon = document.getElementById("toggle-icon");
+        var hiddenItems = document.querySelectorAll(".hidden-series-item");
+        var expanded = false;
+
+        if (!toggleBtn || hiddenItems.length === 0) return;
+
+        toggleBtn.addEventListener("click", function () {
+          expanded = !expanded;
+          hiddenItems.forEach(function (item) {
+            if (expanded) {
+              item.classList.add("visible");
+            } else {
+              item.classList.remove("visible");
+            }
+          });
+          toggleText.textContent = expanded ? "Hide overview" : "Show complete overview";
+          toggleIcon.textContent = expanded ? "↑" : "↓";
         });
       })();
     </script>

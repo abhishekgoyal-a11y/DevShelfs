@@ -1,0 +1,198 @@
+{% extends "web/base.html" %}
+{% block title %}Common Pitfalls & Best Practices — Build with CrewAI{% endblock %}
+{% block content %}
+  <div class="space-y-10">
+    {# ── Breadcrumb ── #}
+    <div class="flex flex-wrap items-center gap-2 text-sm text-slate-400/90">
+      <a href="{% url 'tutorials' %}" class="font-medium text-violet-300/90 transition hover:text-violet-200">Tutorials</a>
+      <span aria-hidden class="text-slate-600">/</span>
+      <a href="{% url 'tutorials' %}?category=ai-agents" class="font-medium text-violet-300/90 transition hover:text-violet-200">AI Agents</a>
+      <span aria-hidden class="text-slate-600">/</span>
+      <span class="text-slate-200/90">Common Pitfalls & Best Practices</span>
+    </div>
+
+    {# ── Hero ── #}
+    <section class="relative overflow-hidden rounded-3xl border border-violet-400/20 bg-white/[0.06] p-6 shadow-[0_0_0_1px_rgba(255,255,255,0.04)] backdrop-blur-2xl sm:p-8">
+      <div class="pointer-events-none absolute -right-24 top-0 h-72 w-72 rounded-full bg-violet-500/15 blur-3xl"></div>
+      <div class="pointer-events-none absolute -left-20 bottom-0 h-56 w-56 rounded-full bg-fuchsia-500/10 blur-3xl"></div>
+      <div class="relative">
+        <div class="flex flex-wrap items-center gap-3">
+          <span class="rounded-full border border-violet-500/25 bg-violet-500/10 px-2.5 py-1 text-xs font-medium text-violet-300/90">Build with CrewAI</span>
+          <span class="rounded-full border border-rose-500/25 bg-rose-500/10 px-2.5 py-1 text-xs font-medium text-rose-300/90">Advanced</span>
+          <span class="text-xs text-slate-400/80">· 14 min read</span>
+          <span class="ml-auto text-xs font-medium text-slate-400/80">Page 14 of 15</span>
+        </div>
+        <h1 class="mt-4 text-3xl font-semibold tracking-tight text-white sm:text-4xl lg:text-[2.5rem] lg:leading-tight">Common Pitfalls & Best Practices</h1>
+        <p class="mt-4 max-w-2xl text-sm leading-relaxed text-slate-200/80 sm:text-base">
+          Seven mistakes that keep crews from making it to production — and the checklist that gets you past them.
+        </p>
+        <div class="mt-6">
+          <div class="mb-1.5 flex items-center justify-between text-xs text-slate-400/80"><span>Series progress</span><span>14 / 15</span></div>
+          <div class="h-1.5 w-full overflow-hidden rounded-full bg-white/10"><div class="h-full w-[93%] rounded-full bg-violet-400/70"></div></div>
+        </div>
+      </div>
+    </section>
+
+    {# ── Content ── #}
+    <div class="glass rounded-3xl border border-white/10 p-5 sm:p-8">
+      <article class="mx-auto space-y-12 text-base leading-relaxed text-slate-300/95">
+
+        <section class="space-y-5" aria-labelledby="pitfall1-heading">
+          <h2 id="pitfall1-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">1. Too Many Agents</h2>
+          <p>Beginners build 7-agent crews because the demo videos do. Don't. Each agent adds an LLM call, a coordination point, and a failure mode.</p>
+          <div class="rounded-2xl border border-green-500/20 bg-green-500/5 p-4">
+            <p class="text-sm text-slate-300"><strong>Rule:</strong> Start with 2 agents. Add a 3rd only when you can name a clear failure mode the new agent will fix.</p>
+          </div>
+        </section>
+
+        <section class="space-y-5" aria-labelledby="pitfall2-heading">
+          <h2 id="pitfall2-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">2. Vague Roles & Goals</h2>
+          <p>"Helper", "Assistant", "Expert" — these produce mush. Specific roles produce specific outputs.</p>
+          <div class="rounded-2xl border border-white/10 bg-white/[0.03] p-5">
+            <p class="font-semibold text-white mb-3">Before / After</p>
+            <div class="ds-codeblock overflow-hidden rounded-2xl border border-white/10 bg-slate-950/90">
+  <div class="flex items-center justify-between gap-3 border-b border-white/10 px-3 py-2">
+    <span class="font-mono text-[11px] font-medium uppercase tracking-wide text-slate-400">PYTHON</span>
+    <button type="button" class="ds-codeblock-copy rounded-lg border border-white/10 bg-white/[0.06] px-2.5 py-1 text-xs font-semibold text-slate-200 transition hover:border-sky-400/40 hover:bg-white/[0.1] hover:text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-sky-400/50" data-copy-label="Copy" data-copied-label="Copied" aria-label="Copy code to clipboard">Copy</button>
+  </div>
+  <pre class="ds-codeblock-pre code-block m-0 overflow-x-auto p-4 text-[0.8125rem] leading-[1.55] sm:text-sm language-python" tabindex="0"><code class="whitespace-pre-wrap font-mono ds-codeblock-source language-python"># ❌ Mush
+Agent(role="Writer", goal="Write content")
+
+# ✓ Sharp
+Agent(
+    role="B2B SaaS Copywriter",
+    goal="Write 200-word LinkedIn posts that drive demo bookings",
+)</code></pre>
+</div>
+          </div>
+        </section>
+
+        <section class="space-y-5" aria-labelledby="pitfall3-heading">
+          <h2 id="pitfall3-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">3. Weak <code>expected_output</code></h2>
+          <p>If the agent has to guess the output format, it will guess differently every run. Pin it down.</p>
+          <div class="rounded-2xl border border-white/10 bg-white/[0.03] p-5">
+            <p class="font-semibold text-white mb-3">Pin the format</p>
+            <div class="ds-codeblock overflow-hidden rounded-2xl border border-white/10 bg-slate-950/90">
+  <div class="flex items-center justify-between gap-3 border-b border-white/10 px-3 py-2">
+    <span class="font-mono text-[11px] font-medium uppercase tracking-wide text-slate-400">PYTHON</span>
+    <button type="button" class="ds-codeblock-copy rounded-lg border border-white/10 bg-white/[0.06] px-2.5 py-1 text-xs font-semibold text-slate-200 transition hover:border-sky-400/40 hover:bg-white/[0.1] hover:text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-sky-400/50" data-copy-label="Copy" data-copied-label="Copied" aria-label="Copy code to clipboard">Copy</button>
+  </div>
+  <pre class="ds-codeblock-pre code-block m-0 overflow-x-auto p-4 text-[0.8125rem] leading-[1.55] sm:text-sm language-python" tabindex="0"><code class="whitespace-pre-wrap font-mono ds-codeblock-source language-python">expected_output=(
+    "Markdown table: | Segment | Churn % | Top Driver |\n"
+    "Followed by exactly 3 paragraphs, one per segment, "
+    "each starting with the segment name in bold."
+)</code></pre>
+</div>
+          </div>
+        </section>
+
+        <section class="space-y-5" aria-labelledby="pitfall4-heading">
+          <h2 id="pitfall4-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">4. Infinite Loops & Cost Overruns</h2>
+          <p>Default <code class="rounded bg-white/[0.06] px-1.5 py-0.5 font-mono text-xs">max_iter=25</code> with GPT-4 is how people accidentally rack up $50 bills.</p>
+          <div class="rounded-2xl border border-white/10 bg-white/[0.03] p-5">
+            <p class="font-semibold text-white mb-3">Tighten limits in dev</p>
+            <div class="ds-codeblock overflow-hidden rounded-2xl border border-white/10 bg-slate-950/90">
+  <div class="flex items-center justify-between gap-3 border-b border-white/10 px-3 py-2">
+    <span class="font-mono text-[11px] font-medium uppercase tracking-wide text-slate-400">PYTHON</span>
+    <button type="button" class="ds-codeblock-copy rounded-lg border border-white/10 bg-white/[0.06] px-2.5 py-1 text-xs font-semibold text-slate-200 transition hover:border-sky-400/40 hover:bg-white/[0.1] hover:text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-sky-400/50" data-copy-label="Copy" data-copied-label="Copied" aria-label="Copy code to clipboard">Copy</button>
+  </div>
+  <pre class="ds-codeblock-pre code-block m-0 overflow-x-auto p-4 text-[0.8125rem] leading-[1.55] sm:text-sm language-python" tabindex="0"><code class="whitespace-pre-wrap font-mono ds-codeblock-source language-python">agent = Agent(role="...", goal="...", backstory="...", max_iter=5, max_execution_time=120)</code></pre>
+</div>
+          </div>
+        </section>
+
+        <section class="space-y-5" aria-labelledby="pitfall5-heading">
+          <h2 id="pitfall5-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">5. Tool Soup</h2>
+          <p>Giving one agent 12 tools confuses the model. It picks wrong, wastes turns, and hits <code class="rounded bg-white/[0.06] px-1.5 py-0.5 font-mono text-xs">max_iter</code>.</p>
+          <div class="rounded-2xl border border-green-500/20 bg-green-500/5 p-4">
+            <p class="text-sm text-slate-300"><strong>Rule:</strong> 2–4 tools per agent. If you need more, split the agent.</p>
+          </div>
+        </section>
+
+        <section class="space-y-5" aria-labelledby="pitfall6-heading">
+          <h2 id="pitfall6-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">6. Delegation Without Boundaries</h2>
+          <p>Setting <code class="rounded bg-white/[0.06] px-1.5 py-0.5 font-mono text-xs">allow_delegation=True</code> on every agent creates an unbounded chain of "ask the next person" loops.</p>
+          <div class="rounded-2xl border border-green-500/20 bg-green-500/5 p-4">
+            <p class="text-sm text-slate-300"><strong>Rule:</strong> Only the manager (or one designated lead) gets <code class="rounded bg-white/[0.06] px-1.5 py-0.5 font-mono text-xs">allow_delegation=True</code>. Everyone else: <code class="rounded bg-white/[0.06] px-1.5 py-0.5 font-mono text-xs">False</code>.</p>
+          </div>
+        </section>
+
+        <section class="space-y-5" aria-labelledby="pitfall7-heading">
+          <h2 id="pitfall7-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">7. No Eval Loop</h2>
+          <p>You can't improve what you don't measure. Even 5 hand-graded test runs beats vibes.</p>
+          <div class="rounded-2xl border border-white/10 bg-white/[0.03] p-5">
+            <p class="font-semibold text-white mb-3">Tiny eval harness</p>
+            <div class="ds-codeblock overflow-hidden rounded-2xl border border-white/10 bg-slate-950/90">
+  <div class="flex items-center justify-between gap-3 border-b border-white/10 px-3 py-2">
+    <span class="font-mono text-[11px] font-medium uppercase tracking-wide text-slate-400">PYTHON</span>
+    <button type="button" class="ds-codeblock-copy rounded-lg border border-white/10 bg-white/[0.06] px-2.5 py-1 text-xs font-semibold text-slate-200 transition hover:border-sky-400/40 hover:bg-white/[0.1] hover:text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-sky-400/50" data-copy-label="Copy" data-copied-label="Copied" aria-label="Copy code to clipboard">Copy</button>
+  </div>
+  <pre class="ds-codeblock-pre code-block m-0 overflow-x-auto p-4 text-[0.8125rem] leading-[1.55] sm:text-sm language-python" tabindex="0"><code class="whitespace-pre-wrap font-mono ds-codeblock-source language-python">cases = [
+    {"topic": "RAG", "must_contain": ["retrieval", "embedding"]},
+    {"topic": "agents", "must_contain": ["tool", "task"]},
+]
+
+for case in cases:
+    out = str(crew.kickoff(inputs={"topic": case["topic"]})).lower()
+    for kw in case["must_contain"]:
+        assert kw in out, f"Missing {kw} for {case[\'topic\']}"
+print("All cases passed.")</code></pre>
+</div>
+          </div>
+        </section>
+
+        <section class="space-y-5" aria-labelledby="checklist-heading">
+          <h2 id="checklist-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">Best-Practices Checklist</h2>
+          <div class="space-y-2">
+            <div class="flex items-center gap-3 rounded-lg border border-white/10 bg-white/[0.03] p-3">
+              <span class="text-green-300">✓</span>
+              <p class="text-sm text-slate-300">Agents have specific, domain-rooted roles</p>
+            </div>
+            <div class="flex items-center gap-3 rounded-lg border border-white/10 bg-white/[0.03] p-3">
+              <span class="text-green-300">✓</span>
+              <p class="text-sm text-slate-300">Every task has a concrete <code class="rounded bg-white/[0.06] px-1.5 py-0.5 font-mono text-xs">expected_output</code></p>
+            </div>
+            <div class="flex items-center gap-3 rounded-lg border border-white/10 bg-white/[0.03] p-3">
+              <span class="text-green-300">✓</span>
+              <p class="text-sm text-slate-300"><code class="rounded bg-white/[0.06] px-1.5 py-0.5 font-mono text-xs">max_iter</code> set per agent (5–10 in dev)</p>
+            </div>
+            <div class="flex items-center gap-3 rounded-lg border border-white/10 bg-white/[0.03] p-3">
+              <span class="text-green-300">✓</span>
+              <p class="text-sm text-slate-300">2–4 tools per agent, with strong docstrings</p>
+            </div>
+            <div class="flex items-center gap-3 rounded-lg border border-white/10 bg-white/[0.03] p-3">
+              <span class="text-green-300">✓</span>
+              <p class="text-sm text-slate-300">Delegation off by default; sequential process by default</p>
+            </div>
+            <div class="flex items-center gap-3 rounded-lg border border-white/10 bg-white/[0.03] p-3">
+              <span class="text-green-300">✓</span>
+              <p class="text-sm text-slate-300">Verbose logging captured to file in prod</p>
+            </div>
+            <div class="flex items-center gap-3 rounded-lg border border-white/10 bg-white/[0.03] p-3">
+              <span class="text-green-300">✓</span>
+              <p class="text-sm text-slate-300">Eval harness with at least 5 cases before shipping</p>
+            </div>
+          </div>
+        </section>
+
+      </article>
+    </div>
+
+    {# ── Navigation ── #}
+    <div class="flex items-center justify-between">
+      <a
+        href="{% url 'tutorial_crewai_debugging' %}"
+        class="inline-flex items-center gap-2 rounded-xl border border-violet-400/35 bg-violet-500/10 px-5 py-2.5 text-sm font-semibold text-violet-200 transition hover:border-violet-300/50 hover:bg-violet-500/20 hover:text-white"
+      >
+        <span aria-hidden>←</span> Previous
+      </a>
+      <a
+        href="{% url 'tutorial_crewai_examples' %}"
+        class="inline-flex items-center gap-2 rounded-xl border border-violet-400/35 bg-violet-500/10 px-5 py-2.5 text-sm font-semibold text-violet-200 transition hover:border-violet-300/50 hover:bg-violet-500/20 hover:text-white"
+      >
+        Next: Real-World Examples <span aria-hidden>→</span>
+      </a>
+    </div>
+
+  </div>
+{% endblock %}

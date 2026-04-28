@@ -1,0 +1,238 @@
+{% extends "web/base.html" %}
+{% block title %}Retrieval Mechanisms — RAG Pipeline Tutorial{% endblock %}
+{% block content %}
+  <div class="space-y-10">
+    {# ── Breadcrumb ── #}
+    <div class="flex flex-wrap items-center gap-2 text-sm text-slate-400/90">
+      <a href="{% url 'tutorials' %}" class="font-medium text-violet-300/90 transition hover:text-violet-200">Tutorials</a>
+      <span aria-hidden class="text-slate-600">/</span>
+      <a href="{% url 'tutorials' %}?category=rag-vector-dbs" class="font-medium text-violet-300/90 transition hover:text-violet-200">RAG & Vector DBs</a>
+      <span aria-hidden class="text-slate-600">/</span>
+      <span class="text-slate-200/90">Retrieval Mechanisms</span>
+    </div>
+
+    {# ── Hero ── #}
+    <section class="relative overflow-hidden rounded-3xl border border-violet-400/20 bg-white/[0.06] p-6 shadow-[0_0_0_1px_rgba(255,255,255,0.04)] backdrop-blur-2xl sm:p-8">
+      <div class="pointer-events-none absolute -right-24 top-0 h-72 w-72 rounded-full bg-violet-500/15 blur-3xl"></div>
+      <div class="pointer-events-none absolute -left-20 bottom-0 h-56 w-56 rounded-full bg-fuchsia-500/10 blur-3xl"></div>
+      <div class="relative">
+        <div class="flex flex-wrap items-center gap-3">
+          <span class="rounded-full border border-violet-500/25 bg-violet-500/10 px-2.5 py-1 text-xs font-medium text-violet-300/90">RAG Pipeline</span>
+          <span class="rounded-full border border-amber-500/25 bg-amber-500/10 px-2.5 py-1 text-xs font-medium text-amber-300/90">Intermediate</span>
+          <span class="text-xs text-slate-400/80">· 15 min read</span>
+          <span class="ml-auto text-xs font-medium text-slate-400/80">Page 7 of 23</span>
+        </div>
+        <h1 class="mt-4 text-3xl font-semibold tracking-tight text-white sm:text-4xl lg:text-[2.5rem] lg:leading-tight">Retrieval Mechanisms</h1>
+        <p class="mt-4 max-w-2xl text-sm leading-relaxed text-slate-200/80 sm:text-base">
+          Similarity search, ranking, reranking with cross-encoders, hybrid search, query expansion, and advanced retrieval patterns.
+        </p>
+        <div class="mt-6">
+          <div class="mb-1.5 flex items-center justify-between text-xs text-slate-400/80"><span>Series progress</span><span>7 / 23</span></div>
+          <div class="h-1.5 w-full overflow-hidden rounded-full bg-white/10"><div class="h-full w-[30%] rounded-full bg-violet-400/70"></div></div>
+        </div>
+      </div>
+    </section>
+
+    {# ── Content ── #}
+    <div class="glass rounded-3xl border border-white/10 p-5 sm:p-8">
+      <article class="mx-auto space-y-12 text-base leading-relaxed text-slate-300/95">
+
+        <section class="space-y-5" aria-labelledby="similarity-heading">
+          <h2 id="similarity-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">1. Similarity Search (Dense Retrieval)</h2>
+          <p>The standard approach: embed query, find most similar vectors.</p>
+
+          <div class="rounded-2xl border border-white/10 bg-white/[0.03] p-5">
+            <div class="ds-codeblock overflow-hidden rounded-2xl border border-white/10 bg-slate-950/90">
+  <div class="flex items-center justify-between gap-3 border-b border-white/10 px-3 py-2">
+    <span class="font-mono text-[11px] font-medium uppercase tracking-wide text-slate-400">Python</span>
+    <button type="button" class="ds-codeblock-copy rounded-lg border border-white/10 bg-white/[0.06] px-2.5 py-1 text-xs font-semibold text-slate-200 transition hover:border-sky-400/40 hover:bg-white/[0.1] hover:text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-sky-400/50" data-copy-label="Copy" data-copied-label="Copied" aria-label="Copy code to clipboard">Copy</button>
+  </div>
+  <pre class="ds-codeblock-pre code-block m-0 overflow-x-auto p-4 text-[0.8125rem] leading-[1.55] sm:text-sm language-python" tabindex="0"><code class="whitespace-pre-wrap font-mono ds-codeblock-source language-python">query = "How do I file taxes?"
+query_embedding = embed(query)
+
+# Search vector DB
+results = vector_db.search(query_embedding, k=10)
+# Returns: [(doc_id, score), ...] sorted by score
+
+for doc_id, score in results:
+    print(f"{doc_id}: {score:.3f}")</code></pre>
+</div>
+          </div>
+
+          <p class="text-sm text-slate-300 mt-3"><strong>Pros:</strong> Fast, semantic, works across languages. <strong>Cons:</strong> Can retrieve unrelated docs with high semantic similarity.</p>
+        </section>
+
+        <section class="space-y-5" aria-labelledby="reranking-heading">
+          <h2 id="reranking-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">2. Reranking with Cross-Encoders ⭐ IMPORTANT</h2>
+          <p>After retrieving top-100 candidates, use a smarter model to rerank top-10. This dramatically improves quality.</p>
+
+          <div class="rounded-2xl border border-white/10 bg-white/[0.03] p-5">
+            <div class="ds-codeblock overflow-hidden rounded-2xl border border-white/10 bg-slate-950/90">
+  <div class="flex items-center justify-between gap-3 border-b border-white/10 px-3 py-2">
+    <span class="font-mono text-[11px] font-medium uppercase tracking-wide text-slate-400">Python</span>
+    <button type="button" class="ds-codeblock-copy rounded-lg border border-white/10 bg-white/[0.06] px-2.5 py-1 text-xs font-semibold text-slate-200 transition hover:border-sky-400/40 hover:bg-white/[0.1] hover:text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-sky-400/50" data-copy-label="Copy" data-copied-label="Copied" aria-label="Copy code to clipboard">Copy</button>
+  </div>
+  <pre class="ds-codeblock-pre code-block m-0 overflow-x-auto p-4 text-[0.8125rem] leading-[1.55] sm:text-sm language-python" tabindex="0"><code class="whitespace-pre-wrap font-mono ds-codeblock-source language-python">from sentence_transformers import CrossEncoder
+
+reranker = CrossEncoder("cross-encoder/qnli-distilroberta-base")
+
+# Get candidates from vector search
+candidates = vector_db.search(query_embedding, k=100)
+
+# Rerank
+query_doc_pairs = [(query, doc.text) for doc in candidates]
+scores = reranker.predict(query_doc_pairs)
+
+# Sort by reranker score
+reranked = sorted(zip(candidates, scores), key=lambda x: -x[1])
+top_10 = reranked[:10]</code></pre>
+</div>
+          </div>
+
+          <div class="rounded-2xl border border-green-500/20 bg-green-500/5 p-4 mt-4">
+            <p class="text-sm text-slate-300">
+              <strong>Result:</strong> Retrieving candidates (fast embedding search) then reranking (slow but accurate) is 10x better than pure embedding search.
+            </p>
+          </div>
+        </section>
+
+        <section class="space-y-5" aria-labelledby="hybrid-heading">
+          <h2 id="hybrid-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">3. Hybrid Search (Dense + Sparse)</h2>
+          <p>Combine semantic search with BM25 keyword search. Keywords catch exact matches, dense embeddings find related concepts.</p>
+
+          <div class="rounded-2xl border border-white/10 bg-white/[0.03] p-5">
+            <div class="ds-codeblock overflow-hidden rounded-2xl border border-white/10 bg-slate-950/90">
+  <div class="flex items-center justify-between gap-3 border-b border-white/10 px-3 py-2">
+    <span class="font-mono text-[11px] font-medium uppercase tracking-wide text-slate-400">Python</span>
+    <button type="button" class="ds-codeblock-copy rounded-lg border border-white/10 bg-white/[0.06] px-2.5 py-1 text-xs font-semibold text-slate-200 transition hover:border-sky-400/40 hover:bg-white/[0.1] hover:text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-sky-400/50" data-copy-label="Copy" data-copied-label="Copied" aria-label="Copy code to clipboard">Copy</button>
+  </div>
+  <pre class="ds-codeblock-pre code-block m-0 overflow-x-auto p-4 text-[0.8125rem] leading-[1.55] sm:text-sm language-python" tabindex="0"><code class="whitespace-pre-wrap font-mono ds-codeblock-source language-python"># Dense search (semantic)
+dense_results = vector_db.search(query_embedding, k=50)
+
+# Sparse search (BM25 keyword)
+sparse_results = bm25_index.search(query, k=50)
+
+# Combine and rerank
+combined = list(set(dense_results + sparse_results))
+final_scores = reranker.predict([(query, doc) for doc in combined])
+top_10 = sorted(final_scores)[:10]</code></pre>
+</div>
+          </div>
+
+          <p class="text-sm text-slate-300 mt-3">Perfect for: Technical docs, FAQs, any domain where exact keywords matter.</p>
+        </section>
+
+        <section class="space-y-5" aria-labelledby="query-expansion-heading">
+          <h2 id="query-expansion-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">4. Query Expansion & Reformulation</h2>
+          <p>Rewrite vague queries to improve retrieval. Use LLM or template-based expansion.</p>
+
+          <div class="rounded-2xl border border-white/10 bg-white/[0.03] p-5">
+            <div class="ds-codeblock overflow-hidden rounded-2xl border border-white/10 bg-slate-950/90">
+  <div class="flex items-center justify-between gap-3 border-b border-white/10 px-3 py-2">
+    <span class="font-mono text-[11px] font-medium uppercase tracking-wide text-slate-400">Python</span>
+    <button type="button" class="ds-codeblock-copy rounded-lg border border-white/10 bg-white/[0.06] px-2.5 py-1 text-xs font-semibold text-slate-200 transition hover:border-sky-400/40 hover:bg-white/[0.1] hover:text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-sky-400/50" data-copy-label="Copy" data-copied-label="Copied" aria-label="Copy code to clipboard">Copy</button>
+  </div>
+  <pre class="ds-codeblock-pre code-block m-0 overflow-x-auto p-4 text-[0.8125rem] leading-[1.55] sm:text-sm language-python" tabindex="0"><code class="whitespace-pre-wrap font-mono ds-codeblock-source language-python"># LLM-based expansion
+original_query = "How?"
+prompt = f"""Expand this vague query into 3 specific variations:
+Query: {original_query}
+
+Variations:"""
+
+expanded = llm.generate(prompt)
+# Returns: "How do I file taxes?", "How do I claim deductions?", ...
+
+# Search with all expanded queries
+results = []
+for expanded_q in expanded:
+    results.extend(vector_db.search(embed(expanded_q), k=5))
+
+# Deduplicate and rerank
+unique_docs = list(set(results))
+final = reranker.predict([(original_query, doc) for doc in unique_docs])</code></pre>
+</div>
+          </div>
+        </section>
+
+        <section class="space-y-5" aria-labelledby="ranking-heading">
+          <h2 id="ranking-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">5. Smart Ranking & Context Ordering</h2>
+          <p>How you order retrieved documents affects LLM output. Recent research shows <strong>position matters</strong>.</p>
+
+          <div class="rounded-2xl border border-white/10 bg-white/[0.03] p-4">
+            <p class="font-semibold text-white text-sm mb-2">Recency Bias</p>
+            <p class="text-sm text-slate-300">LLMs pay more attention to early documents in context. Reorder by importance, not just similarity score.</p>
+          </div>
+
+          <div class="rounded-2xl border border-white/10 bg-white/[0.03] p-4 mt-3">
+            <div class="ds-codeblock overflow-hidden rounded-2xl border border-white/10 bg-slate-950/90">
+  <div class="flex items-center justify-between gap-3 border-b border-white/10 px-3 py-2">
+    <span class="font-mono text-[11px] font-medium uppercase tracking-wide text-slate-400">Python</span>
+    <button type="button" class="ds-codeblock-copy rounded-lg border border-white/10 bg-white/[0.06] px-2.5 py-1 text-xs font-semibold text-slate-200 transition hover:border-sky-400/40 hover:bg-white/[0.1] hover:text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-sky-400/50" data-copy-label="Copy" data-copied-label="Copied" aria-label="Copy code to clipboard">Copy</button>
+  </div>
+  <pre class="ds-codeblock-pre code-block m-0 overflow-x-auto p-4 text-[0.8125rem] leading-[1.55] sm:text-sm language-python" tabindex="0"><code class="whitespace-pre-wrap font-mono ds-codeblock-source language-python">def rank_documents(docs, query, scores):
+    """Rank by composite score: relevance + importance."""
+    ranked = []
+    for doc, score in zip(docs, scores):
+        # Relevance: similarity score
+        # Importance: doc quality, recency, popularity
+        composite = (
+            0.7 * score +  # Similarity
+            0.2 * (doc.updated_at / now) +  # Recency
+            0.1 * doc.popularity  # Citation count
+        )
+        ranked.append((doc, composite))
+    return sorted(ranked, key=lambda x: -x[1])</code></pre>
+</div>
+          </div>
+        </section>
+
+        <section class="space-y-5" aria-labelledby="filtering-heading">
+          <h2 id="filtering-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">6. Metadata Filtering</h2>
+          <p>Filter documents before or after retrieval (permissions, category, date range).</p>
+
+          <div class="rounded-2xl border border-white/10 bg-white/[0.03] p-5">
+            <div class="ds-codeblock overflow-hidden rounded-2xl border border-white/10 bg-slate-950/90">
+  <div class="flex items-center justify-between gap-3 border-b border-white/10 px-3 py-2">
+    <span class="font-mono text-[11px] font-medium uppercase tracking-wide text-slate-400">Python</span>
+    <button type="button" class="ds-codeblock-copy rounded-lg border border-white/10 bg-white/[0.06] px-2.5 py-1 text-xs font-semibold text-slate-200 transition hover:border-sky-400/40 hover:bg-white/[0.1] hover:text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-sky-400/50" data-copy-label="Copy" data-copied-label="Copied" aria-label="Copy code to clipboard">Copy</button>
+  </div>
+  <pre class="ds-codeblock-pre code-block m-0 overflow-x-auto p-4 text-[0.8125rem] leading-[1.55] sm:text-sm language-python" tabindex="0"><code class="whitespace-pre-wrap font-mono ds-codeblock-source language-python"># Filter before search (faster)
+results = vector_db.search(
+    query_embedding,
+    k=10,
+    filter={
+        "user_permissions": {"$in": ["PUBLIC", current_user_id]},
+        "category": {"$eq": "tax_guide"},
+        "date": {"$gte": "2024-01-01"}
+    }
+)
+
+# Filter after search (simpler but slower)
+all_results = vector_db.search(query_embedding, k=100)
+filtered = [doc for doc in all_results
+            if doc.user_id in current_user_permissions
+            and doc.category == "tax_guide"
+            and doc.date >= "2024-01-01"][:10]</code></pre>
+        </section>
+
+      </article>
+    </div>
+
+    {# ── Navigation ── #}
+    <div class="flex items-center justify-between">
+      <a
+        href="{% url 'tutorial_rag_pipeline_vectorstores' %}"
+        class="inline-flex items-center gap-2 rounded-xl border border-violet-400/35 bg-violet-500/10 px-5 py-2.5 text-sm font-semibold text-violet-200 transition hover:border-violet-300/50 hover:bg-violet-500/20 hover:text-white"
+      >
+        <span aria-hidden>←</span> Previous
+      </a>
+      <a
+        href="{% url 'tutorial_rag_pipeline_llm_integration' %}"
+        class="inline-flex items-center gap-2 rounded-xl border border-violet-400/35 bg-violet-500/10 px-5 py-2.5 text-sm font-semibold text-violet-200 transition hover:border-violet-300/50 hover:bg-violet-500/20 hover:text-white"
+      >
+        Next: LLM Integration <span aria-hidden>→</span>
+      </a>
+      </div>
+
+  </div>
+{% endblock %}

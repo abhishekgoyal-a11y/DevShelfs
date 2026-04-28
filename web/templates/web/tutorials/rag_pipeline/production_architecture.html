@@ -1,0 +1,229 @@
+{% extends "web/base.html" %}
+{% block title %}Production Architecture — RAG Pipeline Tutorial{% endblock %}
+{% block content %}
+  <div class="space-y-10">
+    {# ── Breadcrumb ── #}
+    <div class="flex flex-wrap items-center gap-2 text-sm text-slate-400/90">
+      <a href="{% url 'tutorials' %}" class="font-medium text-violet-300/90 transition hover:text-violet-200">Tutorials</a>
+      <span aria-hidden class="text-slate-600">/</span>
+      <a href="{% url 'tutorials' %}?category=rag-vector-dbs" class="font-medium text-violet-300/90 transition hover:text-violet-200">RAG & Vector DBs</a>
+      <span aria-hidden class="text-slate-600">/</span>
+      <span class="text-slate-200/90">Production Architecture</span>
+    </div>
+
+    {# ── Hero ── #}
+    <section class="relative overflow-hidden rounded-3xl border border-violet-400/20 bg-white/[0.06] p-6 shadow-[0_0_0_1px_rgba(255,255,255,0.04)] backdrop-blur-2xl sm:p-8">
+      <div class="pointer-events-none absolute -right-24 top-0 h-72 w-72 rounded-full bg-violet-500/15 blur-3xl"></div>
+      <div class="pointer-events-none absolute -left-20 bottom-0 h-56 w-56 rounded-full bg-fuchsia-500/10 blur-3xl"></div>
+      <div class="relative">
+        <div class="flex flex-wrap items-center gap-3">
+          <span class="rounded-full border border-violet-500/25 bg-violet-500/10 px-2.5 py-1 text-xs font-medium text-violet-300/90">RAG Pipeline</span>
+          <span class="rounded-full border border-rose-500/25 bg-rose-500/10 px-2.5 py-1 text-xs font-medium text-rose-300/90">Advanced</span>
+          <span class="text-xs text-slate-400/80">· 17 min read</span>
+          <span class="ml-auto text-xs font-medium text-slate-400/80">Page 15 of 23</span>
+        </div>
+        <h1 class="mt-4 text-3xl font-semibold tracking-tight text-white sm:text-4xl lg:text-[2.5rem] lg:leading-tight">Production Architecture</h1>
+        <p class="mt-4 max-w-2xl text-sm leading-relaxed text-slate-200/80 sm:text-base">
+          Scaling RAG: API design, async pipelines, queuing, caching layers, load balancing, and infrastructure patterns.
+        </p>
+        <div class="mt-6">
+          <div class="mb-1.5 flex items-center justify-between text-xs text-slate-400/80"><span>Series progress</span><span>15 / 23</span></div>
+          <div class="h-1.5 w-full overflow-hidden rounded-full bg-white/10"><div class="h-full w-[65%] rounded-full bg-violet-400/70"></div></div>
+        </div>
+      </div>
+    </section>
+
+    {# ── Content ── #}
+    <div class="glass rounded-3xl border border-white/10 p-5 sm:p-8">
+      <article class="mx-auto space-y-12 text-base leading-relaxed text-slate-300/95">
+
+        <section class="space-y-5" aria-labelledby="architecture-heading">
+          <h2 id="architecture-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">Production Architecture Diagram</h2>
+
+          <div class="rounded-2xl border border-white/10 bg-white/[0.03] p-5">
+            <div class="ds-codeblock overflow-hidden rounded-2xl border border-white/10 bg-slate-950/90">
+  <div class="flex items-center justify-between gap-3 border-b border-white/10 px-3 py-2">
+    <span class="font-mono text-[11px] font-medium uppercase tracking-wide text-slate-400">Python</span>
+    <button type="button" class="ds-codeblock-copy rounded-lg border border-white/10 bg-white/[0.06] px-2.5 py-1 text-xs font-semibold text-slate-200 transition hover:border-sky-400/40 hover:bg-white/[0.1] hover:text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-sky-400/50" data-copy-label="Copy" data-copied-label="Copied" aria-label="Copy code to clipboard">Copy</button>
+  </div>
+  <pre class="ds-codeblock-pre code-block m-0 overflow-x-auto p-4 text-[0.8125rem] leading-[1.55] sm:text-sm language-python" tabindex="0"><code class="whitespace-pre-wrap font-mono ds-codeblock-source language-python">┌─ Client Requests ─┐
+│   API Gateway     │ ← Rate limiting, auth
+└────────┬──────────┘
+         │
+┌────────▼──────────┐
+│  Load Balancer    │ ← Distribute across servers
+└────────┬──────────┘
+         │
+   ┌─────┴─────┐
+   │           │
+┌──▼──┐    ┌──▼──┐
+│ RAG │    │ RAG │ ← Multiple replicas
+│ Srv │    │ Srv │
+└──┬──┘    └──┬──┘
+   │           │
+   └─────┬─────┘
+         │
+    ┌────┴─────┬──────────┬─────────┐
+    │           │          │         │
+┌───▼──┐  ┌────▼─┐  ┌────▼──┐  ┌──▼────┐
+│Redis │  │Vector│  │LLM    │  │Logging│
+│Cache │  │  DB  │  │Cache  │  │Service│
+└──────┘  └──────┘  └───────┘  └───────┘</code></pre>
+</div>
+          </div>
+        </section>
+
+        <section class="space-y-5" aria-labelledby="api-heading">
+          <h2 id="api-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">API Design</h2>
+
+          <div class="rounded-2xl border border-white/10 bg-white/[0.03] p-5">
+            <div class="ds-codeblock overflow-hidden rounded-2xl border border-white/10 bg-slate-950/90">
+  <div class="flex items-center justify-between gap-3 border-b border-white/10 px-3 py-2">
+    <span class="font-mono text-[11px] font-medium uppercase tracking-wide text-slate-400">Python</span>
+    <button type="button" class="ds-codeblock-copy rounded-lg border border-white/10 bg-white/[0.06] px-2.5 py-1 text-xs font-semibold text-slate-200 transition hover:border-sky-400/40 hover:bg-white/[0.1] hover:text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-sky-400/50" data-copy-label="Copy" data-copied-label="Copied" aria-label="Copy code to clipboard">Copy</button>
+  </div>
+  <pre class="ds-codeblock-pre code-block m-0 overflow-x-auto p-4 text-[0.8125rem] leading-[1.55] sm:text-sm language-python" tabindex="0"><code class="whitespace-pre-wrap font-mono ds-codeblock-source language-python">from fastapi import FastAPI, HTTPException
+from typing import Optional
+
+app = FastAPI()
+
+@app.post("/api/v1/query")
+async def query(
+    query: str,
+    k: int = 5,
+    user_id: Optional[str] = None,
+    timeout: int = 30
+) -> dict:
+    """Query the RAG system."""
+    try:
+        # Rate limit
+        if not rate_limiter.check(user_id):
+            raise HTTPException(429, "Rate limited")
+
+        # Check cache
+        cache_key = f"{user_id}:{query}"
+        if cached := redis.get(cache_key):
+            return json.loads(cached)
+
+        # Retrieve and generate
+        result = await rag.query(query, k=k, timeout=timeout)
+
+        # Cache result
+        redis.setex(cache_key, 3600, json.dumps(result))
+
+        return result
+    except Exception as e:
+        logger.error(f"Query failed: {e}")
+        raise HTTPException(500, "Internal error")</code></pre>
+</div>
+          </div>
+        </section>
+
+        <section class="space-y-5" aria-labelledby="async-heading">
+          <h2 id="async-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">Async Pipelines</h2>
+
+          <div class="rounded-2xl border border-white/10 bg-white/[0.03] p-5">
+            <div class="ds-codeblock overflow-hidden rounded-2xl border border-white/10 bg-slate-950/90">
+  <div class="flex items-center justify-between gap-3 border-b border-white/10 px-3 py-2">
+    <span class="font-mono text-[11px] font-medium uppercase tracking-wide text-slate-400">Python</span>
+    <button type="button" class="ds-codeblock-copy rounded-lg border border-white/10 bg-white/[0.06] px-2.5 py-1 text-xs font-semibold text-slate-200 transition hover:border-sky-400/40 hover:bg-white/[0.1] hover:text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-sky-400/50" data-copy-label="Copy" data-copied-label="Copied" aria-label="Copy code to clipboard">Copy</button>
+  </div>
+  <pre class="ds-codeblock-pre code-block m-0 overflow-x-auto p-4 text-[0.8125rem] leading-[1.55] sm:text-sm language-python" tabindex="0"><code class="whitespace-pre-wrap font-mono ds-codeblock-source language-python">async def process_query(query: str) -> dict:
+    """Async pipeline."""
+    # Parallel execution
+    tasks = [
+        retrieve_documents(query),
+        expand_query(query),
+        log_query(query)
+    ]
+    retrieval, expansions, _ = await asyncio.gather(*tasks)
+
+    # Stream LLM response
+    response = await llm.generate_streaming(
+        query,
+        retrieval,
+        stream=True
+    )
+
+    return response</code></pre>
+</div>
+          </div>
+        </section>
+
+        <section class="space-y-5" aria-labelledby="queues-heading">
+          <h2 id="queues-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">Queuing Systems</h2>
+
+          <div class="space-y-2 text-sm text-slate-300">
+            <p><strong>Use Celery (RabbitMQ/Redis) for:</strong></p>
+            <p>• Batch indexing (slow, non-blocking)</p>
+            <p>• Log aggregation</p>
+            <p>• Data refresh jobs</p>
+            <p>• Non-critical async work</p>
+
+            <code class="block font-mono text-xs text-slate-300 whitespace-pre bg-black/20 p-2 rounded mt-2">from celery import Celery
+
+celery = Celery('rag')
+
+@celery.task
+def index_documents(doc_paths):
+    """Background indexing job."""
+    for path in doc_paths:
+        rag.index(path)
+    return f"Indexed {len(doc_paths)} docs"
+
+# Queue job
+result = index_documents.delay(["file1.pdf", "file2.pdf"])</code>
+          </div>
+        </section>
+
+        <section class="space-y-5" aria-labelledby="monitoring-heading">
+          <h2 id="monitoring-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">Monitoring & Observability</h2>
+
+          <div class="rounded-2xl border border-white/10 bg-white/[0.03] p-4">
+            <p class="font-semibold text-white text-sm mb-2">Metrics to Track</p>
+            <p class="text-sm text-slate-300">Response latency, error rate, retrieval quality, cache hit rate, vector DB latency, LLM cost, token usage.</p>
+          </div>
+
+          <div class="rounded-2xl border border-white/10 bg-white/[0.03] p-4 mt-3">
+            <div class="ds-codeblock overflow-hidden rounded-2xl border border-white/10 bg-slate-950/90">
+  <div class="flex items-center justify-between gap-3 border-b border-white/10 px-3 py-2">
+    <span class="font-mono text-[11px] font-medium uppercase tracking-wide text-slate-400">Python</span>
+    <button type="button" class="ds-codeblock-copy rounded-lg border border-white/10 bg-white/[0.06] px-2.5 py-1 text-xs font-semibold text-slate-200 transition hover:border-sky-400/40 hover:bg-white/[0.1] hover:text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-sky-400/50" data-copy-label="Copy" data-copied-label="Copied" aria-label="Copy code to clipboard">Copy</button>
+  </div>
+  <pre class="ds-codeblock-pre code-block m-0 overflow-x-auto p-4 text-[0.8125rem] leading-[1.55] sm:text-sm language-python" tabindex="0"><code class="whitespace-pre-wrap font-mono ds-codeblock-source language-python">from prometheus_client import Counter, Histogram
+
+queries = Counter('rag_queries_total', 'Total queries')
+latency = Histogram('rag_latency_seconds', 'Query latency')
+cache_hits = Counter('rag_cache_hits', 'Cache hits')
+
+@app.post("/query")
+async def query(query: str):
+    queries.inc()
+    with latency.time():
+        result = await rag.query(query)
+    if result.from_cache:
+        cache_hits.inc()
+    return result</code></pre>
+        </section>
+
+      </article>
+    </div>
+
+    {# ── Navigation ── #}
+    <div class="flex items-center justify-between">
+      <a
+        href="{% url 'tutorial_rag_pipeline_data_refresh' %}"
+        class="inline-flex items-center gap-2 rounded-xl border border-violet-400/35 bg-violet-500/10 px-5 py-2.5 text-sm font-semibold text-violet-200 transition hover:border-violet-300/50 hover:bg-violet-500/20 hover:text-white"
+      >
+        <span aria-hidden>←</span> Previous
+      </a>
+      <a
+        href="{% url 'tutorial_rag_pipeline_security' %}"
+        class="inline-flex items-center gap-2 rounded-xl border border-violet-400/35 bg-violet-500/10 px-5 py-2.5 text-sm font-semibold text-violet-200 transition hover:border-violet-300/50 hover:bg-violet-500/20 hover:text-white"
+      >
+        Next: Security & Privacy <span aria-hidden>→</span>
+      </a>
+      </div>
+
+  </div>
+{% endblock %}

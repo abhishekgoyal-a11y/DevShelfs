@@ -1,0 +1,188 @@
+{% extends "web/base.html" %}
+{% block title %}Prompt Anatomy — Prompt Engineering Tutorial{% endblock %}
+{% block content %}
+  <div class="space-y-10">
+
+    <div class="flex flex-wrap items-center gap-2 text-sm text-slate-400/90">
+      <a href="{% url 'tutorials' %}" class="font-medium text-sky-300/90 transition hover:text-sky-200">Tutorials</a>
+      <span aria-hidden class="text-slate-600">/</span>
+      <a href="{% url 'tutorial_pe_intro' %}" class="font-medium text-sky-300/90 transition hover:text-sky-200">Prompt Engineering</a>
+      <span aria-hidden class="text-slate-600">/</span>
+      <span class="text-slate-200/90">Prompt Anatomy</span>
+    </div>
+
+    <section class="relative overflow-hidden rounded-3xl border border-sky-400/20 bg-white/[0.06] p-6 shadow-[0_0_0_1px_rgba(255,255,255,0.04)] backdrop-blur-2xl sm:p-8">
+      <div class="pointer-events-none absolute -right-24 top-0 h-72 w-72 rounded-full bg-sky-500/15 blur-3xl"></div>
+      <div class="pointer-events-none absolute -left-20 bottom-0 h-56 w-56 rounded-full bg-blue-500/10 blur-3xl"></div>
+      <div class="relative">
+        <div class="flex flex-wrap items-center gap-3">
+          <span class="rounded-full border border-sky-500/25 bg-sky-500/10 px-2.5 py-1 text-xs font-medium text-sky-300/90">Prompt Engineering</span>
+          <span class="rounded-full border border-emerald-500/25 bg-emerald-500/10 px-2.5 py-1 text-xs font-medium text-emerald-300/90">Beginner</span>
+          <span class="text-xs text-slate-400/80">· 9 min read</span>
+          <span class="ml-auto text-xs font-medium text-slate-400/80">Page 2 of 10</span>
+        </div>
+        <h1 class="mt-4 text-3xl font-semibold tracking-tight text-white sm:text-4xl lg:text-[2.5rem] lg:leading-tight">Prompt Anatomy</h1>
+        <p class="mt-4 max-w-2xl text-sm leading-relaxed text-slate-200/80 sm:text-base">
+          System, user, and assistant roles — what they do and when to use each. Plus temperature, top-p, and context window management.
+        </p>
+        <div class="mt-6">
+          <div class="mb-1.5 flex items-center justify-between text-xs text-slate-400/80"><span>Series progress</span><span>2 / 10</span></div>
+          <div class="h-1.5 w-full overflow-hidden rounded-full bg-white/10"><div class="h-full w-[20%] rounded-full bg-sky-400/70"></div></div>
+        </div>
+      </div>
+    </section>
+
+    <div class="glass rounded-3xl border border-white/10 p-5 sm:p-8">
+      <article class="mx-auto space-y-12 text-base leading-relaxed text-slate-300/95">
+
+        <section class="space-y-5" aria-labelledby="roles-heading">
+          <h2 id="roles-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">The three message roles</h2>
+          <p>Modern chat models expect messages in a structured format — not a single blob of text. Each message has a role that tells the model where it came from and how to interpret it.</p>
+          <div class="space-y-3">
+            <div class="rounded-2xl border border-sky-500/20 bg-sky-500/[0.05] p-5">
+              <h3 class="text-sm font-semibold text-sky-100">system</h3>
+              <p class="mt-1.5 text-sm text-slate-400/90">Sets the model's identity, behavior, and constraints for the entire conversation. Evaluated before anything else. This is your most powerful lever — use it to define who the model is and what it must or must not do.</p>
+              <code class="mt-3 block rounded-lg bg-white/[0.05] px-3 py-2 text-xs font-mono text-slate-300">{"role": "system", "content": "You are a senior Python engineer. Answer concisely. Never write pseudocode."}</code>
+            </div>
+            <div class="rounded-2xl border border-white/10 bg-white/[0.03] p-5">
+              <h3 class="text-sm font-semibold text-white">user</h3>
+              <p class="mt-1.5 text-sm text-slate-400/90">The human's message — your question, instruction, or task. This is what the model responds to. In single-turn prompts this is usually the only message you send.</p>
+              <code class="mt-3 block rounded-lg bg-white/[0.05] px-3 py-2 text-xs font-mono text-slate-300">{"role": "user", "content": "Explain list comprehensions with an example."}</code>
+            </div>
+            <div class="rounded-2xl border border-white/10 bg-white/[0.03] p-5">
+              <h3 class="text-sm font-semibold text-white">assistant</h3>
+              <p class="mt-1.5 text-sm text-slate-400/90">The model's previous response. In multi-turn conversations, you include prior assistant messages so the model has context. You can also seed an assistant message to prime the model's output style.</p>
+              <code class="mt-3 block rounded-lg bg-white/[0.05] px-3 py-2 text-xs font-mono text-slate-300">{"role": "assistant", "content": "List comprehensions are..."}</code>
+            </div>
+          </div>
+        </section>
+
+        <section class="space-y-5" aria-labelledby="system-heading">
+          <h2 id="system-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">Writing a strong system prompt</h2>
+          <p>The system prompt is the foundation of any reliable LLM application. A weak system prompt means the model fills gaps with assumptions — often wrong ones.</p>
+          <div class="space-y-3">
+            <div class="rounded-2xl border border-rose-500/20 bg-rose-500/[0.04] p-5">
+              <h3 class="text-sm font-semibold text-rose-200">Weak system prompt</h3>
+              <code class="mt-2 block font-mono text-xs text-slate-300">You are a helpful assistant.</code>
+              <p class="mt-2 text-xs text-slate-400/90">Vague. The model will make up its persona, tone, format, and scope. Every response will be different.</p>
+            </div>
+            <div class="rounded-2xl border border-emerald-500/20 bg-emerald-500/[0.04] p-5">
+              <h3 class="text-sm font-semibold text-emerald-200">Strong system prompt</h3>
+              <code class="block font-mono text-xs text-slate-300 whitespace-pre mt-2">You are a customer support agent for Acme Software.
+Rules:
+- Only answer questions about Acme products.
+- If you don't know, say "I'll escalate this to the team."
+- Be concise — 2–3 sentences max per answer.
+- Never discuss competitors.</code>
+              <p class="mt-2 text-xs text-slate-400/90">Specific identity, explicit rules, defined scope, fallback behavior, and format constraint. Predictable across every call.</p>
+            </div>
+          </div>
+        </section>
+
+        <section class="space-y-5" aria-labelledby="temp-heading">
+          <h2 id="temp-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">Temperature</h2>
+          <p>Temperature controls how "random" the model's output is. It scales the probability distribution over tokens before sampling.</p>
+          <div class="overflow-x-auto rounded-2xl border border-white/10">
+            <table class="w-full text-sm">
+              <thead>
+                <tr class="border-b border-white/10 bg-white/[0.04]">
+                  <th class="px-4 py-3 text-left font-semibold text-slate-200">Value</th>
+                  <th class="px-4 py-3 text-left font-semibold text-slate-200">Behaviour</th>
+                  <th class="px-4 py-3 text-left font-semibold text-slate-200">Use for</th>
+                </tr>
+              </thead>
+              <tbody class="divide-y divide-white/5">
+                <tr>
+                  <td class="px-4 py-3 font-medium text-sky-300">0</td>
+                  <td class="px-4 py-3 text-slate-400/90">Near-deterministic — always picks the most likely token</td>
+                  <td class="px-4 py-3 text-slate-400/90">Classification, data extraction, factual Q&A</td>
+                </tr>
+                <tr>
+                  <td class="px-4 py-3 font-medium text-sky-300">0.3–0.7</td>
+                  <td class="px-4 py-3 text-slate-400/90">Balanced — some variation but stays on topic</td>
+                  <td class="px-4 py-3 text-slate-400/90">Summarisation, code generation, analysis</td>
+                </tr>
+                <tr>
+                  <td class="px-4 py-3 font-medium text-sky-300">0.8–1.0</td>
+                  <td class="px-4 py-3 text-slate-400/90">Creative — diverse, sometimes surprising outputs</td>
+                  <td class="px-4 py-3 text-slate-400/90">Brainstorming, writing, ideation</td>
+                </tr>
+                <tr>
+                  <td class="px-4 py-3 font-medium text-sky-300">&gt;1.0</td>
+                  <td class="px-4 py-3 text-slate-400/90">Very random — often incoherent</td>
+                  <td class="px-4 py-3 text-slate-400/90">Rarely useful in practice</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <p class="text-sm text-slate-400/90">Start at 0 for anything factual or structured. Add temperature only when you want variety — and test the results.</p>
+        </section>
+
+        <section class="space-y-5" aria-labelledby="topp-heading">
+          <h2 id="topp-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">Top-p (nucleus sampling)</h2>
+          <p>
+            Top-p is an alternative to temperature. Instead of scaling all probabilities, it limits sampling to the smallest set of tokens whose cumulative probability reaches <em>p</em>.
+          </p>
+          <div class="rounded-xl border border-white/10 bg-white/[0.02] px-4 py-3 text-sm">
+            <strong class="text-slate-200">Practical rule:</strong>
+            <span class="text-slate-400/90"> Use temperature <em>or</em> top-p — not both at once. Most practitioners stick with temperature and leave top-p at 1.0. Both do similar things; tuning them simultaneously makes results unpredictable.</span>
+          </div>
+        </section>
+
+        <section class="space-y-5" aria-labelledby="context-heading">
+          <h2 id="context-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">Context window management</h2>
+          <p>Every token in your prompt consumes context. When the window fills, the model either truncates or fails. Here's how to manage it.</p>
+          <div class="space-y-3">
+            <div class="rounded-2xl border border-white/10 bg-white/[0.03] p-5">
+              <h3 class="text-sm font-semibold text-slate-200">Know your limits</h3>
+              <p class="mt-1.5 text-xs text-slate-400/90">GPT-4o: 128k tokens. Claude 3.5 Sonnet: 200k tokens. Llama 3 8B: 8k tokens. 1k tokens ≈ 750 words. A 10-page PDF is roughly 5k–8k tokens.</p>
+            </div>
+            <div class="rounded-2xl border border-white/10 bg-white/[0.03] p-5">
+              <h3 class="text-sm font-semibold text-slate-200">Position your instructions wisely</h3>
+              <p class="mt-1.5 text-xs text-slate-400/90">Put your most critical instructions in the system prompt (start) and just before the user's question (end). Content in the middle of a large context is attended to less reliably — the "lost in the middle" problem.</p>
+            </div>
+            <div class="rounded-2xl border border-white/10 bg-white/[0.03] p-5">
+              <h3 class="text-sm font-semibold text-slate-200">Leave room for the output</h3>
+              <p class="mt-1.5 text-xs text-slate-400/90">The context window covers input <em>and</em> output combined. If your prompt is 100k tokens and the model's limit is 128k, you only have 28k tokens left for the response. Set <code class="rounded bg-white/10 px-1">max_tokens</code> explicitly to avoid surprises.</p>
+            </div>
+          </div>
+        </section>
+
+        <section class="space-y-5" aria-labelledby="tokens-heading">
+          <h2 id="tokens-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">Tokens &amp; cost</h2>
+          <p>API pricing is per token (input + output). Understanding token counts helps you estimate and control cost.</p>
+          <div class="rounded-2xl border border-white/10 bg-white/[0.03] p-5">
+            <code class="block font-mono text-xs text-slate-300 whitespace-pre">import tiktoken  # OpenAI's tokeniser
+
+enc = tiktoken.encoding_for_model("gpt-4o")
+tokens = enc.encode("Your prompt text here")
+print(len(tokens))  # number of tokens</code>
+          </div>
+          <p class="text-sm text-slate-400/90">Rule of thumb: 1 token ≈ 4 characters ≈ 0.75 words in English. Code, JSON, and non-English text can be 2–4× more tokens per character.</p>
+        </section>
+
+        <section class="rounded-2xl border border-sky-500/20 bg-sky-500/[0.06] p-5 sm:p-6">
+          <h2 class="text-lg font-semibold text-sky-100">Quick summary</h2>
+          <ul class="mt-3 list-disc space-y-1.5 pl-5 text-sm text-slate-300/95 marker:text-sky-400/80">
+            <li><code class="rounded bg-white/10 px-1">system</code> sets identity and rules; <code class="rounded bg-white/10 px-1">user</code> is the human turn; <code class="rounded bg-white/10 px-1">assistant</code> is prior model output</li>
+            <li>A strong system prompt is specific: identity + rules + scope + fallback + format</li>
+            <li>Temperature 0 for factual tasks; 0.3–0.7 for balanced; higher only for creative work</li>
+            <li>Use temperature <em>or</em> top-p, not both</li>
+            <li>Instructions at the start and end of context are attended to most reliably</li>
+          </ul>
+        </section>
+
+      </article>
+    </div>
+
+    <div class="flex items-center justify-between">
+      <a href="{% url 'tutorial_pe_intro' %}" class="inline-flex items-center gap-2 rounded-xl border border-white/15 bg-white/[0.04] px-5 py-2.5 text-sm font-semibold text-slate-200 transition hover:border-white/25 hover:bg-white/[0.07] hover:text-white">
+        <span aria-hidden>←</span> Introduction
+      </a>
+      <a href="{% url 'tutorial_pe_zeroshot' %}" class="inline-flex items-center gap-2 rounded-xl border border-sky-400/35 bg-sky-500/10 px-5 py-2.5 text-sm font-semibold text-sky-200 transition hover:border-sky-300/50 hover:bg-sky-500/20 hover:text-white">
+        Next: Zero-shot &amp; Few-shot <span aria-hidden>→</span>
+      </a>
+    </div>
+
+  </div>
+{% endblock %}

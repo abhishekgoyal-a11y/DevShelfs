@@ -1,0 +1,227 @@
+{% extends "web/base.html" %}
+{% block title %}Frontend Integration — RAG Pipeline Tutorial{% endblock %}
+{% block content %}
+  <div class="space-y-10">
+    {# ── Breadcrumb ── #}
+    <div class="flex flex-wrap items-center gap-2 text-sm text-slate-400/90">
+      <a href="{% url 'tutorials' %}" class="font-medium text-violet-300/90 transition hover:text-violet-200">Tutorials</a>
+      <span aria-hidden class="text-slate-600">/</span>
+      <a href="{% url 'tutorials' %}?category=rag-vector-dbs" class="font-medium text-violet-300/90 transition hover:text-violet-200">RAG & Vector DBs</a>
+      <span aria-hidden class="text-slate-600">/</span>
+      <span class="text-slate-200/90">Frontend Integration</span>
+    </div>
+
+    {# ── Hero ── #}
+    <section class="relative overflow-hidden rounded-3xl border border-violet-400/20 bg-white/[0.06] p-6 shadow-[0_0_0_1px_rgba(255,255,255,0.04)] backdrop-blur-2xl sm:p-8">
+      <div class="pointer-events-none absolute -right-24 top-0 h-72 w-72 rounded-full bg-violet-500/15 blur-3xl"></div>
+      <div class="pointer-events-none absolute -left-20 bottom-0 h-56 w-56 rounded-full bg-fuchsia-500/10 blur-3xl"></div>
+      <div class="relative">
+        <div class="flex flex-wrap items-center gap-3">
+          <span class="rounded-full border border-violet-500/25 bg-violet-500/10 px-2.5 py-1 text-xs font-medium text-violet-300/90">RAG Pipeline</span>
+          <span class="rounded-full border border-amber-500/25 bg-amber-500/10 px-2.5 py-1 text-xs font-medium text-amber-300/90">Intermediate</span>
+          <span class="text-xs text-slate-400/80">· 13 min read</span>
+          <span class="ml-auto text-xs font-medium text-slate-400/80">Page 18 of 23</span>
+        </div>
+        <h1 class="mt-4 text-3xl font-semibold tracking-tight text-white sm:text-4xl lg:text-[2.5rem] lg:leading-tight">Frontend Integration</h1>
+        <p class="mt-4 max-w-2xl text-sm leading-relaxed text-slate-200/80 sm:text-base">
+          Chat UI patterns, streaming responses, source attribution, confidence scores, and feedback loops.
+        </p>
+        <div class="mt-6">
+          <div class="mb-1.5 flex items-center justify-between text-xs text-slate-400/80"><span>Series progress</span><span>18 / 23</span></div>
+          <div class="h-1.5 w-full overflow-hidden rounded-full bg-white/10"><div class="h-full w-[78%] rounded-full bg-violet-400/70"></div></div>
+        </div>
+      </div>
+    </section>
+
+    {# ── Content ── #}
+    <div class="glass rounded-3xl border border-white/10 p-5 sm:p-8">
+      <article class="mx-auto space-y-12 text-base leading-relaxed text-slate-300/95">
+
+        <section class="space-y-5" aria-labelledby="chat-heading">
+          <h2 id="chat-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">Chat UI Patterns</h2>
+
+          <div class="rounded-2xl border border-white/10 bg-white/[0.03] p-5">
+            <div class="ds-codeblock overflow-hidden rounded-2xl border border-white/10 bg-slate-950/90">
+  <div class="flex items-center justify-between gap-3 border-b border-white/10 px-3 py-2">
+    <span class="font-mono text-[11px] font-medium uppercase tracking-wide text-slate-400">Python</span>
+    <button type="button" class="ds-codeblock-copy rounded-lg border border-white/10 bg-white/[0.06] px-2.5 py-1 text-xs font-semibold text-slate-200 transition hover:border-sky-400/40 hover:bg-white/[0.1] hover:text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-sky-400/50" data-copy-label="Copy" data-copied-label="Copied" aria-label="Copy code to clipboard">Copy</button>
+  </div>
+  <pre class="ds-codeblock-pre code-block m-0 overflow-x-auto p-4 text-[0.8125rem] leading-[1.55] sm:text-sm language-python" tabindex="0"><code class="whitespace-pre-wrap font-mono ds-codeblock-source language-python">// React Chat Component
+function ChatUI() {
+  const [messages, setMessages] = useState([]);
+  const [input, setInput] = useState('');
+
+  const handleSend = async () => {
+    // Add user message
+    setMessages(prev => [...prev, { role: 'user', content: input }]);
+
+    // Stream response
+    const response = await fetch('/api/query', {
+      method: 'POST',
+      body: JSON.stringify({ query: input }),
+      headers: { 'Content-Type': 'application/json' }
+    });
+
+    const reader = response.body.getReader();
+    let assistantMessage = '';
+
+    while (true) {
+      const { done, value } = await reader.read();
+      if (done) break;
+      assistantMessage += new TextDecoder().decode(value);
+      setMessages(prev => [
+        ...prev.slice(0, -1),
+        { role: 'assistant', content: assistantMessage }
+      ]);
+    }
+  };
+
+  return (
+    &lt;div className="chat"&gt;
+      {messages.map((msg, i) =&gt; (
+        &lt;div key={i} className={msg.role}&gt;
+          {msg.content}
+        &lt;/div&gt;
+      ))}
+      &lt;input onChange={e =&gt; setInput(e.target.value)} /&gt;
+      &lt;button onClick={handleSend}&gt;Send&lt;/button&gt;
+    &lt;/div&gt;
+  );
+}</code></pre>
+</div>
+          </div>
+        </section>
+
+        <section class="space-y-5" aria-labelledby="streaming-heading">
+          <h2 id="streaming-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">Streaming Responses</h2>
+
+          <div class="rounded-2xl border border-white/10 bg-white/[0.03] p-4">
+            <p class="text-sm text-slate-300 mb-3"><strong>Server-Sent Events (SSE):</strong> Stream text chunks as they generate.</p>
+            <div class="ds-codeblock overflow-hidden rounded-2xl border border-white/10 bg-slate-950/90">
+  <div class="flex items-center justify-between gap-3 border-b border-white/10 px-3 py-2">
+    <span class="font-mono text-[11px] font-medium uppercase tracking-wide text-slate-400">Python</span>
+    <button type="button" class="ds-codeblock-copy rounded-lg border border-white/10 bg-white/[0.06] px-2.5 py-1 text-xs font-semibold text-slate-200 transition hover:border-sky-400/40 hover:bg-white/[0.1] hover:text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-sky-400/50" data-copy-label="Copy" data-copied-label="Copied" aria-label="Copy code to clipboard">Copy</button>
+  </div>
+  <pre class="ds-codeblock-pre code-block m-0 overflow-x-auto p-4 text-[0.8125rem] leading-[1.55] sm:text-sm language-python" tabindex="0"><code class="whitespace-pre-wrap font-mono ds-codeblock-source language-python">// Server (Python)
+@app.post("/api/query")
+async def stream_query(query: str):
+    async def generate():
+        # Retrieve docs
+        docs = await retrieve(query)
+
+        # Stream LLM response
+        async for chunk in llm.stream(query, docs):
+            yield f"data: {json.dumps({'text': chunk})}\n\n"
+
+    return StreamingResponse(generate(), media_type="text/event-stream")
+
+// Client (JS)
+const eventSource = new EventSource('/api/query?q=question');
+eventSource.onmessage = (event) => {
+  const { text } = JSON.parse(event.data);
+  document.getElementById('response').textContent += text;
+};</code></pre>
+</div>
+          </div>
+
+          <p class="text-sm text-slate-300 mt-3">Benefit: User sees answer immediately, doesn't wait for full LLM response.</p>
+        </section>
+
+        <section class="space-y-5" aria-labelledby="sources-heading">
+          <h2 id="sources-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">Source Attribution & Trust</h2>
+
+          <div class="rounded-2xl border border-white/10 bg-white/[0.03] p-5">
+            <div class="ds-codeblock overflow-hidden rounded-2xl border border-white/10 bg-slate-950/90">
+  <div class="flex items-center justify-between gap-3 border-b border-white/10 px-3 py-2">
+    <span class="font-mono text-[11px] font-medium uppercase tracking-wide text-slate-400">YAML</span>
+    <button type="button" class="ds-codeblock-copy rounded-lg border border-white/10 bg-white/[0.06] px-2.5 py-1 text-xs font-semibold text-slate-200 transition hover:border-sky-400/40 hover:bg-white/[0.1] hover:text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-sky-400/50" data-copy-label="Copy" data-copied-label="Copied" aria-label="Copy code to clipboard">Copy</button>
+  </div>
+  <pre class="ds-codeblock-pre code-block m-0 overflow-x-auto p-4 text-[0.8125rem] leading-[1.55] sm:text-sm language-yaml" tabindex="0"><code class="whitespace-pre-wrap font-mono ds-codeblock-source language-yaml">// Show retrieved sources
+const response = {
+  answer: "Self-employed people must file quarterly...",
+  sources: [
+    {
+      title: "Tax Guide 2024",
+      url: "https://...",
+      excerpt: "Self-employed people must...",
+      relevance: 0.95
+    },
+    {
+      title: "IRS FAQ",
+      url: "https://...",
+      excerpt: "Estimated taxes are...",
+      relevance: 0.82
+    }
+  ],
+  confidence: 0.92
+};
+
+// UI
+&lt;div className="sources"&gt;
+  &lt;h3&gt;Sources ({response.sources.length})&lt;/h3&gt;
+  {response.sources.map(src =&gt; (
+    &lt;a key={src.title} href={src.url}&gt;
+      {src.title}
+      &lt;span className="relevance"&gt;{Math.round(src.relevance * 100)}%&lt;/span&gt;
+    &lt;/a&gt;
+  ))}
+  &lt;span className="confidence"&gt;Answer confidence: {Math.round(response.confidence * 100)}%&lt;/span&gt;
+&lt;/div&gt;</code></pre>
+</div>
+          </div>
+
+          <p class="text-sm text-slate-300 mt-3">Trust building: Show where information came from, confidence score, relevance percentages.</p>
+        </section>
+
+        <section class="space-y-5" aria-labelledby="feedback-heading">
+          <h2 id="feedback-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">Feedback Loop</h2>
+
+          <div class="rounded-2xl border border-white/10 bg-white/[0.03] p-5">
+            <div class="ds-codeblock overflow-hidden rounded-2xl border border-white/10 bg-slate-950/90">
+  <div class="flex items-center justify-between gap-3 border-b border-white/10 px-3 py-2">
+    <span class="font-mono text-[11px] font-medium uppercase tracking-wide text-slate-400">Python</span>
+    <button type="button" class="ds-codeblock-copy rounded-lg border border-white/10 bg-white/[0.06] px-2.5 py-1 text-xs font-semibold text-slate-200 transition hover:border-sky-400/40 hover:bg-white/[0.1] hover:text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-sky-400/50" data-copy-label="Copy" data-copied-label="Copied" aria-label="Copy code to clipboard">Copy</button>
+  </div>
+  <pre class="ds-codeblock-pre code-block m-0 overflow-x-auto p-4 text-[0.8125rem] leading-[1.55] sm:text-sm language-python" tabindex="0"><code class="whitespace-pre-wrap font-mono ds-codeblock-source language-python">// Feedback buttons
+&lt;div className="feedback"&gt;
+  &lt;button onClick={() =&gt; submitFeedback('helpful')}&gt;👍 Helpful&lt;/button&gt;
+  &lt;button onClick={() =&gt; submitFeedback('not_helpful')}&gt;👎 Not helpful&lt;/button&gt;
+  &lt;textarea placeholder="Comments..." /&gt;
+&lt;/div&gt;
+
+// Server logs feedback for improvement
+async def submit_feedback(query_id, feedback, comments):
+    db.insert({
+        "query_id": query_id,
+        "feedback": feedback,
+        "comments": comments,
+        "timestamp": time.time()
+    })
+    # Use feedback to retrain/improve RAG</code></pre>
+</div>
+          </div>
+
+          <p class="text-sm text-slate-300 mt-3">Use feedback to: identify bad answers, retrain embeddings, improve prompts.</p>
+        </section>
+
+      </article>
+    </div>
+
+    {# ── Navigation ── #}
+    <div class="flex items-center justify-between">
+      <a
+        href="{% url 'tutorial_rag_pipeline_cost' %}"
+        class="inline-flex items-center gap-2 rounded-xl border border-violet-400/35 bg-violet-500/10 px-5 py-2.5 text-sm font-semibold text-violet-200 transition hover:border-violet-300/50 hover:bg-violet-500/20 hover:text-white"
+      >
+        <span aria-hidden>←</span> Previous
+      </a>
+      <a
+        href="{% url 'tutorial_rag_pipeline_debugging' %}"
+        class="inline-flex items-center gap-2 rounded-xl border border-violet-400/35 bg-violet-500/10 px-5 py-2.5 text-sm font-semibold text-violet-200 transition hover:border-violet-300/50 hover:bg-violet-500/20 hover:text-white"
+      >
+        Next: Debugging & Monitoring <span aria-hidden>→</span>
+      </a>
+      </div>
+
+  </div>
+{% endblock %}

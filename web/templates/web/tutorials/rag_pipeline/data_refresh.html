@@ -1,0 +1,236 @@
+{% extends "web/base.html" %}
+{% block title %}Data Refresh Pipeline — RAG Pipeline Tutorial{% endblock %}
+{% block content %}
+  <div class="space-y-10">
+    {# ── Breadcrumb ── #}
+    <div class="flex flex-wrap items-center gap-2 text-sm text-slate-400/90">
+      <a href="{% url 'tutorials' %}" class="font-medium text-violet-300/90 transition hover:text-violet-200">Tutorials</a>
+      <span aria-hidden class="text-slate-600">/</span>
+      <a href="{% url 'tutorials' %}?category=rag-vector-dbs" class="font-medium text-violet-300/90 transition hover:text-violet-200">RAG & Vector DBs</a>
+      <span aria-hidden class="text-slate-600">/</span>
+      <span class="text-slate-200/90">Data Refresh</span>
+    </div>
+
+    {# ── Hero ── #}
+    <section class="relative overflow-hidden rounded-3xl border border-violet-400/20 bg-white/[0.06] p-6 shadow-[0_0_0_1px_rgba(255,255,255,0.04)] backdrop-blur-2xl sm:p-8">
+      <div class="pointer-events-none absolute -right-24 top-0 h-72 w-72 rounded-full bg-violet-500/15 blur-3xl"></div>
+      <div class="pointer-events-none absolute -left-20 bottom-0 h-56 w-56 rounded-full bg-fuchsia-500/10 blur-3xl"></div>
+      <div class="relative">
+        <div class="flex flex-wrap items-center gap-3">
+          <span class="rounded-full border border-violet-500/25 bg-violet-500/10 px-2.5 py-1 text-xs font-medium text-violet-300/90">RAG Pipeline</span>
+          <span class="rounded-full border border-amber-500/25 bg-amber-500/10 px-2.5 py-1 text-xs font-medium text-amber-300/90">Intermediate</span>
+          <span class="text-xs text-slate-400/80">· 13 min read</span>
+          <span class="ml-auto text-xs font-medium text-slate-400/80">Page 14 of 23</span>
+        </div>
+        <h1 class="mt-4 text-3xl font-semibold tracking-tight text-white sm:text-4xl lg:text-[2.5rem] lg:leading-tight">Data Refresh Pipeline</h1>
+        <p class="mt-4 max-w-2xl text-sm leading-relaxed text-slate-200/80 sm:text-base">
+          Incremental indexing, change detection, versioning documents, handling deletes, and keeping RAG systems fresh.
+        </p>
+        <div class="mt-6">
+          <div class="mb-1.5 flex items-center justify-between text-xs text-slate-400/80"><span>Series progress</span><span>14 / 23</span></div>
+          <div class="h-1.5 w-full overflow-hidden rounded-full bg-white/10"><div class="h-full w-[61%] rounded-full bg-violet-400/70"></div></div>
+        </div>
+      </div>
+    </section>
+
+    {# ── Content ── #}
+    <div class="glass rounded-3xl border border-white/10 p-5 sm:p-8">
+      <article class="mx-auto space-y-12 text-base leading-relaxed text-slate-300/95">
+
+        <section class="space-y-5" aria-labelledby="strategies-heading">
+          <h2 id="strategies-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">Update Strategies</h2>
+
+          <div class="space-y-3">
+            <div class="rounded-2xl border border-white/10 bg-white/[0.03] p-4">
+              <p class="font-semibold text-white text-sm mb-2">1. Full Re-index (Simplest)</p>
+              <p class="text-sm text-slate-300">Delete all vectors, re-embed all documents. Works for small datasets, inefficient for large.</p>
+            </div>
+
+            <div class="rounded-2xl border border-white/10 bg-white/[0.03] p-4">
+              <p class="font-semibold text-white text-sm mb-2">2. Incremental Updates (Recommended)</p>
+              <p class="text-sm text-slate-300">Only update changed documents. Track hashes, timestamps, or version numbers.</p>
+            </div>
+
+            <div class="rounded-2xl border border-white/10 bg-white/[0.03] p-4">
+              <p class="font-semibold text-white text-sm mb-2">3. Versioned Indices</p>
+              <p class="text-sm text-slate-300">Create new index for each batch of updates. Switch atomically. Keep old index for rollback.</p>
+            </div>
+          </div>
+        </section>
+
+        <section class="space-y-5" aria-labelledby="incremental-heading">
+          <h2 id="incremental-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">Incremental Indexing</h2>
+
+          <div class="rounded-2xl border border-white/10 bg-white/[0.03] p-5">
+            <div class="ds-codeblock overflow-hidden rounded-2xl border border-white/10 bg-slate-950/90">
+  <div class="flex items-center justify-between gap-3 border-b border-white/10 px-3 py-2">
+    <span class="font-mono text-[11px] font-medium uppercase tracking-wide text-slate-400">Python</span>
+    <button type="button" class="ds-codeblock-copy rounded-lg border border-white/10 bg-white/[0.06] px-2.5 py-1 text-xs font-semibold text-slate-200 transition hover:border-sky-400/40 hover:bg-white/[0.1] hover:text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-sky-400/50" data-copy-label="Copy" data-copied-label="Copied" aria-label="Copy code to clipboard">Copy</button>
+  </div>
+  <pre class="ds-codeblock-pre code-block m-0 overflow-x-auto p-4 text-[0.8125rem] leading-[1.55] sm:text-sm language-python" tabindex="0"><code class="whitespace-pre-wrap font-mono ds-codeblock-source language-python">def update_index(documents, vector_db):
+    """Update only changed documents."""
+    import hashlib
+
+    for doc in documents:
+        # Compute hash of current doc
+        current_hash = hashlib.md5(doc.content.encode()).hexdigest()
+
+        # Check if already indexed
+        stored = vector_db.get_metadata(doc.id)
+        if stored and stored.get('content_hash') == current_hash:
+            continue  # No change, skip
+
+        # Document changed or new
+        # 1. Delete old chunks for this doc
+        vector_db.delete_by_metadata({"source_id": doc.id})
+
+        # 2. Chunk and embed
+        chunks = chunk(doc.content)
+        embeddings = embed_batch(chunks)
+
+        # 3. Add to DB with metadata
+        for chunk, emb in zip(chunks, embeddings):
+            vector_db.upsert(
+                id=f"{doc.id}_{chunk.index}",
+                embedding=emb,
+                metadata={
+                    "source_id": doc.id,
+                    "content_hash": current_hash,
+                    "updated_at": time.time()
+                }
+            )
+        print(f"Updated {doc.id}")</code></pre>
+</div>
+          </div>
+        </section>
+
+        <section class="space-y-5" aria-labelledby="deletion-heading">
+          <h2 id="deletion-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">Handling Deletes</h2>
+
+          <div class="rounded-2xl border border-white/10 bg-white/[0.03] p-5">
+            <div class="ds-codeblock overflow-hidden rounded-2xl border border-white/10 bg-slate-950/90">
+  <div class="flex items-center justify-between gap-3 border-b border-white/10 px-3 py-2">
+    <span class="font-mono text-[11px] font-medium uppercase tracking-wide text-slate-400">Python</span>
+    <button type="button" class="ds-codeblock-copy rounded-lg border border-white/10 bg-white/[0.06] px-2.5 py-1 text-xs font-semibold text-slate-200 transition hover:border-sky-400/40 hover:bg-white/[0.1] hover:text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-sky-400/50" data-copy-label="Copy" data-copied-label="Copied" aria-label="Copy code to clipboard">Copy</button>
+  </div>
+  <pre class="ds-codeblock-pre code-block m-0 overflow-x-auto p-4 text-[0.8125rem] leading-[1.55] sm:text-sm language-python" tabindex="0"><code class="whitespace-pre-wrap font-mono ds-codeblock-source language-python">def delete_document(doc_id, vector_db):
+    """Remove all chunks for a document."""
+    # Delete by metadata
+    vector_db.delete_by_metadata({
+        "source_id": doc_id
+    })
+    print(f"Deleted all chunks for {doc_id}")
+
+    # For compliance/privacy
+    def soft_delete(doc_id, vector_db):
+        """Mark as deleted but keep history."""
+        vector_db.update_metadata(
+            ids=[f"{doc_id}_*"],
+            metadata={"deleted": True}
+        )
+
+    def purge_old_versions(doc_id, keep_versions=3):
+        """Delete old versions, keep recent ones."""
+        versions = vector_db.get_versions(doc_id)
+        if len(versions) > keep_versions:
+            for old in versions[:-keep_versions]:
+                vector_db.delete_version(old)</code></pre>
+</div>
+          </div>
+        </section>
+
+        <section class="space-y-5" aria-labelledby="versioning-heading">
+          <h2 id="versioning-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">Document Versioning</h2>
+
+          <div class="rounded-2xl border border-white/10 bg-white/[0.03] p-5">
+            <div class="ds-codeblock overflow-hidden rounded-2xl border border-white/10 bg-slate-950/90">
+  <div class="flex items-center justify-between gap-3 border-b border-white/10 px-3 py-2">
+    <span class="font-mono text-[11px] font-medium uppercase tracking-wide text-slate-400">Python</span>
+    <button type="button" class="ds-codeblock-copy rounded-lg border border-white/10 bg-white/[0.06] px-2.5 py-1 text-xs font-semibold text-slate-200 transition hover:border-sky-400/40 hover:bg-white/[0.1] hover:text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-sky-400/50" data-copy-label="Copy" data-copied-label="Copied" aria-label="Copy code to clipboard">Copy</button>
+  </div>
+  <pre class="ds-codeblock-pre code-block m-0 overflow-x-auto p-4 text-[0.8125rem] leading-[1.55] sm:text-sm language-python" tabindex="0"><code class="whitespace-pre-wrap font-mono ds-codeblock-source language-python">class VersionedDocument:
+    def __init__(self, doc_id, content, version=1):
+        self.id = doc_id
+        self.content = content
+        self.version = version
+        self.created_at = time.time()
+
+    def upsert(self, vector_db):
+        """Store with version tracking."""
+        # Chunk
+        chunks = chunk(self.content)
+        embeddings = embed_batch(chunks)
+
+        # Add with version
+        for chunk, emb in zip(chunks, embeddings):
+            vector_db.upsert(
+                id=f"{self.id}_v{self.version}_{chunk.index}",
+                embedding=emb,
+                metadata={
+                    "doc_id": self.id,
+                    "version": self.version,
+                    "created_at": self.created_at
+                }
+            )
+
+    def rollback(self, vector_db, target_version):
+        """Switch back to previous version."""
+        # Mark new version as deleted
+        vector_db.update_metadata(
+            filter={"doc_id": self.id, "version": self.version},
+            metadata={"active": False}
+        )
+
+        # Mark old version as active
+        vector_db.update_metadata(
+            filter={"doc_id": self.id, "version": target_version},
+            metadata={"active": True}
+        )</code></pre>
+</div>
+          </div>
+        </section>
+
+        <section class="space-y-5" aria-labelledby="real-time-heading">
+          <h2 id="real-time-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">Real-time vs Batch Updates</h2>
+
+          <div class="space-y-3">
+            <div class="rounded-2xl border border-white/10 bg-white/[0.03] p-4">
+              <p class="font-semibold text-white text-sm mb-2">Real-time (Event-driven)</p>
+              <p class="text-sm text-slate-300">When doc changes, immediately update vectors. Fast, fresh data. Complex infrastructure.</p>
+              <code class="block font-mono text-xs text-slate-300 whitespace-pre mt-2 bg-black/20 p-2 rounded"># On doc change event
+async def on_doc_updated(event):
+    doc = await fetch_document(event.doc_id)
+    await vector_db.update(doc)  # Real-time</code>
+            </div>
+
+            <div class="rounded-2xl border border-white/10 bg-white/[0.03] p-4">
+              <p class="font-semibold text-white text-sm mb-2">Batch (Time-based)</p>
+              <p class="text-sm text-slate-300">Update every hour/day. Simpler, but delayed. Good for non-critical data.</p>
+              <code class="block font-mono text-xs text-slate-300 whitespace-pre mt-2 bg-black/20 p-2 rounded"># Scheduled job (every hour)
+@scheduler.scheduled_job('cron', minute=0)
+async def refresh_index():
+    docs = await fetch_changed_docs(since=last_refresh)
+    await update_index(docs)</code>
+        </section>
+
+      </article>
+    </div>
+
+    {# ── Navigation ── #}
+    <div class="flex items-center justify-between">
+      <a
+        href="{% url 'tutorial_rag_pipeline_optimization_tuning' %}"
+        class="inline-flex items-center gap-2 rounded-xl border border-violet-400/35 bg-violet-500/10 px-5 py-2.5 text-sm font-semibold text-violet-200 transition hover:border-violet-300/50 hover:bg-violet-500/20 hover:text-white"
+      >
+        <span aria-hidden>←</span> Previous
+      </a>
+      <a
+        href="{% url 'tutorial_rag_pipeline_production_architecture' %}"
+        class="inline-flex items-center gap-2 rounded-xl border border-violet-400/35 bg-violet-500/10 px-5 py-2.5 text-sm font-semibold text-violet-200 transition hover:border-violet-300/50 hover:bg-violet-500/20 hover:text-white"
+      >
+        Next: Production Architecture <span aria-hidden>→</span>
+      </a>
+      </div>
+
+  </div>
+{% endblock %}

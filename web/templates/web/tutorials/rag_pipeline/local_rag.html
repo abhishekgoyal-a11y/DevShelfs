@@ -1,0 +1,201 @@
+{% extends "web/base.html" %}
+{% block title %}Local RAG Setup — RAG Pipeline Tutorial{% endblock %}
+{% block content %}
+  <div class="space-y-10">
+    {# ── Breadcrumb ── #}
+    <div class="flex flex-wrap items-center gap-2 text-sm text-slate-400/90">
+      <a href="{% url 'tutorials' %}" class="font-medium text-violet-300/90 transition hover:text-violet-200">Tutorials</a>
+      <span aria-hidden class="text-slate-600">/</span>
+      <a href="{% url 'tutorials' %}?category=rag-vector-dbs" class="font-medium text-violet-300/90 transition hover:text-violet-200">RAG & Vector DBs</a>
+      <span aria-hidden class="text-slate-600">/</span>
+      <span class="text-slate-200/90">Local RAG Setup</span>
+    </div>
+
+    {# ── Hero ── #}
+    <section class="relative overflow-hidden rounded-3xl border border-violet-400/20 bg-white/[0.06] p-6 shadow-[0_0_0_1px_rgba(255,255,255,0.04)] backdrop-blur-2xl sm:p-8">
+      <div class="pointer-events-none absolute -right-24 top-0 h-72 w-72 rounded-full bg-violet-500/15 blur-3xl"></div>
+      <div class="pointer-events-none absolute -left-20 bottom-0 h-56 w-56 rounded-full bg-fuchsia-500/10 blur-3xl"></div>
+      <div class="relative">
+        <div class="flex flex-wrap items-center gap-3">
+          <span class="rounded-full border border-violet-500/25 bg-violet-500/10 px-2.5 py-1 text-xs font-medium text-violet-300/90">RAG Pipeline</span>
+          <span class="rounded-full border border-rose-500/25 bg-rose-500/10 px-2.5 py-1 text-xs font-medium text-rose-300/90">Advanced</span>
+          <span class="text-xs text-slate-400/80">· 15 min read</span>
+          <span class="ml-auto text-xs font-medium text-slate-400/80">Page 22 of 23</span>
+        </div>
+        <h1 class="mt-4 text-3xl font-semibold tracking-tight text-white sm:text-4xl lg:text-[2.5rem] lg:leading-tight">Local RAG Setup (Offline AI)</h1>
+        <p class="mt-4 max-w-2xl text-sm leading-relaxed text-slate-200/80 sm:text-base">
+          Run RAG completely offline: Ollama for LLMs, local embeddings, FAISS for vectors. Perfect for privacy and edge deployments.
+        </p>
+        <div class="mt-6">
+          <div class="mb-1.5 flex items-center justify-between text-xs text-slate-400/80"><span>Series progress</span><span>22 / 23</span></div>
+          <div class="h-1.5 w-full overflow-hidden rounded-full bg-white/10"><div class="h-full w-[96%] rounded-full bg-violet-400/70"></div></div>
+        </div>
+      </div>
+    </section>
+
+    {# ── Content ── #}
+    <div class="glass rounded-3xl border border-white/10 p-5 sm:p-8">
+      <article class="mx-auto space-y-12 text-base leading-relaxed text-slate-300/95">
+
+        <section class="space-y-5" aria-labelledby="setup-heading">
+          <h2 id="setup-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">Full Offline Stack</h2>
+
+          <div class="rounded-2xl border border-white/10 bg-white/[0.03] p-5">
+            <div class="ds-codeblock overflow-hidden rounded-2xl border border-white/10 bg-slate-950/90">
+  <div class="flex items-center justify-between gap-3 border-b border-white/10 px-3 py-2">
+    <span class="font-mono text-[11px] font-medium uppercase tracking-wide text-slate-400">Python</span>
+    <button type="button" class="ds-codeblock-copy rounded-lg border border-white/10 bg-white/[0.06] px-2.5 py-1 text-xs font-semibold text-slate-200 transition hover:border-sky-400/40 hover:bg-white/[0.1] hover:text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-sky-400/50" data-copy-label="Copy" data-copied-label="Copied" aria-label="Copy code to clipboard">Copy</button>
+  </div>
+  <pre class="ds-codeblock-pre code-block m-0 overflow-x-auto p-4 text-[0.8125rem] leading-[1.55] sm:text-sm language-python" tabindex="0"><code class="whitespace-pre-wrap font-mono ds-codeblock-source language-python"># 1. Install Ollama (LLM inference)
+# Download from ollama.ai
+ollama pull mistral  # ~7B fast model
+# or llama2:70b for highest quality
+
+# 2. Install dependencies
+pip install sentence-transformers faiss-cpu langchain
+
+# 3. Run full RAG locally
+from langchain.document_loaders import PyPDFLoader
+from langchain.text_splitters import TokenTextSplitter
+from sentence_transformers import SentenceTransformer
+import faiss
+import requests
+import json
+
+# Load docs
+loader = PyPDFLoader("document.pdf")
+docs = loader.load()
+
+# Chunk
+splitter = TokenTextSplitter(chunk_size=400)
+chunks = splitter.split_documents(docs)
+
+# Embed locally
+model = SentenceTransformer('all-mpnet-base-v2')
+embeddings = model.encode([c.page_content for c in chunks])
+
+# Store in FAISS
+dimension = embeddings.shape[1]
+index = faiss.IndexFlatL2(dimension)
+index.add(embeddings.astype('float32'))
+
+# Query
+query = "How do I file taxes?"
+query_emb = model.encode(query).reshape(1, -1)
+distances, indices = index.search(query_emb, k=5)
+
+retrieved = [chunks[i].page_content for i in indices[0]]
+
+# Call local LLM (Ollama)
+prompt = f"""Context: {retrieved}
+Question: {query}
+Answer:"""
+
+response = requests.post('http://localhost:11434/api/generate',
+    json={"model": "mistral", "prompt": prompt, "stream": False}
+)
+answer = response.json()['response']
+print(answer)</code></pre>
+</div>
+          </div>
+        </section>
+
+        <section class="space-y-5" aria-labelledby="ollama-heading">
+          <h2 id="ollama-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">Ollama for Local LLMs</h2>
+
+          <div class="space-y-3">
+            <div class="rounded-2xl border border-white/10 bg-white/[0.03] p-4">
+              <p class="font-semibold text-white text-sm mb-2">Fast & Small (7B models)</p>
+              <p class="text-xs text-slate-300">Mistral, TinyLlama. ~4GB RAM, fast. Trade-off: lower quality.</p>
+            </div>
+
+            <div class="rounded-2xl border border-white/10 bg-white/[0.03] p-4">
+              <p class="font-semibold text-white text-sm mb-2">Balanced (13B models)</p>
+              <p class="text-xs text-slate-300">Llama 2 13B, Neural Chat. ~8GB RAM. Good balance.</p>
+            </div>
+
+            <div class="rounded-2xl border border-white/10 bg-white/[0.03] p-4">
+              <p class="font-semibold text-white text-sm mb-2">Powerful (70B models)</p>
+              <p class="text-xs text-slate-300">Llama 2 70B. ~40GB RAM (needs GPU). Highest quality.</p>
+            </div>
+          </div>
+
+          <div class="rounded-2xl border border-blue-500/20 bg-blue-500/5 p-4 mt-4">
+            <p class="text-sm text-slate-300">
+              <strong>Recommendation:</strong> Start with Mistral (7B). Upgrade to Llama 13B if quality matters.
+            </p>
+          </div>
+        </section>
+
+        <section class="space-y-5" aria-labelledby="faiss-heading">
+          <h2 id="faiss-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">FAISS for Vector Storage</h2>
+
+          <div class="rounded-2xl border border-white/10 bg-white/[0.03] p-5">
+            <div class="ds-codeblock overflow-hidden rounded-2xl border border-white/10 bg-slate-950/90">
+  <div class="flex items-center justify-between gap-3 border-b border-white/10 px-3 py-2">
+    <span class="font-mono text-[11px] font-medium uppercase tracking-wide text-slate-400">Python</span>
+    <button type="button" class="ds-codeblock-copy rounded-lg border border-white/10 bg-white/[0.06] px-2.5 py-1 text-xs font-semibold text-slate-200 transition hover:border-sky-400/40 hover:bg-white/[0.1] hover:text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-sky-400/50" data-copy-label="Copy" data-copied-label="Copied" aria-label="Copy code to clipboard">Copy</button>
+  </div>
+  <pre class="ds-codeblock-pre code-block m-0 overflow-x-auto p-4 text-[0.8125rem] leading-[1.55] sm:text-sm language-python" tabindex="0"><code class="whitespace-pre-wrap font-mono ds-codeblock-source language-python"># FAISS usage
+import faiss
+import numpy as np
+
+# Create index
+dimension = 768  # embedding dimension
+index = faiss.IndexFlatL2(dimension)  # L2 distance
+
+# Add vectors
+embeddings = np.random.random((10000, 768)).astype('float32')
+index.add(embeddings)
+
+# Search
+query = np.random.random((1, 768)).astype('float32')
+distances, indices = index.search(query, k=5)
+
+# Save/load
+faiss.write_index(index, "index.faiss")
+index = faiss.read_index("index.faiss")</code></pre>
+</div>
+          </div>
+
+          <p class="text-sm text-slate-300 mt-3"><strong>Pros:</strong> Blazingly fast, in-memory, no DB overhead. <strong>Cons:</strong> All data in RAM, no filtering.</p>
+        </section>
+
+        <section class="space-y-5" aria-labelledby="performance-heading">
+          <h2 id="performance-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">Performance Expectations</h2>
+
+          <div class="rounded-2xl border border-white/10 bg-white/[0.03] p-4">
+            <p class="font-semibold text-white text-sm mb-2">On MacBook Pro M1 (16GB RAM)</p>
+            <p class="text-xs text-slate-300">Embedding: ~200 docs/sec</p>
+            <p class="text-xs text-slate-300">Search: ~5ms for 10K vectors</p>
+            <p class="text-xs text-slate-300">LLM: ~10 tokens/sec (Mistral 7B)</p>
+          </div>
+
+          <div class="rounded-2xl border border-white/10 bg-white/[0.03] p-4 mt-3">
+            <p class="font-semibold text-white text-sm mb-2">On GPU (RTX 4090)</p>
+            <p class="text-xs text-slate-300">Embedding: ~5000 docs/sec</p>
+            <p class="text-xs text-slate-300">Search: &lt;1ms</p>
+            <p class="text-xs text-slate-300">LLM: ~100 tokens/sec (Llama 70B)</p>
+        </section>
+
+      </article>
+    </div>
+
+    {# ── Navigation ── #}
+    <div class="flex items-center justify-between">
+      <a
+        href="{% url 'tutorial_rag_pipeline_benchmarking' %}"
+        class="inline-flex items-center gap-2 rounded-xl border border-violet-400/35 bg-violet-500/10 px-5 py-2.5 text-sm font-semibold text-violet-200 transition hover:border-violet-300/50 hover:bg-violet-500/20 hover:text-white"
+      >
+        <span aria-hidden>←</span> Previous
+      </a>
+      <a
+        href="{% url 'tutorial_rag_pipeline_examples' %}"
+        class="inline-flex items-center gap-2 rounded-xl border border-violet-400/35 bg-violet-500/10 px-5 py-2.5 text-sm font-semibold text-violet-200 transition hover:border-violet-300/50 hover:bg-violet-500/20 hover:text-white"
+      >
+        Next: Real-World Examples <span aria-hidden>→</span>
+      </a>
+      </div>
+
+  </div>
+{% endblock %}

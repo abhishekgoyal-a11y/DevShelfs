@@ -1,0 +1,202 @@
+{% extends "web/base.html" %}
+{% block title %}Real-World Examples — Build with CrewAI{% endblock %}
+{% block content %}
+  <div class="space-y-10">
+    {# ── Breadcrumb ── #}
+    <div class="flex flex-wrap items-center gap-2 text-sm text-slate-400/90">
+      <a href="{% url 'tutorials' %}" class="font-medium text-violet-300/90 transition hover:text-violet-200">Tutorials</a>
+      <span aria-hidden class="text-slate-600">/</span>
+      <a href="{% url 'tutorials' %}?category=ai-agents" class="font-medium text-violet-300/90 transition hover:text-violet-200">AI Agents</a>
+      <span aria-hidden class="text-slate-600">/</span>
+      <span class="text-slate-200/90">Real-World Examples</span>
+    </div>
+
+    {# ── Hero ── #}
+    <section class="relative overflow-hidden rounded-3xl border border-violet-400/20 bg-white/[0.06] p-6 shadow-[0_0_0_1px_rgba(255,255,255,0.04)] backdrop-blur-2xl sm:p-8">
+      <div class="pointer-events-none absolute -right-24 top-0 h-72 w-72 rounded-full bg-violet-500/15 blur-3xl"></div>
+      <div class="pointer-events-none absolute -left-20 bottom-0 h-56 w-56 rounded-full bg-fuchsia-500/10 blur-3xl"></div>
+      <div class="relative">
+        <div class="flex flex-wrap items-center gap-3">
+          <span class="rounded-full border border-violet-500/25 bg-violet-500/10 px-2.5 py-1 text-xs font-medium text-violet-300/90">Build with CrewAI</span>
+          <span class="rounded-full border border-rose-500/25 bg-rose-500/10 px-2.5 py-1 text-xs font-medium text-rose-300/90">Advanced</span>
+          <span class="text-xs text-slate-400/80">· 18 min read</span>
+          <span class="ml-auto text-xs font-medium text-slate-400/80">Page 15 of 15</span>
+        </div>
+        <h1 class="mt-4 text-3xl font-semibold tracking-tight text-white sm:text-4xl lg:text-[2.5rem] lg:leading-tight">Real-World Examples</h1>
+        <p class="mt-4 max-w-2xl text-sm leading-relaxed text-slate-200/80 sm:text-base">
+          Five complete crews you can fork: research assistant, content factory, code reviewer, sales SDR, support triage.
+        </p>
+        <div class="mt-6">
+          <div class="mb-1.5 flex items-center justify-between text-xs text-slate-400/80"><span>Series progress</span><span>15 / 15</span></div>
+          <div class="h-1.5 w-full overflow-hidden rounded-full bg-white/10"><div class="h-full w-[100%] rounded-full bg-violet-400/70"></div></div>
+        </div>
+      </div>
+    </section>
+
+    {# ── Content ── #}
+    <div class="glass rounded-3xl border border-white/10 p-5 sm:p-8">
+      <article class="mx-auto space-y-12 text-base leading-relaxed text-slate-300/95">
+
+        <section class="space-y-5" aria-labelledby="intro-heading">
+          <h2 id="intro-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">Five Crews You Can Fork Today</h2>
+          <p>Each example is a complete, minimal blueprint — agents, tasks, and the wiring. Adapt them to your domain.</p>
+        </section>
+
+        <section class="space-y-5" aria-labelledby="ex1-heading">
+          <h2 id="ex1-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">1. Research Assistant</h2>
+          <p>Drop in a topic, get a sourced research brief.</p>
+          <div class="rounded-2xl border border-white/10 bg-white/[0.03] p-5">
+            <p class="font-semibold text-white mb-3">research_assistant.py</p>
+            <div class="ds-codeblock overflow-hidden rounded-2xl border border-white/10 bg-slate-950/90">
+  <div class="flex items-center justify-between gap-3 border-b border-white/10 px-3 py-2">
+    <span class="font-mono text-[11px] font-medium uppercase tracking-wide text-slate-400">PYTHON</span>
+    <button type="button" class="ds-codeblock-copy rounded-lg border border-white/10 bg-white/[0.06] px-2.5 py-1 text-xs font-semibold text-slate-200 transition hover:border-sky-400/40 hover:bg-white/[0.1] hover:text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-sky-400/50" data-copy-label="Copy" data-copied-label="Copied" aria-label="Copy code to clipboard">Copy</button>
+  </div>
+  <pre class="ds-codeblock-pre code-block m-0 overflow-x-auto p-4 text-[0.8125rem] leading-[1.55] sm:text-sm language-python" tabindex="0"><code class="whitespace-pre-wrap font-mono ds-codeblock-source language-python">from crewai import Agent, Task, Crew, Process
+from crewai_tools import SerperDevTool, ScrapeWebsiteTool
+
+search, scrape = SerperDevTool(), ScrapeWebsiteTool()
+
+researcher = Agent(
+    role="Senior Research Analyst",
+    goal="Find 5 credible sources on {topic} from the past year",
+    backstory="You triple-check sources and never cite wikis.",
+    tools=[search, scrape], max_iter=8,
+)
+
+writer = Agent(
+    role="Briefing Writer",
+    goal="Turn sources into a 1-page executive brief",
+    backstory="You write tight, sourced prose for execs.",
+    max_iter=5,
+)
+
+t1 = Task(description="Research {topic}", expected_output="5 sources with key claims",  agent=researcher)
+t2 = Task(description="Write 1-page brief", expected_output="Markdown brief",            agent=writer, context=[t1])
+
+crew = Crew(agents=[researcher, writer], tasks=[t1, t2], process=Process.sequential)
+print(crew.kickoff(inputs={"topic": "AI agent observability"}))</code></pre>
+</div>
+          </div>
+        </section>
+
+        <section class="space-y-5" aria-labelledby="ex2-heading">
+          <h2 id="ex2-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">2. Content Factory</h2>
+          <p>Topic → outline → draft → SEO-optimized post.</p>
+          <div class="rounded-2xl border border-white/10 bg-white/[0.03] p-5">
+            <p class="font-semibold text-white mb-3">content_factory.py</p>
+            <div class="ds-codeblock overflow-hidden rounded-2xl border border-white/10 bg-slate-950/90">
+  <div class="flex items-center justify-between gap-3 border-b border-white/10 px-3 py-2">
+    <span class="font-mono text-[11px] font-medium uppercase tracking-wide text-slate-400">PYTHON</span>
+    <button type="button" class="ds-codeblock-copy rounded-lg border border-white/10 bg-white/[0.06] px-2.5 py-1 text-xs font-semibold text-slate-200 transition hover:border-sky-400/40 hover:bg-white/[0.1] hover:text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-sky-400/50" data-copy-label="Copy" data-copied-label="Copied" aria-label="Copy code to clipboard">Copy</button>
+  </div>
+  <pre class="ds-codeblock-pre code-block m-0 overflow-x-auto p-4 text-[0.8125rem] leading-[1.55] sm:text-sm language-python" tabindex="0"><code class="whitespace-pre-wrap font-mono ds-codeblock-source language-python">outliner = Agent(role="Content Strategist", goal="Outline a 1000-word post on {topic}", backstory="...")
+writer   = Agent(role="Long-form Writer",    goal="Draft the post from the outline",      backstory="...")
+seo      = Agent(role="SEO Editor",          goal="Optimize headings and meta description",backstory="...")
+
+t1 = Task(description="Outline the post on {topic}",     expected_output="H2/H3 outline",       agent=outliner)
+t2 = Task(description="Write the full post",             expected_output="1000-word markdown",  agent=writer, context=[t1])
+t3 = Task(description="Optimize for SEO",                expected_output="Final post + meta",   agent=seo,    context=[t2])
+
+crew = Crew(agents=[outliner, writer, seo], tasks=[t1, t2, t3], process=Process.sequential)</code></pre>
+</div>
+          </div>
+        </section>
+
+        <section class="space-y-5" aria-labelledby="ex3-heading">
+          <h2 id="ex3-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">3. Code Reviewer Bot</h2>
+          <p>Diff in, structured review out.</p>
+          <div class="rounded-2xl border border-white/10 bg-white/[0.03] p-5">
+            <p class="font-semibold text-white mb-3">code_reviewer.py</p>
+            <div class="ds-codeblock overflow-hidden rounded-2xl border border-white/10 bg-slate-950/90">
+  <div class="flex items-center justify-between gap-3 border-b border-white/10 px-3 py-2">
+    <span class="font-mono text-[11px] font-medium uppercase tracking-wide text-slate-400">PYTHON</span>
+    <button type="button" class="ds-codeblock-copy rounded-lg border border-white/10 bg-white/[0.06] px-2.5 py-1 text-xs font-semibold text-slate-200 transition hover:border-sky-400/40 hover:bg-white/[0.1] hover:text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-sky-400/50" data-copy-label="Copy" data-copied-label="Copied" aria-label="Copy code to clipboard">Copy</button>
+  </div>
+  <pre class="ds-codeblock-pre code-block m-0 overflow-x-auto p-4 text-[0.8125rem] leading-[1.55] sm:text-sm language-python" tabindex="0"><code class="whitespace-pre-wrap font-mono ds-codeblock-source language-python">reader   = Agent(role="Diff Summarizer",   goal="Summarize what {diff} changes in 5 bullets", backstory="...")
+security = Agent(role="Security Reviewer", goal="Flag injection, auth, secret-leak risks",     backstory="...")
+style    = Agent(role="Style Reviewer",    goal="Flag PEP8, naming, dead-code issues",         backstory="...")
+poster   = Agent(role="Review Composer",   goal="Combine into a single PR comment",            backstory="...")
+
+t1 = Task(description="Summarize diff",     expected_output="5 bullets",   agent=reader)
+t2 = Task(description="Security review",    expected_output="Issues list", agent=security, context=[t1], async_execution=True)
+t3 = Task(description="Style review",       expected_output="Issues list", agent=style,    context=[t1], async_execution=True)
+t4 = Task(description="Compose PR comment", expected_output="Markdown",    agent=poster,   context=[t1, t2, t3])
+
+crew = Crew(agents=[reader, security, style, poster], tasks=[t1, t2, t3, t4], process=Process.sequential)</code></pre>
+</div>
+          </div>
+        </section>
+
+        <section class="space-y-5" aria-labelledby="ex4-heading">
+          <h2 id="ex4-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">4. Sales SDR Crew</h2>
+          <p>Lead profile in → personalized outreach + follow-ups out.</p>
+          <div class="rounded-2xl border border-white/10 bg-white/[0.03] p-5">
+            <p class="font-semibold text-white mb-3">sales_sdr.py</p>
+            <div class="ds-codeblock overflow-hidden rounded-2xl border border-white/10 bg-slate-950/90">
+  <div class="flex items-center justify-between gap-3 border-b border-white/10 px-3 py-2">
+    <span class="font-mono text-[11px] font-medium uppercase tracking-wide text-slate-400">PYTHON</span>
+    <button type="button" class="ds-codeblock-copy rounded-lg border border-white/10 bg-white/[0.06] px-2.5 py-1 text-xs font-semibold text-slate-200 transition hover:border-sky-400/40 hover:bg-white/[0.1] hover:text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-sky-400/50" data-copy-label="Copy" data-copied-label="Copied" aria-label="Copy code to clipboard">Copy</button>
+  </div>
+  <pre class="ds-codeblock-pre code-block m-0 overflow-x-auto p-4 text-[0.8125rem] leading-[1.55] sm:text-sm language-python" tabindex="0"><code class="whitespace-pre-wrap font-mono ds-codeblock-source language-python">profiler = Agent(role="Account Researcher", goal="Build a 1-paragraph profile of {company}", backstory="...", tools=[search])
+copywriter = Agent(role="B2B Copywriter",    goal="Draft 3 personalized cold emails",          backstory="...")
+seq_planner = Agent(role="Sequence Planner", goal="Schedule 5-touch outreach sequence",        backstory="...")
+
+t1 = Task(description="Profile {company}",         expected_output="Company profile + ICP fit", agent=profiler)
+t2 = Task(description="Draft 3 personalized emails", expected_output="3 emails with subjects",  agent=copywriter, context=[t1])
+t3 = Task(description="Plan a 5-touch sequence",     expected_output="Day-by-day schedule",      agent=seq_planner, context=[t1, t2])
+
+crew = Crew(agents=[profiler, copywriter, seq_planner], tasks=[t1, t2, t3], process=Process.sequential)</code></pre>
+</div>
+          </div>
+        </section>
+
+        <section class="space-y-5" aria-labelledby="ex5-heading">
+          <h2 id="ex5-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">5. Support Triage Crew</h2>
+          <p>Incoming ticket → classified, answered, or escalated.</p>
+          <div class="rounded-2xl border border-white/10 bg-white/[0.03] p-5">
+            <p class="font-semibold text-white mb-3">support_triage.py</p>
+            <div class="ds-codeblock overflow-hidden rounded-2xl border border-white/10 bg-slate-950/90">
+  <div class="flex items-center justify-between gap-3 border-b border-white/10 px-3 py-2">
+    <span class="font-mono text-[11px] font-medium uppercase tracking-wide text-slate-400">PYTHON</span>
+    <button type="button" class="ds-codeblock-copy rounded-lg border border-white/10 bg-white/[0.06] px-2.5 py-1 text-xs font-semibold text-slate-200 transition hover:border-sky-400/40 hover:bg-white/[0.1] hover:text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-sky-400/50" data-copy-label="Copy" data-copied-label="Copied" aria-label="Copy code to clipboard">Copy</button>
+  </div>
+  <pre class="ds-codeblock-pre code-block m-0 overflow-x-auto p-4 text-[0.8125rem] leading-[1.55] sm:text-sm language-python" tabindex="0"><code class="whitespace-pre-wrap font-mono ds-codeblock-source language-python">classifier = Agent(role="Ticket Classifier", goal="Tag {ticket} as bug | how-to | billing | other", backstory="...", llm=cheap_llm)
+kb_search  = Agent(role="KB Search Agent",   goal="Find the top 3 KB articles for the ticket",         backstory="...", tools=[kb_tool])
+drafter    = Agent(role="Support Drafter",   goal="Compose a friendly answer citing KB",               backstory="...")
+escalator  = Agent(role="Escalation Lead",   goal="Decide if a human is needed",                       backstory="...", llm=smart_llm)
+
+t1 = Task(description="Classify the ticket",                expected_output="One label",       agent=classifier)
+t2 = Task(description="Search KB for relevant articles",    expected_output="3 article titles",agent=kb_search,  context=[t1])
+t3 = Task(description="Draft a customer reply",             expected_output="Plain-text email",agent=drafter,    context=[t1, t2])
+t4 = Task(description="Decide escalate / send",             expected_output="ESCALATE or SEND",agent=escalator,  context=[t1, t2, t3])
+
+crew = Crew(agents=[classifier, kb_search, drafter, escalator], tasks=[t1, t2, t3, t4], process=Process.sequential)</code></pre>
+</div>
+          </div>
+        </section>
+
+        <section class="space-y-5" aria-labelledby="wrap-heading">
+          <h2 id="wrap-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">You're Ready</h2>
+          <p>You now have the full picture: concepts, building blocks, coordination patterns, production wiring, and concrete blueprints. The fastest path forward: take whichever example above is closest to your problem, fork it, and replace one task at a time with your real domain.</p>
+          <div class="rounded-2xl border border-violet-500/20 bg-violet-500/5 p-4">
+            <p class="text-sm text-slate-300"><strong>Next steps:</strong> Wire it behind FastAPI (Page 12), add Langfuse tracing (Page 13), set up an eval harness (Page 14), and ship.</p>
+          </div>
+        </section>
+
+      </article>
+    </div>
+
+    {# ── Navigation ── #}
+    <div class="flex items-center justify-between">
+      <a
+        href="{% url 'tutorial_crewai_best_practices' %}"
+        class="inline-flex items-center gap-2 rounded-xl border border-violet-400/35 bg-violet-500/10 px-5 py-2.5 text-sm font-semibold text-violet-200 transition hover:border-violet-300/50 hover:bg-violet-500/20 hover:text-white"
+      >
+        <span aria-hidden>←</span> Previous
+      </a>
+      <div></div>
+    </div>
+
+  </div>
+{% endblock %}

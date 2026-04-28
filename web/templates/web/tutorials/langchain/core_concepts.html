@@ -1,0 +1,175 @@
+{% extends "web/base.html" %}
+{% block title %}Core Concepts — LangChain Tutorial{% endblock %}
+{% block content %}
+  <div class="space-y-10">
+
+    <div class="flex flex-wrap items-center gap-2 text-sm text-slate-400/90">
+      <a href="{% url 'tutorials' %}" class="font-medium text-violet-300/90 transition hover:text-violet-200">Tutorials</a>
+      <span aria-hidden class="text-slate-600">/</span>
+      <a href="{% url 'tutorial_langchain_intro' %}" class="font-medium text-violet-300/90 transition hover:text-violet-200">LangChain</a>
+      <span aria-hidden class="text-slate-600">/</span>
+      <span class="text-slate-200/90">Core Concepts</span>
+    </div>
+
+    <section class="relative overflow-hidden rounded-3xl border border-violet-400/20 bg-white/[0.06] p-6 shadow-[0_0_0_1px_rgba(255,255,255,0.04)] backdrop-blur-2xl sm:p-8">
+      <div class="pointer-events-none absolute -right-24 top-0 h-72 w-72 rounded-full bg-violet-500/15 blur-3xl"></div>
+      <div class="pointer-events-none absolute -left-20 bottom-0 h-56 w-56 rounded-full bg-fuchsia-500/10 blur-3xl"></div>
+      <div class="relative">
+        <div class="flex flex-wrap items-center gap-3">
+          <span class="rounded-full border border-violet-500/25 bg-violet-500/10 px-2.5 py-1 text-xs font-medium text-violet-300/90">LangChain</span>
+          <span class="rounded-full border border-sky-500/25 bg-sky-500/10 px-2.5 py-1 text-xs font-medium text-sky-300/90">Intermediate</span>
+          <span class="text-xs text-slate-400/80">· 10 min read</span>
+          <span class="ml-auto text-xs font-medium text-slate-400/80">Page 2 of 8</span>
+        </div>
+        <h1 class="mt-4 text-3xl font-semibold tracking-tight text-white sm:text-4xl lg:text-[2.5rem] lg:leading-tight">Core Concepts</h1>
+        <p class="mt-4 max-w-2xl text-sm leading-relaxed text-slate-200/80 sm:text-base">
+          LLM vs Chat Models, Chains vs Agents, the modern LCEL Runnable interface, and where LangGraph fits in.
+        </p>
+        <div class="mt-6">
+          <div class="mb-1.5 flex items-center justify-between text-xs text-slate-400/80"><span>Series progress</span><span>2 / 8</span></div>
+          <div class="h-1.5 w-full overflow-hidden rounded-full bg-white/10"><div class="h-full w-[25%] rounded-full bg-violet-400/70"></div></div>
+        </div>
+      </div>
+    </section>
+
+    <div class="glass rounded-3xl border border-white/10 p-5 sm:p-8">
+      <article class="mx-auto space-y-12 text-base leading-relaxed text-slate-300/95">
+
+        <section class="space-y-5" aria-labelledby="llm-vs-chat-heading">
+          <h2 id="llm-vs-chat-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">LLM vs Chat Models</h2>
+          <p>LangChain has two model interfaces — understanding which one to use matters for how you write prompts.</p>
+          <div class="grid gap-4 sm:grid-cols-2">
+            <div class="rounded-2xl border border-white/10 bg-white/[0.03] p-5 space-y-2">
+              <h3 class="text-sm font-semibold text-white">LLM (text-in, text-out)</h3>
+              <p class="text-sm text-slate-400/90">Takes a plain string prompt and returns a plain string. The older interface — used by base models like GPT-3 era models.</p>
+              <code class="block mt-2 rounded-lg bg-white/[0.05] px-3 py-2 text-xs text-slate-300 font-mono">llm.invoke("Tell me a joke")</code>
+            </div>
+            <div class="rounded-2xl border border-violet-500/20 bg-violet-500/[0.05] p-5 space-y-2">
+              <h3 class="text-sm font-semibold text-violet-100">Chat Model (messages-in, message-out)</h3>
+              <p class="text-sm text-slate-400/90">Takes a list of messages (system, human, AI) and returns a message. The modern interface — used by GPT-4o, Claude, Gemini.</p>
+              <code class="block mt-2 rounded-lg bg-white/[0.05] px-3 py-2 text-xs text-slate-300 font-mono">chat.invoke([HumanMessage("Tell me a joke")])</code>
+            </div>
+          </div>
+          <p class="rounded-xl border border-white/10 bg-white/[0.02] px-4 py-3 text-sm">
+            <strong class="text-slate-200">Use Chat Models for everything new.</strong> All modern LLMs use the message format. LLM (text-in) is mostly legacy.
+          </p>
+        </section>
+
+        <section class="space-y-5" aria-labelledby="chains-vs-agents-heading">
+          <h2 id="chains-vs-agents-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">Chains vs Agents</h2>
+          <p>This is the most important conceptual distinction in LangChain.</p>
+          <div class="grid gap-4 sm:grid-cols-2">
+            <div class="rounded-2xl border border-white/10 bg-white/[0.03] p-5">
+              <h3 class="mb-2 text-sm font-semibold text-white">Chain</h3>
+              <p class="text-sm text-slate-400/90">A fixed sequence of steps. You define the order at build time and it always runs the same way. Predictable, fast, cheap.</p>
+              <p class="mt-3 text-xs text-slate-500">Prompt → LLM → Parser → Done</p>
+            </div>
+            <div class="rounded-2xl border border-violet-500/20 bg-violet-500/[0.05] p-5">
+              <h3 class="mb-2 text-sm font-semibold text-violet-100">Agent</h3>
+              <p class="text-sm text-slate-400/90">The LLM decides what to do at runtime. Given a goal and tools, it reasons about which tool to call next, loops until done.</p>
+              <p class="mt-3 text-xs text-slate-500">Goal → LLM decides → Tool → Observe → Repeat</p>
+            </div>
+          </div>
+          <p class="text-sm text-slate-400/90">
+            <strong class="text-slate-200">Rule of thumb:</strong> if you know the steps in advance, use a chain. If the steps depend on what the LLM finds along the way, use an agent.
+          </p>
+        </section>
+
+        <section class="space-y-5" aria-labelledby="lcel-heading">
+          <h2 id="lcel-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">LCEL — the Runnable interface</h2>
+          <p>
+            LCEL (LangChain Expression Language) is the modern way to compose LangChain components. It uses the
+            <code class="rounded bg-white/10 px-1 text-sm">|</code> pipe operator to chain any two Runnables together —
+            exactly like Unix pipes.
+          </p>
+          <div class="rounded-2xl border border-white/10 bg-white/[0.03] p-5 space-y-3">
+            <p class="text-sm font-semibold text-slate-200">Old way (v0.1 chains)</p>
+            <code class="block rounded-lg bg-white/[0.05] px-3 py-2 text-xs text-slate-300 font-mono">chain = LLMChain(llm=llm, prompt=prompt)</code>
+            <p class="text-sm font-semibold text-slate-200 mt-3">New way (LCEL)</p>
+            <code class="block rounded-lg bg-white/[0.05] px-3 py-2 text-xs text-slate-300 font-mono">chain = prompt | llm | output_parser</code>
+          </div>
+          <p class="text-sm text-slate-400/90">Every component in LCEL implements the same interface — <code class="rounded bg-white/10 px-1">invoke()</code>, <code class="rounded bg-white/10 px-1">stream()</code>, <code class="rounded bg-white/10 px-1">batch()</code>. You can swap any piece without rewriting the rest.</p>
+          <div class="space-y-2 text-sm">
+            <p class="font-semibold text-slate-200">Why LCEL matters:</p>
+            <ul class="list-disc space-y-1.5 pl-5 text-slate-400/90 marker:text-violet-400/80">
+              <li>Streaming works out of the box — just call <code class="rounded bg-white/10 px-1">.stream()</code></li>
+              <li>Async support built in — call <code class="rounded bg-white/10 px-1">.ainvoke()</code></li>
+              <li>Easy to add logging, retries, and fallbacks at any step</li>
+              <li>Composable — chains of chains are just more pipes</li>
+            </ul>
+          </div>
+        </section>
+
+        <section class="space-y-5" aria-labelledby="components-heading">
+          <h2 id="components-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">The core building blocks</h2>
+          <div class="overflow-x-auto rounded-2xl border border-white/10">
+            <table class="w-full text-sm">
+              <thead>
+                <tr class="border-b border-white/10 bg-white/[0.04]">
+                  <th class="px-4 py-3 text-left font-semibold text-slate-200">Component</th>
+                  <th class="px-4 py-3 text-left font-semibold text-slate-200">What it does</th>
+                  <th class="px-4 py-3 text-left font-semibold text-slate-200">Example</th>
+                </tr>
+              </thead>
+              <tbody class="divide-y divide-white/5">
+                <tr>
+                  <td class="px-4 py-3 font-medium text-violet-300">Model</td>
+                  <td class="px-4 py-3 text-slate-400/90">Wraps an LLM or Chat Model API</td>
+                  <td class="px-4 py-3 text-slate-400/90 font-mono text-xs">ChatOpenAI()</td>
+                </tr>
+                <tr>
+                  <td class="px-4 py-3 font-medium text-violet-300">Prompt</td>
+                  <td class="px-4 py-3 text-slate-400/90">Templates with variables</td>
+                  <td class="px-4 py-3 text-slate-400/90 font-mono text-xs">ChatPromptTemplate</td>
+                </tr>
+                <tr>
+                  <td class="px-4 py-3 font-medium text-violet-300">Output Parser</td>
+                  <td class="px-4 py-3 text-slate-400/90">Converts model output to structured data</td>
+                  <td class="px-4 py-3 text-slate-400/90 font-mono text-xs">StrOutputParser()</td>
+                </tr>
+                <tr>
+                  <td class="px-4 py-3 font-medium text-violet-300">Retriever</td>
+                  <td class="px-4 py-3 text-slate-400/90">Fetches relevant documents</td>
+                  <td class="px-4 py-3 text-slate-400/90 font-mono text-xs">vectorstore.as_retriever()</td>
+                </tr>
+                <tr>
+                  <td class="px-4 py-3 font-medium text-violet-300">Memory</td>
+                  <td class="px-4 py-3 text-slate-400/90">Persists conversation history</td>
+                  <td class="px-4 py-3 text-slate-400/90 font-mono text-xs">ConversationBufferMemory</td>
+                </tr>
+                <tr>
+                  <td class="px-4 py-3 font-medium text-violet-300">Tool</td>
+                  <td class="px-4 py-3 text-slate-400/90">Function an agent can call</td>
+                  <td class="px-4 py-3 text-slate-400/90 font-mono text-xs">@tool decorator</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+
+        <section class="rounded-2xl border border-violet-500/20 bg-violet-500/[0.06] p-5 sm:p-6">
+          <h2 class="text-lg font-semibold text-violet-100">Quick summary</h2>
+          <ul class="mt-3 list-disc space-y-1.5 pl-5 text-sm text-slate-300/95 marker:text-violet-400/80">
+            <li>Use Chat Models for everything — LLM (text-in) is legacy</li>
+            <li>Chains = fixed steps; Agents = LLM decides the steps at runtime</li>
+            <li>LCEL uses <code class="rounded bg-white/10 px-1">prompt | llm | parser</code> — composable, streaming, async</li>
+            <li>Six core components: Model, Prompt, Parser, Retriever, Memory, Tool</li>
+            <li>LangGraph = stateful graph-based agents — the future of LangChain</li>
+          </ul>
+        </section>
+
+      </article>
+    </div>
+
+    <div class="flex items-center justify-between">
+      <a href="{% url 'tutorial_langchain_intro' %}" class="inline-flex items-center gap-2 rounded-xl border border-white/15 bg-white/[0.04] px-5 py-2.5 text-sm font-semibold text-slate-200 transition hover:border-white/25 hover:bg-white/[0.07] hover:text-white">
+        <span aria-hidden>←</span> Introduction
+      </a>
+      <a href="{% url 'tutorial_langchain_prompts' %}" class="inline-flex items-center gap-2 rounded-xl border border-violet-400/35 bg-violet-500/10 px-5 py-2.5 text-sm font-semibold text-violet-200 transition hover:border-violet-300/50 hover:bg-violet-500/20 hover:text-white">
+        Next: Prompt Templates <span aria-hidden>→</span>
+      </a>
+    </div>
+
+  </div>
+{% endblock %}
