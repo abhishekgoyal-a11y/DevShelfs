@@ -52,7 +52,7 @@
               </div>
               <div class="flex items-center gap-3">
                 <span class="w-5 text-right text-xs font-bold text-violet-300">3</span>
-                <span>Embed and index with <code class="rounded bg-white/10 px-1 text-xs">OpenAIEmbeddings</code> + FAISS</span>
+                <span>Embed locally with <code class="rounded bg-white/10 px-1 text-xs">HuggingFaceEmbeddings</code> and index with FAISS</span>
               </div>
               <div class="flex items-center gap-3">
                 <span class="w-5 text-right text-xs font-bold text-violet-300">4</span>
@@ -60,47 +60,74 @@
               </div>
               <div class="flex items-center gap-3">
                 <span class="w-5 text-right text-xs font-bold text-violet-300">5</span>
-                <span>Run an interactive chat loop in the terminal</span>
+                <span>Run an interactive chat loop powered by <code class="rounded bg-white/10 px-1 text-xs">ChatGroq</code></span>
               </div>
             </div>
+          </div>
+          <div class="rounded-xl border border-violet-500/20 bg-violet-500/[0.05] px-4 py-3 text-sm">
+            <strong class="text-violet-200">Stack choice:</strong>
+            <span class="text-slate-400/90"> We use <strong class="text-slate-200">Groq</strong> (free, fast LLM API) instead of OpenAI, and <strong class="text-slate-200">HuggingFace local embeddings</strong> instead of OpenAI Embeddings — so you can run this end-to-end with just a free Groq API key.</span>
           </div>
         </section>
 
         <section class="space-y-5" aria-labelledby="setup-heading">
           <h2 id="setup-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">Setup</h2>
+          <p class="text-sm text-slate-400/90">Create a virtual environment first to keep dependencies isolated:</p>
           <div class="ds-codeblock overflow-hidden rounded-2xl border border-white/10 bg-slate-950/90">
             <div class="flex items-center justify-between gap-3 border-b border-white/10 px-3 py-2">
               <span class="font-mono text-[11px] font-medium uppercase tracking-wide text-slate-400">bash</span>
               <button type="button" class="ds-codeblock-copy rounded-lg border border-white/10 bg-white/[0.06] px-2.5 py-1 text-xs font-semibold text-slate-200 transition hover:border-sky-400/40 hover:bg-white/[0.1] hover:text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-sky-400/50" data-copy-label="Copy" data-copied-label="Copied" aria-label="Copy code to clipboard">Copy</button>
             </div>
-            <pre class="ds-codeblock-pre code-block m-0 overflow-x-auto p-4 text-[0.8125rem] leading-[1.55] sm:text-sm"><code class="whitespace-pre font-mono ds-codeblock-source language-bash">pip install langchain langchain-openai langchain-community \
-    faiss-cpu pypdf</code></pre>
+            <pre class="ds-codeblock-pre code-block m-0 overflow-x-auto p-4 text-[0.8125rem] leading-[1.55] sm:text-sm"><code class="whitespace-pre font-mono ds-codeblock-source language-bash">python3 -m venv .venv
+source .venv/bin/activate   # Windows: .venv\Scripts\activate</code></pre>
           </div>
-          <p class="text-sm text-slate-400/90">Set your OpenAI key as an environment variable before running:</p>
           <div class="ds-codeblock overflow-hidden rounded-2xl border border-white/10 bg-slate-950/90">
             <div class="flex items-center justify-between gap-3 border-b border-white/10 px-3 py-2">
               <span class="font-mono text-[11px] font-medium uppercase tracking-wide text-slate-400">bash</span>
               <button type="button" class="ds-codeblock-copy rounded-lg border border-white/10 bg-white/[0.06] px-2.5 py-1 text-xs font-semibold text-slate-200 transition hover:border-sky-400/40 hover:bg-white/[0.1] hover:text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-sky-400/50" data-copy-label="Copy" data-copied-label="Copied" aria-label="Copy code to clipboard">Copy</button>
             </div>
-            <pre class="ds-codeblock-pre code-block m-0 overflow-x-auto p-4 text-[0.8125rem] leading-[1.55] sm:text-sm"><code class="whitespace-pre font-mono ds-codeblock-source language-bash">export OPENAI_API_KEY="sk-..."</code></pre>
+            <pre class="ds-codeblock-pre code-block m-0 overflow-x-auto p-4 text-[0.8125rem] leading-[1.55] sm:text-sm"><code class="whitespace-pre font-mono ds-codeblock-source language-bash">pip install langchain langchain-groq langchain-huggingface \
+    langchain-community langchain-text-splitters \
+    faiss-cpu pypdf sentence-transformers truststore</code></pre>
+          </div>
+          <p class="text-sm text-slate-400/90">Get a free API key at <strong class="text-slate-200">console.groq.com</strong>, then set it:</p>
+          <div class="ds-codeblock overflow-hidden rounded-2xl border border-white/10 bg-slate-950/90">
+            <div class="flex items-center justify-between gap-3 border-b border-white/10 px-3 py-2">
+              <span class="font-mono text-[11px] font-medium uppercase tracking-wide text-slate-400">bash</span>
+              <button type="button" class="ds-codeblock-copy rounded-lg border border-white/10 bg-white/[0.06] px-2.5 py-1 text-xs font-semibold text-slate-200 transition hover:border-sky-400/40 hover:bg-white/[0.1] hover:text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-sky-400/50" data-copy-label="Copy" data-copied-label="Copied" aria-label="Copy code to clipboard">Copy</button>
+            </div>
+            <pre class="ds-codeblock-pre code-block m-0 overflow-x-auto p-4 text-[0.8125rem] leading-[1.55] sm:text-sm"><code class="whitespace-pre font-mono ds-codeblock-source language-bash">export GROQ_API_KEY="gsk_..."</code></pre>
+          </div>
+          <div class="rounded-xl border border-amber-500/20 bg-amber-500/[0.05] px-4 py-3 text-sm">
+            <strong class="text-amber-200">macOS SSL note:</strong>
+            <span class="text-slate-400/90"> The <code class="rounded bg-white/10 px-1">truststore</code> package fixes a TLS certificate error that occurs with Python 3.12+ on macOS. It's imported at the top of <code class="rounded bg-white/10 px-1">chatbot.py</code> and requires no configuration.</span>
           </div>
         </section>
 
         <section class="space-y-5" aria-labelledby="ingest-heading">
           <h2 id="ingest-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">ingest.py — build the index</h2>
-          <p>Run this once to load your PDF, chunk it, and save the FAISS index to disk. You only need to re-run it when the document changes.</p>
+          <p>Run this once to load your PDF, chunk it, embed with a local model, and save the FAISS index to disk. Re-run only when the document changes.</p>
           <div class="ds-codeblock overflow-hidden rounded-2xl border border-white/10 bg-slate-950/90">
             <div class="flex items-center justify-between gap-3 border-b border-white/10 px-3 py-2">
               <span class="font-mono text-[11px] font-medium uppercase tracking-wide text-slate-400">python</span>
               <button type="button" class="ds-codeblock-copy rounded-lg border border-white/10 bg-white/[0.06] px-2.5 py-1 text-xs font-semibold text-slate-200 transition hover:border-sky-400/40 hover:bg-white/[0.1] hover:text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-sky-400/50" data-copy-label="Copy" data-copied-label="Copied" aria-label="Copy code to clipboard">Copy</button>
             </div>
-            <pre class="ds-codeblock-pre code-block m-0 overflow-x-auto p-4 text-[0.8125rem] leading-[1.55] sm:text-sm"><code class="whitespace-pre font-mono ds-codeblock-source language-python">import sys
+            <pre class="ds-codeblock-pre code-block m-0 overflow-x-auto p-4 text-[0.8125rem] leading-[1.55] sm:text-sm"><code class="whitespace-pre font-mono ds-codeblock-source language-python">import os
+import sys
 from langchain_community.document_loaders import PyPDFLoader
 from langchain_text_splitters import RecursiveCharacterTextSplitter
-from langchain_openai import OpenAIEmbeddings
+from langchain_huggingface import HuggingFaceEmbeddings
 from langchain_community.vectorstores import FAISS
 
-def ingest(pdf_path: str, index_dir: str = "faiss_index"):
+INDEX_DIR = "faiss_index"
+EMBED_MODEL = "all-MiniLM-L6-v2"
+
+
+def ingest(pdf_path: str, index_dir: str = INDEX_DIR):
+    if not os.path.exists(pdf_path):
+        print(f"Error: file not found — {pdf_path}")
+        sys.exit(1)
+
     print(f"Loading {pdf_path}...")
     loader = PyPDFLoader(pdf_path)
     docs = loader.load()
@@ -113,33 +140,45 @@ def ingest(pdf_path: str, index_dir: str = "faiss_index"):
     chunks = splitter.split_documents(docs)
     print(f"  Split into {len(chunks)} chunks")
 
-    embeddings = OpenAIEmbeddings(model="text-embedding-3-small")
+    print(f"  Embedding with {EMBED_MODEL} (local, no API key)...")
+    embeddings = HuggingFaceEmbeddings(model_name=EMBED_MODEL)
     vectorstore = FAISS.from_documents(chunks, embeddings)
     vectorstore.save_local(index_dir)
     print(f"  Index saved to ./{index_dir}/")
+    print("Done. Run chatbot.py to start chatting.")
+
 
 if __name__ == "__main__":
     pdf = sys.argv[1] if len(sys.argv) > 1 else "document.pdf"
     ingest(pdf)</code></pre>
+          </div>
+          <div class="rounded-xl border border-white/10 bg-white/[0.02] px-4 py-3 text-sm">
+            <strong class="text-slate-200">Why HuggingFaceEmbeddings?</strong>
+            <span class="text-slate-400/90"> <code class="rounded bg-white/10 px-1">all-MiniLM-L6-v2</code> runs entirely on your machine (~90 MB, downloaded once). No API key, no cost per embedding call — and quality is solid for most RAG use cases.</span>
           </div>
           <div class="ds-codeblock overflow-hidden rounded-2xl border border-white/10 bg-slate-950/90">
             <div class="flex items-center justify-between gap-3 border-b border-white/10 px-3 py-2">
               <span class="font-mono text-[11px] font-medium uppercase tracking-wide text-slate-400">bash</span>
               <button type="button" class="ds-codeblock-copy rounded-lg border border-white/10 bg-white/[0.06] px-2.5 py-1 text-xs font-semibold text-slate-200 transition hover:border-sky-400/40 hover:bg-white/[0.1] hover:text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-sky-400/50" data-copy-label="Copy" data-copied-label="Copied" aria-label="Copy code to clipboard">Copy</button>
             </div>
-            <pre class="ds-codeblock-pre code-block m-0 overflow-x-auto p-4 text-[0.8125rem] leading-[1.55] sm:text-sm"><code class="whitespace-pre font-mono ds-codeblock-source language-bash">python ingest.py report.pdf</code></pre>
+            <pre class="ds-codeblock-pre code-block m-0 overflow-x-auto p-4 text-[0.8125rem] leading-[1.55] sm:text-sm"><code class="whitespace-pre font-mono ds-codeblock-source language-bash">python3 ingest.py report.pdf</code></pre>
           </div>
         </section>
 
         <section class="space-y-5" aria-labelledby="chatbot-heading">
           <h2 id="chatbot-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">chatbot.py — the conversational chain</h2>
-          <p>This is the main file. It loads the saved index, builds a conversational RAG chain, and runs the chat loop.</p>
+          <p>This is the main file. It loads the saved index, builds a conversational RAG chain with Groq, and runs the chat loop.</p>
           <div class="ds-codeblock overflow-hidden rounded-2xl border border-white/10 bg-slate-950/90">
             <div class="flex items-center justify-between gap-3 border-b border-white/10 px-3 py-2">
               <span class="font-mono text-[11px] font-medium uppercase tracking-wide text-slate-400">python</span>
               <button type="button" class="ds-codeblock-copy rounded-lg border border-white/10 bg-white/[0.06] px-2.5 py-1 text-xs font-semibold text-slate-200 transition hover:border-sky-400/40 hover:bg-white/[0.1] hover:text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-sky-400/50" data-copy-label="Copy" data-copied-label="Copied" aria-label="Copy code to clipboard">Copy</button>
             </div>
-            <pre class="ds-codeblock-pre code-block m-0 overflow-x-auto p-4 text-[0.8125rem] leading-[1.55] sm:text-sm"><code class="whitespace-pre font-mono ds-codeblock-source language-python">from langchain_openai import ChatOpenAI, OpenAIEmbeddings
+            <pre class="ds-codeblock-pre code-block m-0 overflow-x-auto p-4 text-[0.8125rem] leading-[1.55] sm:text-sm"><code class="whitespace-pre font-mono ds-codeblock-source language-python">import os
+import truststore
+truststore.inject_into_ssl()  # fixes macOS TLS cert error
+
+from langchain_groq import ChatGroq
+from langchain_huggingface import HuggingFaceEmbeddings
 from langchain_community.vectorstores import FAISS
 from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
 from langchain_core.output_parsers import StrOutputParser
@@ -148,16 +187,22 @@ from langchain_core.runnables.history import RunnableWithMessageHistory
 from langchain_community.chat_message_histories import ChatMessageHistory
 
 INDEX_DIR = "faiss_index"
+EMBED_MODEL = "all-MiniLM-L6-v2"
+GROQ_MODEL  = "llama-3.3-70b-versatile"
+
+if not os.path.exists(INDEX_DIR):
+    print("Index not found. Run 'python3 ingest.py &lt;your_document.pdf&gt;' first.")
+    raise SystemExit(1)
 
 # ── Load vector store ──────────────────────────────────────
-embeddings = OpenAIEmbeddings(model="text-embedding-3-small")
+embeddings = HuggingFaceEmbeddings(model_name=EMBED_MODEL)
 vectorstore = FAISS.load_local(
     INDEX_DIR, embeddings, allow_dangerous_deserialization=True
 )
 retriever = vectorstore.as_retriever(search_kwargs={"k": 4})
 
 # ── LLM ───────────────────────────────────────────────────
-llm = ChatOpenAI(model="gpt-4o-mini", temperature=0)
+llm = ChatGroq(model=GROQ_MODEL, temperature=0)
 
 # ── Prompt ────────────────────────────────────────────────
 system_prompt = """You are a helpful assistant that answers questions \
@@ -205,9 +250,13 @@ chat = RunnableWithMessageHistory(
 config = {"configurable": {"session_id": "default"}}
 
 # ── Chat loop ─────────────────────────────────────────────
-print("RAG Chatbot — type 'quit' to exit\n")
+print(f"RAG Chatbot ({GROQ_MODEL}) — type 'quit' to exit\n")
 while True:
-    question = input("You: ").strip()
+    try:
+        question = input("You: ").strip()
+    except (EOFError, KeyboardInterrupt):
+        print("\nBye!")
+        break
     if question.lower() in ("quit", "exit", "q"):
         break
     if not question:
@@ -221,13 +270,13 @@ while True:
           <h2 id="run-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">Running it</h2>
           <div class="space-y-3">
             <div>
-              <p class="mb-2 text-xs font-semibold text-slate-400">1. Build the index</p>
+              <p class="mb-2 text-xs font-semibold text-slate-400">1. Build the index (once per document)</p>
               <div class="ds-codeblock overflow-hidden rounded-2xl border border-white/10 bg-slate-950/90">
                 <div class="flex items-center justify-between gap-3 border-b border-white/10 px-3 py-2">
                   <span class="font-mono text-[11px] font-medium uppercase tracking-wide text-slate-400">bash</span>
                   <button type="button" class="ds-codeblock-copy rounded-lg border border-white/10 bg-white/[0.06] px-2.5 py-1 text-xs font-semibold text-slate-200 transition hover:border-sky-400/40 hover:bg-white/[0.1] hover:text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-sky-400/50" data-copy-label="Copy" data-copied-label="Copied" aria-label="Copy code to clipboard">Copy</button>
                 </div>
-                <pre class="ds-codeblock-pre code-block m-0 overflow-x-auto p-4 text-[0.8125rem] leading-[1.55] sm:text-sm"><code class="whitespace-pre font-mono ds-codeblock-source language-bash">python ingest.py your_document.pdf</code></pre>
+                <pre class="ds-codeblock-pre code-block m-0 overflow-x-auto p-4 text-[0.8125rem] leading-[1.55] sm:text-sm"><code class="whitespace-pre font-mono ds-codeblock-source language-bash">python3 ingest.py your_document.pdf</code></pre>
               </div>
             </div>
             <div>
@@ -237,12 +286,12 @@ while True:
                   <span class="font-mono text-[11px] font-medium uppercase tracking-wide text-slate-400">bash</span>
                   <button type="button" class="ds-codeblock-copy rounded-lg border border-white/10 bg-white/[0.06] px-2.5 py-1 text-xs font-semibold text-slate-200 transition hover:border-sky-400/40 hover:bg-white/[0.1] hover:text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-sky-400/50" data-copy-label="Copy" data-copied-label="Copied" aria-label="Copy code to clipboard">Copy</button>
                 </div>
-                <pre class="ds-codeblock-pre code-block m-0 overflow-x-auto p-4 text-[0.8125rem] leading-[1.55] sm:text-sm"><code class="whitespace-pre font-mono ds-codeblock-source language-bash">python chatbot.py</code></pre>
+                <pre class="ds-codeblock-pre code-block m-0 overflow-x-auto p-4 text-[0.8125rem] leading-[1.55] sm:text-sm"><code class="whitespace-pre font-mono ds-codeblock-source language-bash">python3 chatbot.py</code></pre>
               </div>
             </div>
             <div class="rounded-2xl border border-violet-500/20 bg-violet-500/[0.04] p-4">
               <p class="text-xs font-semibold text-violet-300 mb-2">Example session</p>
-              <code class="block font-mono text-xs text-slate-300 whitespace-pre">RAG Chatbot — type 'quit' to exit
+              <code class="block font-mono text-xs text-slate-300 whitespace-pre">RAG Chatbot (llama-3.3-70b-versatile) — type 'quit' to exit
 
 You: What is the main topic of this document?
 Bot: The document is about ...
@@ -250,10 +299,31 @@ Bot: The document is about ...
 You: Can you give me more detail on that?
 Bot: Sure, to elaborate on what I mentioned ...
 
+You: Who is the president of France?
+Bot: I don't know based on the document.
+
 You: quit</code>
             </div>
           </div>
-          <p class="text-sm text-slate-400/90">Follow-up questions work because the full conversation history is passed to the model on every turn via <code class="rounded bg-white/10 px-1">RunnableWithMessageHistory</code>.</p>
+          <p class="text-sm text-slate-400/90">Follow-up questions work because the full conversation history is passed to the model on every turn via <code class="rounded bg-white/10 px-1">RunnableWithMessageHistory</code>. The out-of-context question correctly returns "I don't know" — the grounding instruction is working.</p>
+        </section>
+
+        <section class="space-y-4" aria-labelledby="troubleshoot-heading">
+          <h2 id="troubleshoot-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">Common issues</h2>
+          <div class="space-y-3">
+            <div class="rounded-2xl border border-amber-500/20 bg-amber-500/[0.05] p-4">
+              <h3 class="text-sm font-semibold text-amber-100">SSL: CERTIFICATE_VERIFY_FAILED</h3>
+              <p class="text-xs text-slate-400/90 mt-1">This appears on macOS with Python 3.12+. The fix is already in <code class="rounded bg-white/10 px-1">chatbot.py</code> — the <code class="rounded bg-white/10 px-1">truststore.inject_into_ssl()</code> call at the top patches the SSL context to use your system's trusted certificates.</p>
+            </div>
+            <div class="rounded-2xl border border-amber-500/20 bg-amber-500/[0.05] p-4">
+              <h3 class="text-sm font-semibold text-amber-100">Model decommissioned error</h3>
+              <p class="text-xs text-slate-400/90 mt-1">Groq retires older models. If you get a <code class="rounded bg-white/10 px-1">model_decommissioned</code> error, change <code class="rounded bg-white/10 px-1">GROQ_MODEL</code> in <code class="rounded bg-white/10 px-1">chatbot.py</code> to a current model from <strong class="text-slate-300">console.groq.com/docs/models</strong>.</p>
+            </div>
+            <div class="rounded-2xl border border-amber-500/20 bg-amber-500/[0.05] p-4">
+              <h3 class="text-sm font-semibold text-amber-100">Index not found on startup</h3>
+              <p class="text-xs text-slate-400/90 mt-1">You must run <code class="rounded bg-white/10 px-1">python3 ingest.py your_doc.pdf</code> before <code class="rounded bg-white/10 px-1">chatbot.py</code>. The <code class="rounded bg-white/10 px-1">faiss_index/</code> directory must exist in the same folder.</p>
+            </div>
+          </div>
         </section>
 
         <section class="space-y-5" aria-labelledby="extend-heading">
@@ -282,9 +352,10 @@ You: quit</code>
           <h2 class="text-lg font-semibold text-violet-100">Series complete — what you built</h2>
           <ul class="mt-3 list-disc space-y-1.5 pl-5 text-sm text-slate-300/95 marker:text-violet-400/80">
             <li>A full RAG pipeline: load → chunk → embed → store → retrieve → answer</li>
+            <li>Local embeddings with <code class="rounded bg-white/10 px-1">HuggingFaceEmbeddings</code> — no OpenAI key needed</li>
+            <li>Free LLM via <code class="rounded bg-white/10 px-1">ChatGroq</code> with <code class="rounded bg-white/10 px-1">llama-3.3-70b-versatile</code></li>
             <li>Conversational memory using <code class="rounded bg-white/10 px-1">RunnableWithMessageHistory</code></li>
             <li>A clean LCEL chain that composes retrieval, history, and the LLM in one pipe</li>
-            <li>A reusable <code class="rounded bg-white/10 px-1">ingest.py</code> script that saves the index so you never re-embed twice</li>
           </ul>
           <p class="mt-4 text-sm text-slate-400/90">You now have a solid foundation in LangChain — prompts, chains, memory, tools, agents, and RAG. The next frontier is <strong class="text-slate-200">LangGraph</strong> for stateful, production-grade agent workflows.</p>
         </section>
