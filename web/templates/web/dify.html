@@ -1,0 +1,181 @@
+{% extends "web/base.html" %}
+{% block title %}Dify — DevShelf{% endblock %}
+{% block content %}
+  <div class="space-y-10">
+    <div class="flex flex-wrap items-center gap-2 text-sm text-slate-400/90">
+      <a href="{% url 'ai_tools' %}" class="font-medium text-emerald-300/90 transition hover:text-emerald-200">AI tools</a>
+      <span aria-hidden class="text-slate-600">/</span>
+      <span class="text-slate-200/90">Dify</span>
+    </div>
+
+    <section class="relative overflow-hidden rounded-3xl border border-emerald-400/20 bg-white/[0.06] p-6 shadow-[0_0_0_1px_rgba(255,255,255,0.04)] backdrop-blur-2xl sm:p-8">
+      <div class="pointer-events-none absolute -right-24 top-0 h-72 w-72 rounded-full bg-emerald-500/15 blur-3xl"></div>
+      <div class="pointer-events-none absolute -left-20 bottom-0 h-56 w-56 rounded-full bg-cyan-500/10 blur-3xl"></div>
+      <div class="relative">
+        <p class="text-xs font-semibold uppercase tracking-[0.22em] text-emerald-300/90">AI tool</p>
+        <h1 class="mt-3 text-3xl font-semibold tracking-tight text-white sm:text-4xl lg:text-[2.5rem] lg:leading-tight">
+          Dify: The Open-Source Platform for Building LLM Apps Visually
+        </h1>
+        <p class="mt-4 text-sm leading-relaxed text-slate-200/80 sm:text-base">
+          Dify is an open-source LLM application development platform that lets you build chatbots, RAG pipelines, and AI
+          agents through a visual workflow editor—with built-in observability and one-click deployment.
+        </p>
+        <p class="mt-6 flex flex-wrap items-center gap-3">
+          <a href="https://dify.ai" target="_blank" rel="noopener noreferrer"
+            class="inline-flex items-center gap-2 rounded-full border border-emerald-400/35 bg-emerald-500/10 px-4 py-2 text-sm font-medium text-emerald-200 transition hover:border-emerald-300/50 hover:bg-emerald-500/15 hover:text-white">
+            Try Dify <span aria-hidden class="text-emerald-300/80">↗</span>
+          </a>
+          <a href="https://github.com/langgenius/dify" target="_blank" rel="noopener noreferrer"
+            class="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/[0.04] px-4 py-2 text-sm font-medium text-slate-200/90 transition hover:border-white/25 hover:bg-white/[0.07] hover:text-white">
+            GitHub <span aria-hidden class="text-slate-400">↗</span>
+          </a>
+          <a href="https://docs.dify.ai" target="_blank" rel="noopener noreferrer"
+            class="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/[0.04] px-4 py-2 text-sm font-medium text-slate-200/90 transition hover:border-white/25 hover:bg-white/[0.07] hover:text-white">
+            Docs <span aria-hidden class="text-slate-400">↗</span>
+          </a>
+        </p>
+      </div>
+    </section>
+
+    <div class="glass rounded-3xl border border-white/10 p-5 sm:p-8">
+      <article class="mx-auto space-y-12 text-base leading-relaxed text-slate-300/95">
+
+        <section class="space-y-4" aria-labelledby="what-heading">
+          <h2 id="what-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">What is Dify?</h2>
+          <p>Dify (formerly known as LangGenius) is an open-source platform for building, deploying, and operating LLM-powered applications. Instead of writing orchestration code from scratch, you build your app visually—connecting LLMs, data sources, tools, and logic in a drag-and-drop workflow editor.</p>
+          <p>It supports every major LLM provider (OpenAI, Anthropic, Mistral, Llama, and more), has a built-in RAG pipeline for knowledge bases, and ships with observability tools so you can monitor token usage, latency, and quality out of the box. You can use the hosted cloud version or self-host with Docker.</p>
+        </section>
+
+        <section class="space-y-6" aria-labelledby="features-heading">
+          <h2 id="features-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">Key features of Dify</h2>
+          <div class="space-y-3 rounded-2xl border border-white/10 bg-white/[0.03] p-5 sm:p-6">
+            <h3 class="text-lg font-semibold text-white">1. Visual workflow editor</h3>
+            <p class="text-slate-300/95">Build complex LLM pipelines by connecting nodes—LLM call, document retrieval, code execution, HTTP request, conditional logic—without writing orchestration code.</p>
+          </div>
+          <div class="space-y-3 rounded-2xl border border-white/10 bg-white/[0.03] p-5 sm:p-6">
+            <h3 class="text-lg font-semibold text-white">2. Built-in RAG pipeline</h3>
+            <p class="text-slate-300/95">Upload documents (PDFs, Word files, web pages, Notion pages) to create a knowledge base. Dify handles chunking, embedding, vector storage, and retrieval—you connect it to your workflow with a single node.</p>
+          </div>
+          <div class="space-y-3 rounded-2xl border border-white/10 bg-white/[0.03] p-5 sm:p-6">
+            <h3 class="text-lg font-semibold text-white">3. Multi-model support</h3>
+            <p class="text-slate-300/95">Connect OpenAI, Anthropic Claude, Google Gemini, Mistral, local Ollama models, and many more—all from the same interface. Switch models without rewriting your pipeline.</p>
+          </div>
+          <div class="space-y-3 rounded-2xl border border-white/10 bg-white/[0.03] p-5 sm:p-6">
+            <h3 class="text-lg font-semibold text-white">4. AI agents with tools</h3>
+            <p class="text-slate-300/95">Build ReAct-style agents that can use tools—web search, code execution, API calls, database queries—through a visual agent configuration panel rather than code.</p>
+          </div>
+          <div class="space-y-3 rounded-2xl border border-white/10 bg-white/[0.03] p-5 sm:p-6">
+            <h3 class="text-lg font-semibold text-white">5. Observability and analytics</h3>
+            <p class="text-slate-300/95">Every conversation and workflow run is logged with token usage, latency, user feedback, and model responses—giving you the data to evaluate and improve your application.</p>
+          </div>
+          <div class="space-y-3 rounded-2xl border border-white/10 bg-white/[0.03] p-5 sm:p-6">
+            <h3 class="text-lg font-semibold text-white">6. One-click embed and API</h3>
+            <p class="text-slate-300/95">Publish your app as a shareable chatbot, embed it on a website with a script tag, or consume it via API—without separate deployment infrastructure.</p>
+          </div>
+        </section>
+
+        <section class="space-y-6" aria-labelledby="how-heading">
+          <h2 id="how-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">How Dify works</h2>
+          <ul class="list-disc space-y-2 pl-5 marker:text-emerald-400/80">
+            <li>Create a new app (chatbot, workflow, or agent) from the dashboard</li>
+            <li>Connect your LLM provider API keys in settings</li>
+            <li>Build your pipeline visually—add knowledge bases, tools, and logic nodes</li>
+            <li>Test it in the built-in playground, then publish to a shareable URL or your API</li>
+            <li>Monitor usage and quality via the built-in logs and analytics</li>
+          </ul>
+        </section>
+
+        <section class="space-y-6" aria-labelledby="usecases-heading">
+          <h2 id="usecases-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">Real-life use cases of Dify</h2>
+          <div class="space-y-3 rounded-2xl border border-white/10 bg-white/[0.03] p-5 sm:p-6">
+            <h3 class="text-lg font-semibold text-white">Internal knowledge base chatbot</h3>
+            <ul class="list-disc space-y-2 pl-5 marker:text-emerald-400/80">
+              <li>Upload your company docs, HR policies, and SOPs and deploy a chatbot that answers employee questions accurately</li>
+            </ul>
+          </div>
+          <div class="space-y-3 rounded-2xl border border-white/10 bg-white/[0.03] p-5 sm:p-6">
+            <h3 class="text-lg font-semibold text-white">Customer support automation</h3>
+            <ul class="list-disc space-y-2 pl-5 marker:text-emerald-400/80">
+              <li>Build a RAG-powered support bot that answers from your product documentation with citations</li>
+            </ul>
+          </div>
+          <div class="space-y-3 rounded-2xl border border-white/10 bg-white/[0.03] p-5 sm:p-6">
+            <h3 class="text-lg font-semibold text-white">Automated content pipelines</h3>
+            <ul class="list-disc space-y-2 pl-5 marker:text-emerald-400/80">
+              <li>Build a workflow that takes a URL, summarises the content, categorises it, and writes a social post—all in one triggered pipeline</li>
+            </ul>
+          </div>
+        </section>
+
+        <section class="space-y-6" aria-labelledby="proscons-heading">
+          <h2 id="proscons-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">Pros and cons of Dify</h2>
+          <div class="grid gap-6 lg:grid-cols-2">
+            <div class="rounded-2xl border border-emerald-500/20 bg-emerald-500/5 p-5 sm:p-6">
+              <h3 class="mb-4 text-lg font-semibold text-emerald-100">Pros</h3>
+              <ul class="list-disc space-y-2 pl-5 text-slate-300/95 marker:text-emerald-400/80">
+                <li>Open-source and self-hostable</li>
+                <li>Visual workflow editor—no orchestration code</li>
+                <li>Built-in RAG, observability, and multi-model support</li>
+                <li>Active community with 40K+ GitHub stars</li>
+                <li>Works with local models via Ollama</li>
+              </ul>
+            </div>
+            <div class="rounded-2xl border border-amber-500/20 bg-amber-500/5 p-5 sm:p-6">
+              <h3 class="mb-4 text-lg font-semibold text-amber-100">Cons</h3>
+              <ul class="list-disc space-y-2 pl-5 text-slate-300/95 marker:text-amber-400/80">
+                <li>Self-hosting requires Docker setup and some maintenance</li>
+                <li>Visual workflows can get complex on large applications</li>
+                <li>Less code-level flexibility than pure LangChain/LlamaIndex</li>
+                <li>Enterprise features require the paid cloud plan</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        <section class="space-y-6" aria-labelledby="pricing-heading">
+          <h2 id="pricing-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">Dify pricing</h2>
+          <ul class="list-disc space-y-2 pl-5 marker:text-emerald-400/80">
+            <li><strong class="text-slate-200">Community Edition (free)</strong> — fully featured, self-hosted via Docker</li>
+            <li><strong class="text-slate-200">Cloud Free</strong> — hosted version with 200 message credits/month</li>
+            <li><strong class="text-slate-200">Professional ($59/month)</strong> — 5,000 message credits, priority support</li>
+            <li><strong class="text-slate-200">Enterprise (custom)</strong> — SSO, custom model deployment, SLA</li>
+          </ul>
+        </section>
+
+        <section class="space-y-6" aria-labelledby="alternatives-heading">
+          <h2 id="alternatives-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">Alternatives to Dify</h2>
+          <ul class="list-disc space-y-2 pl-5 marker:text-emerald-400/80">
+            <li><strong class="text-slate-200">Flowise</strong> — simpler drag-and-drop LLM flow builder, LangChain-based</li>
+            <li><strong class="text-slate-200">LangChain</strong> — more code-level control, steeper learning curve</li>
+            <li><strong class="text-slate-200">LlamaIndex</strong> — RAG-focused framework for Python developers</li>
+            <li><strong class="text-slate-200">n8n</strong> — general workflow automation that also supports AI nodes</li>
+          </ul>
+        </section>
+
+        <section class="space-y-4" aria-labelledby="who-heading">
+          <h2 id="who-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">Who should use Dify?</h2>
+          <ul class="list-disc space-y-2 pl-5 marker:text-emerald-400/80">
+            <li>Teams who want to build LLM apps without deep ML engineering expertise</li>
+            <li>Companies that need to self-host AI infrastructure for data privacy</li>
+            <li>Developers who want observability and RAG out of the box</li>
+            <li>Product teams that want to prototype and iterate on AI features quickly</li>
+          </ul>
+        </section>
+
+        <section class="space-y-6" aria-labelledby="bonus-heading">
+          <h2 id="bonus-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">Bonus section</h2>
+          <div class="space-y-3 rounded-2xl border border-white/10 bg-white/[0.03] p-5 sm:p-6">
+            <h3 class="text-lg font-semibold text-white">Getting started with self-hosted Dify</h3>
+            <ul class="list-disc space-y-2 pl-5 text-slate-300/95 marker:text-emerald-400/80">
+              <li>Clone the repo: <code class="rounded bg-white/10 px-1.5 py-0.5 text-sm font-mono text-emerald-200">git clone https://github.com/langgenius/dify</code></li>
+              <li>Run <code class="rounded bg-white/10 px-1.5 py-0.5 text-sm font-mono text-emerald-200">cd dify/docker && docker compose up -d</code></li>
+              <li>Open <code class="rounded bg-white/10 px-1.5 py-0.5 text-sm font-mono text-emerald-200">localhost:80</code> and add your LLM API keys in settings</li>
+            </ul>
+          </div>
+        </section>
+
+        <p class="text-lg text-slate-200/95">Dify is the fastest path from "I want an AI chatbot over my documents" to a production-ready, observable, self-hosted system—without writing orchestration logic from scratch.</p>
+      </article>
+    </div>
+  </div>
+{% endblock %}

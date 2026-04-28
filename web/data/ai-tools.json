@@ -222,5 +222,141 @@
     "description": "Open-source local AI agent that connects to WhatsApp, Telegram, Slack, and more—manages inboxes, calendars, web tasks, and shell commands with your own API key.",
     "detailPath": "/ai-tools/openclaw",
     "featured": false
+  },
+  {
+    "id": "windsurf",
+    "name": "Windsurf",
+    "category": "Developer tools",
+    "description": "Codeium's AI-native IDE built around Cascade—an agentic layer that reads your entire codebase, runs terminal commands, and makes multi-file edits so you stay in flow.",
+    "detailPath": "/ai-tools/windsurf",
+    "featured": false
+  },
+  {
+    "id": "bolt-new",
+    "name": "Bolt.new",
+    "category": "Developer tools",
+    "description": "StackBlitz's browser-based AI app builder—describe your app and get a full-stack project running in seconds, with live preview, editable code, and one-click deploy.",
+    "detailPath": "/ai-tools/bolt-new",
+    "featured": false
+  },
+  {
+    "id": "v0",
+    "name": "v0",
+    "category": "Developer tools",
+    "description": "Vercel's AI UI generator—describe a component or page in plain English and get production-ready React + Tailwind code you can copy or keep refining through chat.",
+    "detailPath": "/ai-tools/v0",
+    "featured": false
+  },
+  {
+    "id": "devin",
+    "name": "Devin",
+    "category": "Developer tools",
+    "description": "Cognition's autonomous AI software engineer—given a task it plans, writes code, runs tests, browses docs, and opens PRs end-to-end without step-by-step guidance.",
+    "detailPath": "/ai-tools/devin",
+    "featured": false
+  },
+  {
+    "id": "grok",
+    "name": "Grok",
+    "category": "AI assistants",
+    "description": "xAI's conversational AI with real-time access to X (Twitter) posts, a less restrictive tone, and strong reasoning via Think mode—built into X Premium.",
+    "detailPath": "/ai-tools/grok",
+    "featured": false
+  },
+  {
+    "id": "mistral",
+    "name": "Mistral",
+    "category": "AI assistants",
+    "description": "French AI lab's open-weight LLM family—Mistral 7B, Mixtral, and Mistral Large punch well above their size, with EU data residency and an OpenAI-compatible API.",
+    "detailPath": "/ai-tools/mistral",
+    "featured": false
+  },
+  {
+    "id": "meta-llama",
+    "name": "Meta Llama",
+    "category": "AI assistants",
+    "description": "Meta's open-weight LLM family—from 8B to 405B parameters, free to download and self-host, with a 128K context window and the largest fine-tuning ecosystem in open-source AI.",
+    "detailPath": "/ai-tools/meta-llama",
+    "featured": false
+  },
+  {
+    "id": "deepseek",
+    "name": "DeepSeek",
+    "category": "AI assistants",
+    "description": "Chinese AI lab's open-weight models that match frontier reasoning benchmarks at a fraction of the cost—DeepSeek-R1 rivals OpenAI o1 under an MIT licence.",
+    "detailPath": "/ai-tools/deepseek",
+    "featured": false
+  },
+  {
+    "id": "suno",
+    "name": "Suno",
+    "category": "Audio & voice",
+    "description": "AI music generation that turns a text prompt into a complete song—lyrics, vocals, and full instrumentation—across any genre, in under 30 seconds.",
+    "detailPath": "/ai-tools/suno",
+    "featured": false
+  },
+  {
+    "id": "udio",
+    "name": "Udio",
+    "category": "Audio & voice",
+    "description": "AI music generator from ex-DeepMind researchers known for high-fidelity audio and nuanced genre handling—build full songs by extending short clips iteratively.",
+    "detailPath": "/ai-tools/udio",
+    "featured": false
+  },
+  {
+    "id": "heygen",
+    "name": "HeyGen",
+    "category": "Video & motion",
+    "description": "AI avatar video platform—create talking-head videos from a script using stock or personalised digital twins, and translate existing videos into 40+ languages with lip-sync dubbing.",
+    "detailPath": "/ai-tools/heygen",
+    "featured": false
+  },
+  {
+    "id": "pika",
+    "name": "Pika",
+    "category": "Video & motion",
+    "description": "AI video generator that creates cinematic short clips from text or image prompts—with camera movement controls, Pikaffects for stylised transformations, and a generous free tier.",
+    "detailPath": "/ai-tools/pika",
+    "featured": false
+  },
+  {
+    "id": "luma-ai",
+    "name": "Luma AI",
+    "category": "Video & motion",
+    "description": "Photorealistic AI video generation via Dream Machine and professional-grade 3D capture from phone video using NeRF—used by filmmakers, game devs, and e-commerce teams.",
+    "detailPath": "/ai-tools/luma-ai",
+    "featured": false
+  },
+  {
+    "id": "dify",
+    "name": "Dify",
+    "category": "AI agents & automation",
+    "description": "Open-source LLM app platform with a visual workflow editor, built-in RAG, multi-model support, and one-click deploy—self-host with Docker or use the cloud.",
+    "detailPath": "/ai-tools/dify",
+    "featured": false
+  },
+  {
+    "id": "flowise",
+    "name": "Flowise",
+    "category": "AI agents & automation",
+    "description": "Open-source drag-and-drop LangChain flow builder—connect LLMs, vector stores, and tools visually, then expose your pipeline as an API or embeddable chat widget.",
+    "detailPath": "/ai-tools/flowise",
+    "featured": false
+  },
+  {
+    "id": "phidata",
+    "name": "Phidata",
+    "category": "AI agents & automation",
+    "description": "Open-source Python framework for building AI agents with persistent memory, searchable knowledge bases, and a rich built-in tool library—clean API, any LLM backend.",
+    "detailPath": "/ai-tools/phidata",
+    "featured": false
+  },
+  {
+    "id": "openai-swarm",
+    "name": "OpenAI Swarm",
+    "category": "AI agents & automation",
+    "description": "OpenAI's experimental multi-agent framework built on two primitives—agents and handoffs—kept intentionally minimal to teach the core patterns behind production agent systems.",
+    "detailPath": "/ai-tools/openai-swarm",
+    "featured": false
   }
 ]

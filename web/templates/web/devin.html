@@ -1,0 +1,267 @@
+{% extends "web/base.html" %}
+{% block title %}Devin — DevShelf{% endblock %}
+{% block content %}
+  <div class="space-y-10">
+    <div class="flex flex-wrap items-center gap-2 text-sm text-slate-400/90">
+      <a href="{% url 'ai_tools' %}" class="font-medium text-emerald-300/90 transition hover:text-emerald-200">AI tools</a>
+      <span aria-hidden class="text-slate-600">/</span>
+      <span class="text-slate-200/90">Devin</span>
+    </div>
+
+    <section
+      class="relative overflow-hidden rounded-3xl border border-emerald-400/20 bg-white/[0.06] p-6 shadow-[0_0_0_1px_rgba(255,255,255,0.04)] backdrop-blur-2xl sm:p-8"
+    >
+      <div class="pointer-events-none absolute -right-24 top-0 h-72 w-72 rounded-full bg-emerald-500/15 blur-3xl"></div>
+      <div class="pointer-events-none absolute -left-20 bottom-0 h-56 w-56 rounded-full bg-cyan-500/10 blur-3xl"></div>
+      <div class="relative">
+        <p class="text-xs font-semibold uppercase tracking-[0.22em] text-emerald-300/90">AI tool</p>
+        <h1 class="mt-3 text-3xl font-semibold tracking-tight text-white sm:text-4xl lg:text-[2.5rem] lg:leading-tight">
+          Devin: The World's First Autonomous AI Software Engineer
+        </h1>
+        <p class="mt-4 text-sm leading-relaxed text-slate-200/80 sm:text-base">
+          Devin by Cognition AI is an autonomous AI agent that can plan, code, debug, browse the web, and open pull requests
+          end-to-end—working like a junior engineer on your team that never needs its hand held.
+        </p>
+        <p class="mt-6 flex flex-wrap items-center gap-3">
+          <a
+            href="https://devin.ai"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="inline-flex items-center gap-2 rounded-full border border-emerald-400/35 bg-emerald-500/10 px-4 py-2 text-sm font-medium text-emerald-200 transition hover:border-emerald-300/50 hover:bg-emerald-500/15 hover:text-white"
+          >
+            Try Devin <span aria-hidden class="text-emerald-300/80">↗</span>
+          </a>
+          <a
+            href="https://devin.ai/pricing"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/[0.04] px-4 py-2 text-sm font-medium text-slate-200/90 transition hover:border-white/25 hover:bg-white/[0.07] hover:text-white"
+          >
+            Pricing <span aria-hidden class="text-slate-400">↗</span>
+          </a>
+          <a
+            href="https://cognition.ai"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/[0.04] px-4 py-2 text-sm font-medium text-slate-200/90 transition hover:border-white/25 hover:bg-white/[0.07] hover:text-white"
+          >
+            Cognition AI <span aria-hidden class="text-slate-400">↗</span>
+          </a>
+        </p>
+      </div>
+    </section>
+
+    <div class="glass rounded-3xl border border-white/10 p-5 sm:p-8">
+      <article class="mx-auto space-y-12 text-base leading-relaxed text-slate-300/95">
+        <section class="space-y-4" aria-labelledby="what-heading">
+          <h2 id="what-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">What is Devin?</h2>
+          <p>
+            Devin is an autonomous AI software engineer built by Cognition AI. Unlike AI coding assistants that suggest the
+            next line or answer questions in a chat panel, Devin is given a task and completes the full software engineering
+            loop on its own: reading a ticket, writing a plan, creating a codebase, running tests, fixing failures, browsing
+            documentation, and opening a pull request—all without step-by-step guidance.
+          </p>
+          <p>
+            When it launched in early 2024 it became the first AI to achieve a meaningful score on the SWE-bench
+            benchmark—a set of real GitHub issues from production open-source projects. It does not replace senior engineers,
+            but it is a genuine autonomous collaborator for well-defined tasks.
+          </p>
+        </section>
+
+        <section class="space-y-6" aria-labelledby="features-heading">
+          <h2 id="features-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">
+            Key features of Devin
+          </h2>
+          <div class="space-y-3 rounded-2xl border border-white/10 bg-white/[0.03] p-5 sm:p-6">
+            <h3 class="text-lg font-semibold text-white">1. Full software engineering loop</h3>
+            <p class="text-slate-300/95">
+              Devin does not just write code—it plans, implements, tests, debugs, and documents. Give it a GitHub issue and
+              it will return a pull request. Give it a feature description and it handles everything from scratch.
+            </p>
+          </div>
+          <div class="space-y-3 rounded-2xl border border-white/10 bg-white/[0.03] p-5 sm:p-6">
+            <h3 class="text-lg font-semibold text-white">2. Sandboxed compute environment</h3>
+            <p class="text-slate-300/95">
+              Devin runs in an isolated cloud environment with its own shell, file system, browser, and code editor. It can
+              install dependencies, start servers, and run tests—exactly like a developer on their own machine.
+            </p>
+          </div>
+          <div class="space-y-3 rounded-2xl border border-white/10 bg-white/[0.03] p-5 sm:p-6">
+            <h3 class="text-lg font-semibold text-white">3. Web browsing and research</h3>
+            <p class="text-slate-300/95">
+              When Devin hits an unfamiliar library or API, it browses documentation, Stack Overflow, and GitHub issues on
+              its own—just like a human developer would—rather than stopping to ask you.
+            </p>
+          </div>
+          <div class="space-y-3 rounded-2xl border border-white/10 bg-white/[0.03] p-5 sm:p-6">
+            <h3 class="text-lg font-semibold text-white">4. GitHub integration</h3>
+            <p class="text-slate-300/95">
+              Devin can clone repos, commit changes, push branches, and open pull requests. It fits directly into existing
+              git workflows without requiring a special integration layer.
+            </p>
+          </div>
+          <div class="space-y-3 rounded-2xl border border-white/10 bg-white/[0.03] p-5 sm:p-6">
+            <h3 class="text-lg font-semibold text-white">5. Long-horizon task planning</h3>
+            <p class="text-slate-300/95">
+              Devin can hold multi-step plans in memory over hours, not just a few turns of conversation. It tracks progress,
+              identifies blockers, and adjusts its approach when something does not work.
+            </p>
+          </div>
+          <div class="space-y-3 rounded-2xl border border-white/10 bg-white/[0.03] p-5 sm:p-6">
+            <h3 class="text-lg font-semibold text-white">6. Human-in-the-loop checkpoints</h3>
+            <p class="text-slate-300/95">
+              When Devin reaches a decision that needs human input—credentials, ambiguous requirements, or a risky
+              change—it pauses and asks rather than guessing. You can observe its progress in real time through a live
+              session view.
+            </p>
+          </div>
+        </section>
+
+        <section class="space-y-6" aria-labelledby="how-heading">
+          <h2 id="how-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">How Devin works</h2>
+          <p>
+            Devin runs on Cognition's proprietary reasoning model, fine-tuned for long-horizon software tasks. A typical
+            session looks like:
+          </p>
+          <ul class="list-disc space-y-2 pl-5 marker:text-emerald-400/80">
+            <li>You assign a task (a GitHub issue, a Jira ticket, or a plain-English description)</li>
+            <li>Devin reads the repo, existing code, and any relevant issues or docs</li>
+            <li>It writes a step-by-step plan and starts executing in its sandboxed environment</li>
+            <li>It runs tests, reads failures, fixes bugs, and retries</li>
+            <li>It opens a pull request and summarises what it did and why</li>
+          </ul>
+          <p class="rounded-xl border border-white/10 bg-white/[0.02] px-4 py-3 text-slate-300/95">
+            The key difference from assistants: <strong class="text-slate-200">you assign a task once and Devin works
+            through it autonomously</strong>—you review the PR, you do not babysit the session.
+          </p>
+        </section>
+
+        <section class="space-y-6" aria-labelledby="usecases-heading">
+          <h2 id="usecases-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">
+            Real-life use cases of Devin
+          </h2>
+          <div class="space-y-3 rounded-2xl border border-white/10 bg-white/[0.03] p-5 sm:p-6">
+            <h3 class="text-lg font-semibold text-white">Clearing the ticket backlog</h3>
+            <ul class="list-disc space-y-2 pl-5 marker:text-emerald-400/80">
+              <li>Assign well-defined bug fixes or small feature tickets to Devin while your team works on complex work</li>
+            </ul>
+          </div>
+          <div class="space-y-3 rounded-2xl border border-white/10 bg-white/[0.03] p-5 sm:p-6">
+            <h3 class="text-lg font-semibold text-white">Dependency upgrades and migrations</h3>
+            <ul class="list-disc space-y-2 pl-5 marker:text-emerald-400/80">
+              <li>Tedious but important work—upgrading libraries, adapting to breaking API changes—is ideal for Devin</li>
+            </ul>
+          </div>
+          <div class="space-y-3 rounded-2xl border border-white/10 bg-white/[0.03] p-5 sm:p-6">
+            <h3 class="text-lg font-semibold text-white">Writing and fixing tests</h3>
+            <ul class="list-disc space-y-2 pl-5 marker:text-emerald-400/80">
+              <li>Generate unit and integration tests for existing code, or fix a flaky test suite</li>
+            </ul>
+          </div>
+          <div class="space-y-3 rounded-2xl border border-white/10 bg-white/[0.03] p-5 sm:p-6">
+            <h3 class="text-lg font-semibold text-white">Open-source contributions</h3>
+            <ul class="list-disc space-y-2 pl-5 marker:text-emerald-400/80">
+              <li>Point Devin at a "good first issue" in a repo you maintain and let it handle the implementation</li>
+            </ul>
+          </div>
+        </section>
+
+        <section class="space-y-6" aria-labelledby="proscons-heading">
+          <h2 id="proscons-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">Pros and cons of Devin</h2>
+          <div class="grid gap-6 lg:grid-cols-2">
+            <div class="rounded-2xl border border-emerald-500/20 bg-emerald-500/5 p-5 sm:p-6">
+              <h3 class="mb-4 text-lg font-semibold text-emerald-100">Pros</h3>
+              <ul class="list-disc space-y-2 pl-5 text-slate-300/95 marker:text-emerald-400/80">
+                <li>Truly end-to-end: plan → code → test → PR</li>
+                <li>Works asynchronously while your team does other things</li>
+                <li>Handles multi-step tasks without constant supervision</li>
+                <li>Web browsing means it can research its own blockers</li>
+                <li>Human-in-the-loop checkpoints prevent costly mistakes</li>
+              </ul>
+            </div>
+            <div class="rounded-2xl border border-amber-500/20 bg-amber-500/5 p-5 sm:p-6">
+              <h3 class="mb-4 text-lg font-semibold text-amber-100">Cons</h3>
+              <ul class="list-disc space-y-2 pl-5 text-slate-300/95 marker:text-amber-400/80">
+                <li>Expensive—pricing is in ACU (compute unit) credits</li>
+                <li>Struggles with ambiguous or open-ended requirements</li>
+                <li>Output still needs thorough code review</li>
+                <li>Not suitable for tasks requiring deep domain judgement</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        <section class="space-y-6" aria-labelledby="pricing-heading">
+          <h2 id="pricing-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">Devin pricing</h2>
+          <p>Devin is priced on ACUs (Agent Compute Units)—compute consumed per task:</p>
+          <ul class="list-disc space-y-2 pl-5 marker:text-emerald-400/80">
+            <li><strong class="text-slate-200">Starter (~$500/month)</strong> — includes a set number of ACUs for lighter usage</li>
+            <li><strong class="text-slate-200">Teams</strong> — higher ACU limits and shared billing across engineers</li>
+            <li><strong class="text-slate-200">Enterprise</strong> — custom pricing with on-premises options and SLA support</li>
+          </ul>
+          <p class="rounded-xl border border-white/10 bg-white/[0.02] px-4 py-3 text-slate-300/95">
+            <span class="mr-1.5 font-medium text-emerald-200" aria-hidden>Note:</span>
+            ACU consumption varies by task complexity. Check
+            <a
+              class="font-medium text-emerald-300/95 underline decoration-emerald-500/40 underline-offset-4 hover:text-emerald-200"
+              href="https://devin.ai/pricing"
+              target="_blank"
+              rel="noopener noreferrer"
+              >devin.ai/pricing</a
+            > for the latest plans—pricing has evolved since launch.
+          </p>
+        </section>
+
+        <section class="space-y-6" aria-labelledby="alternatives-heading">
+          <h2 id="alternatives-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">
+            Alternatives to Devin
+          </h2>
+          <ul class="list-disc space-y-2 pl-5 marker:text-emerald-400/80">
+            <li><strong class="text-slate-200">Windsurf (Cascade)</strong> — agentic IDE that keeps a human in the driver's seat</li>
+            <li><strong class="text-slate-200">Cursor Agent</strong> — similar agentic capabilities inside a local editor</li>
+            <li><strong class="text-slate-200">GitHub Copilot Workspace</strong> — Microsoft's task-driven AI workspace inside GitHub</li>
+            <li><strong class="text-slate-200">AutoGPT</strong> — open-source autonomous agent for general tasks</li>
+          </ul>
+          <p>Devin is the most fully autonomous option—best when you want to hand off a task entirely, not just get suggestions.</p>
+        </section>
+
+        <section class="space-y-4" aria-labelledby="who-heading">
+          <h2 id="who-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">Who should use Devin?</h2>
+          <ul class="list-disc space-y-2 pl-5 marker:text-emerald-400/80">
+            <li>Engineering teams with large backlogs of well-defined tasks</li>
+            <li>Companies that want to run maintenance work in parallel with feature development</li>
+            <li>Open-source maintainers who need help triaging and resolving issues</li>
+            <li>CTOs and tech leads evaluating how AI agents can scale their teams</li>
+          </ul>
+          <p>If your use case is a quick autocomplete or a one-off code snippet, a lighter tool is more cost-effective. Devin earns its cost on longer, self-contained tasks.</p>
+        </section>
+
+        <section class="space-y-6" aria-labelledby="bonus-heading">
+          <h2 id="bonus-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">Bonus section</h2>
+          <div class="space-y-3 rounded-2xl border border-white/10 bg-white/[0.03] p-5 sm:p-6">
+            <h3 class="text-lg font-semibold text-white">Tips for getting the best results from Devin</h3>
+            <ul class="list-disc space-y-2 pl-5 text-slate-300/95 marker:text-emerald-400/80">
+              <li><strong class="text-slate-200">Write precise task descriptions:</strong> include acceptance criteria, not just a vague goal</li>
+              <li><strong class="text-slate-200">Link the relevant code and tickets:</strong> the more context Devin has, the better its plan</li>
+              <li><strong class="text-slate-200">Use it for bounded tasks:</strong> "migrate this module from v1 to v2 of this SDK" beats "improve the codebase"</li>
+              <li><strong class="text-slate-200">Always review the PR:</strong> treat Devin's output like any other contributor's code</li>
+            </ul>
+          </div>
+          <div class="space-y-3 rounded-2xl border border-white/10 bg-white/[0.03] p-5 sm:p-6">
+            <h3 class="text-lg font-semibold text-white">Common mistakes to avoid</h3>
+            <ul class="list-disc space-y-2 pl-5 text-slate-300/95 marker:text-amber-400/80">
+              <li><strong class="text-slate-200">Assigning tasks that require business judgement</strong> — Devin implements, it does not decide strategy</li>
+              <li><strong class="text-slate-200">Merging without review</strong> — autonomous does not mean infallible; always review the diff</li>
+              <li><strong class="text-slate-200">Giving access to production systems</strong> — sandbox Devin's permissions to only what the task requires</li>
+            </ul>
+          </div>
+        </section>
+
+        <p class="text-lg text-slate-200/95">
+          Devin changes the question from "how do I write this code?" to "what should I build next?"—use it to multiply your
+          team's output on well-defined work while saving human judgement for the decisions that matter.
+        </p>
+      </article>
+    </div>
+  </div>
+{% endblock %}

@@ -1,0 +1,177 @@
+{% extends "web/base.html" %}
+{% block title %}HeyGen — DevShelf{% endblock %}
+{% block content %}
+  <div class="space-y-10">
+    <div class="flex flex-wrap items-center gap-2 text-sm text-slate-400/90">
+      <a href="{% url 'ai_tools' %}" class="font-medium text-emerald-300/90 transition hover:text-emerald-200">AI tools</a>
+      <span aria-hidden class="text-slate-600">/</span>
+      <span class="text-slate-200/90">HeyGen</span>
+    </div>
+
+    <section class="relative overflow-hidden rounded-3xl border border-emerald-400/20 bg-white/[0.06] p-6 shadow-[0_0_0_1px_rgba(255,255,255,0.04)] backdrop-blur-2xl sm:p-8">
+      <div class="pointer-events-none absolute -right-24 top-0 h-72 w-72 rounded-full bg-emerald-500/15 blur-3xl"></div>
+      <div class="pointer-events-none absolute -left-20 bottom-0 h-56 w-56 rounded-full bg-cyan-500/10 blur-3xl"></div>
+      <div class="relative">
+        <p class="text-xs font-semibold uppercase tracking-[0.22em] text-emerald-300/90">AI tool</p>
+        <h1 class="mt-3 text-3xl font-semibold tracking-tight text-white sm:text-4xl lg:text-[2.5rem] lg:leading-tight">
+          HeyGen: Realistic AI Video Avatars and Instant Video Translation
+        </h1>
+        <p class="mt-4 text-sm leading-relaxed text-slate-200/80 sm:text-base">
+          HeyGen lets you create professional-quality talking-head videos using AI avatars—no camera, studio, or presenter
+          required—and translate existing videos into 40+ languages with perfectly lip-synced dubbing.
+        </p>
+        <p class="mt-6 flex flex-wrap items-center gap-3">
+          <a href="https://heygen.com" target="_blank" rel="noopener noreferrer"
+            class="inline-flex items-center gap-2 rounded-full border border-emerald-400/35 bg-emerald-500/10 px-4 py-2 text-sm font-medium text-emerald-200 transition hover:border-emerald-300/50 hover:bg-emerald-500/15 hover:text-white">
+            Try HeyGen <span aria-hidden class="text-emerald-300/80">↗</span>
+          </a>
+          <a href="https://heygen.com/pricing" target="_blank" rel="noopener noreferrer"
+            class="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/[0.04] px-4 py-2 text-sm font-medium text-slate-200/90 transition hover:border-white/25 hover:bg-white/[0.07] hover:text-white">
+            Pricing <span aria-hidden class="text-slate-400">↗</span>
+          </a>
+        </p>
+      </div>
+    </section>
+
+    <div class="glass rounded-3xl border border-white/10 p-5 sm:p-8">
+      <article class="mx-auto space-y-12 text-base leading-relaxed text-slate-300/95">
+
+        <section class="space-y-4" aria-labelledby="what-heading">
+          <h2 id="what-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">What is HeyGen?</h2>
+          <p>HeyGen is an AI video generation platform specialising in realistic talking avatar videos. You type a script, choose an AI avatar (or create one from a short recording of yourself), and HeyGen produces a polished video of that avatar speaking your script—complete with natural gestures and lip sync.</p>
+          <p>Its Video Translation feature has made it especially popular: upload an existing video and HeyGen will dub it into another language with the original speaker's cloned voice and lip movements adjusted to match.</p>
+        </section>
+
+        <section class="space-y-6" aria-labelledby="features-heading">
+          <h2 id="features-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">Key features of HeyGen</h2>
+          <div class="space-y-3 rounded-2xl border border-white/10 bg-white/[0.03] p-5 sm:p-6">
+            <h3 class="text-lg font-semibold text-white">1. AI avatar video creation</h3>
+            <p class="text-slate-300/95">Choose from a library of over 100 stock avatars or create a personalised digital twin from a 2-minute video recording of yourself. Type your script and generate a video in minutes.</p>
+          </div>
+          <div class="space-y-3 rounded-2xl border border-white/10 bg-white/[0.03] p-5 sm:p-6">
+            <h3 class="text-lg font-semibold text-white">2. Video Translation (40+ languages)</h3>
+            <p class="text-slate-300/95">Upload a video and HeyGen translates the speech, clones the speaker's voice, and adjusts lip movements—producing dubbed content that looks and sounds like the original presenter speaking the target language.</p>
+          </div>
+          <div class="space-y-3 rounded-2xl border border-white/10 bg-white/[0.03] p-5 sm:p-6">
+            <h3 class="text-lg font-semibold text-white">3. Instant Avatar (personalised digital twin)</h3>
+            <p class="text-slate-300/95">Record two minutes of yourself speaking and HeyGen creates a photorealistic digital twin. You can generate unlimited videos in your own likeness without ever being on camera again.</p>
+          </div>
+          <div class="space-y-3 rounded-2xl border border-white/10 bg-white/[0.03] p-5 sm:p-6">
+            <h3 class="text-lg font-semibold text-white">4. Interactive Avatar API</h3>
+            <p class="text-slate-300/95">Developers can embed a real-time interactive AI avatar into their products—useful for customer service bots, virtual assistants, and training interfaces that need a human face.</p>
+          </div>
+          <div class="space-y-3 rounded-2xl border border-white/10 bg-white/[0.03] p-5 sm:p-6">
+            <h3 class="text-lg font-semibold text-white">5. Templates and scenes</h3>
+            <p class="text-slate-300/95">Choose from professional templates for product demos, training videos, social media content, and corporate communications—the avatar is placed in a suitable scene automatically.</p>
+          </div>
+          <div class="space-y-3 rounded-2xl border border-white/10 bg-white/[0.03] p-5 sm:p-6">
+            <h3 class="text-lg font-semibold text-white">6. Voice cloning</h3>
+            <p class="text-slate-300/95">Clone a voice from a short sample and use it to narrate scripts—combined with an avatar, this produces videos that look and sound like a specific person delivering your content.</p>
+          </div>
+        </section>
+
+        <section class="space-y-6" aria-labelledby="how-heading">
+          <h2 id="how-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">How HeyGen works</h2>
+          <ul class="list-disc space-y-2 pl-5 marker:text-emerald-400/80">
+            <li>Select or create an avatar (stock or personal digital twin)</li>
+            <li>Type or paste your script—or let AI generate it</li>
+            <li>Choose a voice, background, and template</li>
+            <li>HeyGen renders the video—typically in a few minutes</li>
+            <li>Download or share directly from the platform</li>
+          </ul>
+        </section>
+
+        <section class="space-y-6" aria-labelledby="usecases-heading">
+          <h2 id="usecases-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">Real-life use cases of HeyGen</h2>
+          <div class="space-y-3 rounded-2xl border border-white/10 bg-white/[0.03] p-5 sm:p-6">
+            <h3 class="text-lg font-semibold text-white">Corporate training and onboarding</h3>
+            <ul class="list-disc space-y-2 pl-5 marker:text-emerald-400/80">
+              <li>Create consistent training videos at scale without booking presenters each time content needs updating</li>
+            </ul>
+          </div>
+          <div class="space-y-3 rounded-2xl border border-white/10 bg-white/[0.03] p-5 sm:p-6">
+            <h3 class="text-lg font-semibold text-white">Global content distribution</h3>
+            <ul class="list-disc space-y-2 pl-5 marker:text-emerald-400/80">
+              <li>Localise marketing videos, product demos, and tutorials into dozens of languages without re-shooting</li>
+            </ul>
+          </div>
+          <div class="space-y-3 rounded-2xl border border-white/10 bg-white/[0.03] p-5 sm:p-6">
+            <h3 class="text-lg font-semibold text-white">Product demos and sales</h3>
+            <ul class="list-disc space-y-2 pl-5 marker:text-emerald-400/80">
+              <li>Sales teams generate personalised video messages at scale without recording each one individually</li>
+            </ul>
+          </div>
+        </section>
+
+        <section class="space-y-6" aria-labelledby="proscons-heading">
+          <h2 id="proscons-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">Pros and cons of HeyGen</h2>
+          <div class="grid gap-6 lg:grid-cols-2">
+            <div class="rounded-2xl border border-emerald-500/20 bg-emerald-500/5 p-5 sm:p-6">
+              <h3 class="mb-4 text-lg font-semibold text-emerald-100">Pros</h3>
+              <ul class="list-disc space-y-2 pl-5 text-slate-300/95 marker:text-emerald-400/80">
+                <li>Most realistic AI avatar quality available</li>
+                <li>Video translation with lip-sync is genuinely impressive</li>
+                <li>Create a personal digital twin from 2 minutes of footage</li>
+                <li>Large template library for quick starts</li>
+                <li>Interactive avatar API for product embedding</li>
+              </ul>
+            </div>
+            <div class="rounded-2xl border border-amber-500/20 bg-amber-500/5 p-5 sm:p-6">
+              <h3 class="mb-4 text-lg font-semibold text-amber-100">Cons</h3>
+              <ul class="list-disc space-y-2 pl-5 text-slate-300/95 marker:text-amber-400/80">
+                <li>Pricing is per video credit—can get expensive at volume</li>
+                <li>Avatars still look slightly artificial on close inspection</li>
+                <li>Video translation quality varies by language</li>
+                <li>Digital twin creation requires a consent recording process</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        <section class="space-y-6" aria-labelledby="pricing-heading">
+          <h2 id="pricing-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">HeyGen pricing</h2>
+          <ul class="list-disc space-y-2 pl-5 marker:text-emerald-400/80">
+            <li><strong class="text-slate-200">Free</strong> — 1 video credit to try the platform</li>
+            <li><strong class="text-slate-200">Creator ($29/month)</strong> — 15 video credits/month, access to most features</li>
+            <li><strong class="text-slate-200">Team ($89/month)</strong> — more credits, collaboration, and custom avatars</li>
+            <li><strong class="text-slate-200">Enterprise (custom)</strong> — dedicated avatars, API access, and SLA</li>
+          </ul>
+        </section>
+
+        <section class="space-y-6" aria-labelledby="alternatives-heading">
+          <h2 id="alternatives-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">Alternatives to HeyGen</h2>
+          <ul class="list-disc space-y-2 pl-5 marker:text-emerald-400/80">
+            <li><strong class="text-slate-200">Synthesia</strong> — strong enterprise-focused avatar video platform</li>
+            <li><strong class="text-slate-200">D-ID</strong> — simpler avatar video tool, good for quick generations</li>
+            <li><strong class="text-slate-200">Pika / RunwayML</strong> — for creative, non-avatar video generation</li>
+            <li><strong class="text-slate-200">ElevenLabs</strong> — if you only need voice dubbing without a video avatar</li>
+          </ul>
+        </section>
+
+        <section class="space-y-4" aria-labelledby="who-heading">
+          <h2 id="who-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">Who should use HeyGen?</h2>
+          <ul class="list-disc space-y-2 pl-5 marker:text-emerald-400/80">
+            <li>L&D and HR teams producing training content at scale</li>
+            <li>Marketing teams localising video content for global audiences</li>
+            <li>Salespeople sending personalised video outreach at volume</li>
+            <li>Creators who want a consistent on-screen presence without always being on camera</li>
+          </ul>
+        </section>
+
+        <section class="space-y-6" aria-labelledby="bonus-heading">
+          <h2 id="bonus-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">Bonus section</h2>
+          <div class="space-y-3 rounded-2xl border border-white/10 bg-white/[0.03] p-5 sm:p-6">
+            <h3 class="text-lg font-semibold text-white">Tips for better HeyGen videos</h3>
+            <ul class="list-disc space-y-2 pl-5 text-slate-300/95 marker:text-emerald-400/80">
+              <li><strong class="text-slate-200">Write for speech:</strong> short sentences and natural pauses read better on video than dense paragraphs</li>
+              <li><strong class="text-slate-200">Add punctuation for pacing:</strong> commas and full stops control where the avatar pauses—use them deliberately</li>
+              <li><strong class="text-slate-200">Use the translation feature early:</strong> uploading a high-quality original produces the best dubbed output</li>
+            </ul>
+          </div>
+        </section>
+
+        <p class="text-lg text-slate-200/95">HeyGen has made professional video production accessible to anyone with a script—if your team produces regular video content, the time savings alone justify the cost.</p>
+      </article>
+    </div>
+  </div>
+{% endblock %}

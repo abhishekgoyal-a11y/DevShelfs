@@ -1,0 +1,181 @@
+{% extends "web/base.html" %}
+{% block title %}Mistral AI — DevShelf{% endblock %}
+{% block content %}
+  <div class="space-y-10">
+    <div class="flex flex-wrap items-center gap-2 text-sm text-slate-400/90">
+      <a href="{% url 'ai_tools' %}" class="font-medium text-emerald-300/90 transition hover:text-emerald-200">AI tools</a>
+      <span aria-hidden class="text-slate-600">/</span>
+      <span class="text-slate-200/90">Mistral</span>
+    </div>
+
+    <section class="relative overflow-hidden rounded-3xl border border-emerald-400/20 bg-white/[0.06] p-6 shadow-[0_0_0_1px_rgba(255,255,255,0.04)] backdrop-blur-2xl sm:p-8">
+      <div class="pointer-events-none absolute -right-24 top-0 h-72 w-72 rounded-full bg-emerald-500/15 blur-3xl"></div>
+      <div class="pointer-events-none absolute -left-20 bottom-0 h-56 w-56 rounded-full bg-cyan-500/10 blur-3xl"></div>
+      <div class="relative">
+        <p class="text-xs font-semibold uppercase tracking-[0.22em] text-emerald-300/90">AI tool</p>
+        <h1 class="mt-3 text-3xl font-semibold tracking-tight text-white sm:text-4xl lg:text-[2.5rem] lg:leading-tight">
+          Mistral AI: Efficient Open-Weight LLMs from Europe
+        </h1>
+        <p class="mt-4 text-sm leading-relaxed text-slate-200/80 sm:text-base">
+          Mistral AI is a French startup producing some of the most capable open-weight models available—punching well above
+          their weight class in benchmarks while remaining small enough to run on consumer hardware.
+        </p>
+        <p class="mt-6 flex flex-wrap items-center gap-3">
+          <a href="https://chat.mistral.ai" target="_blank" rel="noopener noreferrer"
+            class="inline-flex items-center gap-2 rounded-full border border-emerald-400/35 bg-emerald-500/10 px-4 py-2 text-sm font-medium text-emerald-200 transition hover:border-emerald-300/50 hover:bg-emerald-500/15 hover:text-white">
+            Try Le Chat <span aria-hidden class="text-emerald-300/80">↗</span>
+          </a>
+          <a href="https://mistral.ai/api" target="_blank" rel="noopener noreferrer"
+            class="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/[0.04] px-4 py-2 text-sm font-medium text-slate-200/90 transition hover:border-white/25 hover:bg-white/[0.07] hover:text-white">
+            API <span aria-hidden class="text-slate-400">↗</span>
+          </a>
+          <a href="https://mistral.ai" target="_blank" rel="noopener noreferrer"
+            class="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/[0.04] px-4 py-2 text-sm font-medium text-slate-200/90 transition hover:border-white/25 hover:bg-white/[0.07] hover:text-white">
+            Mistral AI <span aria-hidden class="text-slate-400">↗</span>
+          </a>
+        </p>
+      </div>
+    </section>
+
+    <div class="glass rounded-3xl border border-white/10 p-5 sm:p-8">
+      <article class="mx-auto space-y-12 text-base leading-relaxed text-slate-300/95">
+
+        <section class="space-y-4" aria-labelledby="what-heading">
+          <h2 id="what-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">What is Mistral AI?</h2>
+          <p>Mistral AI is a Paris-based AI company that builds and releases open-weight large language models. Their first model, Mistral 7B, made waves by outperforming much larger models on standard benchmarks. Since then, Mistral has grown its model family to include Mixtral (a mixture-of-experts architecture), Mistral Large, and Mistral Small—covering a range of speed/quality trade-offs.</p>
+          <p>Mistral models are available as open weights (downloadable and self-hostable), via API (La Plateforme), and through a consumer chat interface called Le Chat.</p>
+        </section>
+
+        <section class="space-y-6" aria-labelledby="features-heading">
+          <h2 id="features-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">Key features of Mistral AI</h2>
+          <div class="space-y-3 rounded-2xl border border-white/10 bg-white/[0.03] p-5 sm:p-6">
+            <h3 class="text-lg font-semibold text-white">1. Open-weight models</h3>
+            <p class="text-slate-300/95">Mistral releases model weights publicly under Apache 2.0 or similar licences—you can download them and run them on your own hardware with no API dependency and no data leaving your infrastructure.</p>
+          </div>
+          <div class="space-y-3 rounded-2xl border border-white/10 bg-white/[0.03] p-5 sm:p-6">
+            <h3 class="text-lg font-semibold text-white">2. Mixture-of-Experts (Mixtral)</h3>
+            <p class="text-slate-300/95">Mixtral 8x7B activates only a subset of its parameters per token, giving it near-70B quality at a fraction of the inference cost—a key innovation for running capable models economically.</p>
+          </div>
+          <div class="space-y-3 rounded-2xl border border-white/10 bg-white/[0.03] p-5 sm:p-6">
+            <h3 class="text-lg font-semibold text-white">3. Strong coding performance</h3>
+            <p class="text-slate-300/95">Codestral is Mistral's dedicated code model, trained specifically on programming languages. It supports fill-in-the-middle (FIM) completion—letting it complete code in the middle of existing functions, not just at the end.</p>
+          </div>
+          <div class="space-y-3 rounded-2xl border border-white/10 bg-white/[0.03] p-5 sm:p-6">
+            <h3 class="text-lg font-semibold text-white">4. Function calling and JSON mode</h3>
+            <p class="text-slate-300/95">Mistral's API supports OpenAI-compatible function calling and structured JSON output, making it a drop-in replacement for many existing AI applications.</p>
+          </div>
+          <div class="space-y-3 rounded-2xl border border-white/10 bg-white/[0.03] p-5 sm:p-6">
+            <h3 class="text-lg font-semibold text-white">5. European data residency</h3>
+            <p class="text-slate-300/95">For organisations that need data to stay in Europe for GDPR or regulatory reasons, Mistral's La Plateforme offers EU-hosted inference—an advantage that OpenAI and Anthropic cannot currently match.</p>
+          </div>
+          <div class="space-y-3 rounded-2xl border border-white/10 bg-white/[0.03] p-5 sm:p-6">
+            <h3 class="text-lg font-semibold text-white">6. Le Chat</h3>
+            <p class="text-slate-300/95">Le Chat is Mistral's consumer chatbot—a clean, fast interface for conversation, writing, coding help, and web search without needing to touch the API.</p>
+          </div>
+        </section>
+
+        <section class="space-y-6" aria-labelledby="how-heading">
+          <h2 id="how-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">How Mistral works</h2>
+          <p>Mistral models use a transformer architecture with several efficiency improvements—sliding window attention, grouped-query attention, and in Mixtral's case, a sparse mixture-of-experts layer. You can access them in three ways:</p>
+          <ul class="list-disc space-y-2 pl-5 marker:text-emerald-400/80">
+            <li><strong class="text-slate-200">Self-hosted:</strong> download weights from Hugging Face and run locally with Ollama, vLLM, or similar</li>
+            <li><strong class="text-slate-200">API (La Plateforme):</strong> call models over HTTP with a standard OpenAI-compatible interface</li>
+            <li><strong class="text-slate-200">Le Chat:</strong> chat directly in the browser without any setup</li>
+          </ul>
+        </section>
+
+        <section class="space-y-6" aria-labelledby="usecases-heading">
+          <h2 id="usecases-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">Real-life use cases of Mistral AI</h2>
+          <div class="space-y-3 rounded-2xl border border-white/10 bg-white/[0.03] p-5 sm:p-6">
+            <h3 class="text-lg font-semibold text-white">On-premises AI for regulated industries</h3>
+            <ul class="list-disc space-y-2 pl-5 marker:text-emerald-400/80">
+              <li>Run Mistral locally so sensitive data—medical records, legal documents—never leaves your servers</li>
+            </ul>
+          </div>
+          <div class="space-y-3 rounded-2xl border border-white/10 bg-white/[0.03] p-5 sm:p-6">
+            <h3 class="text-lg font-semibold text-white">Cost-efficient API applications</h3>
+            <ul class="list-disc space-y-2 pl-5 marker:text-emerald-400/80">
+              <li>Use Mistral Small or Mixtral for high-volume tasks at a fraction of GPT-4 pricing</li>
+            </ul>
+          </div>
+          <div class="space-y-3 rounded-2xl border border-white/10 bg-white/[0.03] p-5 sm:p-6">
+            <h3 class="text-lg font-semibold text-white">Code completion with Codestral</h3>
+            <ul class="list-disc space-y-2 pl-5 marker:text-emerald-400/80">
+              <li>Integrate Codestral into your editor for FIM completions across 80+ programming languages</li>
+            </ul>
+          </div>
+        </section>
+
+        <section class="space-y-6" aria-labelledby="proscons-heading">
+          <h2 id="proscons-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">Pros and cons of Mistral AI</h2>
+          <div class="grid gap-6 lg:grid-cols-2">
+            <div class="rounded-2xl border border-emerald-500/20 bg-emerald-500/5 p-5 sm:p-6">
+              <h3 class="mb-4 text-lg font-semibold text-emerald-100">Pros</h3>
+              <ul class="list-disc space-y-2 pl-5 text-slate-300/95 marker:text-emerald-400/80">
+                <li>Genuinely open weights—self-host freely</li>
+                <li>Excellent performance-per-parameter ratio</li>
+                <li>EU data residency available</li>
+                <li>OpenAI-compatible API for easy migration</li>
+                <li>Codestral for specialised code completion</li>
+              </ul>
+            </div>
+            <div class="rounded-2xl border border-amber-500/20 bg-amber-500/5 p-5 sm:p-6">
+              <h3 class="mb-4 text-lg font-semibold text-amber-100">Cons</h3>
+              <ul class="list-disc space-y-2 pl-5 text-slate-300/95 marker:text-amber-400/80">
+                <li>Smaller than GPT-4 or Claude 3 Opus at the top tier</li>
+                <li>Le Chat lags behind ChatGPT in consumer features</li>
+                <li>Smaller community and fewer tutorials than OpenAI ecosystem</li>
+                <li>Self-hosting still requires GPU hardware and setup effort</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        <section class="space-y-6" aria-labelledby="pricing-heading">
+          <h2 id="pricing-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">Mistral AI pricing</h2>
+          <ul class="list-disc space-y-2 pl-5 marker:text-emerald-400/80">
+            <li><strong class="text-slate-200">Open weights (free)</strong> — download and self-host Mistral 7B, Mixtral 8x7B, and others at no cost</li>
+            <li><strong class="text-slate-200">La Plateforme API</strong> — pay-per-token, with Mistral Small being one of the cheapest capable models available</li>
+            <li><strong class="text-slate-200">Le Chat Free</strong> — free browser chatbot with daily limits</li>
+            <li><strong class="text-slate-200">Le Chat Pro (~€15/month)</strong> — higher limits, web search, and image generation</li>
+          </ul>
+        </section>
+
+        <section class="space-y-6" aria-labelledby="alternatives-heading">
+          <h2 id="alternatives-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">Alternatives to Mistral AI</h2>
+          <ul class="list-disc space-y-2 pl-5 marker:text-emerald-400/80">
+            <li><strong class="text-slate-200">Meta Llama</strong> — another strong open-weight family, backed by Meta</li>
+            <li><strong class="text-slate-200">DeepSeek</strong> — highly competitive open-weight models, especially for reasoning and coding</li>
+            <li><strong class="text-slate-200">GPT-4o</strong> — best-in-class closed model with the largest ecosystem</li>
+            <li><strong class="text-slate-200">Claude</strong> — top choice for long-context and nuanced writing tasks</li>
+          </ul>
+        </section>
+
+        <section class="space-y-4" aria-labelledby="who-heading">
+          <h2 id="who-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">Who should use Mistral AI?</h2>
+          <ul class="list-disc space-y-2 pl-5 marker:text-emerald-400/80">
+            <li>Developers who need a capable, affordable, OpenAI-compatible model API</li>
+            <li>Companies with data privacy requirements who want on-premises AI</li>
+            <li>European organisations needing EU-hosted inference for compliance</li>
+            <li>Researchers and hobbyists who want to run LLMs locally on their own hardware</li>
+          </ul>
+        </section>
+
+        <section class="space-y-6" aria-labelledby="bonus-heading">
+          <h2 id="bonus-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">Bonus section</h2>
+          <div class="space-y-3 rounded-2xl border border-white/10 bg-white/[0.03] p-5 sm:p-6">
+            <h3 class="text-lg font-semibold text-white">Quick model selection guide</h3>
+            <ul class="list-disc space-y-2 pl-5 text-slate-300/95 marker:text-emerald-400/80">
+              <li><strong class="text-slate-200">Mistral Small:</strong> fast, cheap, great for classification and simple tasks</li>
+              <li><strong class="text-slate-200">Mixtral 8x7B:</strong> best balance of quality and cost for most applications</li>
+              <li><strong class="text-slate-200">Mistral Large:</strong> top-tier reasoning and complex instruction following</li>
+              <li><strong class="text-slate-200">Codestral:</strong> code completion including fill-in-the-middle</li>
+            </ul>
+          </div>
+        </section>
+
+        <p class="text-lg text-slate-200/95">Mistral is the practical choice when you need strong model quality without the closed-source lock-in—especially if data privacy or cost at scale are real constraints.</p>
+      </article>
+    </div>
+  </div>
+{% endblock %}

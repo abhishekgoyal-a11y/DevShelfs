@@ -1,0 +1,187 @@
+{% extends "web/base.html" %}
+{% block title %}Luma AI — DevShelf{% endblock %}
+{% block content %}
+  <div class="space-y-10">
+    <div class="flex flex-wrap items-center gap-2 text-sm text-slate-400/90">
+      <a href="{% url 'ai_tools' %}" class="font-medium text-emerald-300/90 transition hover:text-emerald-200">AI tools</a>
+      <span aria-hidden class="text-slate-600">/</span>
+      <span class="text-slate-200/90">Luma AI</span>
+    </div>
+
+    <section class="relative overflow-hidden rounded-3xl border border-emerald-400/20 bg-white/[0.06] p-6 shadow-[0_0_0_1px_rgba(255,255,255,0.04)] backdrop-blur-2xl sm:p-8">
+      <div class="pointer-events-none absolute -right-24 top-0 h-72 w-72 rounded-full bg-emerald-500/15 blur-3xl"></div>
+      <div class="pointer-events-none absolute -left-20 bottom-0 h-56 w-56 rounded-full bg-cyan-500/10 blur-3xl"></div>
+      <div class="relative">
+        <p class="text-xs font-semibold uppercase tracking-[0.22em] text-emerald-300/90">AI tool</p>
+        <h1 class="mt-3 text-3xl font-semibold tracking-tight text-white sm:text-4xl lg:text-[2.5rem] lg:leading-tight">
+          Luma AI: Photorealistic Video Generation and 3D Capture
+        </h1>
+        <p class="mt-4 text-sm leading-relaxed text-slate-200/80 sm:text-base">
+          Luma AI builds tools for photorealistic AI content—Dream Machine for text-to-video generation, and NeRF-based 3D
+          capture that turns phone videos into interactive 3D scenes used in games, AR, and film production.
+        </p>
+        <p class="mt-6 flex flex-wrap items-center gap-3">
+          <a href="https://lumalabs.ai" target="_blank" rel="noopener noreferrer"
+            class="inline-flex items-center gap-2 rounded-full border border-emerald-400/35 bg-emerald-500/10 px-4 py-2 text-sm font-medium text-emerald-200 transition hover:border-emerald-300/50 hover:bg-emerald-500/15 hover:text-white">
+            Try Luma AI <span aria-hidden class="text-emerald-300/80">↗</span>
+          </a>
+          <a href="https://lumalabs.ai/dream-machine" target="_blank" rel="noopener noreferrer"
+            class="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/[0.04] px-4 py-2 text-sm font-medium text-slate-200/90 transition hover:border-white/25 hover:bg-white/[0.07] hover:text-white">
+            Dream Machine <span aria-hidden class="text-slate-400">↗</span>
+          </a>
+          <a href="https://lumalabs.ai/api" target="_blank" rel="noopener noreferrer"
+            class="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/[0.04] px-4 py-2 text-sm font-medium text-slate-200/90 transition hover:border-white/25 hover:bg-white/[0.07] hover:text-white">
+            API <span aria-hidden class="text-slate-400">↗</span>
+          </a>
+        </p>
+      </div>
+    </section>
+
+    <div class="glass rounded-3xl border border-white/10 p-5 sm:p-8">
+      <article class="mx-auto space-y-12 text-base leading-relaxed text-slate-300/95">
+
+        <section class="space-y-4" aria-labelledby="what-heading">
+          <h2 id="what-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">What is Luma AI?</h2>
+          <p>Luma AI is a San Francisco AI company that builds photorealistic content generation tools. It is best known for two things: Dream Machine—a text-to-video and image-to-video generator—and its NeRF (Neural Radiance Field) capture technology, which converts ordinary phone video into high-quality 3D scenes.</p>
+          <p>Dream Machine is Luma's answer to RunwayML and Pika, with a strong emphasis on physical realism—objects move with weight, light behaves naturally, and camera motions feel grounded. The 3D capture tools serve a different, more technical audience: game developers, VFX artists, and e-commerce teams who need realistic 3D assets.</p>
+        </section>
+
+        <section class="space-y-6" aria-labelledby="features-heading">
+          <h2 id="features-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">Key features of Luma AI</h2>
+          <div class="space-y-3 rounded-2xl border border-white/10 bg-white/[0.03] p-5 sm:p-6">
+            <h3 class="text-lg font-semibold text-white">1. Dream Machine — text-to-video</h3>
+            <p class="text-slate-300/95">Generate photorealistic video clips from text prompts. Dream Machine is particularly strong on physical plausibility—how objects move, how light interacts with surfaces—compared to competing generators.</p>
+          </div>
+          <div class="space-y-3 rounded-2xl border border-white/10 bg-white/[0.03] p-5 sm:p-6">
+            <h3 class="text-lg font-semibold text-white">2. Image-to-video</h3>
+            <p class="text-slate-300/95">Upload a still image as the first (and optionally last) frame, and Dream Machine generates a video that interpolates between them—useful for precise creative control over start and end states.</p>
+          </div>
+          <div class="space-y-3 rounded-2xl border border-white/10 bg-white/[0.03] p-5 sm:p-6">
+            <h3 class="text-lg font-semibold text-white">3. Keyframe control (first and last frame)</h3>
+            <p class="text-slate-300/95">Set both a starting and ending image and let Dream Machine generate the transition—giving filmmakers a way to plan exactly how a shot begins and ends.</p>
+          </div>
+          <div class="space-y-3 rounded-2xl border border-white/10 bg-white/[0.03] p-5 sm:p-6">
+            <h3 class="text-lg font-semibold text-white">4. 3D Capture (NeRF)</h3>
+            <p class="text-slate-300/95">Walk around an object recording with your phone and Luma converts the footage into a photorealistic, interactive 3D scene using Neural Radiance Fields. No expensive scanning equipment needed.</p>
+          </div>
+          <div class="space-y-3 rounded-2xl border border-white/10 bg-white/[0.03] p-5 sm:p-6">
+            <h3 class="text-lg font-semibold text-white">5. Genie — 3D generation from text</h3>
+            <p class="text-slate-300/95">Genie generates textured 3D objects from text prompts—useful for rapid 3D asset creation in game development and AR without manual modelling.</p>
+          </div>
+          <div class="space-y-3 rounded-2xl border border-white/10 bg-white/[0.03] p-5 sm:p-6">
+            <h3 class="text-lg font-semibold text-white">6. API for developers</h3>
+            <p class="text-slate-300/95">Luma's Dream Machine API allows developers to integrate text-to-video generation into their own applications programmatically.</p>
+          </div>
+        </section>
+
+        <section class="space-y-6" aria-labelledby="how-heading">
+          <h2 id="how-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">How Luma AI works</h2>
+          <p>Dream Machine is built on a diffusion-based video model trained to understand physical world dynamics. The 3D capture pipeline uses NeRF—a technique that learns a continuous 3D representation of a scene from 2D images by modelling how light rays pass through space.</p>
+          <ul class="list-disc space-y-2 pl-5 marker:text-emerald-400/80">
+            <li><strong class="text-slate-200">For video:</strong> enter a prompt (or upload images), choose duration and aspect ratio, generate</li>
+            <li><strong class="text-slate-200">For 3D capture:</strong> record a 360° walk around an object with your phone, upload to the Luma app, wait for processing</li>
+            <li><strong class="text-slate-200">For Genie:</strong> describe a 3D object in text and download the generated mesh</li>
+          </ul>
+        </section>
+
+        <section class="space-y-6" aria-labelledby="usecases-heading">
+          <h2 id="usecases-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">Real-life use cases of Luma AI</h2>
+          <div class="space-y-3 rounded-2xl border border-white/10 bg-white/[0.03] p-5 sm:p-6">
+            <h3 class="text-lg font-semibold text-white">Film and VFX previsualisation</h3>
+            <ul class="list-disc space-y-2 pl-5 marker:text-emerald-400/80">
+              <li>Generate placeholder shots and camera moves during pre-production before expensive live action filming</li>
+            </ul>
+          </div>
+          <div class="space-y-3 rounded-2xl border border-white/10 bg-white/[0.03] p-5 sm:p-6">
+            <h3 class="text-lg font-semibold text-white">E-commerce 3D product showcases</h3>
+            <ul class="list-disc space-y-2 pl-5 marker:text-emerald-400/80">
+              <li>Capture a product with a phone and embed an interactive 3D view on a product page</li>
+            </ul>
+          </div>
+          <div class="space-y-3 rounded-2xl border border-white/10 bg-white/[0.03] p-5 sm:p-6">
+            <h3 class="text-lg font-semibold text-white">Game development asset creation</h3>
+            <ul class="list-disc space-y-2 pl-5 marker:text-emerald-400/80">
+              <li>Capture real-world objects as 3D assets or generate new ones with Genie for rapid prototyping</li>
+            </ul>
+          </div>
+        </section>
+
+        <section class="space-y-6" aria-labelledby="proscons-heading">
+          <h2 id="proscons-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">Pros and cons of Luma AI</h2>
+          <div class="grid gap-6 lg:grid-cols-2">
+            <div class="rounded-2xl border border-emerald-500/20 bg-emerald-500/5 p-5 sm:p-6">
+              <h3 class="mb-4 text-lg font-semibold text-emerald-100">Pros</h3>
+              <ul class="list-disc space-y-2 pl-5 text-slate-300/95 marker:text-emerald-400/80">
+                <li>Strong physical realism in video generation</li>
+                <li>First/last frame control for precise storytelling</li>
+                <li>NeRF 3D capture is genuinely professional quality</li>
+                <li>API available for application integration</li>
+                <li>Unique combination of video and 3D tooling</li>
+              </ul>
+            </div>
+            <div class="rounded-2xl border border-amber-500/20 bg-amber-500/5 p-5 sm:p-6">
+              <h3 class="mb-4 text-lg font-semibold text-amber-100">Cons</h3>
+              <ul class="list-disc space-y-2 pl-5 text-slate-300/95 marker:text-amber-400/80">
+                <li>Free tier is limited—serious use requires a paid plan</li>
+                <li>3D capture requires a careful, methodical recording technique</li>
+                <li>Dream Machine clips are 5–10 seconds—short for storytelling</li>
+                <li>Smaller community than RunwayML or Pika</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        <section class="space-y-6" aria-labelledby="pricing-heading">
+          <h2 id="pricing-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">Luma AI pricing</h2>
+          <ul class="list-disc space-y-2 pl-5 marker:text-emerald-400/80">
+            <li><strong class="text-slate-200">Free</strong> — 30 generations/month via Dream Machine</li>
+            <li><strong class="text-slate-200">Standard ($29.99/month)</strong> — 120 generations, watermark-free</li>
+            <li><strong class="text-slate-200">Plus ($99.99/month)</strong> — 400 generations, priority queue</li>
+            <li><strong class="text-slate-200">Pro ($499.99/month)</strong> — 2,000 generations, API access</li>
+          </ul>
+        </section>
+
+        <section class="space-y-6" aria-labelledby="alternatives-heading">
+          <h2 id="alternatives-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">Alternatives to Luma AI</h2>
+          <ul class="list-disc space-y-2 pl-5 marker:text-emerald-400/80">
+            <li><strong class="text-slate-200">RunwayML</strong> — stronger editing tools and longer clips</li>
+            <li><strong class="text-slate-200">Pika</strong> — faster, cheaper, good for short social clips</li>
+            <li><strong class="text-slate-200">Kling</strong> — strong competitor in the video generation space</li>
+            <li><strong class="text-slate-200">Polycam</strong> — dedicated 3D capture app if 3D is your primary need</li>
+          </ul>
+        </section>
+
+        <section class="space-y-4" aria-labelledby="who-heading">
+          <h2 id="who-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">Who should use Luma AI?</h2>
+          <ul class="list-disc space-y-2 pl-5 marker:text-emerald-400/80">
+            <li>Filmmakers and VFX artists who need physically plausible video generation</li>
+            <li>Game developers needing fast 3D asset capture or generation</li>
+            <li>E-commerce brands building interactive product experiences</li>
+            <li>Developers building apps that need a video generation API</li>
+          </ul>
+        </section>
+
+        <section class="space-y-6" aria-labelledby="bonus-heading">
+          <h2 id="bonus-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">Bonus section</h2>
+          <div class="space-y-3 rounded-2xl border border-white/10 bg-white/[0.03] p-5 sm:p-6">
+            <h3 class="text-lg font-semibold text-white">Tips for great 3D captures</h3>
+            <ul class="list-disc space-y-2 pl-5 text-slate-300/95 marker:text-emerald-400/80">
+              <li><strong class="text-slate-200">Move slowly and steadily</strong> around the object—fast movements cause blur artefacts</li>
+              <li><strong class="text-slate-200">Ensure even lighting:</strong> avoid strong directional shadows; diffuse daylight or a lightbox works best</li>
+              <li><strong class="text-slate-200">Overlap your passes:</strong> multiple loops from different heights produce better geometry reconstruction</li>
+            </ul>
+          </div>
+          <div class="space-y-3 rounded-2xl border border-white/10 bg-white/[0.03] p-5 sm:p-6">
+            <h3 class="text-lg font-semibold text-white">Tips for Dream Machine prompts</h3>
+            <ul class="list-disc space-y-2 pl-5 text-slate-300/95 marker:text-emerald-400/80">
+              <li><strong class="text-slate-200">Describe physics:</strong> "water splashing," "cloth billowing in wind" leverages Dream Machine's physical realism strengths</li>
+              <li><strong class="text-slate-200">Use keyframes:</strong> setting a first and last image gives you far more narrative control than text alone</li>
+            </ul>
+          </div>
+        </section>
+
+        <p class="text-lg text-slate-200/95">Luma AI is the tool for creators who want physical credibility in their AI video—and the only mainstream platform that also gives you production-grade 3D capture from a phone.</p>
+      </article>
+    </div>
+  </div>
+{% endblock %}

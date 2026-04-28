@@ -1,0 +1,185 @@
+{% extends "web/base.html" %}
+{% block title %}Suno — DevShelf{% endblock %}
+{% block content %}
+  <div class="space-y-10">
+    <div class="flex flex-wrap items-center gap-2 text-sm text-slate-400/90">
+      <a href="{% url 'ai_tools' %}" class="font-medium text-emerald-300/90 transition hover:text-emerald-200">AI tools</a>
+      <span aria-hidden class="text-slate-600">/</span>
+      <span class="text-slate-200/90">Suno</span>
+    </div>
+
+    <section class="relative overflow-hidden rounded-3xl border border-emerald-400/20 bg-white/[0.06] p-6 shadow-[0_0_0_1px_rgba(255,255,255,0.04)] backdrop-blur-2xl sm:p-8">
+      <div class="pointer-events-none absolute -right-24 top-0 h-72 w-72 rounded-full bg-emerald-500/15 blur-3xl"></div>
+      <div class="pointer-events-none absolute -left-20 bottom-0 h-56 w-56 rounded-full bg-cyan-500/10 blur-3xl"></div>
+      <div class="relative">
+        <p class="text-xs font-semibold uppercase tracking-[0.22em] text-emerald-300/90">AI tool</p>
+        <h1 class="mt-3 text-3xl font-semibold tracking-tight text-white sm:text-4xl lg:text-[2.5rem] lg:leading-tight">
+          Suno: Generate Complete Songs with Vocals from a Text Prompt
+        </h1>
+        <p class="mt-4 text-sm leading-relaxed text-slate-200/80 sm:text-base">
+          Suno is an AI music generation tool that turns a text description into a full song—complete with lyrics, vocals,
+          melody, and instrumentation—in seconds, across virtually any genre.
+        </p>
+        <p class="mt-6 flex flex-wrap items-center gap-3">
+          <a href="https://suno.com" target="_blank" rel="noopener noreferrer"
+            class="inline-flex items-center gap-2 rounded-full border border-emerald-400/35 bg-emerald-500/10 px-4 py-2 text-sm font-medium text-emerald-200 transition hover:border-emerald-300/50 hover:bg-emerald-500/15 hover:text-white">
+            Try Suno <span aria-hidden class="text-emerald-300/80">↗</span>
+          </a>
+          <a href="https://suno.com/account/billing" target="_blank" rel="noopener noreferrer"
+            class="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/[0.04] px-4 py-2 text-sm font-medium text-slate-200/90 transition hover:border-white/25 hover:bg-white/[0.07] hover:text-white">
+            Pricing <span aria-hidden class="text-slate-400">↗</span>
+          </a>
+        </p>
+      </div>
+    </section>
+
+    <div class="glass rounded-3xl border border-white/10 p-5 sm:p-8">
+      <article class="mx-auto space-y-12 text-base leading-relaxed text-slate-300/95">
+
+        <section class="space-y-4" aria-labelledby="what-heading">
+          <h2 id="what-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">What is Suno?</h2>
+          <p>Suno is an AI music generation platform that creates complete, polished songs from text prompts. Unlike tools that generate instrumentals or short clips, Suno produces tracks with lead vocals, backing harmonies, full instrumentation, and coherent structure—verse, chorus, bridge—all from a single description like "an upbeat indie pop song about missing the ocean."</p>
+          <p>It is the closest thing available to having a full music production studio that responds to plain English requests.</p>
+        </section>
+
+        <section class="space-y-6" aria-labelledby="features-heading">
+          <h2 id="features-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">Key features of Suno</h2>
+          <div class="space-y-3 rounded-2xl border border-white/10 bg-white/[0.03] p-5 sm:p-6">
+            <h3 class="text-lg font-semibold text-white">1. Text-to-song generation</h3>
+            <p class="text-slate-300/95">Describe the style, mood, and theme in a prompt and Suno returns a full song—typically 2–4 minutes—with vocals and full production. No musical knowledge required.</p>
+          </div>
+          <div class="space-y-3 rounded-2xl border border-white/10 bg-white/[0.03] p-5 sm:p-6">
+            <h3 class="text-lg font-semibold text-white">2. Custom lyrics mode</h3>
+            <p class="text-slate-300/95">Write your own lyrics and Suno will compose the music and vocal performance around them—giving you creative control over the words while the AI handles everything else.</p>
+          </div>
+          <div class="space-y-3 rounded-2xl border border-white/10 bg-white/[0.03] p-5 sm:p-6">
+            <h3 class="text-lg font-semibold text-white">3. Wide genre coverage</h3>
+            <p class="text-slate-300/95">From lo-fi hip-hop to death metal to baroque classical to K-pop—Suno handles an extraordinary range of styles, and you can blend genres in a single prompt.</p>
+          </div>
+          <div class="space-y-3 rounded-2xl border border-white/10 bg-white/[0.03] p-5 sm:p-6">
+            <h3 class="text-lg font-semibold text-white">4. Song extension and continuation</h3>
+            <p class="text-slate-300/95">Take an existing clip and extend it—add a bridge, an outro, or a completely new section—keeping the same style and sonic identity as the original.</p>
+          </div>
+          <div class="space-y-3 rounded-2xl border border-white/10 bg-white/[0.03] p-5 sm:p-6">
+            <h3 class="text-lg font-semibold text-white">5. Stems separation (Pro)</h3>
+            <p class="text-slate-300/95">Pro users can download separated audio stems—vocals, drums, bass, and instruments—for use in DAWs and further production work.</p>
+          </div>
+          <div class="space-y-3 rounded-2xl border border-white/10 bg-white/[0.03] p-5 sm:p-6">
+            <h3 class="text-lg font-semibold text-white">6. Community and sharing</h3>
+            <p class="text-slate-300/95">Suno has a built-in feed where users share their creations—a great source of inspiration for what prompts work well across different styles.</p>
+          </div>
+        </section>
+
+        <section class="space-y-6" aria-labelledby="how-heading">
+          <h2 id="how-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">How Suno works</h2>
+          <ul class="list-disc space-y-2 pl-5 marker:text-emerald-400/80">
+            <li>You write a prompt describing the song (style, mood, theme, era)</li>
+            <li>Optionally add your own lyrics or let Suno generate them</li>
+            <li>Suno generates two song variants for you to compare</li>
+            <li>Download the full audio, extend sections, or remix further</li>
+          </ul>
+          <p class="rounded-xl border border-white/10 bg-white/[0.02] px-4 py-3 text-slate-300/95">
+            <strong class="text-slate-200">Good prompt formula:</strong> [tempo/energy] + [genre] + [instruments] + [theme/mood] — e.g. "slow, melancholic jazz piano ballad about watching a city at night."
+          </p>
+        </section>
+
+        <section class="space-y-6" aria-labelledby="usecases-heading">
+          <h2 id="usecases-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">Real-life use cases of Suno</h2>
+          <div class="space-y-3 rounded-2xl border border-white/10 bg-white/[0.03] p-5 sm:p-6">
+            <h3 class="text-lg font-semibold text-white">Content creators and YouTubers</h3>
+            <ul class="list-disc space-y-2 pl-5 marker:text-emerald-400/80">
+              <li>Generate royalty-free background music and jingles matched to the mood of your content</li>
+            </ul>
+          </div>
+          <div class="space-y-3 rounded-2xl border border-white/10 bg-white/[0.03] p-5 sm:p-6">
+            <h3 class="text-lg font-semibold text-white">Songwriters and musicians</h3>
+            <ul class="list-disc space-y-2 pl-5 marker:text-emerald-400/80">
+              <li>Rapidly prototype song ideas—get a sense of how your lyrics sound before committing to studio time</li>
+            </ul>
+          </div>
+          <div class="space-y-3 rounded-2xl border border-white/10 bg-white/[0.03] p-5 sm:p-6">
+            <h3 class="text-lg font-semibold text-white">Game and app developers</h3>
+            <ul class="list-disc space-y-2 pl-5 marker:text-emerald-400/80">
+              <li>Create custom background tracks, menu music, and audio branding without hiring a composer</li>
+            </ul>
+          </div>
+          <div class="space-y-3 rounded-2xl border border-white/10 bg-white/[0.03] p-5 sm:p-6">
+            <h3 class="text-lg font-semibold text-white">Just for fun</h3>
+            <ul class="list-disc space-y-2 pl-5 marker:text-emerald-400/80">
+              <li>Generate a birthday song for a friend, a theme song for your pet, or a parody of your favourite genre</li>
+            </ul>
+          </div>
+        </section>
+
+        <section class="space-y-6" aria-labelledby="proscons-heading">
+          <h2 id="proscons-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">Pros and cons of Suno</h2>
+          <div class="grid gap-6 lg:grid-cols-2">
+            <div class="rounded-2xl border border-emerald-500/20 bg-emerald-500/5 p-5 sm:p-6">
+              <h3 class="mb-4 text-lg font-semibold text-emerald-100">Pros</h3>
+              <ul class="list-disc space-y-2 pl-5 text-slate-300/95 marker:text-emerald-400/80">
+                <li>Full songs with vocals—not just instrumentals</li>
+                <li>Incredibly fast generation (under 30 seconds)</li>
+                <li>No musical knowledge needed</li>
+                <li>Huge genre range</li>
+                <li>Generous free tier for exploration</li>
+              </ul>
+            </div>
+            <div class="rounded-2xl border border-amber-500/20 bg-amber-500/5 p-5 sm:p-6">
+              <h3 class="mb-4 text-lg font-semibold text-amber-100">Cons</h3>
+              <ul class="list-disc space-y-2 pl-5 text-slate-300/95 marker:text-amber-400/80">
+                <li>Limited control over specific musical elements</li>
+                <li>Lyrics can be generic or nonsensical on complex topics</li>
+                <li>Commercial licensing requires a paid plan</li>
+                <li>Ongoing legal questions around training data</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        <section class="space-y-6" aria-labelledby="pricing-heading">
+          <h2 id="pricing-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">Suno pricing</h2>
+          <ul class="list-disc space-y-2 pl-5 marker:text-emerald-400/80">
+            <li><strong class="text-slate-200">Free</strong> — 50 credits/day, non-commercial use only</li>
+            <li><strong class="text-slate-200">Pro ($8/month)</strong> — 2,500 credits/month, commercial rights, priority generation</li>
+            <li><strong class="text-slate-200">Premier ($24/month)</strong> — 10,000 credits/month, commercial rights, stems download</li>
+          </ul>
+        </section>
+
+        <section class="space-y-6" aria-labelledby="alternatives-heading">
+          <h2 id="alternatives-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">Alternatives to Suno</h2>
+          <ul class="list-disc space-y-2 pl-5 marker:text-emerald-400/80">
+            <li><strong class="text-slate-200">Udio</strong> — similar full-song AI with a slightly different sound signature</li>
+            <li><strong class="text-slate-200">Mubert</strong> — continuous AI music streaming for content creators</li>
+            <li><strong class="text-slate-200">Soundraw</strong> — AI music with more manual control over arrangement</li>
+            <li><strong class="text-slate-200">ElevenLabs (Sound Effects)</strong> — for audio effects rather than full music tracks</li>
+          </ul>
+        </section>
+
+        <section class="space-y-4" aria-labelledby="who-heading">
+          <h2 id="who-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">Who should use Suno?</h2>
+          <ul class="list-disc space-y-2 pl-5 marker:text-emerald-400/80">
+            <li>Content creators who need royalty-free music at scale</li>
+            <li>Songwriters who want to prototype ideas quickly</li>
+            <li>Developers and marketers building audio branding</li>
+            <li>Anyone who wants to create music but lacks formal training</li>
+          </ul>
+        </section>
+
+        <section class="space-y-6" aria-labelledby="bonus-heading">
+          <h2 id="bonus-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">Bonus section</h2>
+          <div class="space-y-3 rounded-2xl border border-white/10 bg-white/[0.03] p-5 sm:p-6">
+            <h3 class="text-lg font-semibold text-white">Prompt tips for better songs</h3>
+            <ul class="list-disc space-y-2 pl-5 text-slate-300/95 marker:text-emerald-400/80">
+              <li><strong class="text-slate-200">Use style tags:</strong> wrap genre and mood words in square brackets like [melancholic indie folk] to guide the model more reliably</li>
+              <li><strong class="text-slate-200">Specify era:</strong> "80s synth-pop" or "90s grunge" produces more consistent results than just a genre name</li>
+              <li><strong class="text-slate-200">Generate multiple versions:</strong> Suno produces two variants per prompt—always compare before downloading</li>
+              <li><strong class="text-slate-200">Use Custom Mode for lyrics:</strong> Suno's auto-lyrics are decent but your own words always produce more meaningful songs</li>
+            </ul>
+          </div>
+        </section>
+
+        <p class="text-lg text-slate-200/95">Suno makes music creation as accessible as writing a text message—it is one of those tools that genuinely surprises you the first time you use it.</p>
+      </article>
+    </div>
+  </div>
+{% endblock %}

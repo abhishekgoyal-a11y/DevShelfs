@@ -1,0 +1,187 @@
+{% extends "web/base.html" %}
+{% block title %}Phidata — DevShelf{% endblock %}
+{% block content %}
+  <div class="space-y-10">
+    <div class="flex flex-wrap items-center gap-2 text-sm text-slate-400/90">
+      <a href="{% url 'ai_tools' %}" class="font-medium text-emerald-300/90 transition hover:text-emerald-200">AI tools</a>
+      <span aria-hidden class="text-slate-600">/</span>
+      <span class="text-slate-200/90">Phidata</span>
+    </div>
+
+    <section class="relative overflow-hidden rounded-3xl border border-emerald-400/20 bg-white/[0.06] p-6 shadow-[0_0_0_1px_rgba(255,255,255,0.04)] backdrop-blur-2xl sm:p-8">
+      <div class="pointer-events-none absolute -right-24 top-0 h-72 w-72 rounded-full bg-emerald-500/15 blur-3xl"></div>
+      <div class="pointer-events-none absolute -left-20 bottom-0 h-56 w-56 rounded-full bg-cyan-500/10 blur-3xl"></div>
+      <div class="relative">
+        <p class="text-xs font-semibold uppercase tracking-[0.22em] text-emerald-300/90">AI tool</p>
+        <h1 class="mt-3 text-3xl font-semibold tracking-tight text-white sm:text-4xl lg:text-[2.5rem] lg:leading-tight">
+          Phidata: Build AI Agents with Memory, Knowledge, and Tools
+        </h1>
+        <p class="mt-4 text-sm leading-relaxed text-slate-200/80 sm:text-base">
+          Phidata (now Agno) is an open-source Python framework for building production-grade AI agents that have persistent
+          memory, searchable knowledge bases, and access to tools—with a clean, code-first API that stays out of your way.
+        </p>
+        <p class="mt-6 flex flex-wrap items-center gap-3">
+          <a href="https://phidata.com" target="_blank" rel="noopener noreferrer"
+            class="inline-flex items-center gap-2 rounded-full border border-emerald-400/35 bg-emerald-500/10 px-4 py-2 text-sm font-medium text-emerald-200 transition hover:border-emerald-300/50 hover:bg-emerald-500/15 hover:text-white">
+            Phidata / Agno <span aria-hidden class="text-emerald-300/80">↗</span>
+          </a>
+          <a href="https://github.com/phidatahq/phidata" target="_blank" rel="noopener noreferrer"
+            class="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/[0.04] px-4 py-2 text-sm font-medium text-slate-200/90 transition hover:border-white/25 hover:bg-white/[0.07] hover:text-white">
+            GitHub <span aria-hidden class="text-slate-400">↗</span>
+          </a>
+          <a href="https://docs.phidata.com" target="_blank" rel="noopener noreferrer"
+            class="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/[0.04] px-4 py-2 text-sm font-medium text-slate-200/90 transition hover:border-white/25 hover:bg-white/[0.07] hover:text-white">
+            Docs <span aria-hidden class="text-slate-400">↗</span>
+          </a>
+        </p>
+      </div>
+    </section>
+
+    <div class="glass rounded-3xl border border-white/10 p-5 sm:p-8">
+      <article class="mx-auto space-y-12 text-base leading-relaxed text-slate-300/95">
+
+        <section class="space-y-4" aria-labelledby="what-heading">
+          <h2 id="what-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">What is Phidata?</h2>
+          <p>Phidata is an open-source Python framework for building AI agents. It differs from LangChain and similar tools by taking a first-principles, code-first approach—agents are plain Python objects with memory, knowledge, and tools as first-class attributes, not tangled chains of callbacks.</p>
+          <p>The project has been rebranded as Agno but remains widely known as Phidata. It emphasises production readiness: agents can store long-term memory in databases, retrieve information from structured knowledge bases, and use tools like web search, SQL, Python, and REST APIs—all in a clean, readable API.</p>
+        </section>
+
+        <section class="space-y-6" aria-labelledby="features-heading">
+          <h2 id="features-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">Key features of Phidata</h2>
+          <div class="space-y-3 rounded-2xl border border-white/10 bg-white/[0.03] p-5 sm:p-6">
+            <h3 class="text-lg font-semibold text-white">1. Memory — short and long term</h3>
+            <p class="text-slate-300/95">Agents have built-in conversation memory (session context) and long-term memory (persistent storage in PostgreSQL or SQLite)—so they remember preferences and past interactions across sessions.</p>
+          </div>
+          <div class="space-y-3 rounded-2xl border border-white/10 bg-white/[0.03] p-5 sm:p-6">
+            <h3 class="text-lg font-semibold text-white">2. Knowledge bases</h3>
+            <p class="text-slate-300/95">Attach a searchable knowledge base—PDFs, URLs, text files, databases—to an agent. Phidata handles chunking, embedding, vector storage, and retrieval automatically.</p>
+          </div>
+          <div class="space-y-3 rounded-2xl border border-white/10 bg-white/[0.03] p-5 sm:p-6">
+            <h3 class="text-lg font-semibold text-white">3. Built-in tools</h3>
+            <p class="text-slate-300/95">Phidata ships with ready-to-use tools: DuckDuckGo search, Python REPL, SQL queries, file operations, Exa web search, YFinance for financial data, and dozens more—attach them with a single line.</p>
+          </div>
+          <div class="space-y-3 rounded-2xl border border-white/10 bg-white/[0.03] p-5 sm:p-6">
+            <h3 class="text-lg font-semibold text-white">4. Multi-agent teams</h3>
+            <p class="text-slate-300/95">Compose agents into teams—a lead agent can delegate sub-tasks to specialist agents (researcher, writer, coder) and combine their outputs, using any coordination strategy you define.</p>
+          </div>
+          <div class="space-y-3 rounded-2xl border border-white/10 bg-white/[0.03] p-5 sm:p-6">
+            <h3 class="text-lg font-semibold text-white">5. Any LLM backend</h3>
+            <p class="text-slate-300/95">Works with OpenAI, Anthropic, Google Gemini, Mistral, Groq, Ollama (local models), and AWS Bedrock—swap models with one parameter change.</p>
+          </div>
+          <div class="space-y-3 rounded-2xl border border-white/10 bg-white/[0.03] p-5 sm:p-6">
+            <h3 class="text-lg font-semibold text-white">6. Agno Playground</h3>
+            <p class="text-slate-300/95">Serve your agents locally and interact with them through the hosted Agno Playground UI—useful for testing and debugging without building a custom frontend.</p>
+          </div>
+        </section>
+
+        <section class="space-y-6" aria-labelledby="how-heading">
+          <h2 id="how-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">How Phidata works</h2>
+          <p>A basic Phidata agent is just a few lines of Python:</p>
+          <div class="rounded-xl border border-white/10 bg-white/[0.02] p-4">
+            <pre class="text-sm font-mono text-emerald-200/90 overflow-x-auto"><code>from phi.agent import Agent
+from phi.tools.duckduckgo import DuckDuckGo
+
+agent = Agent(tools=[DuckDuckGo()], markdown=True)
+agent.print_response("What happened in AI this week?")</code></pre>
+          </div>
+          <p>Add memory, a knowledge base, or swap the model with additional parameters. The framework handles the tool-calling loop, context window management, and streaming internally.</p>
+        </section>
+
+        <section class="space-y-6" aria-labelledby="usecases-heading">
+          <h2 id="usecases-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">Real-life use cases of Phidata</h2>
+          <div class="space-y-3 rounded-2xl border border-white/10 bg-white/[0.03] p-5 sm:p-6">
+            <h3 class="text-lg font-semibold text-white">Research agents</h3>
+            <ul class="list-disc space-y-2 pl-5 marker:text-emerald-400/80">
+              <li>An agent that searches the web, reads pages, and writes a structured report—all autonomously</li>
+            </ul>
+          </div>
+          <div class="space-y-3 rounded-2xl border border-white/10 bg-white/[0.03] p-5 sm:p-6">
+            <h3 class="text-lg font-semibold text-white">Data analysis agents</h3>
+            <ul class="list-disc space-y-2 pl-5 marker:text-emerald-400/80">
+              <li>Connect a database and let an agent answer natural-language questions by writing and executing SQL</li>
+            </ul>
+          </div>
+          <div class="space-y-3 rounded-2xl border border-white/10 bg-white/[0.03] p-5 sm:p-6">
+            <h3 class="text-lg font-semibold text-white">Personalised assistants</h3>
+            <ul class="list-disc space-y-2 pl-5 marker:text-emerald-400/80">
+              <li>An assistant that remembers your preferences, past conversations, and personal context across sessions</li>
+            </ul>
+          </div>
+        </section>
+
+        <section class="space-y-6" aria-labelledby="proscons-heading">
+          <h2 id="proscons-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">Pros and cons of Phidata</h2>
+          <div class="grid gap-6 lg:grid-cols-2">
+            <div class="rounded-2xl border border-emerald-500/20 bg-emerald-500/5 p-5 sm:p-6">
+              <h3 class="mb-4 text-lg font-semibold text-emerald-100">Pros</h3>
+              <ul class="list-disc space-y-2 pl-5 text-slate-300/95 marker:text-emerald-400/80">
+                <li>Clean, readable Python API—minimal boilerplate</li>
+                <li>First-class memory and knowledge base support</li>
+                <li>Rich built-in tool library</li>
+                <li>Works with any major LLM</li>
+                <li>Multi-agent teams with simple composition</li>
+              </ul>
+            </div>
+            <div class="rounded-2xl border border-amber-500/20 bg-amber-500/5 p-5 sm:p-6">
+              <h3 class="mb-4 text-lg font-semibold text-amber-100">Cons</h3>
+              <ul class="list-disc space-y-2 pl-5 text-slate-300/95 marker:text-amber-400/80">
+                <li>Python-only—no JavaScript SDK</li>
+                <li>Smaller community than LangChain</li>
+                <li>No visual editor—code-only workflow</li>
+                <li>Rebranding to Agno has caused some documentation fragmentation</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        <section class="space-y-6" aria-labelledby="pricing-heading">
+          <h2 id="pricing-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">Phidata pricing</h2>
+          <ul class="list-disc space-y-2 pl-5 marker:text-emerald-400/80">
+            <li><strong class="text-slate-200">Open-source (free)</strong> — full framework available on GitHub under the MPL licence</li>
+            <li><strong class="text-slate-200">Agno Cloud</strong> — hosted playground, monitoring, and managed agent infrastructure (see agno.com for current pricing)</li>
+          </ul>
+        </section>
+
+        <section class="space-y-6" aria-labelledby="alternatives-heading">
+          <h2 id="alternatives-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">Alternatives to Phidata</h2>
+          <ul class="list-disc space-y-2 pl-5 marker:text-emerald-400/80">
+            <li><strong class="text-slate-200">LangChain</strong> — broader ecosystem, steeper learning curve</li>
+            <li><strong class="text-slate-200">CrewAI</strong> — role-based multi-agent orchestration</li>
+            <li><strong class="text-slate-200">AutoGen</strong> — Microsoft's conversational multi-agent framework</li>
+            <li><strong class="text-slate-200">Smolagents</strong> — Hugging Face's minimal code-first agent library</li>
+          </ul>
+        </section>
+
+        <section class="space-y-4" aria-labelledby="who-heading">
+          <h2 id="who-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">Who should use Phidata?</h2>
+          <ul class="list-disc space-y-2 pl-5 marker:text-emerald-400/80">
+            <li>Python developers who want a clean agent framework without LangChain's complexity</li>
+            <li>Engineers building agents that need persistent memory across sessions</li>
+            <li>Teams who want a rich built-in tool library without writing custom integrations</li>
+            <li>Developers building multi-agent systems that need to coordinate specialist agents</li>
+          </ul>
+        </section>
+
+        <section class="space-y-6" aria-labelledby="bonus-heading">
+          <h2 id="bonus-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">Bonus section</h2>
+          <div class="space-y-3 rounded-2xl border border-white/10 bg-white/[0.03] p-5 sm:p-6">
+            <h3 class="text-lg font-semibold text-white">Building a web research team in minutes</h3>
+            <div class="rounded-xl border border-white/10 bg-white/[0.02] p-4">
+              <pre class="text-sm font-mono text-emerald-200/90 overflow-x-auto"><code>from phi.agent import Agent
+from phi.tools.duckduckgo import DuckDuckGo
+from phi.tools.newspaper4k import Newspaper4k
+
+researcher = Agent(name="Researcher", tools=[DuckDuckGo(), Newspaper4k()])
+writer = Agent(name="Writer", description="Writes clear summaries")
+
+team = Agent(team=[researcher, writer])
+team.print_response("Summarise this week's AI news")</code></pre>
+            </div>
+          </div>
+        </section>
+
+        <p class="text-lg text-slate-200/95">Phidata hits the sweet spot between power and simplicity—agents with real memory and tools in a handful of Python lines, without the ceremony of larger frameworks.</p>
+      </article>
+    </div>
+  </div>
+{% endblock %}

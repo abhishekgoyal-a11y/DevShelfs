@@ -1,0 +1,182 @@
+{% extends "web/base.html" %}
+{% block title %}DeepSeek — DevShelf{% endblock %}
+{% block content %}
+  <div class="space-y-10">
+    <div class="flex flex-wrap items-center gap-2 text-sm text-slate-400/90">
+      <a href="{% url 'ai_tools' %}" class="font-medium text-emerald-300/90 transition hover:text-emerald-200">AI tools</a>
+      <span aria-hidden class="text-slate-600">/</span>
+      <span class="text-slate-200/90">DeepSeek</span>
+    </div>
+
+    <section class="relative overflow-hidden rounded-3xl border border-emerald-400/20 bg-white/[0.06] p-6 shadow-[0_0_0_1px_rgba(255,255,255,0.04)] backdrop-blur-2xl sm:p-8">
+      <div class="pointer-events-none absolute -right-24 top-0 h-72 w-72 rounded-full bg-emerald-500/15 blur-3xl"></div>
+      <div class="pointer-events-none absolute -left-20 bottom-0 h-56 w-56 rounded-full bg-cyan-500/10 blur-3xl"></div>
+      <div class="relative">
+        <p class="text-xs font-semibold uppercase tracking-[0.22em] text-emerald-300/90">AI tool</p>
+        <h1 class="mt-3 text-3xl font-semibold tracking-tight text-white sm:text-4xl lg:text-[2.5rem] lg:leading-tight">
+          DeepSeek: The Open-Source Reasoning Model That Shook the AI World
+        </h1>
+        <p class="mt-4 text-sm leading-relaxed text-slate-200/80 sm:text-base">
+          DeepSeek is a Chinese AI lab producing open-weight models that match or exceed frontier closed models on many
+          benchmarks—at a fraction of the training cost—making powerful reasoning and coding AI accessible to everyone.
+        </p>
+        <p class="mt-6 flex flex-wrap items-center gap-3">
+          <a href="https://chat.deepseek.com" target="_blank" rel="noopener noreferrer"
+            class="inline-flex items-center gap-2 rounded-full border border-emerald-400/35 bg-emerald-500/10 px-4 py-2 text-sm font-medium text-emerald-200 transition hover:border-emerald-300/50 hover:bg-emerald-500/15 hover:text-white">
+            Try DeepSeek Chat <span aria-hidden class="text-emerald-300/80">↗</span>
+          </a>
+          <a href="https://platform.deepseek.com" target="_blank" rel="noopener noreferrer"
+            class="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/[0.04] px-4 py-2 text-sm font-medium text-slate-200/90 transition hover:border-white/25 hover:bg-white/[0.07] hover:text-white">
+            API <span aria-hidden class="text-slate-400">↗</span>
+          </a>
+          <a href="https://huggingface.co/deepseek-ai" target="_blank" rel="noopener noreferrer"
+            class="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/[0.04] px-4 py-2 text-sm font-medium text-slate-200/90 transition hover:border-white/25 hover:bg-white/[0.07] hover:text-white">
+            Hugging Face <span aria-hidden class="text-slate-400">↗</span>
+          </a>
+        </p>
+      </div>
+    </section>
+
+    <div class="glass rounded-3xl border border-white/10 p-5 sm:p-8">
+      <article class="mx-auto space-y-12 text-base leading-relaxed text-slate-300/95">
+
+        <section class="space-y-4" aria-labelledby="what-heading">
+          <h2 id="what-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">What is DeepSeek?</h2>
+          <p>DeepSeek is an AI research lab and model family from Hangzhou-based High-Flyer Capital Management. In early 2025, their model DeepSeek-R1 made global headlines by matching OpenAI's o1 reasoning model on major benchmarks while being fully open-source and reportedly trained at a fraction of the cost—around $6 million versus hundreds of millions for comparable US models.</p>
+          <p>The lab produces both chat models (DeepSeek-V2, V3) and dedicated reasoning models (DeepSeek-R1), all with open weights and a very competitive API pricing that undercuts most alternatives.</p>
+        </section>
+
+        <section class="space-y-6" aria-labelledby="features-heading">
+          <h2 id="features-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">Key features of DeepSeek</h2>
+          <div class="space-y-3 rounded-2xl border border-white/10 bg-white/[0.03] p-5 sm:p-6">
+            <h3 class="text-lg font-semibold text-white">1. DeepSeek-R1: frontier reasoning</h3>
+            <p class="text-slate-300/95">R1 is a chain-of-thought reasoning model that shows its work step-by-step. On maths, coding, and science benchmarks it rivals OpenAI o1—and the weights are public.</p>
+          </div>
+          <div class="space-y-3 rounded-2xl border border-white/10 bg-white/[0.03] p-5 sm:p-6">
+            <h3 class="text-lg font-semibold text-white">2. Mixture-of-Experts architecture</h3>
+            <p class="text-slate-300/95">DeepSeek-V2 and V3 use a Mixture-of-Experts design that activates only a fraction of parameters per token—delivering high-quality output with lower compute costs than dense models of the same size.</p>
+          </div>
+          <div class="space-y-3 rounded-2xl border border-white/10 bg-white/[0.03] p-5 sm:p-6">
+            <h3 class="text-lg font-semibold text-white">3. Exceptional coding ability</h3>
+            <p class="text-slate-300/95">DeepSeek Coder and the V3/R1 models consistently rank among the top performers on HumanEval and SWE-bench coding benchmarks—often beating models with far larger training budgets.</p>
+          </div>
+          <div class="space-y-3 rounded-2xl border border-white/10 bg-white/[0.03] p-5 sm:p-6">
+            <h3 class="text-lg font-semibold text-white">4. Open weights under MIT licence</h3>
+            <p class="text-slate-300/95">DeepSeek-R1 is released under the MIT licence—one of the most permissive available—allowing commercial use, modification, and redistribution without restriction.</p>
+          </div>
+          <div class="space-y-3 rounded-2xl border border-white/10 bg-white/[0.03] p-5 sm:p-6">
+            <h3 class="text-lg font-semibold text-white">5. Very low API pricing</h3>
+            <p class="text-slate-300/95">DeepSeek's API is priced at a fraction of GPT-4 rates—cache hits on its API are essentially free—making it one of the most cost-effective ways to run a frontier-class model in production.</p>
+          </div>
+          <div class="space-y-3 rounded-2xl border border-white/10 bg-white/[0.03] p-5 sm:p-6">
+            <h3 class="text-lg font-semibold text-white">6. Distilled smaller models</h3>
+            <p class="text-slate-300/95">DeepSeek released distilled versions of R1 (based on Qwen and Llama architectures) in sizes from 1.5B to 70B—strong reasoning models that run on consumer hardware.</p>
+          </div>
+        </section>
+
+        <section class="space-y-6" aria-labelledby="how-heading">
+          <h2 id="how-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">How DeepSeek works</h2>
+          <p>DeepSeek-R1 uses reinforcement learning to develop reasoning behaviour—the model learns to "think" through problems in long internal chains before giving a final answer. Key access paths:</p>
+          <ul class="list-disc space-y-2 pl-5 marker:text-emerald-400/80">
+            <li><strong class="text-slate-200">DeepSeek Chat (chat.deepseek.com):</strong> free browser chatbot, supports R1 and V3</li>
+            <li><strong class="text-slate-200">DeepSeek API:</strong> OpenAI-compatible endpoint with extremely competitive token pricing</li>
+            <li><strong class="text-slate-200">Self-hosted:</strong> download weights from Hugging Face and run with vLLM, Ollama, or llama.cpp</li>
+          </ul>
+        </section>
+
+        <section class="space-y-6" aria-labelledby="usecases-heading">
+          <h2 id="usecases-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">Real-life use cases of DeepSeek</h2>
+          <div class="space-y-3 rounded-2xl border border-white/10 bg-white/[0.03] p-5 sm:p-6">
+            <h3 class="text-lg font-semibold text-white">Complex coding and debugging</h3>
+            <ul class="list-disc space-y-2 pl-5 marker:text-emerald-400/80">
+              <li>Use R1 for hard algorithmic problems—it shows reasoning steps that help you understand the solution</li>
+            </ul>
+          </div>
+          <div class="space-y-3 rounded-2xl border border-white/10 bg-white/[0.03] p-5 sm:p-6">
+            <h3 class="text-lg font-semibold text-white">Maths and science problems</h3>
+            <ul class="list-disc space-y-2 pl-5 marker:text-emerald-400/80">
+              <li>R1 excels at competition-level maths, proofs, and quantitative reasoning tasks</li>
+            </ul>
+          </div>
+          <div class="space-y-3 rounded-2xl border border-white/10 bg-white/[0.03] p-5 sm:p-6">
+            <h3 class="text-lg font-semibold text-white">High-volume production APIs</h3>
+            <ul class="list-disc space-y-2 pl-5 marker:text-emerald-400/80">
+              <li>Use DeepSeek V3 via API for cost-sensitive applications where you need GPT-4-class quality at a much lower rate</li>
+            </ul>
+          </div>
+        </section>
+
+        <section class="space-y-6" aria-labelledby="proscons-heading">
+          <h2 id="proscons-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">Pros and cons of DeepSeek</h2>
+          <div class="grid gap-6 lg:grid-cols-2">
+            <div class="rounded-2xl border border-emerald-500/20 bg-emerald-500/5 p-5 sm:p-6">
+              <h3 class="mb-4 text-lg font-semibold text-emerald-100">Pros</h3>
+              <ul class="list-disc space-y-2 pl-5 text-slate-300/95 marker:text-emerald-400/80">
+                <li>R1 matches frontier reasoning models at open-source cost</li>
+                <li>MIT licence—truly free for commercial use</li>
+                <li>Exceptional coding and maths performance</li>
+                <li>Cheapest competitive API on the market</li>
+                <li>Distilled models run locally on consumer hardware</li>
+              </ul>
+            </div>
+            <div class="rounded-2xl border border-amber-500/20 bg-amber-500/5 p-5 sm:p-6">
+              <h3 class="mb-4 text-lg font-semibold text-amber-100">Cons</h3>
+              <ul class="list-disc space-y-2 pl-5 text-slate-300/95 marker:text-amber-400/80">
+                <li>Servers based in China—data privacy concerns for sensitive workloads</li>
+                <li>API reliability has faced outages during peak demand</li>
+                <li>Censored on some political topics (China-related content policies)</li>
+                <li>R1 reasoning traces can be very long, increasing latency</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        <section class="space-y-6" aria-labelledby="pricing-heading">
+          <h2 id="pricing-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">DeepSeek pricing</h2>
+          <ul class="list-disc space-y-2 pl-5 marker:text-emerald-400/80">
+            <li><strong class="text-slate-200">Chat (free)</strong> — free access to R1 and V3 at chat.deepseek.com</li>
+            <li><strong class="text-slate-200">API (pay-per-token)</strong> — among the lowest rates for frontier-class models; cache hits on input tokens are nearly free</li>
+            <li><strong class="text-slate-200">Self-hosted (free)</strong> — download weights from Hugging Face and run with no API cost</li>
+          </ul>
+        </section>
+
+        <section class="space-y-6" aria-labelledby="alternatives-heading">
+          <h2 id="alternatives-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">Alternatives to DeepSeek</h2>
+          <ul class="list-disc space-y-2 pl-5 marker:text-emerald-400/80">
+            <li><strong class="text-slate-200">OpenAI o1/o3</strong> — leading closed reasoning models</li>
+            <li><strong class="text-slate-200">Meta Llama 3.1</strong> — open-weight with strong general capability</li>
+            <li><strong class="text-slate-200">Mistral Large</strong> — capable open model with EU hosting option</li>
+            <li><strong class="text-slate-200">Claude 3.5 Sonnet</strong> — excellent for coding and analysis via API</li>
+          </ul>
+        </section>
+
+        <section class="space-y-4" aria-labelledby="who-heading">
+          <h2 id="who-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">Who should use DeepSeek?</h2>
+          <ul class="list-disc space-y-2 pl-5 marker:text-emerald-400/80">
+            <li>Developers who need frontier reasoning at minimal API cost</li>
+            <li>Researchers who want transparent, open-weight reasoning models to study</li>
+            <li>Students and engineers tackling hard maths, algorithms, or competitive programming</li>
+            <li>Teams evaluating whether to self-host a capable model rather than pay per-token</li>
+          </ul>
+          <p class="rounded-xl border border-amber-500/20 bg-amber-500/5 px-4 py-3 text-slate-300/95">
+            <span class="mr-1.5 font-medium text-amber-200" aria-hidden>Note:</span> For sensitive production workloads where data privacy is paramount, consider self-hosting the weights instead of using DeepSeek's hosted API.
+          </p>
+        </section>
+
+        <section class="space-y-6" aria-labelledby="bonus-heading">
+          <h2 id="bonus-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">Bonus section</h2>
+          <div class="space-y-3 rounded-2xl border border-white/10 bg-white/[0.03] p-5 sm:p-6">
+            <h3 class="text-lg font-semibold text-white">Tips for using DeepSeek-R1 effectively</h3>
+            <ul class="list-disc space-y-2 pl-5 text-slate-300/95 marker:text-emerald-400/80">
+              <li><strong class="text-slate-200">Let it think:</strong> R1's long reasoning traces are not noise—they are why it gets hard problems right</li>
+              <li><strong class="text-slate-200">Use for verification:</strong> give it your solution and ask it to find flaws—its systematic thinking catches subtle bugs</li>
+              <li><strong class="text-slate-200">Distilled models for speed:</strong> if latency matters, the 8B or 14B distilled models are dramatically faster with surprisingly little quality loss on most tasks</li>
+            </ul>
+          </div>
+        </section>
+
+        <p class="text-lg text-slate-200/95">DeepSeek proved that frontier AI does not require frontier budgets—it is the strongest argument yet that open-source can genuinely compete with the world's best closed models.</p>
+      </article>
+    </div>
+  </div>
+{% endblock %}
