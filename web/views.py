@@ -772,97 +772,131 @@ def tutorial_rll_rag(request):
     return render(request, "web/tutorials/run_llms_locally/local_rag.html", {"layout": _layout(request.path), "active_nav": "tutorials"})
 
 
+_RAG_PIPELINE_SERIES = [
+    {"number": 2, "title": "Core Concepts", "summary": "Embeddings, vector similarity, retrieval strategies, reranking, and the complete RAG architecture.", "url": "tutorial_rag_pipeline_core_concepts"},
+    {"number": 3, "title": "Document Ingestion", "summary": "Load PDFs, docs, web pages. Handle unstructured data, clean text, and prepare for chunking.", "url": "tutorial_rag_pipeline_document_ingestion"},
+    {"number": 4, "title": "Chunking Strategies", "summary": "Fixed-size, semantic, sliding window chunks. Token management, overlap, and context preservation.", "url": "tutorial_rag_pipeline_chunking"},
+    {"number": 5, "title": "Embeddings", "summary": "Embedding models (OpenAI, local), dimensions, fine-tuning embeddings, and choosing the right one.", "url": "tutorial_rag_pipeline_embeddings"},
+    {"number": 6, "title": "Vector Stores", "summary": "Pinecone, Qdrant, Milvus, FAISS, Chroma — comparison, indexing, and scaling.", "url": "tutorial_rag_pipeline_vectorstores"},
+    {"number": 7, "title": "Retrieval Mechanisms", "summary": "Dense, sparse, hybrid search. Metadata filtering, MMR diversity, and multi-query expansion.", "url": "tutorial_rag_pipeline_retrieval"},
+    {"number": 8, "title": "LLM Integration", "summary": "Connecting retrievers to LLMs. Prompt formatting, truncation, and generating final answers.", "url": "tutorial_rag_pipeline_llm_integration"},
+    {"number": 9, "title": "Advanced Techniques", "summary": "Query expansion, reranking, recursive retrieval, agent-based RAG, and hybrid approaches.", "url": "tutorial_rag_pipeline_advanced_techniques"},
+    {"number": 10, "title": "Complete System", "summary": "Building end-to-end: loader → chunker → embedder → retriever → LLM. Full code example.", "url": "tutorial_rag_pipeline_complete_system"},
+    {"number": 11, "title": "Evaluation Framework", "summary": "RAGAS metrics, retrieval quality, answer quality, benchmarking on real datasets.", "url": "tutorial_rag_pipeline_evaluation_framework"},
+    {"number": 12, "title": "Common Pitfalls", "summary": "Lost in retrieval, too many chunks, poor embeddings, hallucinations, and how to fix them.", "url": "tutorial_rag_pipeline_pitfalls"},
+    {"number": 13, "title": "Optimization & Tuning", "summary": "Chunk size, embedding model, retrieval algorithms. A/B testing and iteration strategies.", "url": "tutorial_rag_pipeline_optimization_tuning"},
+    {"number": 14, "title": "Data Refresh Strategies", "summary": "Keeping vectors fresh: real-time updates, batch ingestion, and handling deletions.", "url": "tutorial_rag_pipeline_data_refresh"},
+    {"number": 15, "title": "Production Architecture", "summary": "Caching, async processing, horizontal scaling, multi-tenancy, and handling edge cases.", "url": "tutorial_rag_pipeline_production_architecture"},
+    {"number": 16, "title": "Security & Privacy", "summary": "Data encryption, PII handling, access control, audit logs, and compliance requirements.", "url": "tutorial_rag_pipeline_security"},
+    {"number": 17, "title": "Cost Breakdown", "summary": "API costs, vector DB costs, compute costs. Optimization strategies to reduce spending.", "url": "tutorial_rag_pipeline_cost"},
+    {"number": 18, "title": "Frontend Integration", "summary": "Building UIs for RAG: streaming responses, showing sources, citations, feedback loops.", "url": "tutorial_rag_pipeline_frontend"},
+    {"number": 19, "title": "Debugging & Monitoring", "summary": "Logging retrieval steps, monitoring latency, identifying failures, and debugging hallucinations.", "url": "tutorial_rag_pipeline_debugging"},
+    {"number": 20, "title": "Design Patterns", "summary": "Agentic RAG, Graph RAG, Multi-hop retrieval, and domain-specific patterns.", "url": "tutorial_rag_pipeline_design_patterns"},
+    {"number": 21, "title": "Benchmarking Systems", "summary": "Comparing vector DBs, embeddings, chunk sizes. Real benchmarks and performance expectations.", "url": "tutorial_rag_pipeline_benchmarking"},
+    {"number": 22, "title": "Local RAG Setup", "summary": "Offline RAG with Ollama, local embeddings, FAISS. Perfect for privacy and offline use.", "url": "tutorial_rag_pipeline_local_rag"},
+    {"number": 23, "title": "Real-World Examples", "summary": "Five complete case studies: support bots, knowledge bases, legal, medical, and code search.", "url": "tutorial_rag_pipeline_examples"},
+]
+
+
 # RAG Pipeline Tutorial Views
 def tutorial_rag_pipeline_intro(request):
-    return render(request, "web/tutorials/rag_pipeline/1_introduction.html", {"layout": _layout(request.path), "active_nav": "tutorials"})
+    return render(
+        request,
+        "web/tutorials/rag_pipeline/introduction.html",
+        {
+            "layout": _layout(request.path),
+            "active_nav": "tutorials",
+            "series_pages": _RAG_PIPELINE_SERIES,
+        },
+    )
 
 
 def tutorial_rag_pipeline_core_concepts(request):
-    return render(request, "web/tutorials/rag_pipeline/2_core_concepts.html", {"layout": _layout(request.path), "active_nav": "tutorials"})
+    return render(request, "web/tutorials/rag_pipeline/core_concepts.html", {"layout": _layout(request.path), "active_nav": "tutorials"})
 
 
 def tutorial_rag_pipeline_document_ingestion(request):
-    return render(request, "web/tutorials/rag_pipeline/3_document_ingestion.html", {"layout": _layout(request.path), "active_nav": "tutorials"})
+    return render(request, "web/tutorials/rag_pipeline/document_ingestion.html", {"layout": _layout(request.path), "active_nav": "tutorials"})
 
 
 def tutorial_rag_pipeline_chunking(request):
-    return render(request, "web/tutorials/rag_pipeline/4_chunking_strategies.html", {"layout": _layout(request.path), "active_nav": "tutorials"})
+    return render(request, "web/tutorials/rag_pipeline/chunking_strategies.html", {"layout": _layout(request.path), "active_nav": "tutorials"})
 
 
 def tutorial_rag_pipeline_embeddings(request):
-    return render(request, "web/tutorials/rag_pipeline/5_embeddings.html", {"layout": _layout(request.path), "active_nav": "tutorials"})
+    return render(request, "web/tutorials/rag_pipeline/embeddings.html", {"layout": _layout(request.path), "active_nav": "tutorials"})
 
 
 def tutorial_rag_pipeline_vectorstores(request):
-    return render(request, "web/tutorials/rag_pipeline/6_vector_stores.html", {"layout": _layout(request.path), "active_nav": "tutorials"})
+    return render(request, "web/tutorials/rag_pipeline/vector_stores.html", {"layout": _layout(request.path), "active_nav": "tutorials"})
 
 
 def tutorial_rag_pipeline_retrieval(request):
-    return render(request, "web/tutorials/rag_pipeline/7_retrieval_mechanisms.html", {"layout": _layout(request.path), "active_nav": "tutorials"})
+    return render(request, "web/tutorials/rag_pipeline/retrieval_mechanisms.html", {"layout": _layout(request.path), "active_nav": "tutorials"})
 
 
 def tutorial_rag_pipeline_llm_integration(request):
-    return render(request, "web/tutorials/rag_pipeline/8_llm_integration.html", {"layout": _layout(request.path), "active_nav": "tutorials"})
+    return render(request, "web/tutorials/rag_pipeline/llm_integration.html", {"layout": _layout(request.path), "active_nav": "tutorials"})
 
 
 def tutorial_rag_pipeline_advanced_techniques(request):
-    return render(request, "web/tutorials/rag_pipeline/9_advanced_techniques.html", {"layout": _layout(request.path), "active_nav": "tutorials"})
+    return render(request, "web/tutorials/rag_pipeline/advanced_techniques.html", {"layout": _layout(request.path), "active_nav": "tutorials"})
 
 
 def tutorial_rag_pipeline_complete_system(request):
-    return render(request, "web/tutorials/rag_pipeline/10_complete_system.html", {"layout": _layout(request.path), "active_nav": "tutorials"})
+    return render(request, "web/tutorials/rag_pipeline/complete_system.html", {"layout": _layout(request.path), "active_nav": "tutorials"})
 
 
 def tutorial_rag_pipeline_evaluation_framework(request):
-    return render(request, "web/tutorials/rag_pipeline/11_evaluation_framework.html", {"layout": _layout(request.path), "active_nav": "tutorials"})
+    return render(request, "web/tutorials/rag_pipeline/evaluation_framework.html", {"layout": _layout(request.path), "active_nav": "tutorials"})
 
 
 def tutorial_rag_pipeline_pitfalls(request):
-    return render(request, "web/tutorials/rag_pipeline/12_common_pitfalls.html", {"layout": _layout(request.path), "active_nav": "tutorials"})
+    return render(request, "web/tutorials/rag_pipeline/common_pitfalls.html", {"layout": _layout(request.path), "active_nav": "tutorials"})
 
 
 def tutorial_rag_pipeline_optimization_tuning(request):
-    return render(request, "web/tutorials/rag_pipeline/13_optimization_tuning.html", {"layout": _layout(request.path), "active_nav": "tutorials"})
+    return render(request, "web/tutorials/rag_pipeline/optimization_tuning.html", {"layout": _layout(request.path), "active_nav": "tutorials"})
 
 
 def tutorial_rag_pipeline_data_refresh(request):
-    return render(request, "web/tutorials/rag_pipeline/14_data_refresh.html", {"layout": _layout(request.path), "active_nav": "tutorials"})
+    return render(request, "web/tutorials/rag_pipeline/data_refresh.html", {"layout": _layout(request.path), "active_nav": "tutorials"})
 
 
 def tutorial_rag_pipeline_production_architecture(request):
-    return render(request, "web/tutorials/rag_pipeline/15_production_architecture.html", {"layout": _layout(request.path), "active_nav": "tutorials"})
+    return render(request, "web/tutorials/rag_pipeline/production_architecture.html", {"layout": _layout(request.path), "active_nav": "tutorials"})
 
 
 def tutorial_rag_pipeline_security(request):
-    return render(request, "web/tutorials/rag_pipeline/16_security.html", {"layout": _layout(request.path), "active_nav": "tutorials"})
+    return render(request, "web/tutorials/rag_pipeline/security.html", {"layout": _layout(request.path), "active_nav": "tutorials"})
 
 
 def tutorial_rag_pipeline_cost(request):
-    return render(request, "web/tutorials/rag_pipeline/17_cost_breakdown.html", {"layout": _layout(request.path), "active_nav": "tutorials"})
+    return render(request, "web/tutorials/rag_pipeline/cost_breakdown.html", {"layout": _layout(request.path), "active_nav": "tutorials"})
 
 
 def tutorial_rag_pipeline_frontend(request):
-    return render(request, "web/tutorials/rag_pipeline/18_frontend_integration.html", {"layout": _layout(request.path), "active_nav": "tutorials"})
+    return render(request, "web/tutorials/rag_pipeline/frontend_integration.html", {"layout": _layout(request.path), "active_nav": "tutorials"})
 
 
 def tutorial_rag_pipeline_debugging(request):
-    return render(request, "web/tutorials/rag_pipeline/19_debugging.html", {"layout": _layout(request.path), "active_nav": "tutorials"})
+    return render(request, "web/tutorials/rag_pipeline/debugging.html", {"layout": _layout(request.path), "active_nav": "tutorials"})
 
 
 def tutorial_rag_pipeline_design_patterns(request):
-    return render(request, "web/tutorials/rag_pipeline/20_design_patterns.html", {"layout": _layout(request.path), "active_nav": "tutorials"})
+    return render(request, "web/tutorials/rag_pipeline/design_patterns.html", {"layout": _layout(request.path), "active_nav": "tutorials"})
 
 
 def tutorial_rag_pipeline_benchmarking(request):
-    return render(request, "web/tutorials/rag_pipeline/21_benchmarking.html", {"layout": _layout(request.path), "active_nav": "tutorials"})
+    return render(request, "web/tutorials/rag_pipeline/benchmarking.html", {"layout": _layout(request.path), "active_nav": "tutorials"})
 
 
 def tutorial_rag_pipeline_local_rag(request):
-    return render(request, "web/tutorials/rag_pipeline/22_local_rag.html", {"layout": _layout(request.path), "active_nav": "tutorials"})
+    return render(request, "web/tutorials/rag_pipeline/local_rag.html", {"layout": _layout(request.path), "active_nav": "tutorials"})
 
 
 def tutorial_rag_pipeline_examples(request):
-    return render(request, "web/tutorials/rag_pipeline/23_real_world_examples.html", {"layout": _layout(request.path), "active_nav": "tutorials"})
+    return render(request, "web/tutorials/rag_pipeline/real_world_examples.html", {"layout": _layout(request.path), "active_nav": "tutorials"})
 
 
 def tutorials(request):

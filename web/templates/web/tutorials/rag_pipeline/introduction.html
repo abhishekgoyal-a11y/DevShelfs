@@ -3,13 +3,16 @@
 {% block content %}
   <div class="space-y-10">
 
+    {# ── Breadcrumb ── #}
     <div class="flex flex-wrap items-center gap-2 text-sm text-slate-400/90">
       <a href="{% url 'tutorials' %}" class="font-medium text-violet-300/90 transition hover:text-violet-200">Tutorials</a>
       <span aria-hidden class="text-slate-600">/</span>
-      <a href="{% url 'tutorial_rag_pipeline_intro' %}" class="font-medium text-violet-300/90 transition hover:text-violet-200">RAG Pipeline</a>
+      <a href="{% url 'tutorials' %}?category=rag-vector-dbs" class="font-medium text-violet-300/90 transition hover:text-violet-200">RAG & Vector DBs</a>
       <span aria-hidden class="text-slate-600">/</span>
       <span class="text-slate-200/90">Introduction</span>
     </div>
+
+    {# ── Hero ── #}
 
     <section class="relative overflow-hidden rounded-3xl border border-violet-400/20 bg-white/[0.06] p-6 shadow-[0_0_0_1px_rgba(255,255,255,0.04)] backdrop-blur-2xl sm:p-8">
       <div class="pointer-events-none absolute -right-24 top-0 h-72 w-72 rounded-full bg-violet-500/15 blur-3xl"></div>
@@ -32,6 +35,7 @@
       </div>
     </section>
 
+    {# ── Content ── #}
     <div class="glass rounded-3xl border border-white/10 p-5 sm:p-8">
       <article class="mx-auto space-y-12 text-base leading-relaxed text-slate-300/95">
 
@@ -170,6 +174,54 @@
           </div>
         </section>
 
+        <section class="space-y-5" aria-labelledby="prereqs-heading">
+          <h2 id="prereqs-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">Prerequisites</h2>
+          <ul class="list-disc space-y-2 pl-5 marker:text-violet-400/80">
+            <li>Python 3.10+ and basic Python knowledge</li>
+            <li>Familiarity with what an LLM is (GPT-4, Claude, etc.)</li>
+            <li>Understanding of vector databases and embeddings (helpful but not required)</li>
+            <li>For hands-on examples: an OpenAI API key or similar LLM access</li>
+          </ul>
+          <p class="rounded-xl border border-white/10 bg-white/[0.02] px-4 py-3 text-sm">
+            <span class="font-medium text-violet-200">Note:</span> Pages 1–9 are conceptual with code snippets. You need a full Python environment for Pages 10+ to implement and test systems.
+          </p>
+        </section>
+
+        <section class="space-y-5" aria-labelledby="learn-heading">
+          <h2 id="learn-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">What you will learn</h2>
+          <ul class="list-disc space-y-2 pl-5 marker:text-violet-400/80">
+            <li>What RAG is, how it works, and when to use it vs fine-tuning or few-shot prompting</li>
+            <li>Complete RAG architecture: embeddings, vector search, chunking, retrieval</li>
+            <li>How to choose and integrate vector databases (Pinecone, Qdrant, FAISS, etc.)</li>
+            <li>Building production RAG systems with caching, scaling, and monitoring</li>
+            <li>Advanced patterns: reranking, multi-hop retrieval, agentic RAG, Graph RAG</li>
+            <li>Evaluation frameworks and metrics for measuring retrieval and answer quality</li>
+            <li>Real-world implementations: support bots, knowledge bases, legal analysis, code search</li>
+          </ul>
+        </section>
+
+        <section class="space-y-6" aria-labelledby="series-heading">
+          <h2 id="series-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">Series overview</h2>
+          <div class="space-y-3">
+            <div class="flex items-start gap-4 rounded-2xl border border-violet-400/25 bg-violet-500/[0.07] p-4">
+              <span class="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-violet-500/20 text-xs font-bold text-violet-300">1</span>
+              <div>
+                <p class="font-semibold text-white">Introduction <span class="ml-2 text-xs font-normal text-violet-300/80">← You are here</span></p>
+                <p class="mt-0.5 text-sm text-slate-400/90">What RAG is, why it matters, when to use it, and series overview.</p>
+              </div>
+            </div>
+            {% for page in series_pages %}
+              <div class="flex items-start gap-4 rounded-2xl border border-white/10 bg-white/[0.02] p-4">
+                <span class="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-white/10 text-xs font-bold text-slate-300">{{ page.number }}</span>
+                <div>
+                  <p class="font-semibold text-slate-200">{{ page.title }}</p>
+                  <p class="mt-0.5 text-sm text-slate-400/90">{{ page.summary }}</p>
+                </div>
+              </div>
+            {% endfor %}
+          </div>
+        </section>
+
         <section class="space-y-5" aria-labelledby="when-heading">
           <h2 id="when-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">When Should You Use RAG?</h2>
           <p>Use RAG when you have:</p>
@@ -227,17 +279,18 @@
           </div>
         </section>
 
-        <section class="space-y-5 border-t border-slate-700/50 pt-8" aria-labelledby="next-heading">
-          <h2 id="next-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">Next: Core Concepts</h2>
-          <p>
-            Now that you understand what RAG is and why it matters, let's dive into the core concepts: <strong>embeddings, vector search, and the RAG architecture</strong>.
-          </p>
-          <a href="{% url 'tutorial_rag_pipeline_core_concepts' %}" class="inline-block mt-4 px-6 py-3 rounded-lg bg-violet-600 hover:bg-violet-700 text-white font-medium transition">
-            Continue to Core Concepts →
-          </a>
-        </section>
-
       </article>
+    </div>
+
+    {# ── Navigation ── #}
+    <div class="flex items-center justify-between">
+      <div></div>
+      <a
+        href="{% url 'tutorial_rag_pipeline_core_concepts' %}"
+        class="inline-flex items-center gap-2 rounded-xl border border-violet-400/35 bg-violet-500/10 px-5 py-2.5 text-sm font-semibold text-violet-200 transition hover:border-violet-300/50 hover:bg-violet-500/20 hover:text-white"
+      >
+        Next: Core Concepts <span aria-hidden>→</span>
+      </a>
     </div>
 
   </div>

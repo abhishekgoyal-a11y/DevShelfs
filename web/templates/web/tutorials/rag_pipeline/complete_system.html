@@ -2,10 +2,16 @@
 {% block title %}Building Complete System — RAG Pipeline Tutorial{% endblock %}
 {% block content %}
   <div class="space-y-10">
+    {# ── Breadcrumb ── #}
     <div class="flex flex-wrap items-center gap-2 text-sm text-slate-400/90">
-      <span class="text-slate-200/90">Building Complete System</span>
+      <a href="{% url 'tutorials' %}" class="font-medium text-violet-300/90 transition hover:text-violet-200">Tutorials</a>
+      <span aria-hidden class="text-slate-600">/</span>
+      <a href="{% url 'tutorials' %}?category=rag-vector-dbs" class="font-medium text-violet-300/90 transition hover:text-violet-200">RAG & Vector DBs</a>
+      <span aria-hidden class="text-slate-600">/</span>
+      <span class="text-slate-200/90">Complete System</span>
     </div>
 
+    {# ── Hero ── #}
     <section class="relative overflow-hidden rounded-3xl border border-violet-400/20 bg-white/[0.06] p-6 shadow-[0_0_0_1px_rgba(255,255,255,0.04)] backdrop-blur-2xl sm:p-8">
       <div class="pointer-events-none absolute -right-24 top-0 h-72 w-72 rounded-full bg-violet-500/15 blur-3xl"></div>
       <div class="relative">
@@ -20,6 +26,7 @@
       </div>
     </section>
 
+    {# ── Content ── #}
     <div class="glass rounded-3xl border border-white/10 p-5 sm:p-8">
       <article class="mx-auto space-y-12 text-base leading-relaxed text-slate-300/95">
 
