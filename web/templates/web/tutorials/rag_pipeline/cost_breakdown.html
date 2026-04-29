@@ -74,7 +74,9 @@
           <h2 id="storage-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">Vector DB Storage Costs</h2>
 
           <div class="rounded-2xl border border-white/10 bg-white/[0.03] p-5">
-            <code class="block font-mono text-xs text-slate-300 whitespace-pre">Storage Calculation:
+            <div class="code-wrapper rounded-2xl border border-white/10 bg-white/[0.03] overflow-hidden">
+            <button class="copy-button" data-copy-label="Copy" data-copied-label="✓ Copied" aria-label="Copy code to clipboard"></button>
+            <pre class="code-block"><code class="language-markdown ds-codeblock-source">Storage Calculation:
 1M documents × 400 tokens/doc × 3 chars/token = 1.2B chars
 1.2B chars / 1M = 1.2M tokens of embeddings
 
@@ -83,7 +85,8 @@ Storage per model:
 - 1,536 dimensions × 4 bytes = 6,144 bytes per vector
 
 Cost with Pinecone:
-- 1M vectors × 1536 dims = $100-300/month</code>
+- 1M vectors × 1536 dims = $100-300/month</code></pre>
+          </div>
           </div>
         </section>
 
@@ -112,7 +115,9 @@ Cost with Pinecone:
           <h2 id="roi-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">ROI Calculation</h2>
 
           <div class="rounded-2xl border border-white/10 bg-white/[0.03] p-5">
-            <code class="block font-mono text-xs text-slate-300 whitespace-pre">Example: Customer Support RAG
+            <div class="code-wrapper rounded-2xl border border-white/10 bg-white/[0.03] overflow-hidden">
+            <button class="copy-button" data-copy-label="Copy" data-copied-label="✓ Copied" aria-label="Copy code to clipboard"></button>
+            <pre class="code-block"><code class="language-markdown ds-codeblock-source">Example: Customer Support RAG
 
 Setup Cost: $10K (infrastructure, training)
 Monthly Cost: $5K (cloud services, embeddings)
@@ -124,7 +129,8 @@ Benefits:
 
 Monthly ROI: ($50K + $16.7K + $5K) - $5K = $66.7K profit
 Payback period: ~1.5 months
-Annual ROI: 800%</code>
+Annual ROI: 800%</code></pre>
+          </div>
           </div>
         </section>
 

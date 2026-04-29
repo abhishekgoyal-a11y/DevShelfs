@@ -44,10 +44,13 @@
             An <strong>embedding</strong> is a numerical representation of text. Instead of storing "The cat sat on the mat" as a string, we convert it to a list of numbers that capture its meaning.
           </p>
           <div class="rounded-2xl border border-white/10 bg-white/[0.03] p-5">
-            <code class="block font-mono text-xs text-slate-300 whitespace-pre">Text: "The cat sat on the mat"
+            <div class="code-wrapper rounded-2xl border border-white/10 bg-white/[0.03] overflow-hidden">
+            <button class="copy-button" data-copy-label="Copy" data-copied-label="✓ Copied" aria-label="Copy code to clipboard"></button>
+            <pre class="code-block"><code class="language-python ds-codeblock-source">Text: "The cat sat on the mat"
 ↓
 Embedding: [0.23, -0.41, 0.15, 0.89, ..., 0.05]
-           (1536 numbers for OpenAI's text-embedding-3-small)</code>
+           (1536 numbers for OpenAI's text-embedding-3-small)</code></pre>
+          </div>
           </div>
 
           <p class="text-sm text-slate-400">
@@ -93,7 +96,9 @@ Embedding: [0.23, -0.41, 0.15, 0.89, ..., 0.05]
             <div class="rounded-2xl border border-white/10 bg-white/[0.03] p-5">
               <p class="font-semibold text-white mb-3">Cosine Similarity (Most Common)</p>
               <p class="text-sm text-slate-300 mb-3">Measures the angle between two vectors. Range: -1 to 1 (but typically 0 to 1 for text).</p>
-              <code class="block font-mono text-xs text-slate-300 whitespace-pre">similarity = (A · B) / (||A|| × ||B||)
+              <div class="code-wrapper rounded-2xl border border-white/10 bg-white/[0.03] overflow-hidden">
+            <button class="copy-button" data-copy-label="Copy" data-copied-label="✓ Copied" aria-label="Copy code to clipboard"></button>
+            <pre class="code-block"><code class="language-python ds-codeblock-source">similarity = (A · B) / (||A|| × ||B||)
 
 Example:
 Text A: "Python programming language"
@@ -101,7 +106,8 @@ Text B: "Python is great for coding"
 Cosine Similarity: 0.92 (very similar!)
 
 Text C: "What's the weather?"
-Cosine Similarity to A: 0.15 (not similar)</code>
+Cosine Similarity to A: 0.15 (not similar)</code></pre>
+          </div>
             </div>
 
             <div class="rounded-2xl border border-white/10 bg-white/[0.03] p-5">
@@ -160,7 +166,9 @@ top_10_docs = vector_db.search(query_embedding, k=10)</code>
           <div class="space-y-4">
             <div class="rounded-2xl border border-white/10 bg-white/[0.03] p-5">
               <p class="font-semibold text-white mb-4">Phase 1: Indexing (Offline, happens once or periodically)</p>
-              <code class="block font-mono text-xs text-slate-300 whitespace-pre">Step 1: Load Documents
+              <div class="code-wrapper rounded-2xl border border-white/10 bg-white/[0.03] overflow-hidden">
+            <button class="copy-button" data-copy-label="Copy" data-copied-label="✓ Copied" aria-label="Copy code to clipboard"></button>
+            <pre class="code-block"><code class="language-python ds-codeblock-source">Step 1: Load Documents
 documents = ["tax_guide.pdf", "FAQ.html", "policies.txt", ...]
 
 Step 2: Chunk Them
@@ -180,12 +188,15 @@ embeddings = [
 
 Step 4: Store in Vector DB
 vector_db.add(chunks, embeddings)
-# Now ready for search!</code>
+# Now ready for search!</code></pre>
+          </div>
             </div>
 
             <div class="rounded-2xl border border-white/10 bg-white/[0.03] p-5">
               <p class="font-semibold text-white mb-4">Phase 2: Querying (Online, happens per request)</p>
-              <code class="block font-mono text-xs text-slate-300 whitespace-pre">Step 1: Embed Query
+              <div class="code-wrapper rounded-2xl border border-white/10 bg-white/[0.03] overflow-hidden">
+            <button class="copy-button" data-copy-label="Copy" data-copied-label="✓ Copied" aria-label="Copy code to clipboard"></button>
+            <pre class="code-block"><code class="language-python ds-codeblock-source">Step 1: Embed Query
 user_query = "How do I maximize tax deductions?"
 query_embedding = embed(user_query)
 
@@ -205,7 +216,8 @@ Answer:
 
 Step 4: Call LLM
 answer = llm.generate(prompt)
-# LLM now has ground truth to answer from</code>
+# LLM now has ground truth to answer from</code></pre>
+          </div>
             </div>
           </div>
 

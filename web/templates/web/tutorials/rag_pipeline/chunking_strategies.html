@@ -197,7 +197,9 @@ chunks = chunker.split_text(document_text)
 
           <div class="rounded-2xl border border-white/10 bg-white/[0.03] p-5 space-y-3">
             <p class="font-semibold text-white">Example:</p>
-            <code class="block font-mono text-xs text-slate-300 whitespace-pre">Text: "Tax deductions are allowed. Common examples include mortgages,
+            <div class="code-wrapper rounded-2xl border border-white/10 bg-white/[0.03] overflow-hidden">
+            <button class="copy-button" data-copy-label="Copy" data-copied-label="✓ Copied" aria-label="Copy code to clipboard"></button>
+            <pre class="code-block"><code class="language-python ds-codeblock-source">Text: "Tax deductions are allowed. Common examples include mortgages,
 charitable donations, and medical expenses. Self-employed..."
 
 WITHOUT overlap (chunk_overlap=0):
@@ -209,7 +211,8 @@ WITH overlap (chunk_overlap=30):
 Chunk 1: "Tax deductions are allowed. Common examples include mortgages,
 charitable donations, and medical expenses."
 Chunk 2: "...charitable donations, and medical expenses. Self-employed..."
-         ↑ Overlaps with chunk 1</code>
+         ↑ Overlaps with chunk 1</code></pre>
+          </div>
           </div>
 
           <div class="space-y-3 mt-4">
@@ -239,7 +242,9 @@ Chunk 2: "...charitable donations, and medical expenses. Self-employed..."
 
           <div class="rounded-2xl border border-white/10 bg-white/[0.03] p-5">
             <p class="font-semibold text-white mb-3">Example: Code-Aware Chunking</p>
-            <code class="block font-mono text-xs text-slate-300 whitespace-pre">def chunk_code(code_text, max_tokens=400):
+            <div class="code-wrapper rounded-2xl border border-white/10 bg-white/[0.03] overflow-hidden">
+            <button class="copy-button" data-copy-label="Copy" data-copied-label="✓ Copied" aria-label="Copy code to clipboard"></button>
+            <pre class="code-block"><code class="language-python ds-codeblock-source">def chunk_code(code_text, max_tokens=400):
     """Chunk code by functions/classes, not arbitrary lines."""
     import re
     import tiktoken
@@ -263,7 +268,8 @@ Chunk 2: "...charitable donations, and medical expenses. Self-employed..."
 
     if current:
         chunks.append(current)
-    return chunks</code>
+    return chunks</code></pre>
+          </div>
           </div>
         </section>
 

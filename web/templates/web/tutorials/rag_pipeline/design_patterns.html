@@ -35,10 +35,13 @@
           <p>Simple: retrieve top-K docs, pass to LLM. Best for: MVP, simple Q&A, small docs.</p>
 
           <div class="rounded-2xl border border-white/10 bg-white/[0.03] p-4">
-            <code class="block font-mono text-xs text-slate-300 whitespace-pre">query → embed → search → LLM answer
+            <div class="code-wrapper rounded-2xl border border-white/10 bg-white/[0.03] overflow-hidden">
+            <button class="copy-button" data-copy-label="Copy" data-copied-label="✓ Copied" aria-label="Copy code to clipboard"></button>
+            <pre class="code-block"><code class="language-python ds-codeblock-source">query → embed → search → LLM answer
 
 Pros: Simple, fast
-Cons: Low quality, hallucinations, no reasoning</code>
+Cons: Low quality, hallucinations, no reasoning</code></pre>
+          </div>
           </div>
         </section>
 
@@ -47,10 +50,13 @@ Cons: Low quality, hallucinations, no reasoning</code>
           <p>Combines dense (semantic) + sparse (keyword) search + reranking. Best for: Production, technical docs.</p>
 
           <div class="rounded-2xl border border-white/10 bg-white/[0.03] p-4">
-            <code class="block font-mono text-xs text-slate-300 whitespace-pre">query → [dense search + BM25] → combine → rerank → LLM
+            <div class="code-wrapper rounded-2xl border border-white/10 bg-white/[0.03] overflow-hidden">
+            <button class="copy-button" data-copy-label="Copy" data-copied-label="✓ Copied" aria-label="Copy code to clipboard"></button>
+            <pre class="code-block"><code class="language-yaml ds-codeblock-source">query → [dense search + BM25] → combine → rerank → LLM
 
 Pros: Better quality, catches keywords
-Cons: Slower, more complex</code>
+Cons: Slower, more complex</code></pre>
+          </div>
           </div>
         </section>
 
@@ -59,13 +65,16 @@ Cons: Slower, more complex</code>
           <p>LLM decides when to retrieve, search web, use tools. Best for: Complex questions, multi-step reasoning.</p>
 
           <div class="rounded-2xl border border-white/10 bg-white/[0.03] p-4">
-            <code class="block font-mono text-xs text-slate-300 whitespace-pre">LLM: "I need to search docs AND search web"
+            <div class="code-wrapper rounded-2xl border border-white/10 bg-white/[0.03] overflow-hidden">
+            <button class="copy-button" data-copy-label="Copy" data-copied-label="✓ Copied" aria-label="Copy code to clipboard"></button>
+            <pre class="code-block"><code class="language-yaml ds-codeblock-source">LLM: "I need to search docs AND search web"
 → [retrieve + search_web]
 → Combine results
 → Answer
 
 Pros: Flexible, can adapt
-Cons: Slower, harder to control</code>
+Cons: Slower, harder to control</code></pre>
+          </div>
           </div>
         </section>
 
@@ -74,14 +83,17 @@ Cons: Slower, harder to control</code>
           <p>Structure docs as knowledge graph, traverse edges. Best for: Highly interconnected data, entity relationships.</p>
 
           <div class="rounded-2xl border border-white/10 bg-white/[0.03] p-4">
-            <code class="block font-mono text-xs text-slate-300 whitespace-pre">Query: "What treatments work for diabetes?"
+            <div class="code-wrapper rounded-2xl border border-white/10 bg-white/[0.03] overflow-hidden">
+            <button class="copy-button" data-copy-label="Copy" data-copied-label="✓ Copied" aria-label="Copy code to clipboard"></button>
+            <pre class="code-block"><code class="language-python ds-codeblock-source">Query: "What treatments work for diabetes?"
 
 Graph structure:
 Diabetes → [Medications: Insulin, Metformin, ...]
         → [Complications: Heart disease, Kidney disease, ...]
         → [Lifestyle: Diet, Exercise]
 
-Traverse graph → Retrieve relevant paths → Answer</code>
+Traverse graph → Retrieve relevant paths → Answer</code></pre>
+          </div>
           </div>
         </section>
 
@@ -90,12 +102,15 @@ Traverse graph → Retrieve relevant paths → Answer</code>
           <p>Keep conversation history, retrieve relevant past context. Best for: Multi-turn conversations.</p>
 
           <div class="rounded-2xl border border-white/10 bg-white/[0.03] p-4">
-            <code class="block font-mono text-xs text-slate-300 whitespace-pre">Turn 1: User: "Tell me about taxes"
+            <div class="code-wrapper rounded-2xl border border-white/10 bg-white/[0.03] overflow-hidden">
+            <button class="copy-button" data-copy-label="Copy" data-copied-label="✓ Copied" aria-label="Copy code to clipboard"></button>
+            <pre class="code-block"><code class="language-python ds-codeblock-source">Turn 1: User: "Tell me about taxes"
         RAG retrieves and answers
 
 Turn 2: User: "Can I claim that as deduction?"
         RAG: Uses context from Turn 1 + new retrieval
-        → Better understanding</code>
+        → Better understanding</code></pre>
+          </div>
           </div>
         </section>
 

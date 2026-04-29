@@ -122,7 +122,9 @@
           <h2 id="chunk-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">Chunk Size Impact</h2>
 
           <div class="rounded-2xl border border-white/10 bg-white/[0.03] p-5">
-            <code class="block font-mono text-xs text-slate-300 whitespace-pre">Benchmark: 10K test queries on tax docs
+            <div class="code-wrapper rounded-2xl border border-white/10 bg-white/[0.03] overflow-hidden">
+            <button class="copy-button" data-copy-label="Copy" data-copied-label="✓ Copied" aria-label="Copy code to clipboard"></button>
+            <pre class="code-block"><code class="language-python ds-codeblock-source">Benchmark: 10K test queries on tax docs
 
 Chunk Size:  200   300   400   500   600
 Recall@5:    0.73  0.79  0.82  0.81  0.78
@@ -130,7 +132,8 @@ MRR:         0.68  0.75  0.78  0.77  0.74
 Latency:     45ms  48ms  52ms  55ms  60ms
 Cost/1M:     $180  $150  $130  $125  $120
 
-🎯 Winner: 400-500 tokens (best quality/speed/cost balance)</code>
+🎯 Winner: 400-500 tokens (best quality/speed/cost balance)</code></pre>
+          </div>
           </div>
         </section>
 

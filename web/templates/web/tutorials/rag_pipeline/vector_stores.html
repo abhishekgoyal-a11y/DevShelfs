@@ -155,7 +155,9 @@
 
           <div class="rounded-2xl border border-white/10 bg-white/[0.03] p-5">
             <p class="font-semibold text-white mb-3">Using Pinecone (Easiest)</p>
-            <code class="block font-mono text-xs text-slate-300 whitespace-pre">import pinecone
+            <div class="code-wrapper rounded-2xl border border-white/10 bg-white/[0.03] overflow-hidden">
+            <button class="copy-button" data-copy-label="Copy" data-copied-label="✓ Copied" aria-label="Copy code to clipboard"></button>
+            <pre class="code-block"><code class="language-python ds-codeblock-source">import pinecone
 from openai import OpenAI
 
 # Initialize
@@ -180,12 +182,15 @@ query_emb = client.embeddings.create(
 
 results = index.query(vector=query_emb, top_k=5)
 for match in results.matches:
-    print(f"ID: {match.id}, Score: {match.score}")</code>
+    print(f"ID: {match.id}, Score: {match.score}")</code></pre>
+          </div>
           </div>
 
           <div class="rounded-2xl border border-white/10 bg-white/[0.03] p-5 mt-4">
             <p class="font-semibold text-white mb-3">Using Chroma (Free, Local)</p>
-            <code class="block font-mono text-xs text-slate-300 whitespace-pre">import chromadb
+            <div class="code-wrapper rounded-2xl border border-white/10 bg-white/[0.03] overflow-hidden">
+            <button class="copy-button" data-copy-label="Copy" data-copied-label="✓ Copied" aria-label="Copy code to clipboard"></button>
+            <pre class="code-block"><code class="language-python ds-codeblock-source">import chromadb
 
 # Create collection
 client = chromadb.Client()
@@ -203,7 +208,8 @@ results = collection.query(
     query_embeddings=[[0.1, 0.2]],
     n_results=5
 )
-print(results)</code>
+print(results)</code></pre>
+          </div>
           </div>
         </section>
 

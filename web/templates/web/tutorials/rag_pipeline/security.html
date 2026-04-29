@@ -34,7 +34,9 @@
           <h2 id="permissions-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">Document-Level Permissions</h2>
 
           <div class="rounded-2xl border border-white/10 bg-white/[0.03] p-5">
-            <code class="block font-mono text-xs text-slate-300 whitespace-pre">def retrieve_with_permissions(query, user_id):
+            <div class="code-wrapper rounded-2xl border border-white/10 bg-white/[0.03] overflow-hidden">
+            <button class="copy-button" data-copy-label="Copy" data-copied-label="✓ Copied" aria-label="Copy code to clipboard"></button>
+            <pre class="code-block"><code class="language-python ds-codeblock-source">def retrieve_with_permissions(query, user_id):
     """Only return docs user has access to."""
     # Search normally
     all_results = vector_db.search(query, k=100)
@@ -46,7 +48,8 @@
         if doc.doc_id in user_perms['readable_docs']
     ]
 
-    return authorized[:10]</code>
+    return authorized[:10]</code></pre>
+          </div>
           </div>
 
           <p class="text-sm text-slate-300 mt-3"><strong>Implementation:</strong> Store permission list in document metadata. Filter at retrieval time.</p>
@@ -60,7 +63,9 @@
           </div>
 
           <div class="rounded-2xl border border-green-500/20 bg-green-500/5 p-4 mt-3">
-            <code class="block font-mono text-xs text-slate-300 whitespace-pre">✓ Better: Separate indices per tenant
+            <div class="code-wrapper rounded-2xl border border-white/10 bg-white/[0.03] overflow-hidden">
+            <button class="copy-button" data-copy-label="Copy" data-copied-label="✓ Copied" aria-label="Copy code to clipboard"></button>
+            <pre class="code-block"><code class="language-python ds-codeblock-source">✓ Better: Separate indices per tenant
 class MultiTenantRAG:
     def __init__(self):
         self.indices = {}  # {"tenant1": index1, "tenant2": index2}
@@ -75,7 +80,8 @@ class MultiTenantRAG:
             # Create new index
             index = VectorStore.create()
             self.indices[tenant_id] = index
-        index.add(doc)</code>
+        index.add(doc)</code></pre>
+          </div>
           </div>
 
           <p class="text-sm text-slate-300 mt-3">Alternatively: Store tenant_id in metadata, filter at search time (cheaper but less isolated).</p>
@@ -85,7 +91,9 @@ class MultiTenantRAG:
           <h2 id="injection-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">Prompt Injection Prevention</h2>
 
           <div class="rounded-2xl border border-white/10 bg-white/[0.03] p-5">
-            <code class="block font-mono text-xs text-slate-300 whitespace-pre">✓ Defense Strategy:
+            <div class="code-wrapper rounded-2xl border border-white/10 bg-white/[0.03] overflow-hidden">
+            <button class="copy-button" data-copy-label="Copy" data-copied-label="✓ Copied" aria-label="Copy code to clipboard"></button>
+            <pre class="code-block"><code class="language-json ds-codeblock-source">✓ Defense Strategy:
 
 1. Sandbox untrusted content
 prompt = f"""
@@ -113,7 +121,8 @@ def filter_output(answer):
     suspicious = ['execute', 'password', 'api_key']
     for term in suspicious:
         answer = answer.replace(term, '[REDACTED]')
-    return answer</code>
+    return answer</code></pre>
+          </div>
           </div>
         </section>
 
@@ -143,7 +152,9 @@ def redact_pii(text):
           <h2 id="audit-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">Audit Logging</h2>
 
           <div class="rounded-2xl border border-white/10 bg-white/[0.03] p-5">
-            <code class="block font-mono text-xs text-slate-300 whitespace-pre">def log_query(user_id, query, result, timestamp):
+            <div class="code-wrapper rounded-2xl border border-white/10 bg-white/[0.03] overflow-hidden">
+            <button class="copy-button" data-copy-label="Copy" data-copied-label="✓ Copied" aria-label="Copy code to clipboard"></button>
+            <pre class="code-block"><code class="language-python ds-codeblock-source">def log_query(user_id, query, result, timestamp):
     """Log for audit trail."""
     audit_log = {
         "user_id": user_id,
@@ -159,7 +170,8 @@ def redact_pii(text):
 
     # Alert on suspicious activity
     if suspicious_pattern(query):
-        alert("Suspicious query", user_id, query)</code>
+        alert("Suspicious query", user_id, query)</code></pre>
+          </div>
           </div>
         </section>
 

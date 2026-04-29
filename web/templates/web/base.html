@@ -187,6 +187,22 @@
       src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-bash.min.js"
       crossorigin="anonymous"
     ></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-yaml.min.js"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-json.min.js"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-markdown.min.js"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-sql.min.js"
+      crossorigin="anonymous"
+    ></script>
     <script>
       (function () {
         if (typeof Prism === "undefined") return;
@@ -201,6 +217,7 @@
     </script>
     <script>
       (function () {
+        // Handle old-style copy buttons (.ds-codeblock-copy)
         document.querySelectorAll(".ds-codeblock-copy").forEach(function (btn) {
           btn.addEventListener("click", function () {
             var root = btn.closest(".ds-codeblock");
@@ -214,6 +231,41 @@
               btn.textContent = copied ? copiedLabel : copyLabel;
               btn.setAttribute("aria-label", copied ? "Copied" : "Copy code to clipboard");
             }
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+              navigator.clipboard.writeText(text).then(
+                function () {
+                  setState(true);
+                  window.setTimeout(function () {
+                    setState(false);
+                  }, 2000);
+                },
+                function () {
+                  setState(false);
+                }
+              );
+            } else {
+              setState(false);
+            }
+          });
+        });
+
+        // Handle new-style copy buttons (.copy-button)
+        document.querySelectorAll(".copy-button").forEach(function (btn) {
+          btn.addEventListener("click", function () {
+            var root = btn.closest(".code-wrapper");
+            if (!root) return;
+            var codeEl = root.querySelector("pre code.ds-codeblock-source");
+            if (!codeEl) return;
+            var text = (codeEl.textContent || "").replace(/\n$/, "");
+            var copyLabel = btn.getAttribute("data-copy-label") || "Copy";
+            var copiedLabel = btn.getAttribute("data-copied-label") || "Copied";
+
+            function setState(copied) {
+              btn.textContent = copied ? copiedLabel : copyLabel;
+              btn.classList.toggle("copied", copied);
+              btn.setAttribute("aria-label", copied ? "Copied to clipboard" : "Copy code to clipboard");
+            }
+
             if (navigator.clipboard && navigator.clipboard.writeText) {
               navigator.clipboard.writeText(text).then(
                 function () {

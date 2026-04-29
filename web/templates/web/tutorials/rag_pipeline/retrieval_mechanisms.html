@@ -42,7 +42,9 @@
           <p>The standard approach: embed query, find most similar vectors.</p>
 
           <div class="rounded-2xl border border-white/10 bg-white/[0.03] p-5">
-            <code class="block font-mono text-xs text-slate-300 whitespace-pre">query = "How do I file taxes?"
+            <div class="code-wrapper rounded-2xl border border-white/10 bg-white/[0.03] overflow-hidden">
+            <button class="copy-button" data-copy-label="Copy" data-copied-label="✓ Copied" aria-label="Copy code to clipboard"></button>
+            <pre class="code-block"><code class="language-python ds-codeblock-source">query = "How do I file taxes?"
 query_embedding = embed(query)
 
 # Search vector DB
@@ -50,7 +52,8 @@ results = vector_db.search(query_embedding, k=10)
 # Returns: [(doc_id, score), ...] sorted by score
 
 for doc_id, score in results:
-    print(f"{doc_id}: {score:.3f}")</code>
+    print(f"{doc_id}: {score:.3f}")</code></pre>
+          </div>
           </div>
 
           <p class="text-sm text-slate-300 mt-3"><strong>Pros:</strong> Fast, semantic, works across languages. <strong>Cons:</strong> Can retrieve unrelated docs with high semantic similarity.</p>
@@ -61,7 +64,9 @@ for doc_id, score in results:
           <p>After retrieving top-100 candidates, use a smarter model to rerank top-10. This dramatically improves quality.</p>
 
           <div class="rounded-2xl border border-white/10 bg-white/[0.03] p-5">
-            <code class="block font-mono text-xs text-slate-300 whitespace-pre">from sentence_transformers import CrossEncoder
+            <div class="code-wrapper rounded-2xl border border-white/10 bg-white/[0.03] overflow-hidden">
+            <button class="copy-button" data-copy-label="Copy" data-copied-label="✓ Copied" aria-label="Copy code to clipboard"></button>
+            <pre class="code-block"><code class="language-python ds-codeblock-source">from sentence_transformers import CrossEncoder
 
 reranker = CrossEncoder("cross-encoder/qnli-distilroberta-base")
 
@@ -74,7 +79,8 @@ scores = reranker.predict(query_doc_pairs)
 
 # Sort by reranker score
 reranked = sorted(zip(candidates, scores), key=lambda x: -x[1])
-top_10 = reranked[:10]</code>
+top_10 = reranked[:10]</code></pre>
+          </div>
           </div>
 
           <div class="rounded-2xl border border-green-500/20 bg-green-500/5 p-4 mt-4">
@@ -89,7 +95,9 @@ top_10 = reranked[:10]</code>
           <p>Combine semantic search with BM25 keyword search. Keywords catch exact matches, dense embeddings find related concepts.</p>
 
           <div class="rounded-2xl border border-white/10 bg-white/[0.03] p-5">
-            <code class="block font-mono text-xs text-slate-300 whitespace-pre"># Dense search (semantic)
+            <div class="code-wrapper rounded-2xl border border-white/10 bg-white/[0.03] overflow-hidden">
+            <button class="copy-button" data-copy-label="Copy" data-copied-label="✓ Copied" aria-label="Copy code to clipboard"></button>
+            <pre class="code-block"><code class="language-python ds-codeblock-source"># Dense search (semantic)
 dense_results = vector_db.search(query_embedding, k=50)
 
 # Sparse search (BM25 keyword)
@@ -98,7 +106,8 @@ sparse_results = bm25_index.search(query, k=50)
 # Combine and rerank
 combined = list(set(dense_results + sparse_results))
 final_scores = reranker.predict([(query, doc) for doc in combined])
-top_10 = sorted(final_scores)[:10]</code>
+top_10 = sorted(final_scores)[:10]</code></pre>
+          </div>
           </div>
 
           <p class="text-sm text-slate-300 mt-3">Perfect for: Technical docs, FAQs, any domain where exact keywords matter.</p>
@@ -109,7 +118,9 @@ top_10 = sorted(final_scores)[:10]</code>
           <p>Rewrite vague queries to improve retrieval. Use LLM or template-based expansion.</p>
 
           <div class="rounded-2xl border border-white/10 bg-white/[0.03] p-5">
-            <code class="block font-mono text-xs text-slate-300 whitespace-pre"># LLM-based expansion
+            <div class="code-wrapper rounded-2xl border border-white/10 bg-white/[0.03] overflow-hidden">
+            <button class="copy-button" data-copy-label="Copy" data-copied-label="✓ Copied" aria-label="Copy code to clipboard"></button>
+            <pre class="code-block"><code class="language-python ds-codeblock-source"># LLM-based expansion
 original_query = "How?"
 prompt = f"""Expand this vague query into 3 specific variations:
 Query: {original_query}
@@ -126,7 +137,8 @@ for expanded_q in expanded:
 
 # Deduplicate and rerank
 unique_docs = list(set(results))
-final = reranker.predict([(original_query, doc) for doc in unique_docs])</code>
+final = reranker.predict([(original_query, doc) for doc in unique_docs])</code></pre>
+          </div>
           </div>
         </section>
 
@@ -140,7 +152,9 @@ final = reranker.predict([(original_query, doc) for doc in unique_docs])</code>
           </div>
 
           <div class="rounded-2xl border border-white/10 bg-white/[0.03] p-4 mt-3">
-            <code class="block font-mono text-xs text-slate-300 whitespace-pre">def rank_documents(docs, query, scores):
+            <div class="code-wrapper rounded-2xl border border-white/10 bg-white/[0.03] overflow-hidden">
+            <button class="copy-button" data-copy-label="Copy" data-copied-label="✓ Copied" aria-label="Copy code to clipboard"></button>
+            <pre class="code-block"><code class="language-python ds-codeblock-source">def rank_documents(docs, query, scores):
     """Rank by composite score: relevance + importance."""
     ranked = []
     for doc, score in zip(docs, scores):
@@ -152,7 +166,8 @@ final = reranker.predict([(original_query, doc) for doc in unique_docs])</code>
             0.1 * doc.popularity  # Citation count
         )
         ranked.append((doc, composite))
-    return sorted(ranked, key=lambda x: -x[1])</code>
+    return sorted(ranked, key=lambda x: -x[1])</code></pre>
+          </div>
           </div>
         </section>
 
@@ -161,7 +176,9 @@ final = reranker.predict([(original_query, doc) for doc in unique_docs])</code>
           <p>Filter documents before or after retrieval (permissions, category, date range).</p>
 
           <div class="rounded-2xl border border-white/10 bg-white/[0.03] p-5">
-            <code class="block font-mono text-xs text-slate-300 whitespace-pre"># Filter before search (faster)
+            <div class="code-wrapper rounded-2xl border border-white/10 bg-white/[0.03] overflow-hidden">
+            <button class="copy-button" data-copy-label="Copy" data-copied-label="✓ Copied" aria-label="Copy code to clipboard"></button>
+            <pre class="code-block"><code class="language-python ds-codeblock-source"># Filter before search (faster)
 results = vector_db.search(
     query_embedding,
     k=10,
@@ -177,14 +194,17 @@ all_results = vector_db.search(query_embedding, k=100)
 filtered = [doc for doc in all_results
             if doc.user_id in current_user_permissions
             and doc.category == "tax_guide"
-            and doc.date >= "2024-01-01"][:10]</code>
+            and doc.date >= "2024-01-01"][:10]</code></pre>
+          </div>
           </div>
         </section>
 
         <div class="space-y-5 border-t border-slate-700/50 pt-8" aria-labelledby="best-practice-heading">
           <h2 id="best-practice-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">Best Practice Pipeline</h2>
           <div class="rounded-2xl border border-green-500/20 bg-green-500/5 p-5">
-            <code class="block font-mono text-xs text-slate-300 whitespace-pre">1. Expand query (if vague)
+            <div class="code-wrapper rounded-2xl border border-white/10 bg-white/[0.03] overflow-hidden">
+            <button class="copy-button" data-copy-label="Copy" data-copied-label="✓ Copied" aria-label="Copy code to clipboard"></button>
+            <pre class="code-block"><code class="language-python ds-codeblock-source">1. Expand query (if vague)
 2. Dense search → top-100
 3. Sparse (BM25) search → top-50
 4. Combine, deduplicate
@@ -193,7 +213,8 @@ filtered = [doc for doc in all_results
 7. Order by composite score
 8. Return top-5 to LLM
 
-Result: High quality, efficient retrieval.</code>
+Result: High quality, efficient retrieval.</code></pre>
+          </div>
           </div>
         </div>
 

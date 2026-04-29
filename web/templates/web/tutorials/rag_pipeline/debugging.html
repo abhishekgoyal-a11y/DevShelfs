@@ -55,7 +55,9 @@
           <h2 id="debug-retrieval-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">Debugging Retrieval</h2>
 
           <div class="rounded-2xl border border-white/10 bg-white/[0.03] p-5">
-            <code class="block font-mono text-xs text-slate-300 whitespace-pre">def debug_retrieval(query, expected_doc_ids):
+            <div class="code-wrapper rounded-2xl border border-white/10 bg-white/[0.03] overflow-hidden">
+            <button class="copy-button" data-copy-label="Copy" data-copied-label="✓ Copied" aria-label="Copy code to clipboard"></button>
+            <pre class="code-block"><code class="language-python ds-codeblock-source">def debug_retrieval(query, expected_doc_ids):
     """Diagnose why docs aren't retrieved."""
     # Get all results with scores
     results = vector_db.search(query, k=100)
@@ -70,7 +72,8 @@
     # Analyze
     retrieved_ids = [id for id, _ in results[:10]]
     found = len(set(retrieved_ids) & set(expected_doc_ids))
-    print(f"\nFound {found}/{len(expected_doc_ids)} expected docs in top-10")</code>
+    print(f"\nFound {found}/{len(expected_doc_ids)} expected docs in top-10")</code></pre>
+          </div>
           </div>
 
           <div class="rounded-2xl border border-blue-500/20 bg-blue-500/5 p-4 mt-4">
@@ -88,7 +91,9 @@
           <h2 id="token-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">Token Usage Debugging</h2>
 
           <div class="rounded-2xl border border-white/10 bg-white/[0.03] p-5">
-            <code class="block font-mono text-xs text-slate-300 whitespace-pre">import tiktoken
+            <div class="code-wrapper rounded-2xl border border-white/10 bg-white/[0.03] overflow-hidden">
+            <button class="copy-button" data-copy-label="Copy" data-copied-label="✓ Copied" aria-label="Copy code to clipboard"></button>
+            <pre class="code-block"><code class="language-python ds-codeblock-source">import tiktoken
 
 def analyze_tokens(query, docs, answer):
     enc = tiktoken.encoding_for_model("gpt-4")
@@ -109,7 +114,8 @@ def analyze_tokens(query, docs, answer):
 
     # Check if exceeding limit
     if total > 4096:
-        print("⚠️  EXCEEDING CONTEXT LIMIT!")</code>
+        print("⚠️  EXCEEDING CONTEXT LIMIT!")</code></pre>
+          </div>
           </div>
         </section>
 
@@ -130,14 +136,17 @@ def analyze_tokens(query, docs, answer):
           </div>
 
           <div class="rounded-2xl border border-white/10 bg-white/[0.03] p-4 mt-3">
-            <code class="block font-mono text-xs text-slate-300 whitespace-pre">Tools: Prometheus + Grafana, CloudWatch, DataDog, or custom dashboard
+            <div class="code-wrapper rounded-2xl border border-white/10 bg-white/[0.03] overflow-hidden">
+            <button class="copy-button" data-copy-label="Copy" data-copied-label="✓ Copied" aria-label="Copy code to clipboard"></button>
+            <pre class="code-block"><code class="language-markdown ds-codeblock-source">Tools: Prometheus + Grafana, CloudWatch, DataDog, or custom dashboard
 
 Grafana dashboard shows:
 - Request rate (queries/sec)
 - Latency histogram
 - Error rate trend
 - Cache performance
-- Cost trajectory</code>
+- Cost trajectory</code></pre>
+          </div>
           </div>
         </section>
 

@@ -72,7 +72,9 @@
           <div class="space-y-4">
             <div class="rounded-2xl border border-white/10 bg-white/[0.03] p-5">
               <p class="font-semibold text-white mb-3">LangChain Example</p>
-              <code class="block font-mono text-xs text-slate-300 whitespace-pre">from langchain_community.document_loaders import (
+              <div class="code-wrapper rounded-2xl border border-white/10 bg-white/[0.03] overflow-hidden">
+            <button class="copy-button" data-copy-label="Copy" data-copied-label="✓ Copied" aria-label="Copy code to clipboard"></button>
+            <pre class="code-block"><code class="language-python ds-codeblock-source">from langchain_community.document_loaders import (
     PyPDFLoader,
     TextLoader,
     WebBaseLoader,
@@ -93,12 +95,15 @@ docs = loader.load()
 
 # Load Excel
 loader = UnstructuredExcelLoader("data.xlsx")
-docs = loader.load()</code>
+docs = loader.load()</code></pre>
+          </div>
             </div>
 
             <div class="rounded-2xl border border-white/10 bg-white/[0.03] p-5">
               <p class="font-semibold text-white mb-3">Document Structure</p>
-              <code class="block font-mono text-xs text-slate-300 whitespace-pre">Document {
+              <div class="code-wrapper rounded-2xl border border-white/10 bg-white/[0.03] overflow-hidden">
+            <button class="copy-button" data-copy-label="Copy" data-copied-label="✓ Copied" aria-label="Copy code to clipboard"></button>
+            <pre class="code-block"><code class="language-yaml ds-codeblock-source">Document {
   page_content: "Tax deductions include...",
   metadata: {
     "source": "tax_guide.pdf",
@@ -106,7 +111,8 @@ docs = loader.load()</code>
     "author": "IRS",
     "date": "2024-01-01"
   }
-}</code>
+}</code></pre>
+          </div>
             </div>
           </div>
         </section>
@@ -214,7 +220,9 @@ docs = [
           <p>Raw documents often contain noise that hurts embedding quality. Clean them before ingestion.</p>
 
           <div class="rounded-2xl border border-white/10 bg-white/[0.03] p-5">
-            <code class="block font-mono text-xs text-slate-300 whitespace-pre">import re
+            <div class="code-wrapper rounded-2xl border border-white/10 bg-white/[0.03] overflow-hidden">
+            <button class="copy-button" data-copy-label="Copy" data-copied-label="✓ Copied" aria-label="Copy code to clipboard"></button>
+            <pre class="code-block"><code class="language-python ds-codeblock-source">import re
 
 def clean_text(text):
     # Remove extra whitespace
@@ -233,7 +241,8 @@ def clean_text(text):
 
 # Apply to documents
 for doc in documents:
-    doc.page_content = clean_text(doc.page_content)</code>
+    doc.page_content = clean_text(doc.page_content)</code></pre>
+          </div>
           </div>
 
           <div class="space-y-3 mt-4">

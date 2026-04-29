@@ -34,7 +34,9 @@
           <h2 id="setup-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">Full Offline Stack</h2>
 
           <div class="rounded-2xl border border-white/10 bg-white/[0.03] p-5">
-            <code class="block font-mono text-xs text-slate-300 whitespace-pre"># 1. Install Ollama (LLM inference)
+            <div class="code-wrapper rounded-2xl border border-white/10 bg-white/[0.03] overflow-hidden">
+            <button class="copy-button" data-copy-label="Copy" data-copied-label="✓ Copied" aria-label="Copy code to clipboard"></button>
+            <pre class="code-block"><code class="language-python ds-codeblock-source"># 1. Install Ollama (LLM inference)
 # Download from ollama.ai
 ollama pull mistral  # ~7B fast model
 # or llama2:70b for highest quality
@@ -83,7 +85,8 @@ response = requests.post('http://localhost:11434/api/generate',
     json={"model": "mistral", "prompt": prompt, "stream": False}
 )
 answer = response.json()['response']
-print(answer)</code>
+print(answer)</code></pre>
+          </div>
           </div>
         </section>
 
@@ -118,7 +121,9 @@ print(answer)</code>
           <h2 id="faiss-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">FAISS for Vector Storage</h2>
 
           <div class="rounded-2xl border border-white/10 bg-white/[0.03] p-5">
-            <code class="block font-mono text-xs text-slate-300 whitespace-pre"># FAISS usage
+            <div class="code-wrapper rounded-2xl border border-white/10 bg-white/[0.03] overflow-hidden">
+            <button class="copy-button" data-copy-label="Copy" data-copied-label="✓ Copied" aria-label="Copy code to clipboard"></button>
+            <pre class="code-block"><code class="language-python ds-codeblock-source"># FAISS usage
 import faiss
 import numpy as np
 
@@ -136,7 +141,8 @@ distances, indices = index.search(query, k=5)
 
 # Save/load
 faiss.write_index(index, "index.faiss")
-index = faiss.read_index("index.faiss")</code>
+index = faiss.read_index("index.faiss")</code></pre>
+          </div>
           </div>
 
           <p class="text-sm text-slate-300 mt-3"><strong>Pros:</strong> Blazingly fast, in-memory, no DB overhead. <strong>Cons:</strong> All data in RAM, no filtering.</p>

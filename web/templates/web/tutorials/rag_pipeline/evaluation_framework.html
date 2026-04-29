@@ -72,13 +72,16 @@
 
           <div class="rounded-2xl border border-white/10 bg-white/[0.03] p-5 space-y-3">
             <p class="font-semibold text-white">Dataset Structure:</p>
-            <code class="block font-mono text-xs text-slate-300 whitespace-pre">{
+            <div class="code-wrapper rounded-2xl border border-white/10 bg-white/[0.03] overflow-hidden">
+            <button class="copy-button" data-copy-label="Copy" data-copied-label="✓ Copied" aria-label="Copy code to clipboard"></button>
+            <pre class="code-block"><code class="language-python ds-codeblock-source">{
   "id": "test_001",
   "query": "How do I file taxes if self-employed?",
   "relevant_doc_ids": ["tax_guide_p3", "deduction_rules_p1"],
   "ground_truth_answer": "Self-employed people must...",
   "difficulty": "medium"
-}</code>
+}</code></pre>
+          </div>
           </div>
 
           <div class="space-y-3 mt-4">
@@ -282,7 +285,9 @@ print(f"Pass rate: {result.pass_rate}")</code>
           </p>
 
           <div class="rounded-2xl border border-white/10 bg-white/[0.03] p-5">
-            <code class="block font-mono text-xs text-slate-300 whitespace-pre">Workflow:
+            <div class="code-wrapper rounded-2xl border border-white/10 bg-white/[0.03] overflow-hidden">
+            <button class="copy-button" data-copy-label="Copy" data-copied-label="✓ Copied" aria-label="Copy code to clipboard"></button>
+            <pre class="code-block"><code class="language-python ds-codeblock-source">Workflow:
 1. Run batch evaluation (RAGAS, automated metrics)
 2. Flag low-scoring examples
 3. Send to humans for review (Label Studio, Argilla)
@@ -294,7 +299,8 @@ Human Rating Scale (example):
 ☑ Excellent - Answer is accurate, complete, well-sourced
 ☑ Good - Answer is mostly correct but missing nuance
 ☑ Fair - Answer partially correct but has gaps
-☐ Poor - Answer is inaccurate or hallucinated</code>
+☐ Poor - Answer is inaccurate or hallucinated</code></pre>
+          </div>
           </div>
         </section>
 

@@ -56,7 +56,9 @@
           </div>
 
           <div class="rounded-2xl border border-green-500/20 bg-green-500/5 p-4 mt-4">
-            <code class="block font-mono text-xs text-slate-300 whitespace-pre">def find_optimal_chunk_size(eval_dataset):
+            <div class="code-wrapper rounded-2xl border border-white/10 bg-white/[0.03] overflow-hidden">
+            <button class="copy-button" data-copy-label="Copy" data-copied-label="✓ Copied" aria-label="Copy code to clipboard"></button>
+            <pre class="code-block"><code class="language-python ds-codeblock-source">def find_optimal_chunk_size(eval_dataset):
     """Grid search for chunk size."""
     results = {}
     for chunk_size in [200, 300, 400, 500, 600]:
@@ -65,7 +67,8 @@
         results[chunk_size] = metrics
 
     best = max(results.items(), key=lambda x: x[1]['f1_score'])
-    return best[0]  # optimal size</code>
+    return best[0]  # optimal size</code></pre>
+          </div>
           </div>
         </section>
 
@@ -105,7 +108,9 @@
           <h2 id="cost-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">Cost Optimization</h2>
 
           <div class="rounded-2xl border border-white/10 bg-white/[0.03] p-5">
-            <code class="block font-mono text-xs text-slate-300 whitespace-pre">Cost breakdown per query:
+            <div class="code-wrapper rounded-2xl border border-white/10 bg-white/[0.03] overflow-hidden">
+            <button class="copy-button" data-copy-label="Copy" data-copied-label="✓ Copied" aria-label="Copy code to clipboard"></button>
+            <pre class="code-block"><code class="language-python ds-codeblock-source">Cost breakdown per query:
 - Embedding (query): $0.0002 (text-embedding-3-small)
 - Vector DB search: $0.0001 (Pinecone)
 - LLM (GPT-4): $0.03 (worst case, 2K output)
@@ -119,7 +124,8 @@ Cost reduction strategies:
 2. Use smaller LLM (GPT-3.5) → -75% inference cost
 3. Batch embeddings → -30% API cost
 4. Cache results → -60% repeat queries cost
-5. Local embeddings → $0 embedding cost</code>
+5. Local embeddings → $0 embedding cost</code></pre>
+          </div>
           </div>
         </section>
 
@@ -127,7 +133,9 @@ Cost reduction strategies:
           <h2 id="abtest-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">A/B Testing Changes</h2>
 
           <div class="rounded-2xl border border-white/10 bg-white/[0.03] p-5">
-            <code class="block font-mono text-xs text-slate-300 whitespace-pre">def ab_test_retrieval(control_rag, treatment_rag, test_queries):
+            <div class="code-wrapper rounded-2xl border border-white/10 bg-white/[0.03] overflow-hidden">
+            <button class="copy-button" data-copy-label="Copy" data-copied-label="✓ Copied" aria-label="Copy code to clipboard"></button>
+            <pre class="code-block"><code class="language-python ds-codeblock-source">def ab_test_retrieval(control_rag, treatment_rag, test_queries):
     """Compare two RAG systems."""
     results = {
         "control": {"quality": 0, "latency": 0, "cost": 0},
@@ -154,7 +162,8 @@ Cost reduction strategies:
 
     # Statistically significant?
     if results["treatment"]["quality"] > results["control"]["quality"] * 1.05:
-        print("Treatment is significantly better!")</code>
+        print("Treatment is significantly better!")</code></pre>
+          </div>
           </div>
         </section>
 

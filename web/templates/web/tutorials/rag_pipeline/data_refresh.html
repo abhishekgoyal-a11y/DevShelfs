@@ -55,7 +55,9 @@
           <h2 id="incremental-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">Incremental Indexing</h2>
 
           <div class="rounded-2xl border border-white/10 bg-white/[0.03] p-5">
-            <code class="block font-mono text-xs text-slate-300 whitespace-pre">def update_index(documents, vector_db):
+            <div class="code-wrapper rounded-2xl border border-white/10 bg-white/[0.03] overflow-hidden">
+            <button class="copy-button" data-copy-label="Copy" data-copied-label="✓ Copied" aria-label="Copy code to clipboard"></button>
+            <pre class="code-block"><code class="language-python ds-codeblock-source">def update_index(documents, vector_db):
     """Update only changed documents."""
     import hashlib
 
@@ -87,7 +89,8 @@
                     "updated_at": time.time()
                 }
             )
-        print(f"Updated {doc.id}")</code>
+        print(f"Updated {doc.id}")</code></pre>
+          </div>
           </div>
         </section>
 
@@ -95,7 +98,9 @@
           <h2 id="deletion-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">Handling Deletes</h2>
 
           <div class="rounded-2xl border border-white/10 bg-white/[0.03] p-5">
-            <code class="block font-mono text-xs text-slate-300 whitespace-pre">def delete_document(doc_id, vector_db):
+            <div class="code-wrapper rounded-2xl border border-white/10 bg-white/[0.03] overflow-hidden">
+            <button class="copy-button" data-copy-label="Copy" data-copied-label="✓ Copied" aria-label="Copy code to clipboard"></button>
+            <pre class="code-block"><code class="language-python ds-codeblock-source">def delete_document(doc_id, vector_db):
     """Remove all chunks for a document."""
     # Delete by metadata
     vector_db.delete_by_metadata({
@@ -116,7 +121,8 @@
         versions = vector_db.get_versions(doc_id)
         if len(versions) > keep_versions:
             for old in versions[:-keep_versions]:
-                vector_db.delete_version(old)</code>
+                vector_db.delete_version(old)</code></pre>
+          </div>
           </div>
         </section>
 
@@ -124,7 +130,9 @@
           <h2 id="versioning-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">Document Versioning</h2>
 
           <div class="rounded-2xl border border-white/10 bg-white/[0.03] p-5">
-            <code class="block font-mono text-xs text-slate-300 whitespace-pre">class VersionedDocument:
+            <div class="code-wrapper rounded-2xl border border-white/10 bg-white/[0.03] overflow-hidden">
+            <button class="copy-button" data-copy-label="Copy" data-copied-label="✓ Copied" aria-label="Copy code to clipboard"></button>
+            <pre class="code-block"><code class="language-python ds-codeblock-source">class VersionedDocument:
     def __init__(self, doc_id, content, version=1):
         self.id = doc_id
         self.content = content
@@ -161,7 +169,8 @@
         vector_db.update_metadata(
             filter={"doc_id": self.id, "version": target_version},
             metadata={"active": True}
-        )</code>
+        )</code></pre>
+          </div>
           </div>
         </section>
 

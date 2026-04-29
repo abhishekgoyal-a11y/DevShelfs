@@ -34,7 +34,9 @@
           <h2 id="architecture-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">System Architecture</h2>
 
           <div class="rounded-2xl border border-white/10 bg-white/[0.03] p-5">
-            <code class="block font-mono text-xs text-slate-300 whitespace-pre">RAG System Architecture:
+            <div class="code-wrapper rounded-2xl border border-white/10 bg-white/[0.03] overflow-hidden">
+            <button class="copy-button" data-copy-label="Copy" data-copied-label="✓ Copied" aria-label="Copy code to clipboard"></button>
+            <pre class="code-block"><code class="language-python ds-codeblock-source">RAG System Architecture:
 
 ┌─ Document Ingestion Layer ─┐
 │  Load → Clean → Chunk      │
@@ -68,7 +70,8 @@
 ┌──────────▼──────────────────┐
 │   Output Processing         │
 │ cite sources → verify       │
-└──────────────────────────────┘</code>
+└──────────────────────────────┘</code></pre>
+          </div>
           </div>
         </section>
 
@@ -76,7 +79,9 @@
           <h2 id="implementation-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">Python Implementation</h2>
 
           <div class="rounded-2xl border border-white/10 bg-white/[0.03] p-5">
-            <code class="block font-mono text-xs text-slate-300 whitespace-pre">from langchain_community.document_loaders import PyPDFLoader
+            <div class="code-wrapper rounded-2xl border border-white/10 bg-white/[0.03] overflow-hidden">
+            <button class="copy-button" data-copy-label="Copy" data-copied-label="✓ Copied" aria-label="Copy code to clipboard"></button>
+            <pre class="code-block"><code class="language-python ds-codeblock-source">from langchain_community.document_loaders import PyPDFLoader
 from langchain.text_splitters import TokenTextSplitter
 from langchain_openai import OpenAIEmbeddings, ChatOpenAI
 from langchain_pinecone import PineconeVectorStore
@@ -156,7 +161,8 @@ ANSWER:"""
 # Usage
 rag = RAGSystem()
 rag.index_documents(["tax_guide.pdf", "faq.pdf"])
-answer, sources = rag.generate_answer("How do I file taxes?")</code>
+answer, sources = rag.generate_answer("How do I file taxes?")</code></pre>
+          </div>
           </div>
         </section>
 
@@ -164,7 +170,9 @@ answer, sources = rag.generate_answer("How do I file taxes?")</code>
           <h2 id="testing-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">Testing & Validation</h2>
 
           <div class="rounded-2xl border border-white/10 bg-white/[0.03] p-5">
-            <code class="block font-mono text-xs text-slate-300 whitespace-pre">def test_rag_system():
+            <div class="code-wrapper rounded-2xl border border-white/10 bg-white/[0.03] overflow-hidden">
+            <button class="copy-button" data-copy-label="Copy" data-copied-label="✓ Copied" aria-label="Copy code to clipboard"></button>
+            <pre class="code-block"><code class="language-python ds-codeblock-source">def test_rag_system():
     """Test retrieval and generation quality."""
     from ragas import evaluate
     from ragas.metrics import faithfulness, answer_relevancy
@@ -203,7 +211,8 @@ answer, sources = rag.generate_answer("How do I file taxes?")</code>
 
     # Assert minimum quality
     assert eval_result['faithfulness'] > 0.7
-    assert eval_result['answer_relevancy'] > 0.75</code>
+    assert eval_result['answer_relevancy'] > 0.75</code></pre>
+          </div>
           </div>
         </section>
 
@@ -211,7 +220,9 @@ answer, sources = rag.generate_answer("How do I file taxes?")</code>
           <h2 id="error-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">Error Handling</h2>
 
           <div class="rounded-2xl border border-white/10 bg-white/[0.03] p-5">
-            <code class="block font-mono text-xs text-slate-300 whitespace-pre">def safe_rag_query(rag, query, max_retries=2):
+            <div class="code-wrapper rounded-2xl border border-white/10 bg-white/[0.03] overflow-hidden">
+            <button class="copy-button" data-copy-label="Copy" data-copied-label="✓ Copied" aria-label="Copy code to clipboard"></button>
+            <pre class="code-block"><code class="language-json ds-codeblock-source">def safe_rag_query(rag, query, max_retries=2):
     """Robust query with fallbacks."""
     try:
         answer, docs = rag.generate_answer(query)
@@ -240,7 +251,8 @@ answer, sources = rag.generate_answer("How do I file taxes?")</code>
             "answer": "I encountered an error. Please try again.",
             "status": "error",
             "sources": []
-        }</code>
+        }</code></pre>
+          </div>
           </div>
         </section>
 

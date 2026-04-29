@@ -35,17 +35,22 @@
 
           <div class="rounded-2xl border border-white/10 bg-white/[0.03] p-5">
             <p class="font-semibold text-white mb-3">Bad RAG Prompt</p>
-            <code class="block font-mono text-xs text-slate-300 whitespace-pre">"Use these documents to answer: {docs}
+            <div class="code-wrapper rounded-2xl border border-white/10 bg-white/[0.03] overflow-hidden">
+            <button class="copy-button" data-copy-label="Copy" data-copied-label="✓ Copied" aria-label="Copy code to clipboard"></button>
+            <pre class="code-block"><code class="language-yaml ds-codeblock-source">"Use these documents to answer: {docs}
 Question: {query}
 Answer:"
 
 Problems: Ambiguous instructions. LLM doesn't know to cite sources.
-Result: Hallucinations, made-up citations.</code>
+Result: Hallucinations, made-up citations.</code></pre>
+          </div>
           </div>
 
           <div class="rounded-2xl border border-green-500/20 bg-green-500/5 p-5 mt-4">
             <p class="font-semibold text-green-300 mb-3">✓ Better RAG Prompt</p>
-            <code class="block font-mono text-xs text-slate-300 whitespace-pre">You are a helpful assistant. Your job is to answer questions using ONLY
+            <div class="code-wrapper rounded-2xl border border-white/10 bg-white/[0.03] overflow-hidden">
+            <button class="copy-button" data-copy-label="Copy" data-copied-label="✓ Copied" aria-label="Copy code to clipboard"></button>
+            <pre class="code-block"><code class="language-python ds-codeblock-source">You are a helpful assistant. Your job is to answer questions using ONLY
 the provided documents. If the answer is not in the documents, say:
 "I don't have this information in the available documents."
 
@@ -56,7 +61,8 @@ Always cite your sources using the [Source: doc_title] format.
 Question: {QUERY}
 
 Answer: Let me search the documents...
-[Your answer with citations]</code>
+[Your answer with citations]</code></pre>
+          </div>
           </div>
 
           <div class="space-y-3 mt-4">
@@ -76,7 +82,9 @@ Answer: Let me search the documents...
 
           <div class="rounded-2xl border border-white/10 bg-white/[0.03] p-5">
             <p class="font-semibold text-white mb-3">JSON Mode (Force Structure)</p>
-            <code class="block font-mono text-xs text-slate-300 whitespace-pre">response = client.chat.completions.create(
+            <div class="code-wrapper rounded-2xl border border-white/10 bg-white/[0.03] overflow-hidden">
+            <button class="copy-button" data-copy-label="Copy" data-copied-label="✓ Copied" aria-label="Copy code to clipboard"></button>
+            <pre class="code-block"><code class="language-yaml ds-codeblock-source">response = client.chat.completions.create(
     model="gpt-4",
     temperature=0,
     response_format={"type": "json_object"},
@@ -95,12 +103,15 @@ Question: ..."""
 )
 
 result = json.loads(response.choices[0].message.content)
-# Guaranteed structure, easy to parse</code>
+# Guaranteed structure, easy to parse</code></pre>
+          </div>
           </div>
 
           <div class="rounded-2xl border border-white/10 bg-white/[0.03] p-5 mt-4">
             <p class="font-semibold text-white mb-3">Function Calling (For Complex Tasks)</p>
-            <code class="block font-mono text-xs text-slate-300 whitespace-pre">tools = [
+            <div class="code-wrapper rounded-2xl border border-white/10 bg-white/[0.03] overflow-hidden">
+            <button class="copy-button" data-copy-label="Copy" data-copied-label="✓ Copied" aria-label="Copy code to clipboard"></button>
+            <pre class="code-block"><code class="language-python ds-codeblock-source">tools = [
   {
     "type": "function",
     "function": {
@@ -123,7 +134,8 @@ response = client.chat.completions.create(
     tools=tools,
     messages=[...]
 )
-# LLM must call function with correct structure</code>
+# LLM must call function with correct structure</code></pre>
+          </div>
           </div>
         </section>
 
@@ -131,7 +143,9 @@ response = client.chat.completions.create(
           <h2 id="citation-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">Citation Enforcement</h2>
 
           <div class="rounded-2xl border border-white/10 bg-white/[0.03] p-5">
-            <code class="block font-mono text-xs text-slate-300 whitespace-pre">def enforce_citations(answer, docs):
+            <div class="code-wrapper rounded-2xl border border-white/10 bg-white/[0.03] overflow-hidden">
+            <button class="copy-button" data-copy-label="Copy" data-copied-label="✓ Copied" aria-label="Copy code to clipboard"></button>
+            <pre class="code-block"><code class="language-python ds-codeblock-source">def enforce_citations(answer, docs):
     """Verify answer only uses facts from docs."""
     import re
 
@@ -157,7 +171,8 @@ response = client.chat.completions.create(
         """
         # Score faithfulness...
 
-    return True, "Citations valid"</code>
+    return True, "Citations valid"</code></pre>
+          </div>
           </div>
         </section>
 

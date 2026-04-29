@@ -147,7 +147,9 @@
 
           <div class="rounded-2xl border border-white/10 bg-white/[0.03] p-5">
             <p class="font-semibold text-white mb-3">Using OpenAI</p>
-            <code class="block font-mono text-xs text-slate-300 whitespace-pre">from openai import OpenAI
+            <div class="code-wrapper rounded-2xl border border-white/10 bg-white/[0.03] overflow-hidden">
+            <button class="copy-button" data-copy-label="Copy" data-copied-label="✓ Copied" aria-label="Copy code to clipboard"></button>
+            <pre class="code-block"><code class="language-python ds-codeblock-source">from openai import OpenAI
 
 client = OpenAI(api_key="sk-...")
 
@@ -165,12 +167,15 @@ response = client.embeddings.create(
     model="text-embedding-3-small",
     input=chunks
 )
-embeddings = [d.embedding for d in response.data]</code>
+embeddings = [d.embedding for d in response.data]</code></pre>
+          </div>
           </div>
 
           <div class="rounded-2xl border border-white/10 bg-white/[0.03] p-5 mt-4">
             <p class="font-semibold text-white mb-3">Using Open-Source (Local)</p>
-            <code class="block font-mono text-xs text-slate-300 whitespace-pre">from sentence_transformers import SentenceTransformer
+            <div class="code-wrapper rounded-2xl border border-white/10 bg-white/[0.03] overflow-hidden">
+            <button class="copy-button" data-copy-label="Copy" data-copied-label="✓ Copied" aria-label="Copy code to clipboard"></button>
+            <pre class="code-block"><code class="language-python ds-codeblock-source">from sentence_transformers import SentenceTransformer
 
 model = SentenceTransformer('all-mpnet-base-v2')
 
@@ -188,7 +193,8 @@ embeddings = model.encode(
     device='cuda',  # Use GPU if available
     batch_size=32,
     show_progress_bar=True
-)</code>
+)</code></pre>
+          </div>
           </div>
         </section>
 
@@ -199,7 +205,9 @@ embeddings = model.encode(
           </p>
 
           <div class="rounded-2xl border border-white/10 bg-white/[0.03] p-5">
-            <code class="block font-mono text-xs text-slate-300 whitespace-pre">from openai import OpenAI
+            <div class="code-wrapper rounded-2xl border border-white/10 bg-white/[0.03] overflow-hidden">
+            <button class="copy-button" data-copy-label="Copy" data-copied-label="✓ Copied" aria-label="Copy code to clipboard"></button>
+            <pre class="code-block"><code class="language-python ds-codeblock-source">from openai import OpenAI
 from tqdm import tqdm
 import time
 
@@ -223,7 +231,8 @@ for i in tqdm(range(0, len(chunks), batch_size)):
     embeddings.extend([d.embedding for d in response.data])
     time.sleep(1)  # Rate limiting
 
-print(f"Embedded {len(embeddings)} chunks")</code>
+print(f"Embedded {len(embeddings)} chunks")</code></pre>
+          </div>
           </div>
 
           <div class="space-y-3 mt-4">
@@ -252,7 +261,9 @@ print(f"Embedded {len(embeddings)} chunks")</code>
           </p>
 
           <div class="rounded-2xl border border-white/10 bg-white/[0.03] p-5">
-            <code class="block font-mono text-xs text-slate-300 whitespace-pre">import hashlib
+            <div class="code-wrapper rounded-2xl border border-white/10 bg-white/[0.03] overflow-hidden">
+            <button class="copy-button" data-copy-label="Copy" data-copied-label="✓ Copied" aria-label="Copy code to clipboard"></button>
+            <pre class="code-block"><code class="language-python ds-codeblock-source">import hashlib
 import json
 
 def get_embedding(text, model="text-embedding-3-small"):
@@ -278,7 +289,8 @@ def get_embedding(text, model="text-embedding-3-small"):
     with open(cache_file, 'w') as f:
         json.dump(embedding, f)
 
-    return embedding</code>
+    return embedding</code></pre>
+          </div>
           </div>
 
           <div class="rounded-2xl border border-sky-500/20 bg-sky-500/5 p-4 mt-4">

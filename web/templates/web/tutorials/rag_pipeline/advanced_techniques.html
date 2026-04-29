@@ -35,7 +35,9 @@
           <p>When a single document is too long, retrieve its summary first, then retrieve relevant chunks within it.</p>
 
           <div class="rounded-2xl border border-white/10 bg-white/[0.03] p-5">
-            <code class="block font-mono text-xs text-slate-300 whitespace-pre">Step 1: Index summaries (small)
+            <div class="code-wrapper rounded-2xl border border-white/10 bg-white/[0.03] overflow-hidden">
+            <button class="copy-button" data-copy-label="Copy" data-copied-label="✓ Copied" aria-label="Copy code to clipboard"></button>
+            <pre class="code-block"><code class="language-python ds-codeblock-source">Step 1: Index summaries (small)
 summaries = [
   {"id": "doc1_summary", "summary": "About tax deductions...", "source_doc": "doc1"},
   ...
@@ -51,7 +53,8 @@ for summary in top_summaries:
     chunks = db.query(source_doc, k=10)
     relevant_chunks.extend(chunks)
 
-Result: Top 5 most relevant documents, with best chunks from each.</code>
+Result: Top 5 most relevant documents, with best chunks from each.</code></pre>
+          </div>
           </div>
         </section>
 
@@ -60,7 +63,9 @@ Result: Top 5 most relevant documents, with best chunks from each.</code>
           <p>Instead of retrieving and answering, let the LLM decide: should I retrieve more docs? Search web? Use a tool?</p>
 
           <div class="rounded-2xl border border-white/10 bg-white/[0.03] p-5">
-            <code class="block font-mono text-xs text-slate-300 whitespace-pre">agent = create_agent(
+            <div class="code-wrapper rounded-2xl border border-white/10 bg-white/[0.03] overflow-hidden">
+            <button class="copy-button" data-copy-label="Copy" data-copied-label="✓ Copied" aria-label="Copy code to clipboard"></button>
+            <pre class="code-block"><code class="language-yaml ds-codeblock-source">agent = create_agent(
     tools=[
         {"name": "search_documents", "description": "Search internal docs"},
         {"name": "search_web", "description": "Search internet"},
@@ -79,7 +84,8 @@ response = agent.run(
 # 2. LLM decides to use "search_documents" + "search_web"
 # 3. Executes both tools
 # 4. Combines results
-# 5. Generates final answer</code>
+# 5. Generates final answer</code></pre>
+          </div>
           </div>
 
           <p class="text-sm text-slate-300 mt-3">Best for: Complex questions, multi-step reasoning, uncertain data freshness.</p>
@@ -90,7 +96,9 @@ response = agent.run(
           <p>Have the LLM verify its own answer against retrieved docs. Catch hallucinations before returning.</p>
 
           <div class="rounded-2xl border border-white/10 bg-white/[0.03] p-5">
-            <code class="block font-mono text-xs text-slate-300 whitespace-pre">Step 1: Generate answer
+            <div class="code-wrapper rounded-2xl border border-white/10 bg-white/[0.03] overflow-hidden">
+            <button class="copy-button" data-copy-label="Copy" data-copied-label="✓ Copied" aria-label="Copy code to clipboard"></button>
+            <pre class="code-block"><code class="language-json ds-codeblock-source">Step 1: Generate answer
 answer = llm.generate(query, retrieved_docs)
 
 Step 2: Self-verify
@@ -108,7 +116,8 @@ if verified.confidence < 0.7:
     more_docs = retrieve(query, k=10)
     answer = llm.generate(query, more_docs + retrieved_docs)
 
-return answer</code>
+return answer</code></pre>
+          </div>
           </div>
         </section>
 
@@ -133,7 +142,9 @@ return answer</code>
           <p>Don't always retrieve fixed K documents. Stop when confident you have enough.</p>
 
           <div class="rounded-2xl border border-white/10 bg-white/[0.03] p-5">
-            <code class="block font-mono text-xs text-slate-300 whitespace-pre">def adaptive_retrieve(query, max_docs=20):
+            <div class="code-wrapper rounded-2xl border border-white/10 bg-white/[0.03] overflow-hidden">
+            <button class="copy-button" data-copy-label="Copy" data-copied-label="✓ Copied" aria-label="Copy code to clipboard"></button>
+            <pre class="code-block"><code class="language-python ds-codeblock-source">def adaptive_retrieve(query, max_docs=20):
     retrieved = []
     confidence = 0
     k = 5
@@ -149,7 +160,8 @@ return answer</code>
 
         k = min(k + 5, 20)  # Increase batch size
 
-    return retrieved[:max_docs]</code>
+    return retrieved[:max_docs]</code></pre>
+          </div>
           </div>
 
           <p class="text-sm text-slate-300 mt-3">Benefit: Reduces costs, faster for simple queries, better UX for complex queries.</p>
