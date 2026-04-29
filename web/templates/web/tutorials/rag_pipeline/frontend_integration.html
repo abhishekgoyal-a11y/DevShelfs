@@ -34,9 +34,12 @@
           <h2 id="chat-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">Chat UI Patterns</h2>
 
           <div class="rounded-2xl border border-white/10 bg-white/[0.03] p-5">
-            <div class="code-wrapper rounded-2xl border border-white/10 bg-white/[0.03] overflow-hidden">
-            <button class="copy-button" data-copy-label="Copy" data-copied-label="✓ Copied" aria-label="Copy code to clipboard"></button>
-            <pre class="code-block"><code class="language-python ds-codeblock-source">// React Chat Component
+            <div class="ds-codeblock overflow-hidden rounded-2xl border border-white/10 bg-slate-950/90">
+  <div class="flex items-center justify-between gap-3 border-b border-white/10 px-3 py-2">
+    <span class="font-mono text-[11px] font-medium uppercase tracking-wide text-slate-400">Python</span>
+    <button type="button" class="ds-codeblock-copy rounded-lg border border-white/10 bg-white/[0.06] px-2.5 py-1 text-xs font-semibold text-slate-200 transition hover:border-sky-400/40 hover:bg-white/[0.1] hover:text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-sky-400/50" data-copy-label="Copy" data-copied-label="Copied" aria-label="Copy code to clipboard">Copy</button>
+  </div>
+  <pre class="ds-codeblock-pre code-block m-0 overflow-x-auto p-4 text-[0.8125rem] leading-[1.55] sm:text-sm language-python" tabindex="0"><code class="whitespace-pre-wrap font-mono ds-codeblock-source language-python">// React Chat Component
 function ChatUI() {
   const [messages, setMessages] = useState([]);
   const [input, setInput] = useState('');
@@ -78,7 +81,7 @@ function ChatUI() {
     &lt;/div&gt;
   );
 }</code></pre>
-          </div>
+</div>
           </div>
         </section>
 
@@ -87,9 +90,12 @@ function ChatUI() {
 
           <div class="rounded-2xl border border-white/10 bg-white/[0.03] p-4">
             <p class="text-sm text-slate-300 mb-3"><strong>Server-Sent Events (SSE):</strong> Stream text chunks as they generate.</p>
-            <div class="code-wrapper rounded-2xl border border-white/10 bg-white/[0.03] overflow-hidden">
-            <button class="copy-button" data-copy-label="Copy" data-copied-label="✓ Copied" aria-label="Copy code to clipboard"></button>
-            <pre class="code-block"><code class="language-python ds-codeblock-source">// Server (Python)
+            <div class="ds-codeblock overflow-hidden rounded-2xl border border-white/10 bg-slate-950/90">
+  <div class="flex items-center justify-between gap-3 border-b border-white/10 px-3 py-2">
+    <span class="font-mono text-[11px] font-medium uppercase tracking-wide text-slate-400">Python</span>
+    <button type="button" class="ds-codeblock-copy rounded-lg border border-white/10 bg-white/[0.06] px-2.5 py-1 text-xs font-semibold text-slate-200 transition hover:border-sky-400/40 hover:bg-white/[0.1] hover:text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-sky-400/50" data-copy-label="Copy" data-copied-label="Copied" aria-label="Copy code to clipboard">Copy</button>
+  </div>
+  <pre class="ds-codeblock-pre code-block m-0 overflow-x-auto p-4 text-[0.8125rem] leading-[1.55] sm:text-sm language-python" tabindex="0"><code class="whitespace-pre-wrap font-mono ds-codeblock-source language-python">// Server (Python)
 @app.post("/api/query")
 async def stream_query(query: str):
     async def generate():
@@ -108,7 +114,7 @@ eventSource.onmessage = (event) => {
   const { text } = JSON.parse(event.data);
   document.getElementById('response').textContent += text;
 };</code></pre>
-          </div>
+</div>
           </div>
 
           <p class="text-sm text-slate-300 mt-3">Benefit: User sees answer immediately, doesn't wait for full LLM response.</p>
@@ -118,9 +124,12 @@ eventSource.onmessage = (event) => {
           <h2 id="sources-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">Source Attribution & Trust</h2>
 
           <div class="rounded-2xl border border-white/10 bg-white/[0.03] p-5">
-            <div class="code-wrapper rounded-2xl border border-white/10 bg-white/[0.03] overflow-hidden">
-            <button class="copy-button" data-copy-label="Copy" data-copied-label="✓ Copied" aria-label="Copy code to clipboard"></button>
-            <pre class="code-block"><code class="language-yaml ds-codeblock-source">// Show retrieved sources
+            <div class="ds-codeblock overflow-hidden rounded-2xl border border-white/10 bg-slate-950/90">
+  <div class="flex items-center justify-between gap-3 border-b border-white/10 px-3 py-2">
+    <span class="font-mono text-[11px] font-medium uppercase tracking-wide text-slate-400">YAML</span>
+    <button type="button" class="ds-codeblock-copy rounded-lg border border-white/10 bg-white/[0.06] px-2.5 py-1 text-xs font-semibold text-slate-200 transition hover:border-sky-400/40 hover:bg-white/[0.1] hover:text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-sky-400/50" data-copy-label="Copy" data-copied-label="Copied" aria-label="Copy code to clipboard">Copy</button>
+  </div>
+  <pre class="ds-codeblock-pre code-block m-0 overflow-x-auto p-4 text-[0.8125rem] leading-[1.55] sm:text-sm language-yaml" tabindex="0"><code class="whitespace-pre-wrap font-mono ds-codeblock-source language-yaml">// Show retrieved sources
 const response = {
   answer: "Self-employed people must file quarterly...",
   sources: [
@@ -151,7 +160,7 @@ const response = {
   ))}
   &lt;span className="confidence"&gt;Answer confidence: {Math.round(response.confidence * 100)}%&lt;/span&gt;
 &lt;/div&gt;</code></pre>
-          </div>
+</div>
           </div>
 
           <p class="text-sm text-slate-300 mt-3">Trust building: Show where information came from, confidence score, relevance percentages.</p>
@@ -161,9 +170,12 @@ const response = {
           <h2 id="feedback-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">Feedback Loop</h2>
 
           <div class="rounded-2xl border border-white/10 bg-white/[0.03] p-5">
-            <div class="code-wrapper rounded-2xl border border-white/10 bg-white/[0.03] overflow-hidden">
-            <button class="copy-button" data-copy-label="Copy" data-copied-label="✓ Copied" aria-label="Copy code to clipboard"></button>
-            <pre class="code-block"><code class="language-python ds-codeblock-source">// Feedback buttons
+            <div class="ds-codeblock overflow-hidden rounded-2xl border border-white/10 bg-slate-950/90">
+  <div class="flex items-center justify-between gap-3 border-b border-white/10 px-3 py-2">
+    <span class="font-mono text-[11px] font-medium uppercase tracking-wide text-slate-400">Python</span>
+    <button type="button" class="ds-codeblock-copy rounded-lg border border-white/10 bg-white/[0.06] px-2.5 py-1 text-xs font-semibold text-slate-200 transition hover:border-sky-400/40 hover:bg-white/[0.1] hover:text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-sky-400/50" data-copy-label="Copy" data-copied-label="Copied" aria-label="Copy code to clipboard">Copy</button>
+  </div>
+  <pre class="ds-codeblock-pre code-block m-0 overflow-x-auto p-4 text-[0.8125rem] leading-[1.55] sm:text-sm language-python" tabindex="0"><code class="whitespace-pre-wrap font-mono ds-codeblock-source language-python">// Feedback buttons
 &lt;div className="feedback"&gt;
   &lt;button onClick={() =&gt; submitFeedback('helpful')}&gt;👍 Helpful&lt;/button&gt;
   &lt;button onClick={() =&gt; submitFeedback('not_helpful')}&gt;👎 Not helpful&lt;/button&gt;
@@ -179,7 +191,7 @@ async def submit_feedback(query_id, feedback, comments):
         "timestamp": time.time()
     })
     # Use feedback to retrain/improve RAG</code></pre>
-          </div>
+</div>
           </div>
 
           <p class="text-sm text-slate-300 mt-3">Use feedback to: identify bad answers, retrain embeddings, improve prompts.</p>

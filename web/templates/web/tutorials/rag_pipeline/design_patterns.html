@@ -35,13 +35,16 @@
           <p>Simple: retrieve top-K docs, pass to LLM. Best for: MVP, simple Q&A, small docs.</p>
 
           <div class="rounded-2xl border border-white/10 bg-white/[0.03] p-4">
-            <div class="code-wrapper rounded-2xl border border-white/10 bg-white/[0.03] overflow-hidden">
-            <button class="copy-button" data-copy-label="Copy" data-copied-label="✓ Copied" aria-label="Copy code to clipboard"></button>
-            <pre class="code-block"><code class="language-python ds-codeblock-source">query → embed → search → LLM answer
+            <div class="ds-codeblock overflow-hidden rounded-2xl border border-white/10 bg-slate-950/90">
+  <div class="flex items-center justify-between gap-3 border-b border-white/10 px-3 py-2">
+    <span class="font-mono text-[11px] font-medium uppercase tracking-wide text-slate-400">Python</span>
+    <button type="button" class="ds-codeblock-copy rounded-lg border border-white/10 bg-white/[0.06] px-2.5 py-1 text-xs font-semibold text-slate-200 transition hover:border-sky-400/40 hover:bg-white/[0.1] hover:text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-sky-400/50" data-copy-label="Copy" data-copied-label="Copied" aria-label="Copy code to clipboard">Copy</button>
+  </div>
+  <pre class="ds-codeblock-pre code-block m-0 overflow-x-auto p-4 text-[0.8125rem] leading-[1.55] sm:text-sm language-python" tabindex="0"><code class="whitespace-pre-wrap font-mono ds-codeblock-source language-python">query → embed → search → LLM answer
 
 Pros: Simple, fast
 Cons: Low quality, hallucinations, no reasoning</code></pre>
-          </div>
+</div>
           </div>
         </section>
 
@@ -50,13 +53,16 @@ Cons: Low quality, hallucinations, no reasoning</code></pre>
           <p>Combines dense (semantic) + sparse (keyword) search + reranking. Best for: Production, technical docs.</p>
 
           <div class="rounded-2xl border border-white/10 bg-white/[0.03] p-4">
-            <div class="code-wrapper rounded-2xl border border-white/10 bg-white/[0.03] overflow-hidden">
-            <button class="copy-button" data-copy-label="Copy" data-copied-label="✓ Copied" aria-label="Copy code to clipboard"></button>
-            <pre class="code-block"><code class="language-yaml ds-codeblock-source">query → [dense search + BM25] → combine → rerank → LLM
+            <div class="ds-codeblock overflow-hidden rounded-2xl border border-white/10 bg-slate-950/90">
+  <div class="flex items-center justify-between gap-3 border-b border-white/10 px-3 py-2">
+    <span class="font-mono text-[11px] font-medium uppercase tracking-wide text-slate-400">YAML</span>
+    <button type="button" class="ds-codeblock-copy rounded-lg border border-white/10 bg-white/[0.06] px-2.5 py-1 text-xs font-semibold text-slate-200 transition hover:border-sky-400/40 hover:bg-white/[0.1] hover:text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-sky-400/50" data-copy-label="Copy" data-copied-label="Copied" aria-label="Copy code to clipboard">Copy</button>
+  </div>
+  <pre class="ds-codeblock-pre code-block m-0 overflow-x-auto p-4 text-[0.8125rem] leading-[1.55] sm:text-sm language-yaml" tabindex="0"><code class="whitespace-pre-wrap font-mono ds-codeblock-source language-yaml">query → [dense search + BM25] → combine → rerank → LLM
 
 Pros: Better quality, catches keywords
 Cons: Slower, more complex</code></pre>
-          </div>
+</div>
           </div>
         </section>
 
@@ -65,16 +71,19 @@ Cons: Slower, more complex</code></pre>
           <p>LLM decides when to retrieve, search web, use tools. Best for: Complex questions, multi-step reasoning.</p>
 
           <div class="rounded-2xl border border-white/10 bg-white/[0.03] p-4">
-            <div class="code-wrapper rounded-2xl border border-white/10 bg-white/[0.03] overflow-hidden">
-            <button class="copy-button" data-copy-label="Copy" data-copied-label="✓ Copied" aria-label="Copy code to clipboard"></button>
-            <pre class="code-block"><code class="language-yaml ds-codeblock-source">LLM: "I need to search docs AND search web"
+            <div class="ds-codeblock overflow-hidden rounded-2xl border border-white/10 bg-slate-950/90">
+  <div class="flex items-center justify-between gap-3 border-b border-white/10 px-3 py-2">
+    <span class="font-mono text-[11px] font-medium uppercase tracking-wide text-slate-400">YAML</span>
+    <button type="button" class="ds-codeblock-copy rounded-lg border border-white/10 bg-white/[0.06] px-2.5 py-1 text-xs font-semibold text-slate-200 transition hover:border-sky-400/40 hover:bg-white/[0.1] hover:text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-sky-400/50" data-copy-label="Copy" data-copied-label="Copied" aria-label="Copy code to clipboard">Copy</button>
+  </div>
+  <pre class="ds-codeblock-pre code-block m-0 overflow-x-auto p-4 text-[0.8125rem] leading-[1.55] sm:text-sm language-yaml" tabindex="0"><code class="whitespace-pre-wrap font-mono ds-codeblock-source language-yaml">LLM: "I need to search docs AND search web"
 → [retrieve + search_web]
 → Combine results
 → Answer
 
 Pros: Flexible, can adapt
 Cons: Slower, harder to control</code></pre>
-          </div>
+</div>
           </div>
         </section>
 
@@ -83,9 +92,12 @@ Cons: Slower, harder to control</code></pre>
           <p>Structure docs as knowledge graph, traverse edges. Best for: Highly interconnected data, entity relationships.</p>
 
           <div class="rounded-2xl border border-white/10 bg-white/[0.03] p-4">
-            <div class="code-wrapper rounded-2xl border border-white/10 bg-white/[0.03] overflow-hidden">
-            <button class="copy-button" data-copy-label="Copy" data-copied-label="✓ Copied" aria-label="Copy code to clipboard"></button>
-            <pre class="code-block"><code class="language-python ds-codeblock-source">Query: "What treatments work for diabetes?"
+            <div class="ds-codeblock overflow-hidden rounded-2xl border border-white/10 bg-slate-950/90">
+  <div class="flex items-center justify-between gap-3 border-b border-white/10 px-3 py-2">
+    <span class="font-mono text-[11px] font-medium uppercase tracking-wide text-slate-400">Python</span>
+    <button type="button" class="ds-codeblock-copy rounded-lg border border-white/10 bg-white/[0.06] px-2.5 py-1 text-xs font-semibold text-slate-200 transition hover:border-sky-400/40 hover:bg-white/[0.1] hover:text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-sky-400/50" data-copy-label="Copy" data-copied-label="Copied" aria-label="Copy code to clipboard">Copy</button>
+  </div>
+  <pre class="ds-codeblock-pre code-block m-0 overflow-x-auto p-4 text-[0.8125rem] leading-[1.55] sm:text-sm language-python" tabindex="0"><code class="whitespace-pre-wrap font-mono ds-codeblock-source language-python">Query: "What treatments work for diabetes?"
 
 Graph structure:
 Diabetes → [Medications: Insulin, Metformin, ...]
@@ -93,7 +105,7 @@ Diabetes → [Medications: Insulin, Metformin, ...]
         → [Lifestyle: Diet, Exercise]
 
 Traverse graph → Retrieve relevant paths → Answer</code></pre>
-          </div>
+</div>
           </div>
         </section>
 
@@ -102,15 +114,18 @@ Traverse graph → Retrieve relevant paths → Answer</code></pre>
           <p>Keep conversation history, retrieve relevant past context. Best for: Multi-turn conversations.</p>
 
           <div class="rounded-2xl border border-white/10 bg-white/[0.03] p-4">
-            <div class="code-wrapper rounded-2xl border border-white/10 bg-white/[0.03] overflow-hidden">
-            <button class="copy-button" data-copy-label="Copy" data-copied-label="✓ Copied" aria-label="Copy code to clipboard"></button>
-            <pre class="code-block"><code class="language-python ds-codeblock-source">Turn 1: User: "Tell me about taxes"
+            <div class="ds-codeblock overflow-hidden rounded-2xl border border-white/10 bg-slate-950/90">
+  <div class="flex items-center justify-between gap-3 border-b border-white/10 px-3 py-2">
+    <span class="font-mono text-[11px] font-medium uppercase tracking-wide text-slate-400">Python</span>
+    <button type="button" class="ds-codeblock-copy rounded-lg border border-white/10 bg-white/[0.06] px-2.5 py-1 text-xs font-semibold text-slate-200 transition hover:border-sky-400/40 hover:bg-white/[0.1] hover:text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-sky-400/50" data-copy-label="Copy" data-copied-label="Copied" aria-label="Copy code to clipboard">Copy</button>
+  </div>
+  <pre class="ds-codeblock-pre code-block m-0 overflow-x-auto p-4 text-[0.8125rem] leading-[1.55] sm:text-sm language-python" tabindex="0"><code class="whitespace-pre-wrap font-mono ds-codeblock-source language-python">Turn 1: User: "Tell me about taxes"
         RAG retrieves and answers
 
 Turn 2: User: "Can I claim that as deduction?"
         RAG: Uses context from Turn 1 + new retrieval
         → Better understanding</code></pre>
-          </div>
+</div>
           </div>
         </section>
 

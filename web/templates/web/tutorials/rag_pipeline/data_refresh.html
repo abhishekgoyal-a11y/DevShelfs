@@ -55,9 +55,12 @@
           <h2 id="incremental-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">Incremental Indexing</h2>
 
           <div class="rounded-2xl border border-white/10 bg-white/[0.03] p-5">
-            <div class="code-wrapper rounded-2xl border border-white/10 bg-white/[0.03] overflow-hidden">
-            <button class="copy-button" data-copy-label="Copy" data-copied-label="✓ Copied" aria-label="Copy code to clipboard"></button>
-            <pre class="code-block"><code class="language-python ds-codeblock-source">def update_index(documents, vector_db):
+            <div class="ds-codeblock overflow-hidden rounded-2xl border border-white/10 bg-slate-950/90">
+  <div class="flex items-center justify-between gap-3 border-b border-white/10 px-3 py-2">
+    <span class="font-mono text-[11px] font-medium uppercase tracking-wide text-slate-400">Python</span>
+    <button type="button" class="ds-codeblock-copy rounded-lg border border-white/10 bg-white/[0.06] px-2.5 py-1 text-xs font-semibold text-slate-200 transition hover:border-sky-400/40 hover:bg-white/[0.1] hover:text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-sky-400/50" data-copy-label="Copy" data-copied-label="Copied" aria-label="Copy code to clipboard">Copy</button>
+  </div>
+  <pre class="ds-codeblock-pre code-block m-0 overflow-x-auto p-4 text-[0.8125rem] leading-[1.55] sm:text-sm language-python" tabindex="0"><code class="whitespace-pre-wrap font-mono ds-codeblock-source language-python">def update_index(documents, vector_db):
     """Update only changed documents."""
     import hashlib
 
@@ -90,7 +93,7 @@
                 }
             )
         print(f"Updated {doc.id}")</code></pre>
-          </div>
+</div>
           </div>
         </section>
 
@@ -98,9 +101,12 @@
           <h2 id="deletion-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">Handling Deletes</h2>
 
           <div class="rounded-2xl border border-white/10 bg-white/[0.03] p-5">
-            <div class="code-wrapper rounded-2xl border border-white/10 bg-white/[0.03] overflow-hidden">
-            <button class="copy-button" data-copy-label="Copy" data-copied-label="✓ Copied" aria-label="Copy code to clipboard"></button>
-            <pre class="code-block"><code class="language-python ds-codeblock-source">def delete_document(doc_id, vector_db):
+            <div class="ds-codeblock overflow-hidden rounded-2xl border border-white/10 bg-slate-950/90">
+  <div class="flex items-center justify-between gap-3 border-b border-white/10 px-3 py-2">
+    <span class="font-mono text-[11px] font-medium uppercase tracking-wide text-slate-400">Python</span>
+    <button type="button" class="ds-codeblock-copy rounded-lg border border-white/10 bg-white/[0.06] px-2.5 py-1 text-xs font-semibold text-slate-200 transition hover:border-sky-400/40 hover:bg-white/[0.1] hover:text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-sky-400/50" data-copy-label="Copy" data-copied-label="Copied" aria-label="Copy code to clipboard">Copy</button>
+  </div>
+  <pre class="ds-codeblock-pre code-block m-0 overflow-x-auto p-4 text-[0.8125rem] leading-[1.55] sm:text-sm language-python" tabindex="0"><code class="whitespace-pre-wrap font-mono ds-codeblock-source language-python">def delete_document(doc_id, vector_db):
     """Remove all chunks for a document."""
     # Delete by metadata
     vector_db.delete_by_metadata({
@@ -122,7 +128,7 @@
         if len(versions) > keep_versions:
             for old in versions[:-keep_versions]:
                 vector_db.delete_version(old)</code></pre>
-          </div>
+</div>
           </div>
         </section>
 
@@ -130,9 +136,12 @@
           <h2 id="versioning-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">Document Versioning</h2>
 
           <div class="rounded-2xl border border-white/10 bg-white/[0.03] p-5">
-            <div class="code-wrapper rounded-2xl border border-white/10 bg-white/[0.03] overflow-hidden">
-            <button class="copy-button" data-copy-label="Copy" data-copied-label="✓ Copied" aria-label="Copy code to clipboard"></button>
-            <pre class="code-block"><code class="language-python ds-codeblock-source">class VersionedDocument:
+            <div class="ds-codeblock overflow-hidden rounded-2xl border border-white/10 bg-slate-950/90">
+  <div class="flex items-center justify-between gap-3 border-b border-white/10 px-3 py-2">
+    <span class="font-mono text-[11px] font-medium uppercase tracking-wide text-slate-400">Python</span>
+    <button type="button" class="ds-codeblock-copy rounded-lg border border-white/10 bg-white/[0.06] px-2.5 py-1 text-xs font-semibold text-slate-200 transition hover:border-sky-400/40 hover:bg-white/[0.1] hover:text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-sky-400/50" data-copy-label="Copy" data-copied-label="Copied" aria-label="Copy code to clipboard">Copy</button>
+  </div>
+  <pre class="ds-codeblock-pre code-block m-0 overflow-x-auto p-4 text-[0.8125rem] leading-[1.55] sm:text-sm language-python" tabindex="0"><code class="whitespace-pre-wrap font-mono ds-codeblock-source language-python">class VersionedDocument:
     def __init__(self, doc_id, content, version=1):
         self.id = doc_id
         self.content = content
@@ -170,7 +179,7 @@
             filter={"doc_id": self.id, "version": target_version},
             metadata={"active": True}
         )</code></pre>
-          </div>
+</div>
           </div>
         </section>
 

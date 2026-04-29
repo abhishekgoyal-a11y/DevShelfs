@@ -48,42 +48,42 @@ pre.code-block,
   background: transparent;
 }
 
-/* Code block wrapper with copy button */
-.code-wrapper {
-  position: relative;
-  display: inline-block;
-  width: 100%;
+/* Code block styling */
+.ds-codeblock {
+  background-color: rgba(15, 23, 42, 0.9);
+  border-color: rgba(255, 255, 255, 0.1);
 }
 
-.copy-button {
-  position: absolute;
-  top: 0.75rem;
-  right: 0.75rem;
-  padding: 0.5rem 0.75rem;
-  background-color: rgba(255, 255, 255, 0.1);
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  border-radius: 0.5rem;
-  color: rgba(255, 255, 255, 0.7);
-  font-size: 0.75rem;
-  font-weight: 500;
-  cursor: pointer;
-  transition: all 0.2s ease;
+.ds-codeblock-pre {
+  background: transparent;
+  margin: 0;
+}
+
+.ds-codeblock-pre code {
   font-family: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
-  z-index: 10;
-  min-width: 70px;
-  text-align: center;
+  background: transparent;
 }
 
-.copy-button:hover:not(.copied) {
-  background-color: rgba(255, 255, 255, 0.15);
-  border-color: rgba(255, 255, 255, 0.3);
-  color: rgba(255, 255, 255, 0.9);
+/* Copy button styling */
+.ds-codeblock-copy {
+  border-color: rgba(255, 255, 255, 0.1);
+  background-color: rgba(255, 255, 255, 0.06);
+  color: rgba(226, 232, 240, 0.87);
+  cursor: pointer;
+  font-family: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  transition: all 0.2s ease;
 }
 
-.copy-button.copied {
-  background-color: rgba(34, 197, 94, 0.2);
-  border-color: rgba(34, 197, 94, 0.4);
-  color: rgb(134, 239, 172);
+.ds-codeblock-copy:hover {
+  border-color: rgba(56, 189, 248, 0.4);
+  background-color: rgba(255, 255, 255, 0.1);
+  color: white;
+}
+
+.ds-codeblock-copy.copied {
+  border-color: rgba(56, 189, 248, 0.4);
+  background-color: rgba(56, 189, 248, 0.1);
+  color: rgb(226, 232, 240);
 }
 
 /* Series overview toggle */

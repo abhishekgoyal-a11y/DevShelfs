@@ -56,9 +56,12 @@
           </div>
 
           <div class="rounded-2xl border border-green-500/20 bg-green-500/5 p-4 mt-4">
-            <div class="code-wrapper rounded-2xl border border-white/10 bg-white/[0.03] overflow-hidden">
-            <button class="copy-button" data-copy-label="Copy" data-copied-label="✓ Copied" aria-label="Copy code to clipboard"></button>
-            <pre class="code-block"><code class="language-python ds-codeblock-source">def find_optimal_chunk_size(eval_dataset):
+            <div class="ds-codeblock overflow-hidden rounded-2xl border border-white/10 bg-slate-950/90">
+  <div class="flex items-center justify-between gap-3 border-b border-white/10 px-3 py-2">
+    <span class="font-mono text-[11px] font-medium uppercase tracking-wide text-slate-400">Python</span>
+    <button type="button" class="ds-codeblock-copy rounded-lg border border-white/10 bg-white/[0.06] px-2.5 py-1 text-xs font-semibold text-slate-200 transition hover:border-sky-400/40 hover:bg-white/[0.1] hover:text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-sky-400/50" data-copy-label="Copy" data-copied-label="Copied" aria-label="Copy code to clipboard">Copy</button>
+  </div>
+  <pre class="ds-codeblock-pre code-block m-0 overflow-x-auto p-4 text-[0.8125rem] leading-[1.55] sm:text-sm language-python" tabindex="0"><code class="whitespace-pre-wrap font-mono ds-codeblock-source language-python">def find_optimal_chunk_size(eval_dataset):
     """Grid search for chunk size."""
     results = {}
     for chunk_size in [200, 300, 400, 500, 600]:
@@ -68,7 +71,7 @@
 
     best = max(results.items(), key=lambda x: x[1]['f1_score'])
     return best[0]  # optimal size</code></pre>
-          </div>
+</div>
           </div>
         </section>
 
@@ -108,9 +111,12 @@
           <h2 id="cost-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">Cost Optimization</h2>
 
           <div class="rounded-2xl border border-white/10 bg-white/[0.03] p-5">
-            <div class="code-wrapper rounded-2xl border border-white/10 bg-white/[0.03] overflow-hidden">
-            <button class="copy-button" data-copy-label="Copy" data-copied-label="✓ Copied" aria-label="Copy code to clipboard"></button>
-            <pre class="code-block"><code class="language-python ds-codeblock-source">Cost breakdown per query:
+            <div class="ds-codeblock overflow-hidden rounded-2xl border border-white/10 bg-slate-950/90">
+  <div class="flex items-center justify-between gap-3 border-b border-white/10 px-3 py-2">
+    <span class="font-mono text-[11px] font-medium uppercase tracking-wide text-slate-400">Python</span>
+    <button type="button" class="ds-codeblock-copy rounded-lg border border-white/10 bg-white/[0.06] px-2.5 py-1 text-xs font-semibold text-slate-200 transition hover:border-sky-400/40 hover:bg-white/[0.1] hover:text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-sky-400/50" data-copy-label="Copy" data-copied-label="Copied" aria-label="Copy code to clipboard">Copy</button>
+  </div>
+  <pre class="ds-codeblock-pre code-block m-0 overflow-x-auto p-4 text-[0.8125rem] leading-[1.55] sm:text-sm language-python" tabindex="0"><code class="whitespace-pre-wrap font-mono ds-codeblock-source language-python">Cost breakdown per query:
 - Embedding (query): $0.0002 (text-embedding-3-small)
 - Vector DB search: $0.0001 (Pinecone)
 - LLM (GPT-4): $0.03 (worst case, 2K output)
@@ -125,7 +131,7 @@ Cost reduction strategies:
 3. Batch embeddings → -30% API cost
 4. Cache results → -60% repeat queries cost
 5. Local embeddings → $0 embedding cost</code></pre>
-          </div>
+</div>
           </div>
         </section>
 
@@ -133,9 +139,12 @@ Cost reduction strategies:
           <h2 id="abtest-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">A/B Testing Changes</h2>
 
           <div class="rounded-2xl border border-white/10 bg-white/[0.03] p-5">
-            <div class="code-wrapper rounded-2xl border border-white/10 bg-white/[0.03] overflow-hidden">
-            <button class="copy-button" data-copy-label="Copy" data-copied-label="✓ Copied" aria-label="Copy code to clipboard"></button>
-            <pre class="code-block"><code class="language-python ds-codeblock-source">def ab_test_retrieval(control_rag, treatment_rag, test_queries):
+            <div class="ds-codeblock overflow-hidden rounded-2xl border border-white/10 bg-slate-950/90">
+  <div class="flex items-center justify-between gap-3 border-b border-white/10 px-3 py-2">
+    <span class="font-mono text-[11px] font-medium uppercase tracking-wide text-slate-400">Python</span>
+    <button type="button" class="ds-codeblock-copy rounded-lg border border-white/10 bg-white/[0.06] px-2.5 py-1 text-xs font-semibold text-slate-200 transition hover:border-sky-400/40 hover:bg-white/[0.1] hover:text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-sky-400/50" data-copy-label="Copy" data-copied-label="Copied" aria-label="Copy code to clipboard">Copy</button>
+  </div>
+  <pre class="ds-codeblock-pre code-block m-0 overflow-x-auto p-4 text-[0.8125rem] leading-[1.55] sm:text-sm language-python" tabindex="0"><code class="whitespace-pre-wrap font-mono ds-codeblock-source language-python">def ab_test_retrieval(control_rag, treatment_rag, test_queries):
     """Compare two RAG systems."""
     results = {
         "control": {"quality": 0, "latency": 0, "cost": 0},
@@ -163,7 +172,7 @@ Cost reduction strategies:
     # Statistically significant?
     if results["treatment"]["quality"] > results["control"]["quality"] * 1.05:
         print("Treatment is significantly better!")</code></pre>
-          </div>
+</div>
           </div>
         </section>
 

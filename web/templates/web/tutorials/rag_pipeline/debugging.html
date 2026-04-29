@@ -55,9 +55,12 @@
           <h2 id="debug-retrieval-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">Debugging Retrieval</h2>
 
           <div class="rounded-2xl border border-white/10 bg-white/[0.03] p-5">
-            <div class="code-wrapper rounded-2xl border border-white/10 bg-white/[0.03] overflow-hidden">
-            <button class="copy-button" data-copy-label="Copy" data-copied-label="✓ Copied" aria-label="Copy code to clipboard"></button>
-            <pre class="code-block"><code class="language-python ds-codeblock-source">def debug_retrieval(query, expected_doc_ids):
+            <div class="ds-codeblock overflow-hidden rounded-2xl border border-white/10 bg-slate-950/90">
+  <div class="flex items-center justify-between gap-3 border-b border-white/10 px-3 py-2">
+    <span class="font-mono text-[11px] font-medium uppercase tracking-wide text-slate-400">Python</span>
+    <button type="button" class="ds-codeblock-copy rounded-lg border border-white/10 bg-white/[0.06] px-2.5 py-1 text-xs font-semibold text-slate-200 transition hover:border-sky-400/40 hover:bg-white/[0.1] hover:text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-sky-400/50" data-copy-label="Copy" data-copied-label="Copied" aria-label="Copy code to clipboard">Copy</button>
+  </div>
+  <pre class="ds-codeblock-pre code-block m-0 overflow-x-auto p-4 text-[0.8125rem] leading-[1.55] sm:text-sm language-python" tabindex="0"><code class="whitespace-pre-wrap font-mono ds-codeblock-source language-python">def debug_retrieval(query, expected_doc_ids):
     """Diagnose why docs aren't retrieved."""
     # Get all results with scores
     results = vector_db.search(query, k=100)
@@ -73,7 +76,7 @@
     retrieved_ids = [id for id, _ in results[:10]]
     found = len(set(retrieved_ids) & set(expected_doc_ids))
     print(f"\nFound {found}/{len(expected_doc_ids)} expected docs in top-10")</code></pre>
-          </div>
+</div>
           </div>
 
           <div class="rounded-2xl border border-blue-500/20 bg-blue-500/5 p-4 mt-4">
@@ -91,9 +94,12 @@
           <h2 id="token-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">Token Usage Debugging</h2>
 
           <div class="rounded-2xl border border-white/10 bg-white/[0.03] p-5">
-            <div class="code-wrapper rounded-2xl border border-white/10 bg-white/[0.03] overflow-hidden">
-            <button class="copy-button" data-copy-label="Copy" data-copied-label="✓ Copied" aria-label="Copy code to clipboard"></button>
-            <pre class="code-block"><code class="language-python ds-codeblock-source">import tiktoken
+            <div class="ds-codeblock overflow-hidden rounded-2xl border border-white/10 bg-slate-950/90">
+  <div class="flex items-center justify-between gap-3 border-b border-white/10 px-3 py-2">
+    <span class="font-mono text-[11px] font-medium uppercase tracking-wide text-slate-400">Python</span>
+    <button type="button" class="ds-codeblock-copy rounded-lg border border-white/10 bg-white/[0.06] px-2.5 py-1 text-xs font-semibold text-slate-200 transition hover:border-sky-400/40 hover:bg-white/[0.1] hover:text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-sky-400/50" data-copy-label="Copy" data-copied-label="Copied" aria-label="Copy code to clipboard">Copy</button>
+  </div>
+  <pre class="ds-codeblock-pre code-block m-0 overflow-x-auto p-4 text-[0.8125rem] leading-[1.55] sm:text-sm language-python" tabindex="0"><code class="whitespace-pre-wrap font-mono ds-codeblock-source language-python">import tiktoken
 
 def analyze_tokens(query, docs, answer):
     enc = tiktoken.encoding_for_model("gpt-4")
@@ -115,7 +121,7 @@ def analyze_tokens(query, docs, answer):
     # Check if exceeding limit
     if total > 4096:
         print("⚠️  EXCEEDING CONTEXT LIMIT!")</code></pre>
-          </div>
+</div>
           </div>
         </section>
 
@@ -136,9 +142,12 @@ def analyze_tokens(query, docs, answer):
           </div>
 
           <div class="rounded-2xl border border-white/10 bg-white/[0.03] p-4 mt-3">
-            <div class="code-wrapper rounded-2xl border border-white/10 bg-white/[0.03] overflow-hidden">
-            <button class="copy-button" data-copy-label="Copy" data-copied-label="✓ Copied" aria-label="Copy code to clipboard"></button>
-            <pre class="code-block"><code class="language-markdown ds-codeblock-source">Tools: Prometheus + Grafana, CloudWatch, DataDog, or custom dashboard
+            <div class="ds-codeblock overflow-hidden rounded-2xl border border-white/10 bg-slate-950/90">
+  <div class="flex items-center justify-between gap-3 border-b border-white/10 px-3 py-2">
+    <span class="font-mono text-[11px] font-medium uppercase tracking-wide text-slate-400">Markdown</span>
+    <button type="button" class="ds-codeblock-copy rounded-lg border border-white/10 bg-white/[0.06] px-2.5 py-1 text-xs font-semibold text-slate-200 transition hover:border-sky-400/40 hover:bg-white/[0.1] hover:text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-sky-400/50" data-copy-label="Copy" data-copied-label="Copied" aria-label="Copy code to clipboard">Copy</button>
+  </div>
+  <pre class="ds-codeblock-pre code-block m-0 overflow-x-auto p-4 text-[0.8125rem] leading-[1.55] sm:text-sm language-markdown" tabindex="0"><code class="whitespace-pre-wrap font-mono ds-codeblock-source language-markdown">Tools: Prometheus + Grafana, CloudWatch, DataDog, or custom dashboard
 
 Grafana dashboard shows:
 - Request rate (queries/sec)
@@ -146,7 +155,7 @@ Grafana dashboard shows:
 - Error rate trend
 - Cache performance
 - Cost trajectory</code></pre>
-          </div>
+</div>
           </div>
         </section>
 

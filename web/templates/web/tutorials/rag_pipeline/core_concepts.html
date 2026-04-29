@@ -44,13 +44,16 @@
             An <strong>embedding</strong> is a numerical representation of text. Instead of storing "The cat sat on the mat" as a string, we convert it to a list of numbers that capture its meaning.
           </p>
           <div class="rounded-2xl border border-white/10 bg-white/[0.03] p-5">
-            <div class="code-wrapper rounded-2xl border border-white/10 bg-white/[0.03] overflow-hidden">
-            <button class="copy-button" data-copy-label="Copy" data-copied-label="✓ Copied" aria-label="Copy code to clipboard"></button>
-            <pre class="code-block"><code class="language-python ds-codeblock-source">Text: "The cat sat on the mat"
+            <div class="ds-codeblock overflow-hidden rounded-2xl border border-white/10 bg-slate-950/90">
+  <div class="flex items-center justify-between gap-3 border-b border-white/10 px-3 py-2">
+    <span class="font-mono text-[11px] font-medium uppercase tracking-wide text-slate-400">Python</span>
+    <button type="button" class="ds-codeblock-copy rounded-lg border border-white/10 bg-white/[0.06] px-2.5 py-1 text-xs font-semibold text-slate-200 transition hover:border-sky-400/40 hover:bg-white/[0.1] hover:text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-sky-400/50" data-copy-label="Copy" data-copied-label="Copied" aria-label="Copy code to clipboard">Copy</button>
+  </div>
+  <pre class="ds-codeblock-pre code-block m-0 overflow-x-auto p-4 text-[0.8125rem] leading-[1.55] sm:text-sm language-python" tabindex="0"><code class="whitespace-pre-wrap font-mono ds-codeblock-source language-python">Text: "The cat sat on the mat"
 ↓
 Embedding: [0.23, -0.41, 0.15, 0.89, ..., 0.05]
            (1536 numbers for OpenAI's text-embedding-3-small)</code></pre>
-          </div>
+</div>
           </div>
 
           <p class="text-sm text-slate-400">
@@ -96,9 +99,12 @@ Embedding: [0.23, -0.41, 0.15, 0.89, ..., 0.05]
             <div class="rounded-2xl border border-white/10 bg-white/[0.03] p-5">
               <p class="font-semibold text-white mb-3">Cosine Similarity (Most Common)</p>
               <p class="text-sm text-slate-300 mb-3">Measures the angle between two vectors. Range: -1 to 1 (but typically 0 to 1 for text).</p>
-              <div class="code-wrapper rounded-2xl border border-white/10 bg-white/[0.03] overflow-hidden">
-            <button class="copy-button" data-copy-label="Copy" data-copied-label="✓ Copied" aria-label="Copy code to clipboard"></button>
-            <pre class="code-block"><code class="language-python ds-codeblock-source">similarity = (A · B) / (||A|| × ||B||)
+              <div class="ds-codeblock overflow-hidden rounded-2xl border border-white/10 bg-slate-950/90">
+  <div class="flex items-center justify-between gap-3 border-b border-white/10 px-3 py-2">
+    <span class="font-mono text-[11px] font-medium uppercase tracking-wide text-slate-400">Python</span>
+    <button type="button" class="ds-codeblock-copy rounded-lg border border-white/10 bg-white/[0.06] px-2.5 py-1 text-xs font-semibold text-slate-200 transition hover:border-sky-400/40 hover:bg-white/[0.1] hover:text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-sky-400/50" data-copy-label="Copy" data-copied-label="Copied" aria-label="Copy code to clipboard">Copy</button>
+  </div>
+  <pre class="ds-codeblock-pre code-block m-0 overflow-x-auto p-4 text-[0.8125rem] leading-[1.55] sm:text-sm language-python" tabindex="0"><code class="whitespace-pre-wrap font-mono ds-codeblock-source language-python">similarity = (A · B) / (||A|| × ||B||)
 
 Example:
 Text A: "Python programming language"
@@ -107,7 +113,7 @@ Cosine Similarity: 0.92 (very similar!)
 
 Text C: "What's the weather?"
 Cosine Similarity to A: 0.15 (not similar)</code></pre>
-          </div>
+</div>
             </div>
 
             <div class="rounded-2xl border border-white/10 bg-white/[0.03] p-5">
@@ -166,9 +172,12 @@ top_10_docs = vector_db.search(query_embedding, k=10)</code>
           <div class="space-y-4">
             <div class="rounded-2xl border border-white/10 bg-white/[0.03] p-5">
               <p class="font-semibold text-white mb-4">Phase 1: Indexing (Offline, happens once or periodically)</p>
-              <div class="code-wrapper rounded-2xl border border-white/10 bg-white/[0.03] overflow-hidden">
-            <button class="copy-button" data-copy-label="Copy" data-copied-label="✓ Copied" aria-label="Copy code to clipboard"></button>
-            <pre class="code-block"><code class="language-python ds-codeblock-source">Step 1: Load Documents
+              <div class="ds-codeblock overflow-hidden rounded-2xl border border-white/10 bg-slate-950/90">
+  <div class="flex items-center justify-between gap-3 border-b border-white/10 px-3 py-2">
+    <span class="font-mono text-[11px] font-medium uppercase tracking-wide text-slate-400">Python</span>
+    <button type="button" class="ds-codeblock-copy rounded-lg border border-white/10 bg-white/[0.06] px-2.5 py-1 text-xs font-semibold text-slate-200 transition hover:border-sky-400/40 hover:bg-white/[0.1] hover:text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-sky-400/50" data-copy-label="Copy" data-copied-label="Copied" aria-label="Copy code to clipboard">Copy</button>
+  </div>
+  <pre class="ds-codeblock-pre code-block m-0 overflow-x-auto p-4 text-[0.8125rem] leading-[1.55] sm:text-sm language-python" tabindex="0"><code class="whitespace-pre-wrap font-mono ds-codeblock-source language-python">Step 1: Load Documents
 documents = ["tax_guide.pdf", "FAQ.html", "policies.txt", ...]
 
 Step 2: Chunk Them
@@ -189,14 +198,17 @@ embeddings = [
 Step 4: Store in Vector DB
 vector_db.add(chunks, embeddings)
 # Now ready for search!</code></pre>
-          </div>
+</div>
             </div>
 
             <div class="rounded-2xl border border-white/10 bg-white/[0.03] p-5">
               <p class="font-semibold text-white mb-4">Phase 2: Querying (Online, happens per request)</p>
-              <div class="code-wrapper rounded-2xl border border-white/10 bg-white/[0.03] overflow-hidden">
-            <button class="copy-button" data-copy-label="Copy" data-copied-label="✓ Copied" aria-label="Copy code to clipboard"></button>
-            <pre class="code-block"><code class="language-python ds-codeblock-source">Step 1: Embed Query
+              <div class="ds-codeblock overflow-hidden rounded-2xl border border-white/10 bg-slate-950/90">
+  <div class="flex items-center justify-between gap-3 border-b border-white/10 px-3 py-2">
+    <span class="font-mono text-[11px] font-medium uppercase tracking-wide text-slate-400">Python</span>
+    <button type="button" class="ds-codeblock-copy rounded-lg border border-white/10 bg-white/[0.06] px-2.5 py-1 text-xs font-semibold text-slate-200 transition hover:border-sky-400/40 hover:bg-white/[0.1] hover:text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-sky-400/50" data-copy-label="Copy" data-copied-label="Copied" aria-label="Copy code to clipboard">Copy</button>
+  </div>
+  <pre class="ds-codeblock-pre code-block m-0 overflow-x-auto p-4 text-[0.8125rem] leading-[1.55] sm:text-sm language-python" tabindex="0"><code class="whitespace-pre-wrap font-mono ds-codeblock-source language-python">Step 1: Embed Query
 user_query = "How do I maximize tax deductions?"
 query_embedding = embed(user_query)
 
@@ -217,7 +229,7 @@ Answer:
 Step 4: Call LLM
 answer = llm.generate(prompt)
 # LLM now has ground truth to answer from</code></pre>
-          </div>
+</div>
             </div>
           </div>
 

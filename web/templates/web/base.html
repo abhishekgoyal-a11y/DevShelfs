@@ -217,8 +217,14 @@
     </script>
     <script>
       (function () {
-        // Handle old-style copy buttons (.ds-codeblock-copy)
+        // Handle copy buttons (.ds-codeblock-copy)
         document.querySelectorAll(".ds-codeblock-copy").forEach(function (btn) {
+          // Initialize button text
+          var copyLabel = btn.getAttribute("data-copy-label") || "Copy";
+          if (!btn.textContent.trim()) {
+            btn.textContent = copyLabel;
+          }
+
           btn.addEventListener("click", function () {
             var root = btn.closest(".ds-codeblock");
             if (!root) return;
@@ -251,6 +257,10 @@
 
         // Handle new-style copy buttons (.copy-button)
         document.querySelectorAll(".copy-button").forEach(function (btn) {
+          // Initialize button text
+          var copyLabel = btn.getAttribute("data-copy-label") || "Copy";
+          btn.textContent = copyLabel;
+
           btn.addEventListener("click", function () {
             var root = btn.closest(".code-wrapper");
             if (!root) return;

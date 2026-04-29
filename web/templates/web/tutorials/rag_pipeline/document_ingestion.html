@@ -72,9 +72,12 @@
           <div class="space-y-4">
             <div class="rounded-2xl border border-white/10 bg-white/[0.03] p-5">
               <p class="font-semibold text-white mb-3">LangChain Example</p>
-              <div class="code-wrapper rounded-2xl border border-white/10 bg-white/[0.03] overflow-hidden">
-            <button class="copy-button" data-copy-label="Copy" data-copied-label="✓ Copied" aria-label="Copy code to clipboard"></button>
-            <pre class="code-block"><code class="language-python ds-codeblock-source">from langchain_community.document_loaders import (
+              <div class="ds-codeblock overflow-hidden rounded-2xl border border-white/10 bg-slate-950/90">
+  <div class="flex items-center justify-between gap-3 border-b border-white/10 px-3 py-2">
+    <span class="font-mono text-[11px] font-medium uppercase tracking-wide text-slate-400">Python</span>
+    <button type="button" class="ds-codeblock-copy rounded-lg border border-white/10 bg-white/[0.06] px-2.5 py-1 text-xs font-semibold text-slate-200 transition hover:border-sky-400/40 hover:bg-white/[0.1] hover:text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-sky-400/50" data-copy-label="Copy" data-copied-label="Copied" aria-label="Copy code to clipboard">Copy</button>
+  </div>
+  <pre class="ds-codeblock-pre code-block m-0 overflow-x-auto p-4 text-[0.8125rem] leading-[1.55] sm:text-sm language-python" tabindex="0"><code class="whitespace-pre-wrap font-mono ds-codeblock-source language-python">from langchain_community.document_loaders import (
     PyPDFLoader,
     TextLoader,
     WebBaseLoader,
@@ -96,14 +99,17 @@ docs = loader.load()
 # Load Excel
 loader = UnstructuredExcelLoader("data.xlsx")
 docs = loader.load()</code></pre>
-          </div>
+</div>
             </div>
 
             <div class="rounded-2xl border border-white/10 bg-white/[0.03] p-5">
               <p class="font-semibold text-white mb-3">Document Structure</p>
-              <div class="code-wrapper rounded-2xl border border-white/10 bg-white/[0.03] overflow-hidden">
-            <button class="copy-button" data-copy-label="Copy" data-copied-label="✓ Copied" aria-label="Copy code to clipboard"></button>
-            <pre class="code-block"><code class="language-yaml ds-codeblock-source">Document {
+              <div class="ds-codeblock overflow-hidden rounded-2xl border border-white/10 bg-slate-950/90">
+  <div class="flex items-center justify-between gap-3 border-b border-white/10 px-3 py-2">
+    <span class="font-mono text-[11px] font-medium uppercase tracking-wide text-slate-400">YAML</span>
+    <button type="button" class="ds-codeblock-copy rounded-lg border border-white/10 bg-white/[0.06] px-2.5 py-1 text-xs font-semibold text-slate-200 transition hover:border-sky-400/40 hover:bg-white/[0.1] hover:text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-sky-400/50" data-copy-label="Copy" data-copied-label="Copied" aria-label="Copy code to clipboard">Copy</button>
+  </div>
+  <pre class="ds-codeblock-pre code-block m-0 overflow-x-auto p-4 text-[0.8125rem] leading-[1.55] sm:text-sm language-yaml" tabindex="0"><code class="whitespace-pre-wrap font-mono ds-codeblock-source language-yaml">Document {
   page_content: "Tax deductions include...",
   metadata: {
     "source": "tax_guide.pdf",
@@ -112,7 +118,7 @@ docs = loader.load()</code></pre>
     "date": "2024-01-01"
   }
 }</code></pre>
-          </div>
+</div>
             </div>
           </div>
         </section>
@@ -220,9 +226,12 @@ docs = [
           <p>Raw documents often contain noise that hurts embedding quality. Clean them before ingestion.</p>
 
           <div class="rounded-2xl border border-white/10 bg-white/[0.03] p-5">
-            <div class="code-wrapper rounded-2xl border border-white/10 bg-white/[0.03] overflow-hidden">
-            <button class="copy-button" data-copy-label="Copy" data-copied-label="✓ Copied" aria-label="Copy code to clipboard"></button>
-            <pre class="code-block"><code class="language-python ds-codeblock-source">import re
+            <div class="ds-codeblock overflow-hidden rounded-2xl border border-white/10 bg-slate-950/90">
+  <div class="flex items-center justify-between gap-3 border-b border-white/10 px-3 py-2">
+    <span class="font-mono text-[11px] font-medium uppercase tracking-wide text-slate-400">Python</span>
+    <button type="button" class="ds-codeblock-copy rounded-lg border border-white/10 bg-white/[0.06] px-2.5 py-1 text-xs font-semibold text-slate-200 transition hover:border-sky-400/40 hover:bg-white/[0.1] hover:text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-sky-400/50" data-copy-label="Copy" data-copied-label="Copied" aria-label="Copy code to clipboard">Copy</button>
+  </div>
+  <pre class="ds-codeblock-pre code-block m-0 overflow-x-auto p-4 text-[0.8125rem] leading-[1.55] sm:text-sm language-python" tabindex="0"><code class="whitespace-pre-wrap font-mono ds-codeblock-source language-python">import re
 
 def clean_text(text):
     # Remove extra whitespace
@@ -242,7 +251,7 @@ def clean_text(text):
 # Apply to documents
 for doc in documents:
     doc.page_content = clean_text(doc.page_content)</code></pre>
-          </div>
+</div>
           </div>
 
           <div class="space-y-3 mt-4">

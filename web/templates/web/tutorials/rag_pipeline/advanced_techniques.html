@@ -35,9 +35,12 @@
           <p>When a single document is too long, retrieve its summary first, then retrieve relevant chunks within it.</p>
 
           <div class="rounded-2xl border border-white/10 bg-white/[0.03] p-5">
-            <div class="code-wrapper rounded-2xl border border-white/10 bg-white/[0.03] overflow-hidden">
-            <button class="copy-button" data-copy-label="Copy" data-copied-label="✓ Copied" aria-label="Copy code to clipboard"></button>
-            <pre class="code-block"><code class="language-python ds-codeblock-source">Step 1: Index summaries (small)
+            <div class="ds-codeblock overflow-hidden rounded-2xl border border-white/10 bg-slate-950/90">
+  <div class="flex items-center justify-between gap-3 border-b border-white/10 px-3 py-2">
+    <span class="font-mono text-[11px] font-medium uppercase tracking-wide text-slate-400">Python</span>
+    <button type="button" class="ds-codeblock-copy rounded-lg border border-white/10 bg-white/[0.06] px-2.5 py-1 text-xs font-semibold text-slate-200 transition hover:border-sky-400/40 hover:bg-white/[0.1] hover:text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-sky-400/50" data-copy-label="Copy" data-copied-label="Copied" aria-label="Copy code to clipboard">Copy</button>
+  </div>
+  <pre class="ds-codeblock-pre code-block m-0 overflow-x-auto p-4 text-[0.8125rem] leading-[1.55] sm:text-sm language-python" tabindex="0"><code class="whitespace-pre-wrap font-mono ds-codeblock-source language-python">Step 1: Index summaries (small)
 summaries = [
   {"id": "doc1_summary", "summary": "About tax deductions...", "source_doc": "doc1"},
   ...
@@ -54,7 +57,7 @@ for summary in top_summaries:
     relevant_chunks.extend(chunks)
 
 Result: Top 5 most relevant documents, with best chunks from each.</code></pre>
-          </div>
+</div>
           </div>
         </section>
 
@@ -63,9 +66,12 @@ Result: Top 5 most relevant documents, with best chunks from each.</code></pre>
           <p>Instead of retrieving and answering, let the LLM decide: should I retrieve more docs? Search web? Use a tool?</p>
 
           <div class="rounded-2xl border border-white/10 bg-white/[0.03] p-5">
-            <div class="code-wrapper rounded-2xl border border-white/10 bg-white/[0.03] overflow-hidden">
-            <button class="copy-button" data-copy-label="Copy" data-copied-label="✓ Copied" aria-label="Copy code to clipboard"></button>
-            <pre class="code-block"><code class="language-yaml ds-codeblock-source">agent = create_agent(
+            <div class="ds-codeblock overflow-hidden rounded-2xl border border-white/10 bg-slate-950/90">
+  <div class="flex items-center justify-between gap-3 border-b border-white/10 px-3 py-2">
+    <span class="font-mono text-[11px] font-medium uppercase tracking-wide text-slate-400">YAML</span>
+    <button type="button" class="ds-codeblock-copy rounded-lg border border-white/10 bg-white/[0.06] px-2.5 py-1 text-xs font-semibold text-slate-200 transition hover:border-sky-400/40 hover:bg-white/[0.1] hover:text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-sky-400/50" data-copy-label="Copy" data-copied-label="Copied" aria-label="Copy code to clipboard">Copy</button>
+  </div>
+  <pre class="ds-codeblock-pre code-block m-0 overflow-x-auto p-4 text-[0.8125rem] leading-[1.55] sm:text-sm language-yaml" tabindex="0"><code class="whitespace-pre-wrap font-mono ds-codeblock-source language-yaml">agent = create_agent(
     tools=[
         {"name": "search_documents", "description": "Search internal docs"},
         {"name": "search_web", "description": "Search internet"},
@@ -85,7 +91,7 @@ response = agent.run(
 # 3. Executes both tools
 # 4. Combines results
 # 5. Generates final answer</code></pre>
-          </div>
+</div>
           </div>
 
           <p class="text-sm text-slate-300 mt-3">Best for: Complex questions, multi-step reasoning, uncertain data freshness.</p>

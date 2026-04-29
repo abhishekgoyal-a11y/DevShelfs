@@ -74,9 +74,12 @@
           <h2 id="storage-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">Vector DB Storage Costs</h2>
 
           <div class="rounded-2xl border border-white/10 bg-white/[0.03] p-5">
-            <div class="code-wrapper rounded-2xl border border-white/10 bg-white/[0.03] overflow-hidden">
-            <button class="copy-button" data-copy-label="Copy" data-copied-label="✓ Copied" aria-label="Copy code to clipboard"></button>
-            <pre class="code-block"><code class="language-markdown ds-codeblock-source">Storage Calculation:
+            <div class="ds-codeblock overflow-hidden rounded-2xl border border-white/10 bg-slate-950/90">
+  <div class="flex items-center justify-between gap-3 border-b border-white/10 px-3 py-2">
+    <span class="font-mono text-[11px] font-medium uppercase tracking-wide text-slate-400">Markdown</span>
+    <button type="button" class="ds-codeblock-copy rounded-lg border border-white/10 bg-white/[0.06] px-2.5 py-1 text-xs font-semibold text-slate-200 transition hover:border-sky-400/40 hover:bg-white/[0.1] hover:text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-sky-400/50" data-copy-label="Copy" data-copied-label="Copied" aria-label="Copy code to clipboard">Copy</button>
+  </div>
+  <pre class="ds-codeblock-pre code-block m-0 overflow-x-auto p-4 text-[0.8125rem] leading-[1.55] sm:text-sm language-markdown" tabindex="0"><code class="whitespace-pre-wrap font-mono ds-codeblock-source language-markdown">Storage Calculation:
 1M documents × 400 tokens/doc × 3 chars/token = 1.2B chars
 1.2B chars / 1M = 1.2M tokens of embeddings
 
@@ -86,7 +89,7 @@ Storage per model:
 
 Cost with Pinecone:
 - 1M vectors × 1536 dims = $100-300/month</code></pre>
-          </div>
+</div>
           </div>
         </section>
 
@@ -115,9 +118,12 @@ Cost with Pinecone:
           <h2 id="roi-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">ROI Calculation</h2>
 
           <div class="rounded-2xl border border-white/10 bg-white/[0.03] p-5">
-            <div class="code-wrapper rounded-2xl border border-white/10 bg-white/[0.03] overflow-hidden">
-            <button class="copy-button" data-copy-label="Copy" data-copied-label="✓ Copied" aria-label="Copy code to clipboard"></button>
-            <pre class="code-block"><code class="language-markdown ds-codeblock-source">Example: Customer Support RAG
+            <div class="ds-codeblock overflow-hidden rounded-2xl border border-white/10 bg-slate-950/90">
+  <div class="flex items-center justify-between gap-3 border-b border-white/10 px-3 py-2">
+    <span class="font-mono text-[11px] font-medium uppercase tracking-wide text-slate-400">Markdown</span>
+    <button type="button" class="ds-codeblock-copy rounded-lg border border-white/10 bg-white/[0.06] px-2.5 py-1 text-xs font-semibold text-slate-200 transition hover:border-sky-400/40 hover:bg-white/[0.1] hover:text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-sky-400/50" data-copy-label="Copy" data-copied-label="Copied" aria-label="Copy code to clipboard">Copy</button>
+  </div>
+  <pre class="ds-codeblock-pre code-block m-0 overflow-x-auto p-4 text-[0.8125rem] leading-[1.55] sm:text-sm language-markdown" tabindex="0"><code class="whitespace-pre-wrap font-mono ds-codeblock-source language-markdown">Example: Customer Support RAG
 
 Setup Cost: $10K (infrastructure, training)
 Monthly Cost: $5K (cloud services, embeddings)
@@ -130,7 +136,7 @@ Benefits:
 Monthly ROI: ($50K + $16.7K + $5K) - $5K = $66.7K profit
 Payback period: ~1.5 months
 Annual ROI: 800%</code></pre>
-          </div>
+</div>
           </div>
         </section>
 
