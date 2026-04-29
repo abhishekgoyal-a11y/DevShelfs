@@ -310,14 +310,26 @@ Human Rating Scale (example):
           </div>
         </section>
 
-        <section class="space-y-5 border-t border-slate-700/50 pt-8" aria-labelledby="summary-heading">
-          <h2 id="summary-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">Evaluation Checklist</h2>
-          <div class="rounded-2xl border border-green-500/20 bg-green-500/5 p-5 space-y-2 text-sm text-slate-300">
-            <div class="flex items-center gap-3">
-              <input type="checkbox" checked disabled />
-              <p><strong>Ground truth dataset:</strong> 50+ test examples with queries and relevant docs</p>
-            </div>
-            <div class="flex items-center gap-3">
+            {# ── Navigation ── #}
+    <div class="flex items-center justify-between">
+      <a
+        href="{% url 'tutorial_rag_pipeline_complete_system' %}"
+        class="inline-flex items-center gap-2 rounded-xl border border-violet-400/35 bg-violet-500/10 px-5 py-2.5 text-sm font-semibold text-violet-200 transition hover:border-violet-300/50 hover:bg-violet-500/20 hover:text-white"
+      >
+        <span aria-hidden>←</span> Previous
+      </a>
+      <a
+        href="{% url 'tutorial_rag_pipeline_pitfalls' %}"
+        class="inline-flex items-center gap-2 rounded-xl border border-violet-400/35 bg-violet-500/10 px-5 py-2.5 text-sm font-semibold text-violet-200 transition hover:border-violet-300/50 hover:bg-violet-500/20 hover:text-white"
+      >
+        Next: Common Pitfalls <span aria-hidden>→</span>
+      </a>
+    </div>
+
+      </article>
+    </div>
+
+<div class="flex items-center gap-3">
               <input type="checkbox" checked disabled />
               <p><strong>Retrieval metrics:</strong> Tracking Recall@5, MRR, nDCG@10</p>
             </div>
@@ -336,15 +348,21 @@ Human Rating Scale (example):
           </div>
         </section>
 
-        <div class="space-y-5 border-t border-slate-700/50 pt-8" aria-labelledby="next-heading">
-          <h2 id="next-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">Next: Common Pitfalls</h2>
-          <p>
-            Now that you know how to measure RAG quality, let's explore the most common failures and how to avoid them.
-          </p>
-          <a href="{% url 'tutorial_rag_pipeline_pitfalls' %}" class="inline-block mt-4 px-6 py-3 rounded-lg bg-violet-600 hover:bg-violet-700 text-white font-medium transition">
-            Continue to Common Pitfalls →
-          </a>
-        </div>
+            {# ── Navigation ── #}
+    <div class="flex items-center justify-between">
+      <a
+        href="{% url 'tutorial_rag_pipeline_complete_system' %}"
+        class="inline-flex items-center gap-2 rounded-xl border border-violet-400/35 bg-violet-500/10 px-5 py-2.5 text-sm font-semibold text-violet-200 transition hover:border-violet-300/50 hover:bg-violet-500/20 hover:text-white"
+      >
+        <span aria-hidden>←</span> Previous
+      </a>
+      <a
+        href="{% url 'tutorial_rag_pipeline_pitfalls' %}"
+        class="inline-flex items-center gap-2 rounded-xl border border-violet-400/35 bg-violet-500/10 px-5 py-2.5 text-sm font-semibold text-violet-200 transition hover:border-violet-300/50 hover:bg-violet-500/20 hover:text-white"
+      >
+        Next: Common Pitfalls <span aria-hidden>→</span>
+      </a>
+    </div>
 
       </article>
     </div>

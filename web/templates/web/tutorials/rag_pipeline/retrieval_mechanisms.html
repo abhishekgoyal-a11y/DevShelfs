@@ -217,35 +217,20 @@ filtered = [doc for doc in all_results
           </div>
         </section>
 
-        <div class="space-y-5 border-t border-slate-700/50 pt-8" aria-labelledby="best-practice-heading">
-          <h2 id="best-practice-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">Best Practice Pipeline</h2>
-          <div class="rounded-2xl border border-green-500/20 bg-green-500/5 p-5">
-            <div class="ds-codeblock overflow-hidden rounded-2xl border border-white/10 bg-slate-950/90">
-  <div class="flex items-center justify-between gap-3 border-b border-white/10 px-3 py-2">
-    <span class="font-mono text-[11px] font-medium uppercase tracking-wide text-slate-400">Python</span>
-    <button type="button" class="ds-codeblock-copy rounded-lg border border-white/10 bg-white/[0.06] px-2.5 py-1 text-xs font-semibold text-slate-200 transition hover:border-sky-400/40 hover:bg-white/[0.1] hover:text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-sky-400/50" data-copy-label="Copy" data-copied-label="Copied" aria-label="Copy code to clipboard">Copy</button>
-  </div>
-  <pre class="ds-codeblock-pre code-block m-0 overflow-x-auto p-4 text-[0.8125rem] leading-[1.55] sm:text-sm language-python" tabindex="0"><code class="whitespace-pre-wrap font-mono ds-codeblock-source language-python">1. Expand query (if vague)
-2. Dense search → top-100
-3. Sparse (BM25) search → top-50
-4. Combine, deduplicate
-5. Rerank with cross-encoder
-6. Apply metadata filters
-7. Order by composite score
-8. Return top-5 to LLM
-
-Result: High quality, efficient retrieval.</code></pre>
-</div>
-          </div>
-        </div>
-
-        <section class="space-y-5 border-t border-slate-700/50 pt-8" aria-labelledby="next-heading">
-          <h2 id="next-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">Next: LLM Integration</h2>
-          <p>Now that we retrieve documents, let's integrate them into LLM prompts with guardrails, structured output, and citation enforcement.</p>
-          <a href="{% url 'tutorial_rag_pipeline_llm_integration' %}" class="inline-block mt-4 px-6 py-3 rounded-lg bg-violet-600 hover:bg-violet-700 text-white font-medium transition">Continue to LLM Integration →</a>
-        </section>
-
-      </article>
+    {# ── Navigation ── #}
+    <div class="flex items-center justify-between">
+      <a
+        href="{% url 'tutorial_rag_pipeline_vectorstores' %}"
+        class="inline-flex items-center gap-2 rounded-xl border border-violet-400/35 bg-violet-500/10 px-5 py-2.5 text-sm font-semibold text-violet-200 transition hover:border-violet-300/50 hover:bg-violet-500/20 hover:text-white"
+      >
+        <span aria-hidden>←</span> Previous
+      </a>
+      <a
+        href="{% url 'tutorial_rag_pipeline_llm_integration' %}"
+        class="inline-flex items-center gap-2 rounded-xl border border-violet-400/35 bg-violet-500/10 px-5 py-2.5 text-sm font-semibold text-violet-200 transition hover:border-violet-300/50 hover:bg-violet-500/20 hover:text-white"
+      >
+        Next: LLM Integration <span aria-hidden>→</span>
+      </a>
     </div>
   </div>
 {% endblock %}

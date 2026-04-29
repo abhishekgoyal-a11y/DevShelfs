@@ -279,34 +279,26 @@ Chunk 2: "...charitable donations, and medical expenses. Self-employed..."
           </div>
         </section>
 
-        <section class="space-y-5 border-t border-slate-700/50 pt-8" aria-labelledby="summary-heading">
-          <h2 id="summary-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">Quick Recommendation</h2>
-          <div class="rounded-2xl border border-green-500/20 bg-green-500/5 p-5">
-            <p class="font-semibold text-green-300 mb-3">✓ Start with this setup:</p>
-            <code class="block font-mono text-xs text-slate-300 whitespace-pre bg-black/20 p-3 rounded">from langchain.text_splitters import TokenTextSplitter
+      </article>
+    </div>
 
-splitter = TokenTextSplitter(
-    chunk_size=400,       # tokens (not chars)
-    chunk_overlap=40,     # 10% overlap
-    encoding_name="cl100k_base"
-)
-chunks = splitter.split_text(document)
+</section>
 
-# Tune from here based on your results
-# Increase chunk_size if retrieving too many loosely-related docs
-# Decrease if context gets lost at boundaries</code>
-          </div>
-        </section>
-
-        <div class="space-y-5 border-t border-slate-700/50 pt-8" aria-labelledby="next-heading">
-          <h2 id="next-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">Next: Embeddings & Vectors</h2>
-          <p>
-            Now that chunks are ready, they need to be converted to embeddings. Learn how embeddings work, which models to use, and optimization techniques.
-          </p>
-          <a href="{% url 'tutorial_rag_pipeline_embeddings' %}" class="inline-block mt-4 px-6 py-3 rounded-lg bg-violet-600 hover:bg-violet-700 text-white font-medium transition">
-            Continue to Embeddings →
-          </a>
-        </div>
+            {# ── Navigation ── #}
+    <div class="flex items-center justify-between">
+      <a
+        href="{% url 'tutorial_rag_pipeline_document_ingestion' %}"
+        class="inline-flex items-center gap-2 rounded-xl border border-violet-400/35 bg-violet-500/10 px-5 py-2.5 text-sm font-semibold text-violet-200 transition hover:border-violet-300/50 hover:bg-violet-500/20 hover:text-white"
+      >
+        <span aria-hidden>←</span> Previous
+      </a>
+      <a
+        href="{% url 'tutorial_rag_pipeline_embeddings' %}"
+        class="inline-flex items-center gap-2 rounded-xl border border-violet-400/35 bg-violet-500/10 px-5 py-2.5 text-sm font-semibold text-violet-200 transition hover:border-violet-300/50 hover:bg-violet-500/20 hover:text-white"
+      >
+        Next: Embeddings <span aria-hidden>→</span>
+      </a>
+    </div>
 
       </article>
     </div>

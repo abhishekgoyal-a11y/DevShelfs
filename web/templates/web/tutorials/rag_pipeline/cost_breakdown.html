@@ -140,12 +140,26 @@ Annual ROI: 800%</code></pre>
           </div>
         </section>
 
-        <section class="space-y-5 border-t border-slate-700/50 pt-8" aria-labelledby="next-heading">
-          <h2 id="next-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">Next: Frontend Integration</h2>
-          <a href="{% url 'tutorial_rag_pipeline_frontend' %}" class="inline-block mt-4 px-6 py-3 rounded-lg bg-violet-600 hover:bg-violet-700 text-white font-medium transition">Continue →</a>
-        </section>
+            {# ── Navigation ── #}
+    <div class="flex items-center justify-between">
+      <a
+        href="{% url 'tutorial_rag_pipeline_security' %}"
+        class="inline-flex items-center gap-2 rounded-xl border border-violet-400/35 bg-violet-500/10 px-5 py-2.5 text-sm font-semibold text-violet-200 transition hover:border-violet-300/50 hover:bg-violet-500/20 hover:text-white"
+      >
+        <span aria-hidden>←</span> Previous
+      </a>
+      <a
+        href="{% url 'tutorial_rag_pipeline_frontend' %}"
+        class="inline-flex items-center gap-2 rounded-xl border border-violet-400/35 bg-violet-500/10 px-5 py-2.5 text-sm font-semibold text-violet-200 transition hover:border-violet-300/50 hover:bg-violet-500/20 hover:text-white"
+      >
+        Next: Frontend Integration <span aria-hidden>→</span>
+      </a>
+    </div>
 
       </article>
+    </div>
+
+</article>
     </div>
   </div>
 {% endblock %}

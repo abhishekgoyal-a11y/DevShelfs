@@ -358,14 +358,26 @@ User question: {question}
           </div>
         </section>
 
-        <section class="space-y-5 border-t border-slate-700/50 pt-8" aria-labelledby="summary-heading">
-          <h2 id="summary-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">Quick Reference: Pitfall Checklist</h2>
-          <div class="space-y-2 text-sm text-slate-300">
-            <div class="flex items-start gap-3 rounded-lg border border-white/10 bg-white/[0.03] p-3">
-              <input type="checkbox" />
-              <p><strong>Chunks:</strong> Using RecursiveCharacterTextSplitter or TokenTextSplitter with 30+ overlap?</p>
-            </div>
-            <div class="flex items-start gap-3 rounded-lg border border-white/10 bg-white/[0.03] p-3">
+            {# ── Navigation ── #}
+    <div class="flex items-center justify-between">
+      <a
+        href="{% url 'tutorial_rag_pipeline_evaluation_framework' %}"
+        class="inline-flex items-center gap-2 rounded-xl border border-violet-400/35 bg-violet-500/10 px-5 py-2.5 text-sm font-semibold text-violet-200 transition hover:border-violet-300/50 hover:bg-violet-500/20 hover:text-white"
+      >
+        <span aria-hidden>←</span> Previous
+      </a>
+      <a
+        href="{% url 'tutorial_rag_pipeline_optimization_tuning' %}"
+        class="inline-flex items-center gap-2 rounded-xl border border-violet-400/35 bg-violet-500/10 px-5 py-2.5 text-sm font-semibold text-violet-200 transition hover:border-violet-300/50 hover:bg-violet-500/20 hover:text-white"
+      >
+        Next: Optimization & Tuning <span aria-hidden>→</span>
+      </a>
+    </div>
+
+      </article>
+    </div>
+
+<div class="flex items-start gap-3 rounded-lg border border-white/10 bg-white/[0.03] p-3">
               <input type="checkbox" />
               <p><strong>Retrieval:</strong> Ranking good docs first? Testing with ground truth dataset?</p>
             </div>
@@ -392,15 +404,21 @@ User question: {question}
           </div>
         </section>
 
-        <div class="space-y-5 border-t border-slate-700/50 pt-8" aria-labelledby="next-heading">
-          <h2 id="next-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">Next: Production Architecture</h2>
-          <p>
-            Now that you understand the pitfalls, let's design a production-ready RAG system. We'll cover API layers, async pipelines, caching, and observability.
-          </p>
-          <a href="{% url 'tutorial_rag_pipeline_production' %}" class="inline-block mt-4 px-6 py-3 rounded-lg bg-violet-600 hover:bg-violet-700 text-white font-medium transition">
-            Continue to Production Architecture →
-          </a>
-        </div>
+            {# ── Navigation ── #}
+    <div class="flex items-center justify-between">
+      <a
+        href="{% url 'tutorial_rag_pipeline_evaluation_framework' %}"
+        class="inline-flex items-center gap-2 rounded-xl border border-violet-400/35 bg-violet-500/10 px-5 py-2.5 text-sm font-semibold text-violet-200 transition hover:border-violet-300/50 hover:bg-violet-500/20 hover:text-white"
+      >
+        <span aria-hidden>←</span> Previous
+      </a>
+      <a
+        href="{% url 'tutorial_rag_pipeline_optimization_tuning' %}"
+        class="inline-flex items-center gap-2 rounded-xl border border-violet-400/35 bg-violet-500/10 px-5 py-2.5 text-sm font-semibold text-violet-200 transition hover:border-violet-300/50 hover:bg-violet-500/20 hover:text-white"
+      >
+        Next: Optimization & Tuning <span aria-hidden>→</span>
+      </a>
+    </div>
 
       </article>
     </div>

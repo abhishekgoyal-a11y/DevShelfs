@@ -281,18 +281,24 @@ for doc in documents:
           </div>
         </section>
 
-        <div class="space-y-5 border-t border-slate-700/50 pt-8" aria-labelledby="next-heading">
-          <h2 id="next-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">Next: Chunking Strategies</h2>
-          <p>
-            Once loaded and cleaned, documents must be split into chunks. The way you chunk has a massive impact on retrieval quality. Let's learn how.
-          </p>
-          <a href="{% url 'tutorial_rag_pipeline_chunking' %}" class="inline-block mt-4 px-6 py-3 rounded-lg bg-violet-600 hover:bg-violet-700 text-white font-medium transition">
-            Continue to Chunking Strategies →
-          </a>
-        </div>
 
       </article>
     </div>
 
+    {# ── Navigation ── #}
+    <div class="flex items-center justify-between">
+      <a
+        href="{% url 'tutorial_rag_pipeline_core_concepts' %}"
+        class="inline-flex items-center gap-2 rounded-xl border border-violet-400/35 bg-violet-500/10 px-5 py-2.5 text-sm font-semibold text-violet-200 transition hover:border-violet-300/50 hover:bg-violet-500/20 hover:text-white"
+      >
+        <span aria-hidden>←</span> Previous
+      </a>
+      <a
+        href="{% url 'tutorial_rag_pipeline_chunking' %}"
+        class="inline-flex items-center gap-2 rounded-xl border border-violet-400/35 bg-violet-500/10 px-5 py-2.5 text-sm font-semibold text-violet-200 transition hover:border-violet-300/50 hover:bg-violet-500/20 hover:text-white"
+      >
+        Next: Chunking Strategies <span aria-hidden>→</span>
+      </a>
+    </div>
   </div>
 {% endblock %}
