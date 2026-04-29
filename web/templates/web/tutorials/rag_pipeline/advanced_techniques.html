@@ -109,9 +109,12 @@ response = agent.run(
           <p>Have the LLM verify its own answer against retrieved docs. Catch hallucinations before returning.</p>
 
           <div class="rounded-2xl border border-white/10 bg-white/[0.03] p-5">
-            <div class="code-wrapper rounded-2xl border border-white/10 bg-white/[0.03] overflow-hidden">
-            <button class="copy-button" data-copy-label="Copy" data-copied-label="✓ Copied" aria-label="Copy code to clipboard"></button>
-            <pre class="code-block"><code class="language-json ds-codeblock-source">Step 1: Generate answer
+            <div class="ds-codeblock overflow-hidden rounded-2xl border border-white/10 bg-slate-950/90">
+  <div class="flex items-center justify-between gap-3 border-b border-white/10 px-3 py-2">
+    <span class="font-mono text-[11px] font-medium uppercase tracking-wide text-slate-400">PYTHON</span>
+    <button type="button" class="ds-codeblock-copy rounded-lg border border-white/10 bg-white/[0.06] px-2.5 py-1 text-xs font-semibold text-slate-200 transition hover:border-sky-400/40 hover:bg-white/[0.1] hover:text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-sky-400/50" data-copy-label="Copy" data-copied-label="Copied" aria-label="Copy code to clipboard">Copy</button>
+  </div>
+  <pre class="ds-codeblock-pre code-block m-0 overflow-x-auto p-4 text-[0.8125rem] leading-[1.55] sm:text-sm language-python" tabindex="0"><code class="whitespace-pre-wrap font-mono ds-codeblock-source language-python">Step 1: Generate answer
 answer = llm.generate(query, retrieved_docs)
 
 Step 2: Self-verify
@@ -130,7 +133,7 @@ if verified.confidence < 0.7:
     answer = llm.generate(query, more_docs + retrieved_docs)
 
 return answer</code></pre>
-          </div>
+</div>
           </div>
         </section>
 
@@ -155,9 +158,12 @@ return answer</code></pre>
           <p>Don't always retrieve fixed K documents. Stop when confident you have enough.</p>
 
           <div class="rounded-2xl border border-white/10 bg-white/[0.03] p-5">
-            <div class="code-wrapper rounded-2xl border border-white/10 bg-white/[0.03] overflow-hidden">
-            <button class="copy-button" data-copy-label="Copy" data-copied-label="✓ Copied" aria-label="Copy code to clipboard"></button>
-            <pre class="code-block"><code class="language-python ds-codeblock-source">def adaptive_retrieve(query, max_docs=20):
+            <div class="ds-codeblock overflow-hidden rounded-2xl border border-white/10 bg-slate-950/90">
+  <div class="flex items-center justify-between gap-3 border-b border-white/10 px-3 py-2">
+    <span class="font-mono text-[11px] font-medium uppercase tracking-wide text-slate-400">PYTHON</span>
+    <button type="button" class="ds-codeblock-copy rounded-lg border border-white/10 bg-white/[0.06] px-2.5 py-1 text-xs font-semibold text-slate-200 transition hover:border-sky-400/40 hover:bg-white/[0.1] hover:text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-sky-400/50" data-copy-label="Copy" data-copied-label="Copied" aria-label="Copy code to clipboard">Copy</button>
+  </div>
+  <pre class="ds-codeblock-pre code-block m-0 overflow-x-auto p-4 text-[0.8125rem] leading-[1.55] sm:text-sm language-python" tabindex="0"><code class="whitespace-pre-wrap font-mono ds-codeblock-source language-python">def adaptive_retrieve(query, max_docs=20):
     retrieved = []
     confidence = 0
     k = 5
@@ -174,7 +180,7 @@ return answer</code></pre>
         k = min(k + 5, 20)  # Increase batch size
 
     return retrieved[:max_docs]</code></pre>
-          </div>
+</div>
           </div>
 
           <p class="text-sm text-slate-300 mt-3">Benefit: Reduces costs, faster for simple queries, better UX for complex queries.</p>
