@@ -1,0 +1,300 @@
+{% extends "web/base.html" %}
+{% block title %}Chunking Strategies — RAG Pipeline Tutorial{% endblock %}
+{% block content %}
+  <div class="space-y-10">
+
+    <div class="flex flex-wrap items-center gap-2 text-sm text-slate-400/90">
+      <a href="{% url 'tutorials' %}" class="font-medium text-violet-300/90 transition hover:text-violet-200">Tutorials</a>
+      <span aria-hidden class="text-slate-600">/</span>
+      <a href="{% url 'tutorial_rag_pipeline_intro' %}" class="font-medium text-violet-300/90 transition hover:text-violet-200">RAG Pipeline</a>
+      <span aria-hidden class="text-slate-600">/</span>
+      <span class="text-slate-200/90">Chunking Strategies</span>
+    </div>
+
+    <section class="relative overflow-hidden rounded-3xl border border-violet-400/20 bg-white/[0.06] p-6 shadow-[0_0_0_1px_rgba(255,255,255,0.04)] backdrop-blur-2xl sm:p-8">
+      <div class="pointer-events-none absolute -right-24 top-0 h-72 w-72 rounded-full bg-violet-500/15 blur-3xl"></div>
+      <div class="pointer-events-none absolute -left-20 bottom-0 h-56 w-56 rounded-full bg-fuchsia-500/10 blur-3xl"></div>
+      <div class="relative">
+        <div class="flex flex-wrap items-center gap-3">
+          <span class="rounded-full border border-violet-500/25 bg-violet-500/10 px-2.5 py-1 text-xs font-medium text-violet-300/90">RAG Pipeline</span>
+          <span class="rounded-full border border-sky-500/25 bg-sky-500/10 px-2.5 py-1 text-xs font-medium text-sky-300/90">Intermediate</span>
+          <span class="text-xs text-slate-400/80">· 15 min read</span>
+          <span class="ml-auto text-xs font-medium text-slate-400/80">Page 4 of 23</span>
+        </div>
+        <h1 class="mt-4 text-3xl font-semibold tracking-tight text-white sm:text-4xl lg:text-[2.5rem] lg:leading-tight">Chunking Strategies</h1>
+        <p class="mt-4 max-w-2xl text-sm leading-relaxed text-slate-200/80 sm:text-base">
+          Why chunking matters, different strategies (fixed, recursive, semantic, token-based), model-specific sizes, overlap tuning, and when to use each approach.
+        </p>
+        <div class="mt-6">
+          <div class="mb-1.5 flex items-center justify-between text-xs text-slate-400/80"><span>Series progress</span><span>4 / 23</span></div>
+          <div class="h-1.5 w-full overflow-hidden rounded-full bg-white/10"><div class="h-full w-[17%] rounded-full bg-violet-400/70"></div></div>
+        </div>
+      </div>
+    </section>
+
+    <div class="glass rounded-3xl border border-white/10 p-5 sm:p-8">
+      <article class="mx-auto space-y-12 text-base leading-relaxed text-slate-300/95">
+
+        <section class="space-y-5" aria-labelledby="why-heading">
+          <h2 id="why-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">Why Chunking Matters</h2>
+          <p>
+            Chunking is <strong>the most impactful decision in RAG</strong>. Get it wrong and you'll retrieve irrelevant documents or miss important context.
+          </p>
+
+          <div class="space-y-3">
+            <div class="rounded-2xl border border-red-500/20 bg-red-500/5 p-4">
+              <p class="font-semibold text-red-300 mb-2">❌ Too Large (5000+ tokens)</p>
+              <p class="text-sm text-slate-300">Chunks contain too many topics. Query "How do I file taxes?" might retrieve a 10-page document. LLM spends tokens on irrelevant content.</p>
+            </div>
+
+            <div class="rounded-2xl border border-red-500/20 bg-red-500/5 p-4">
+              <p class="font-semibold text-red-300 mb-2">❌ Too Small (&lt;50 tokens)</p>
+              <p class="text-sm text-slate-300">Chunks lose context. "Self-employed people can..." (alone) is confusing without the full deduction explanation.</p>
+            </div>
+
+            <div class="rounded-2xl border border-green-500/20 bg-green-500/5 p-4">
+              <p class="font-semibold text-green-300 mb-2">✓ Just Right (200-500 tokens)</p>
+              <p class="text-sm text-slate-300">Focused on single topic. Enough context to understand alone. Fits in context window with multiple retrievals.</p>
+            </div>
+          </div>
+
+          <div class="rounded-2xl border border-orange-500/20 bg-orange-500/5 p-4 mt-4">
+            <p class="text-sm text-slate-300">
+              <strong>🎯 Sweet spot:</strong> 256-512 tokens (for most use cases). Adjust based on your LLM's context window and retrieval requirements.
+            </p>
+          </div>
+        </section>
+
+        <section class="space-y-5" aria-labelledby="methods-heading">
+          <h2 id="methods-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">Chunking Methods</h2>
+
+          <div class="space-y-4">
+            <div class="rounded-2xl border border-white/10 bg-white/[0.03] p-5">
+              <p class="font-semibold text-white mb-3">1. Fixed-Size Character Splitting</p>
+              <p class="text-sm text-slate-300 mb-3"><strong>How:</strong> Split every N characters (e.g., 1000 chars = ~200 tokens).</p>
+              <code class="block font-mono text-xs text-slate-300 whitespace-pre bg-black/20 p-2 rounded">text = "Long document text..."
+chunk_size = 1000  # characters
+chunks = [text[i:i+chunk_size] for i in range(0, len(text), chunk_size)]</code>
+              <p class="text-xs text-slate-400 mt-2">❌ <strong>Problem:</strong> Chunks may break mid-sentence. Hard to predict actual token count.</p>
+            </div>
+
+            <div class="rounded-2xl border border-white/10 bg-white/[0.03] p-5">
+              <p class="font-semibold text-white mb-3">2. Recursive Character Splitting (Recommended)</p>
+              <p class="text-sm text-slate-300 mb-3"><strong>How:</strong> Split on delimiters in order (paragraph, sentence, word) until chunk reaches target size.</p>
+              <code class="block font-mono text-xs text-slate-300 whitespace-pre bg-black/20 p-2 rounded">from langchain.text_splitters import RecursiveCharacterTextSplitter
+
+splitter = RecursiveCharacterTextSplitter(
+    chunk_size=500,
+    chunk_overlap=50,
+    separators=["\n\n", "\n", ". ", " ", ""]
+)
+chunks = splitter.split_text(document_text)</code>
+              <p class="text-xs text-slate-400 mt-2">✓ <strong>Advantage:</strong> Preserves logical boundaries (paragraphs, sentences). Most reliable.</p>
+            </div>
+
+            <div class="rounded-2xl border border-white/10 bg-white/[0.03] p-5">
+              <p class="font-semibold text-white mb-3">3. Token-Based Splitting ⭐ BEST PRACTICE</p>
+              <p class="text-sm text-slate-300 mb-3"><strong>How:</strong> Count actual tokens using the model's tokenizer. Split when tokens reach limit.</p>
+              <code class="block font-mono text-xs text-slate-300 whitespace-pre bg-black/20 p-2 rounded">import tiktoken
+from langchain.text_splitters import TokenTextSplitter
+
+# For GPT models
+splitter = TokenTextSplitter(
+    chunk_size=400,      # tokens, not characters
+    chunk_overlap=20,    # tokens
+    encoding_name="cl100k_base"  # GPT-4 encoding
+)
+chunks = splitter.split_text(text)
+
+# Verify token count
+enc = tiktoken.encoding_for_model("gpt-4")
+for chunk in chunks:
+    token_count = len(enc.encode(chunk))
+    print(f"Chunk: {token_count} tokens")</code>
+              <p class="text-xs text-slate-400 mt-2">✓ <strong>Why:</strong> Exact token counts. No surprises with context limits. Model-specific.</p>
+            </div>
+
+            <div class="rounded-2xl border border-white/10 bg-white/[0.03] p-5">
+              <p class="font-semibold text-white mb-3">4. Semantic Chunking</p>
+              <p class="text-sm text-slate-300 mb-3"><strong>How:</strong> Use embeddings to detect when topic changes. Split there, not by size.</p>
+              <code class="block font-mono text-xs text-slate-300 whitespace-pre bg-black/20 p-2 rounded">from semantic_chunkers import StatisticalChunker
+
+chunker = StatisticalChunker(
+    encoder="openai",  # or "huggingface"
+)
+chunks = chunker.split_text(document_text)
+# Chunks vary in size based on topic coherence</code>
+              <p class="text-xs text-slate-400 mt-2">⚠️ <strong>Tradeoff:</strong> Better quality but slower (requires embedding during chunking). Use for critical documents.</p>
+            </div>
+          </div>
+        </section>
+
+        <section class="space-y-5" aria-labelledby="modelspecific-heading">
+          <h2 id="modelspecific-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">Model-Specific Chunk Sizes</h2>
+          <p>Different LLMs have different strengths. Adjust chunk size accordingly:</p>
+
+          <div class="overflow-x-auto">
+            <table class="w-full text-sm text-slate-300">
+              <thead class="text-xs font-semibold text-white border-b border-slate-700">
+                <tr>
+                  <th class="text-left py-3 px-3">Model</th>
+                  <th class="text-left py-3 px-3">Context Window</th>
+                  <th class="text-left py-3 px-3">Recommended Chunk</th>
+                  <th class="text-left py-3 px-3">Max Retrievals</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr class="border-b border-slate-800">
+                  <td class="py-3 px-3">GPT-4o</td>
+                  <td class="py-3 px-3">128K tokens</td>
+                  <td class="py-3 px-3">400-500 tokens</td>
+                  <td class="py-3 px-3">10-15 chunks</td>
+                </tr>
+                <tr class="border-b border-slate-800">
+                  <td class="py-3 px-3">GPT-3.5-turbo</td>
+                  <td class="py-3 px-3">16K tokens</td>
+                  <td class="py-3 px-3">250-300 tokens</td>
+                  <td class="py-3 px-3">5-8 chunks</td>
+                </tr>
+                <tr class="border-b border-slate-800">
+                  <td class="py-3 px-3">Claude 3 Opus</td>
+                  <td class="py-3 px-3">200K tokens</td>
+                  <td class="py-3 px-3">600-800 tokens</td>
+                  <td class="py-3 px-3">20-25 chunks</td>
+                </tr>
+                <tr class="border-b border-slate-800">
+                  <td class="py-3 px-3">Llama 2 (7B)</td>
+                  <td class="py-3 px-3">4K tokens</td>
+                  <td class="py-3 px-3">200-256 tokens</td>
+                  <td class="py-3 px-3">3-4 chunks</td>
+                </tr>
+                <tr class="border-b border-slate-800">
+                  <td class="py-3 px-3">Mixtral 8x7B</td>
+                  <td class="py-3 px-3">32K tokens</td>
+                  <td class="py-3 px-3">400-500 tokens</td>
+                  <td class="py-3 px-3">8-10 chunks</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="rounded-2xl border border-sky-500/20 bg-sky-500/5 p-4 mt-4">
+            <p class="text-sm text-slate-300">
+              <strong>Formula:</strong> Max chunk size = (context_window × 0.6) / max_retrievals
+            </p>
+            <p class="text-xs text-slate-400 mt-2">This reserves ~40% of context for prompt, system message, and LLM's response.</p>
+          </div>
+        </section>
+
+        <section class="space-y-5" aria-labelledby="overlap-heading">
+          <h2 id="overlap-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">Overlap: Context Preservation</h2>
+          <p>
+            Chunks are split independently, but important context might fall on boundaries. <strong>Overlap</strong> solves this.
+          </p>
+
+          <div class="rounded-2xl border border-white/10 bg-white/[0.03] p-5 space-y-3">
+            <p class="font-semibold text-white">Example:</p>
+            <code class="block font-mono text-xs text-slate-300 whitespace-pre">Text: "Tax deductions are allowed. Common examples include mortgages,
+charitable donations, and medical expenses. Self-employed..."
+
+WITHOUT overlap (chunk_overlap=0):
+Chunk 1: "Tax deductions are allowed. Common examples include mortgages,
+charitable donations, and medical expenses."
+Chunk 2: "Self-employed..."  ← Lost context about deductions!
+
+WITH overlap (chunk_overlap=30):
+Chunk 1: "Tax deductions are allowed. Common examples include mortgages,
+charitable donations, and medical expenses."
+Chunk 2: "...charitable donations, and medical expenses. Self-employed..."
+         ↑ Overlaps with chunk 1</code>
+          </div>
+
+          <div class="space-y-3 mt-4">
+            <p class="font-semibold text-white text-sm">Overlap Tuning:</p>
+            <div class="space-y-2 text-sm text-slate-300">
+              <div class="flex items-start gap-3">
+                <span class="rounded bg-violet-500/20 px-2 py-0.5 text-xs font-medium text-violet-300 flex-shrink-0">Small (10-20 tokens)</span>
+                <p>Fast, low storage cost. Use for well-structured docs (articles, manuals).</p>
+              </div>
+              <div class="flex items-start gap-3">
+                <span class="rounded bg-violet-500/20 px-2 py-0.5 text-xs font-medium text-violet-300 flex-shrink-0">Medium (30-50 tokens)</span>
+                <p><strong>Recommended.</strong> Good balance. Preserves context without too much duplication.</p>
+              </div>
+              <div class="flex items-start gap-3">
+                <span class="rounded bg-violet-500/20 px-2 py-0.5 text-xs font-medium text-violet-300 flex-shrink-0">Large (50-100+ tokens)</span>
+                <p>For complex, interdependent docs. Higher storage/embedding cost.</p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="space-y-5" aria-labelledby="custom-heading">
+          <h2 id="custom-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">Custom Chunking Logic</h2>
+          <p>
+            Sometimes you need domain-specific chunking. Write custom logic for your use case.
+          </p>
+
+          <div class="rounded-2xl border border-white/10 bg-white/[0.03] p-5">
+            <p class="font-semibold text-white mb-3">Example: Code-Aware Chunking</p>
+            <code class="block font-mono text-xs text-slate-300 whitespace-pre">def chunk_code(code_text, max_tokens=400):
+    """Chunk code by functions/classes, not arbitrary lines."""
+    import re
+    import tiktoken
+
+    # Split by function/class definitions
+    pattern = r'(def |class )(\w+)'
+    functions = re.split(f'(?={pattern})', code_text)
+
+    enc = tiktoken.encoding_for_model("gpt-4")
+    chunks = []
+    current = ""
+
+    for func in functions:
+        tokens = len(enc.encode(func))
+        if len(enc.encode(current + func)) > max_tokens:
+            if current:
+                chunks.append(current)
+            current = func
+        else:
+            current += func
+
+    if current:
+        chunks.append(current)
+    return chunks</code>
+          </div>
+        </section>
+
+        <section class="space-y-5 border-t border-slate-700/50 pt-8" aria-labelledby="summary-heading">
+          <h2 id="summary-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">Quick Recommendation</h2>
+          <div class="rounded-2xl border border-green-500/20 bg-green-500/5 p-5">
+            <p class="font-semibold text-green-300 mb-3">✓ Start with this setup:</p>
+            <code class="block font-mono text-xs text-slate-300 whitespace-pre bg-black/20 p-3 rounded">from langchain.text_splitters import TokenTextSplitter
+
+splitter = TokenTextSplitter(
+    chunk_size=400,       # tokens (not chars)
+    chunk_overlap=40,     # 10% overlap
+    encoding_name="cl100k_base"
+)
+chunks = splitter.split_text(document)
+
+# Tune from here based on your results
+# Increase chunk_size if retrieving too many loosely-related docs
+# Decrease if context gets lost at boundaries</code>
+          </div>
+        </section>
+
+        <div class="space-y-5 border-t border-slate-700/50 pt-8" aria-labelledby="next-heading">
+          <h2 id="next-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">Next: Embeddings & Vectors</h2>
+          <p>
+            Now that chunks are ready, they need to be converted to embeddings. Learn how embeddings work, which models to use, and optimization techniques.
+          </p>
+          <a href="{% url 'tutorial_rag_pipeline_embeddings' %}" class="inline-block mt-4 px-6 py-3 rounded-lg bg-violet-600 hover:bg-violet-700 text-white font-medium transition">
+            Continue to Embeddings →
+          </a>
+        </div>
+
+      </article>
+    </div>
+
+  </div>
+{% endblock %}

@@ -459,13 +459,13 @@ _TUTORIALS = [
     },
     {
         "title": "RAG Pipeline Tutorial",
-        "description": "Connect an LLM to your own documents using retrieval-augmented generation.",
+        "description": "Complete guide to building production RAG systems: from fundamentals to advanced patterns.",
         "category": "RAG & Vector DBs",
         "difficulty": "Intermediate",
-        "read_time": 15,
+        "read_time": 120,
         "icon": "📚",
         "icon_gradient": "from-amber-500/40 via-orange-400/20 to-yellow-400/25",
-        "url": "#",
+        "url": "/tutorials/rag-pipeline/introduction/",
     },
     {
         "title": "Prompt Engineering",
@@ -770,6 +770,99 @@ def tutorial_rll_langchain(request):
 
 def tutorial_rll_rag(request):
     return render(request, "web/tutorials/run_llms_locally/local_rag.html", {"layout": _layout(request.path), "active_nav": "tutorials"})
+
+
+# RAG Pipeline Tutorial Views
+def tutorial_rag_pipeline_intro(request):
+    return render(request, "web/tutorials/rag_pipeline/1_introduction.html", {"layout": _layout(request.path), "active_nav": "tutorials"})
+
+
+def tutorial_rag_pipeline_core_concepts(request):
+    return render(request, "web/tutorials/rag_pipeline/2_core_concepts.html", {"layout": _layout(request.path), "active_nav": "tutorials"})
+
+
+def tutorial_rag_pipeline_document_ingestion(request):
+    return render(request, "web/tutorials/rag_pipeline/3_document_ingestion.html", {"layout": _layout(request.path), "active_nav": "tutorials"})
+
+
+def tutorial_rag_pipeline_chunking(request):
+    return render(request, "web/tutorials/rag_pipeline/4_chunking_strategies.html", {"layout": _layout(request.path), "active_nav": "tutorials"})
+
+
+def tutorial_rag_pipeline_embeddings(request):
+    return render(request, "web/tutorials/rag_pipeline/5_embeddings.html", {"layout": _layout(request.path), "active_nav": "tutorials"})
+
+
+def tutorial_rag_pipeline_vectorstores(request):
+    return render(request, "web/tutorials/rag_pipeline/6_vector_stores.html", {"layout": _layout(request.path), "active_nav": "tutorials"})
+
+
+def tutorial_rag_pipeline_retrieval(request):
+    return render(request, "web/tutorials/rag_pipeline/7_retrieval_mechanisms.html", {"layout": _layout(request.path), "active_nav": "tutorials"})
+
+
+def tutorial_rag_pipeline_llm_integration(request):
+    return render(request, "web/tutorials/rag_pipeline/8_llm_integration.html", {"layout": _layout(request.path), "active_nav": "tutorials"})
+
+
+def tutorial_rag_pipeline_advanced_techniques(request):
+    return render(request, "web/tutorials/rag_pipeline/9_advanced_techniques.html", {"layout": _layout(request.path), "active_nav": "tutorials"})
+
+
+def tutorial_rag_pipeline_complete_system(request):
+    return render(request, "web/tutorials/rag_pipeline/10_complete_system.html", {"layout": _layout(request.path), "active_nav": "tutorials"})
+
+
+def tutorial_rag_pipeline_evaluation_framework(request):
+    return render(request, "web/tutorials/rag_pipeline/11_evaluation_framework.html", {"layout": _layout(request.path), "active_nav": "tutorials"})
+
+
+def tutorial_rag_pipeline_pitfalls(request):
+    return render(request, "web/tutorials/rag_pipeline/12_common_pitfalls.html", {"layout": _layout(request.path), "active_nav": "tutorials"})
+
+
+def tutorial_rag_pipeline_optimization_tuning(request):
+    return render(request, "web/tutorials/rag_pipeline/13_optimization_tuning.html", {"layout": _layout(request.path), "active_nav": "tutorials"})
+
+
+def tutorial_rag_pipeline_data_refresh(request):
+    return render(request, "web/tutorials/rag_pipeline/14_data_refresh.html", {"layout": _layout(request.path), "active_nav": "tutorials"})
+
+
+def tutorial_rag_pipeline_production_architecture(request):
+    return render(request, "web/tutorials/rag_pipeline/15_production_architecture.html", {"layout": _layout(request.path), "active_nav": "tutorials"})
+
+
+def tutorial_rag_pipeline_security(request):
+    return render(request, "web/tutorials/rag_pipeline/16_security.html", {"layout": _layout(request.path), "active_nav": "tutorials"})
+
+
+def tutorial_rag_pipeline_cost(request):
+    return render(request, "web/tutorials/rag_pipeline/17_cost_breakdown.html", {"layout": _layout(request.path), "active_nav": "tutorials"})
+
+
+def tutorial_rag_pipeline_frontend(request):
+    return render(request, "web/tutorials/rag_pipeline/18_frontend_integration.html", {"layout": _layout(request.path), "active_nav": "tutorials"})
+
+
+def tutorial_rag_pipeline_debugging(request):
+    return render(request, "web/tutorials/rag_pipeline/19_debugging.html", {"layout": _layout(request.path), "active_nav": "tutorials"})
+
+
+def tutorial_rag_pipeline_design_patterns(request):
+    return render(request, "web/tutorials/rag_pipeline/20_design_patterns.html", {"layout": _layout(request.path), "active_nav": "tutorials"})
+
+
+def tutorial_rag_pipeline_benchmarking(request):
+    return render(request, "web/tutorials/rag_pipeline/21_benchmarking.html", {"layout": _layout(request.path), "active_nav": "tutorials"})
+
+
+def tutorial_rag_pipeline_local_rag(request):
+    return render(request, "web/tutorials/rag_pipeline/22_local_rag.html", {"layout": _layout(request.path), "active_nav": "tutorials"})
+
+
+def tutorial_rag_pipeline_examples(request):
+    return render(request, "web/tutorials/rag_pipeline/23_real_world_examples.html", {"layout": _layout(request.path), "active_nav": "tutorials"})
 
 
 def tutorials(request):

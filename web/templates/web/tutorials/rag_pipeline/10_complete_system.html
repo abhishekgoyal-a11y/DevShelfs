@@ -1,0 +1,284 @@
+{% extends "web/base.html" %}
+{% block title %}Building Complete System — RAG Pipeline Tutorial{% endblock %}
+{% block content %}
+  <div class="space-y-10">
+    <div class="flex flex-wrap items-center gap-2 text-sm text-slate-400/90">
+      <span class="text-slate-200/90">Building Complete System</span>
+    </div>
+
+    <section class="relative overflow-hidden rounded-3xl border border-violet-400/20 bg-white/[0.06] p-6 shadow-[0_0_0_1px_rgba(255,255,255,0.04)] backdrop-blur-2xl sm:p-8">
+      <div class="pointer-events-none absolute -right-24 top-0 h-72 w-72 rounded-full bg-violet-500/15 blur-3xl"></div>
+      <div class="relative">
+        <div class="flex flex-wrap items-center gap-3">
+          <span class="rounded-full border border-violet-500/25 bg-violet-500/10 px-2.5 py-1 text-xs font-medium text-violet-300/90">RAG Pipeline</span>
+          <span class="text-xs text-slate-400/80">Page 10 of 23</span>
+        </div>
+        <h1 class="mt-4 text-3xl font-semibold tracking-tight text-white sm:text-4xl lg:text-[2.5rem] lg:leading-tight">Building a Complete RAG System</h1>
+        <p class="mt-4 max-w-2xl text-sm leading-relaxed text-slate-200/80 sm:text-base">
+          End-to-end implementation: indexing, retrieval, generation, error handling, testing, and deployment.
+        </p>
+      </div>
+    </section>
+
+    <div class="glass rounded-3xl border border-white/10 p-5 sm:p-8">
+      <article class="mx-auto space-y-12 text-base leading-relaxed text-slate-300/95">
+
+        <section class="space-y-5" aria-labelledby="architecture-heading">
+          <h2 id="architecture-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">System Architecture</h2>
+
+          <div class="rounded-2xl border border-white/10 bg-white/[0.03] p-5">
+            <code class="block font-mono text-xs text-slate-300 whitespace-pre">RAG System Architecture:
+
+┌─ Document Ingestion Layer ─┐
+│  Load → Clean → Chunk      │
+└──────────┬──────────────────┘
+           │
+┌──────────▼──────────────────┐
+│   Embedding Layer           │
+│ tokenize → embed (batch)    │
+└──────────┬──────────────────┘
+           │
+┌──────────▼──────────────────┐
+│   Vector DB (Pinecone)      │
+│ Index & Store              │
+└──────────┬──────────────────┘
+           │ (Query Time)
+┌──────────▼──────────────────┐
+│   Retrieval Layer           │
+│ search → rerank → filter    │
+└──────────┬──────────────────┘
+           │
+┌──────────▼──────────────────┐
+│   Prompt Construction       │
+│ format docs → build prompt  │
+└──────────┬──────────────────┘
+           │
+┌──────────▼──────────────────┐
+│   LLM Generation            │
+│ call GPT-4 → get answer     │
+└──────────┬──────────────────┘
+           │
+┌──────────▼──────────────────┐
+│   Output Processing         │
+│ cite sources → verify       │
+└──────────────────────────────┘</code>
+          </div>
+        </section>
+
+        <section class="space-y-5" aria-labelledby="implementation-heading">
+          <h2 id="implementation-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">Python Implementation</h2>
+
+          <div class="rounded-2xl border border-white/10 bg-white/[0.03] p-5">
+            <code class="block font-mono text-xs text-slate-300 whitespace-pre">from langchain_community.document_loaders import PyPDFLoader
+from langchain.text_splitters import TokenTextSplitter
+from langchain_openai import OpenAIEmbeddings, ChatOpenAI
+from langchain_pinecone import PineconeVectorStore
+from langchain.chains import RetrievalQA
+from sentence_transformers import CrossEncoder
+
+class RAGSystem:
+    def __init__(self):
+        self.embeddings = OpenAIEmbeddings(
+            model="text-embedding-3-small"
+        )
+        self.llm = ChatOpenAI(model="gpt-4", temperature=0.3)
+        self.vector_store = PineconeVectorStore.from_existing_index(
+            index_name="my-rag",
+            embedding=self.embeddings
+        )
+        self.reranker = CrossEncoder("cross-encoder/qnli-distilroberta-base")
+
+    def index_documents(self, file_paths):
+        """Load, chunk, and index documents."""
+        docs = []
+        for path in file_paths:
+            loader = PyPDFLoader(path)
+            docs.extend(loader.load())
+
+        splitter = TokenTextSplitter(
+            chunk_size=400,
+            chunk_overlap=40,
+            encoding_name="cl100k_base"
+        )
+        chunks = splitter.split_documents(docs)
+
+        # Add to vector store
+        self.vector_store.add_documents(chunks)
+        print(f"Indexed {len(chunks)} chunks")
+
+    def retrieve_and_rank(self, query, k=10):
+        """Retrieve and rerank documents."""
+        # Dense search
+        dense_results = self.vector_store.similarity_search_with_score(
+            query, k=k*2
+        )
+
+        # Rerank
+        docs = [doc for doc, _ in dense_results]
+        pairs = [[query, doc.page_content] for doc in docs]
+        scores = self.reranker.predict(pairs)
+
+        # Sort by reranker score
+        ranked = sorted(zip(docs, scores), key=lambda x: -x[1])
+        return [doc for doc, _ in ranked[:k]]
+
+    def generate_answer(self, query):
+        """Generate answer from retrieved docs."""
+        # Retrieve
+        docs = self.retrieve_and_rank(query)
+
+        # Build prompt
+        context = "\n".join([
+            f"[{i}] {doc.page_content}"
+            for i, doc in enumerate(docs)
+        ])
+
+        prompt = f"""Answer using ONLY these documents. Cite sources.
+
+DOCUMENTS:
+{context}
+
+QUESTION: {query}
+
+ANSWER:"""
+
+        # Generate
+        response = self.llm.predict(text=prompt)
+        return response, docs
+
+# Usage
+rag = RAGSystem()
+rag.index_documents(["tax_guide.pdf", "faq.pdf"])
+answer, sources = rag.generate_answer("How do I file taxes?")</code>
+          </div>
+        </section>
+
+        <section class="space-y-5" aria-labelledby="testing-heading">
+          <h2 id="testing-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">Testing & Validation</h2>
+
+          <div class="rounded-2xl border border-white/10 bg-white/[0.03] p-5">
+            <code class="block font-mono text-xs text-slate-300 whitespace-pre">def test_rag_system():
+    """Test retrieval and generation quality."""
+    from ragas import evaluate
+    from ragas.metrics import faithfulness, answer_relevancy
+
+    rag = RAGSystem()
+
+    # Test cases
+    test_data = [
+        {
+            "query": "How do I file taxes?",
+            "ground_truth": "You file taxes using Form 1040..."
+        },
+        {
+            "query": "What deductions can I claim?",
+            "ground_truth": "Common deductions include..."
+        }
+    ]
+
+    results = []
+    for test in test_data:
+        answer, docs = rag.generate_answer(test["query"])
+        results.append({
+            "query": test["query"],
+            "answer": answer,
+            "context": "\n".join([d.page_content for d in docs]),
+            "ground_truth": test["ground_truth"]
+        })
+
+    # Evaluate
+    eval_result = evaluate(
+        results,
+        metrics=[faithfulness, answer_relevancy]
+    )
+    print(f"Faithfulness: {eval_result['faithfulness']}")
+    print(f"Relevancy: {eval_result['answer_relevancy']}")
+
+    # Assert minimum quality
+    assert eval_result['faithfulness'] > 0.7
+    assert eval_result['answer_relevancy'] > 0.75</code>
+          </div>
+        </section>
+
+        <section class="space-y-5" aria-labelledby="error-heading">
+          <h2 id="error-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">Error Handling</h2>
+
+          <div class="rounded-2xl border border-white/10 bg-white/[0.03] p-5">
+            <code class="block font-mono text-xs text-slate-300 whitespace-pre">def safe_rag_query(rag, query, max_retries=2):
+    """Robust query with fallbacks."""
+    try:
+        answer, docs = rag.generate_answer(query)
+
+        # Verify answer
+        if not answer or len(answer) < 10:
+            raise ValueError("Empty answer")
+
+        # Check for hallucinations
+        if "don't know" in answer.lower():
+            return {
+                "answer": answer,
+                "status": "limited_info",
+                "sources": docs
+            }
+
+        return {
+            "answer": answer,
+            "status": "success",
+            "sources": docs
+        }
+
+    except Exception as e:
+        print(f"Error: {e}")
+        return {
+            "answer": "I encountered an error. Please try again.",
+            "status": "error",
+            "sources": []
+        }</code>
+          </div>
+        </section>
+
+        <section class="space-y-5 border-t border-slate-700/50 pt-8" aria-labelledby="deployment-heading">
+          <h2 id="deployment-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">Deployment Checklist</h2>
+
+          <div class="space-y-2 text-sm text-slate-300">
+            <div class="flex items-center gap-3 rounded-lg border border-white/10 bg-white/[0.03] p-3">
+              <input type="checkbox" />
+              <p><strong>Data:</strong> All documents loaded and chunked ✓</p>
+            </div>
+            <div class="flex items-center gap-3 rounded-lg border border-white/10 bg-white/[0.03] p-3">
+              <input type="checkbox" />
+              <p><strong>Indexing:</strong> Vector DB indexed and searchable ✓</p>
+            </div>
+            <div class="flex items-center gap-3 rounded-lg border border-white/10 bg-white/[0.03] p-3">
+              <input type="checkbox" />
+              <p><strong>Quality:</strong> Eval metrics pass (Recall@5 ≥0.8) ✓</p>
+            </div>
+            <div class="flex items-center gap-3 rounded-lg border border-white/10 bg-white/[0.03] p-3">
+              <input type="checkbox" />
+              <p><strong>Latency:</strong> Response time &lt;2 seconds ✓</p>
+            </div>
+            <div class="flex items-center gap-3 rounded-lg border border-white/10 bg-white/[0.03] p-3">
+              <input type="checkbox" />
+              <p><strong>Cost:</strong> Under budget per 1K queries ✓</p>
+            </div>
+            <div class="flex items-center gap-3 rounded-lg border border-white/10 bg-white/[0.03] p-3">
+              <input type="checkbox" />
+              <p><strong>Monitoring:</strong> Logging and alerts set up ✓</p>
+            </div>
+            <div class="flex items-center gap-3 rounded-lg border border-white/10 bg-white/[0.03] p-3">
+              <input type="checkbox" />
+              <p><strong>Security:</strong> API keys secured, input validated ✓</p>
+            </div>
+          </div>
+        </section>
+
+        <section class="space-y-5 border-t border-slate-700/50 pt-8" aria-labelledby="next-heading">
+          <h2 id="next-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">Next: Production Architecture</h2>
+          <p>Now that you have a working RAG system, let's scale it for production with APIs, async pipelines, and monitoring.</p>
+          <a href="{% url 'tutorial_rag_pipeline_production_architecture' %}" class="inline-block mt-4 px-6 py-3 rounded-lg bg-violet-600 hover:bg-violet-700 text-white font-medium transition">Continue to Production →</a>
+        </section>
+
+      </article>
+    </div>
+  </div>
+{% endblock %}

@@ -1,0 +1,162 @@
+{% extends "web/base.html" %}
+{% block title %}Optimization & Tuning — RAG Pipeline Tutorial{% endblock %}
+{% block content %}
+  <div class="space-y-10">
+    <div class="flex flex-wrap items-center gap-2 text-sm text-slate-400/90">
+      <span class="text-slate-200/90">Optimization & Tuning</span>
+    </div>
+
+    <section class="relative overflow-hidden rounded-3xl border border-violet-400/20 bg-white/[0.06] p-6 shadow-[0_0_0_1px_rgba(255,255,255,0.04)] backdrop-blur-2xl sm:p-8">
+      <div class="pointer-events-none absolute -right-24 top-0 h-72 w-72 rounded-full bg-violet-500/15 blur-3xl"></div>
+      <div class="relative">
+        <div class="flex flex-wrap items-center gap-3">
+          <span class="rounded-full border border-violet-500/25 bg-violet-500/10 px-2.5 py-1 text-xs font-medium text-violet-300/90">RAG Pipeline</span>
+          <span class="text-xs text-slate-400/80">Page 13 of 23</span>
+        </div>
+        <h1 class="mt-4 text-3xl font-semibold tracking-tight text-white sm:text-4xl lg:text-[2.5rem] lg:leading-tight">Optimization & Tuning</h1>
+        <p class="mt-4 max-w-2xl text-sm leading-relaxed text-slate-200/80 sm:text-base">
+          Improving retrieval quality, reducing latency, optimizing costs, A/B testing, and continuous tuning.
+        </p>
+      </div>
+    </section>
+
+    <div class="glass rounded-3xl border border-white/10 p-5 sm:p-8">
+      <article class="mx-auto space-y-12 text-base leading-relaxed text-slate-300/95">
+
+        <section class="space-y-5" aria-labelledby="tuning-heading">
+          <h2 id="tuning-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">Hyperparameter Tuning</h2>
+
+          <div class="rounded-2xl border border-white/10 bg-white/[0.03] p-5">
+            <p class="font-semibold text-white mb-3">Parameters to Tune:</p>
+            <div class="space-y-3 text-sm text-slate-300">
+              <div>
+                <p><strong>Chunk Size</strong> (200-800 tokens)</p>
+                <p class="text-xs text-slate-400">Smaller = more retrievals needed, faster, noisier. Larger = context-heavy, slower, better semantics.</p>
+              </div>
+              <div>
+                <p><strong>Retrieval K</strong> (3-20 documents)</p>
+                <p class="text-xs text-slate-400">More K = higher recall but costs more, context overflow risk. Less K = faster, lower cost, miss answers.</p>
+              </div>
+              <div>
+                <p><strong>Embedding Model</strong> (768D vs 1536D)</p>
+                <p class="text-xs text-slate-400">Larger = better quality but 2x storage, slower. Smaller = fast but quality drops.</p>
+              </div>
+              <div>
+                <p><strong>Reranker Threshold</strong> (0.0-1.0)</p>
+                <p class="text-xs text-slate-400">Higher = only return highly relevant docs. Lower = more retrieval but noise.</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="rounded-2xl border border-green-500/20 bg-green-500/5 p-4 mt-4">
+            <code class="block font-mono text-xs text-slate-300 whitespace-pre">def find_optimal_chunk_size(eval_dataset):
+    """Grid search for chunk size."""
+    results = {}
+    for chunk_size in [200, 300, 400, 500, 600]:
+        rag = RAGSystem(chunk_size=chunk_size)
+        metrics = rag.evaluate(eval_dataset)
+        results[chunk_size] = metrics
+
+    best = max(results.items(), key=lambda x: x[1]['f1_score'])
+    return best[0]  # optimal size</code>
+          </div>
+        </section>
+
+        <section class="space-y-5" aria-labelledby="latency-heading">
+          <h2 id="latency-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">Latency Optimization</h2>
+
+          <div class="space-y-3">
+            <div class="rounded-2xl border border-white/10 bg-white/[0.03] p-4">
+              <p class="font-semibold text-white text-sm mb-2">Caching (Biggest impact)</p>
+              <p class="text-sm text-slate-300">Cache query embeddings and LLM responses. If same question asked twice, return cached answer immediately.</p>
+            </div>
+
+            <div class="rounded-2xl border border-white/10 bg-white/[0.03] p-4">
+              <p class="font-semibold text-white text-sm mb-2">Async Retrieval</p>
+              <p class="text-sm text-slate-300">Retrieve docs while streaming LLM response. Don't wait for retrieval to start generation.</p>
+            </div>
+
+            <div class="rounded-2xl border border-white/10 bg-white/[0.03] p-4">
+              <p class="font-semibold text-white text-sm mb-2">Batch Embeddings</p>
+              <p class="text-sm text-slate-300">Never embed one doc at a time. Batch 100+ for 10x speedup.</p>
+            </div>
+
+            <div class="rounded-2xl border border-white/10 bg-white/[0.03] p-4">
+              <p class="font-semibold text-white text-sm mb-2">Vector DB Selection</p>
+              <p class="text-sm text-slate-300">HNSW (Qdrant) is faster than IVF (Milvus). Choose based on scale.</p>
+            </div>
+          </div>
+
+          <div class="rounded-2xl border border-blue-500/20 bg-blue-500/5 p-4 mt-4">
+            <p class="text-sm text-slate-300">
+              <strong>Typical latency breakdown:</strong> Retrieval 50ms + LLM 1000ms + overhead 50ms = 1.1s. Focus on LLM speed (streaming, smaller model).
+            </p>
+          </div>
+        </section>
+
+        <section class="space-y-5" aria-labelledby="cost-heading">
+          <h2 id="cost-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">Cost Optimization</h2>
+
+          <div class="rounded-2xl border border-white/10 bg-white/[0.03] p-5">
+            <code class="block font-mono text-xs text-slate-300 whitespace-pre">Cost breakdown per query:
+- Embedding (query): $0.0002 (text-embedding-3-small)
+- Vector DB search: $0.0001 (Pinecone)
+- LLM (GPT-4): $0.03 (worst case, 2K output)
+
+Total per query: ~$0.032
+
+For 1M queries/month: $32,000
+
+Cost reduction strategies:
+1. Reduce K from 10 to 5 → -50% vector DB cost
+2. Use smaller LLM (GPT-3.5) → -75% inference cost
+3. Batch embeddings → -30% API cost
+4. Cache results → -60% repeat queries cost
+5. Local embeddings → $0 embedding cost</code>
+          </div>
+        </section>
+
+        <section class="space-y-5" aria-labelledby="abtest-heading">
+          <h2 id="abtest-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">A/B Testing Changes</h2>
+
+          <div class="rounded-2xl border border-white/10 bg-white/[0.03] p-5">
+            <code class="block font-mono text-xs text-slate-300 whitespace-pre">def ab_test_retrieval(control_rag, treatment_rag, test_queries):
+    """Compare two RAG systems."""
+    results = {
+        "control": {"quality": 0, "latency": 0, "cost": 0},
+        "treatment": {"quality": 0, "latency": 0, "cost": 0}
+    }
+
+    for i, query in enumerate(test_queries):
+        if i % 2 == 0:
+            # Control group
+            start = time.time()
+            answer, docs = control_rag.query(query)
+            results["control"]["latency"] += time.time() - start
+            results["control"]["quality"] += evaluate_answer(answer)
+        else:
+            # Treatment group
+            start = time.time()
+            answer, docs = treatment_rag.query(query)
+            results["treatment"]["latency"] += time.time() - start
+            results["treatment"]["quality"] += evaluate_answer(answer)
+
+    # Analyze results
+    print(f"Control Quality: {results['control']['quality']/len(test_queries)}")
+    print(f"Treatment Quality: {results['treatment']['quality']/len(test_queries)}")
+
+    # Statistically significant?
+    if results["treatment"]["quality"] > results["control"]["quality"] * 1.05:
+        print("Treatment is significantly better!")</code>
+          </div>
+        </section>
+
+        <section class="space-y-5 border-t border-slate-700/50 pt-8" aria-labelledby="next-heading">
+          <h2 id="next-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">Next: Data Refresh Pipeline</h2>
+          <a href="{% url 'tutorial_rag_pipeline_data_refresh' %}" class="inline-block mt-4 px-6 py-3 rounded-lg bg-violet-600 hover:bg-violet-700 text-white font-medium transition">Continue →</a>
+        </section>
+
+      </article>
+    </div>
+  </div>
+{% endblock %}

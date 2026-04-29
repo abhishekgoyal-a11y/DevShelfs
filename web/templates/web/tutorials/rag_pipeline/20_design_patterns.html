@@ -1,0 +1,152 @@
+{% extends "web/base.html" %}
+{% block title %}RAG Design Patterns — RAG Pipeline Tutorial{% endblock %}
+{% block content %}
+  <div class="space-y-10">
+    <div class="flex flex-wrap items-center gap-2 text-sm text-slate-400/90">
+      <span class="text-slate-200/90">Design Patterns</span>
+    </div>
+
+    <section class="relative overflow-hidden rounded-3xl border border-violet-400/20 bg-white/[0.06] p-6 shadow-[0_0_0_1px_rgba(255,255,255,0.04)] backdrop-blur-2xl sm:p-8">
+      <div class="pointer-events-none absolute -right-24 top-0 h-72 w-72 rounded-full bg-violet-500/15 blur-3xl"></div>
+      <div class="relative">
+        <div class="flex flex-wrap items-center gap-3">
+          <span class="rounded-full border border-violet-500/25 bg-violet-500/10 px-2.5 py-1 text-xs font-medium text-violet-300/90">Advanced</span>
+          <span class="text-xs text-slate-400/80">Page 20 of 23</span>
+        </div>
+        <h1 class="mt-4 text-3xl font-semibold tracking-tight text-white sm:text-4xl lg:text-[2.5rem] lg:leading-tight">RAG Design Patterns</h1>
+        <p class="mt-4 max-w-2xl text-sm leading-relaxed text-slate-200/80 sm:text-base">
+          Five core RAG patterns: Naive, Hybrid, Agentic, Graph, and Memory-augmented RAG. Choose based on your use case.
+        </p>
+      </div>
+    </section>
+
+    <div class="glass rounded-3xl border border-white/10 p-5 sm:p-8">
+      <article class="mx-auto space-y-12 text-base leading-relaxed text-slate-300/95">
+
+        <section class="space-y-5" aria-labelledby="naive-heading">
+          <h2 id="naive-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">1. Naive RAG (Baseline)</h2>
+          <p>Simple: retrieve top-K docs, pass to LLM. Best for: MVP, simple Q&A, small docs.</p>
+
+          <div class="rounded-2xl border border-white/10 bg-white/[0.03] p-4">
+            <code class="block font-mono text-xs text-slate-300 whitespace-pre">query → embed → search → LLM answer
+
+Pros: Simple, fast
+Cons: Low quality, hallucinations, no reasoning</code>
+          </div>
+        </section>
+
+        <section class="space-y-5" aria-labelledby="hybrid-heading">
+          <h2 id="hybrid-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">2. Hybrid RAG</h2>
+          <p>Combines dense (semantic) + sparse (keyword) search + reranking. Best for: Production, technical docs.</p>
+
+          <div class="rounded-2xl border border-white/10 bg-white/[0.03] p-4">
+            <code class="block font-mono text-xs text-slate-300 whitespace-pre">query → [dense search + BM25] → combine → rerank → LLM
+
+Pros: Better quality, catches keywords
+Cons: Slower, more complex</code>
+          </div>
+        </section>
+
+        <section class="space-y-5" aria-labelledby="agentic-heading">
+          <h2 id="agentic-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">3. Agentic RAG (ReAct)</h2>
+          <p>LLM decides when to retrieve, search web, use tools. Best for: Complex questions, multi-step reasoning.</p>
+
+          <div class="rounded-2xl border border-white/10 bg-white/[0.03] p-4">
+            <code class="block font-mono text-xs text-slate-300 whitespace-pre">LLM: "I need to search docs AND search web"
+→ [retrieve + search_web]
+→ Combine results
+→ Answer
+
+Pros: Flexible, can adapt
+Cons: Slower, harder to control</code>
+          </div>
+        </section>
+
+        <section class="space-y-5" aria-labelledby="graph-heading">
+          <h2 id="graph-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">4. Graph RAG</h2>
+          <p>Structure docs as knowledge graph, traverse edges. Best for: Highly interconnected data, entity relationships.</p>
+
+          <div class="rounded-2xl border border-white/10 bg-white/[0.03] p-4">
+            <code class="block font-mono text-xs text-slate-300 whitespace-pre">Query: "What treatments work for diabetes?"
+
+Graph structure:
+Diabetes → [Medications: Insulin, Metformin, ...]
+        → [Complications: Heart disease, Kidney disease, ...]
+        → [Lifestyle: Diet, Exercise]
+
+Traverse graph → Retrieve relevant paths → Answer</code>
+          </div>
+        </section>
+
+        <section class="space-y-5" aria-labelledby="memory-heading">
+          <h2 id="memory-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">5. Memory-Augmented RAG</h2>
+          <p>Keep conversation history, retrieve relevant past context. Best for: Multi-turn conversations.</p>
+
+          <div class="rounded-2xl border border-white/10 bg-white/[0.03] p-4">
+            <code class="block font-mono text-xs text-slate-300 whitespace-pre">Turn 1: User: "Tell me about taxes"
+        RAG retrieves and answers
+
+Turn 2: User: "Can I claim that as deduction?"
+        RAG: Uses context from Turn 1 + new retrieval
+        → Better understanding</code>
+          </div>
+        </section>
+
+        <section class="space-y-5 border-t border-slate-700/50 pt-8" aria-labelledby="comparison-heading">
+          <h2 id="comparison-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">Pattern Comparison</h2>
+
+          <div class="overflow-x-auto text-sm">
+            <table class="w-full text-slate-300">
+              <thead class="text-xs font-semibold text-white border-b border-slate-700">
+                <tr>
+                  <th class="text-left py-2 px-2">Pattern</th>
+                  <th class="text-left py-2 px-2">Complexity</th>
+                  <th class="text-left py-2 px-2">Quality</th>
+                  <th class="text-left py-2 px-2">Speed</th>
+                </tr>
+              </thead>
+              <tbody class="text-xs">
+                <tr class="border-b border-slate-800">
+                  <td class="py-2 px-2">Naive</td>
+                  <td class="py-2 px-2">Low</td>
+                  <td class="py-2 px-2">⭐⭐</td>
+                  <td class="py-2 px-2">⭐⭐⭐</td>
+                </tr>
+                <tr class="border-b border-slate-800">
+                  <td class="py-2 px-2">Hybrid</td>
+                  <td class="py-2 px-2">Medium</td>
+                  <td class="py-2 px-2">⭐⭐⭐⭐</td>
+                  <td class="py-2 px-2">⭐⭐</td>
+                </tr>
+                <tr class="border-b border-slate-800">
+                  <td class="py-2 px-2">Agentic</td>
+                  <td class="py-2 px-2">High</td>
+                  <td class="py-2 px-2">⭐⭐⭐⭐⭐</td>
+                  <td class="py-2 px-2">⭐</td>
+                </tr>
+                <tr class="border-b border-slate-800">
+                  <td class="py-2 px-2">Graph</td>
+                  <td class="py-2 px-2">High</td>
+                  <td class="py-2 px-2">⭐⭐⭐⭐⭐</td>
+                  <td class="py-2 px-2">⭐⭐</td>
+                </tr>
+                <tr>
+                  <td class="py-2 px-2">Memory</td>
+                  <td class="py-2 px-2">Medium</td>
+                  <td class="py-2 px-2">⭐⭐⭐⭐</td>
+                  <td class="py-2 px-2">⭐⭐</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <section class="space-y-5 border-t border-slate-700/50 pt-8" aria-labelledby="next-heading">
+          <h2 id="next-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">Next: Benchmarking</h2>
+          <a href="{% url 'tutorial_rag_pipeline_benchmarking' %}" class="inline-block mt-4 px-6 py-3 rounded-lg bg-violet-600 hover:bg-violet-700 text-white font-medium transition">Continue →</a>
+        </section>
+
+      </article>
+    </div>
+  </div>
+{% endblock %}

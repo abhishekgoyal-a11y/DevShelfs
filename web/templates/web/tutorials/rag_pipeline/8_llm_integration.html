@@ -1,0 +1,192 @@
+{% extends "web/base.html" %}
+{% block title %}LLM Integration — RAG Pipeline Tutorial{% endblock %}
+{% block content %}
+  <div class="space-y-10">
+    <div class="flex flex-wrap items-center gap-2 text-sm text-slate-400/90">
+      <span class="text-slate-200/90">LLM Integration</span>
+    </div>
+
+    <section class="relative overflow-hidden rounded-3xl border border-violet-400/20 bg-white/[0.06] p-6 shadow-[0_0_0_1px_rgba(255,255,255,0.04)] backdrop-blur-2xl sm:p-8">
+      <div class="pointer-events-none absolute -right-24 top-0 h-72 w-72 rounded-full bg-violet-500/15 blur-3xl"></div>
+      <div class="relative">
+        <div class="flex flex-wrap items-center gap-3">
+          <span class="rounded-full border border-violet-500/25 bg-violet-500/10 px-2.5 py-1 text-xs font-medium text-violet-300/90">RAG Pipeline</span>
+          <span class="text-xs text-slate-400/80">Page 8 of 23</span>
+        </div>
+        <h1 class="mt-4 text-3xl font-semibold tracking-tight text-white sm:text-4xl lg:text-[2.5rem] lg:leading-tight">LLM Integration</h1>
+        <p class="mt-4 max-w-2xl text-sm leading-relaxed text-slate-200/80 sm:text-base">
+          Prompt engineering for RAG, guardrails, structured output, citation enforcement, and chain patterns.
+        </p>
+      </div>
+    </section>
+
+    <div class="glass rounded-3xl border border-white/10 p-5 sm:p-8">
+      <article class="mx-auto space-y-12 text-base leading-relaxed text-slate-300/95">
+
+        <section class="space-y-5" aria-labelledby="prompting-heading">
+          <h2 id="prompting-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">Prompt Engineering for RAG</h2>
+
+          <div class="rounded-2xl border border-white/10 bg-white/[0.03] p-5">
+            <p class="font-semibold text-white mb-3">Bad RAG Prompt</p>
+            <code class="block font-mono text-xs text-slate-300 whitespace-pre">"Use these documents to answer: {docs}
+Question: {query}
+Answer:"
+
+Problems: Ambiguous instructions. LLM doesn't know to cite sources.
+Result: Hallucinations, made-up citations.</code>
+          </div>
+
+          <div class="rounded-2xl border border-green-500/20 bg-green-500/5 p-5 mt-4">
+            <p class="font-semibold text-green-300 mb-3">✓ Better RAG Prompt</p>
+            <code class="block font-mono text-xs text-slate-300 whitespace-pre">You are a helpful assistant. Your job is to answer questions using ONLY
+the provided documents. If the answer is not in the documents, say:
+"I don't have this information in the available documents."
+
+Always cite your sources using the [Source: doc_title] format.
+
+{DOCUMENTS}
+
+Question: {QUERY}
+
+Answer: Let me search the documents...
+[Your answer with citations]</code>
+          </div>
+
+          <div class="space-y-3 mt-4">
+            <p class="font-semibold text-white text-sm">Prompt Tips:</p>
+            <ul class="list-disc list-inside space-y-1 text-sm text-slate-300">
+              <li>Be explicit about using only provided docs</li>
+              <li>Define what to do when info isn't available</li>
+              <li>Show citation format with examples</li>
+              <li>Use lower temperature (0.3-0.5) for consistency</li>
+              <li>Add examples in few-shot format</li>
+            </ul>
+          </div>
+        </section>
+
+        <section class="space-y-5" aria-labelledby="guardrails-heading">
+          <h2 id="guardrails-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">Guardrails & Structured Output</h2>
+
+          <div class="rounded-2xl border border-white/10 bg-white/[0.03] p-5">
+            <p class="font-semibold text-white mb-3">JSON Mode (Force Structure)</p>
+            <code class="block font-mono text-xs text-slate-300 whitespace-pre">response = client.chat.completions.create(
+    model="gpt-4",
+    temperature=0,
+    response_format={"type": "json_object"},
+    messages=[{
+        "role": "user",
+        "content": """Answer in this JSON format:
+{
+  "answer": "your answer here",
+  "sources": ["doc1", "doc2"],
+  "confidence": "high/medium/low",
+  "needs_more_info": true/false
+}
+Documents: ...
+Question: ..."""
+    }]
+)
+
+result = json.loads(response.choices[0].message.content)
+# Guaranteed structure, easy to parse</code>
+          </div>
+
+          <div class="rounded-2xl border border-white/10 bg-white/[0.03] p-5 mt-4">
+            <p class="font-semibold text-white mb-3">Function Calling (For Complex Tasks)</p>
+            <code class="block font-mono text-xs text-slate-300 whitespace-pre">tools = [
+  {
+    "type": "function",
+    "function": {
+      "name": "answer_with_sources",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "answer": {"type": "string"},
+          "sources": {"type": "array", "items": {"type": "string"}},
+          "confidence": {"type": "string", "enum": ["high", "medium", "low"]}
+        },
+        "required": ["answer", "sources", "confidence"]
+      }
+    }
+  }
+]
+
+response = client.chat.completions.create(
+    model="gpt-4",
+    tools=tools,
+    messages=[...]
+)
+# LLM must call function with correct structure</code>
+          </div>
+        </section>
+
+        <section class="space-y-5" aria-labelledby="citation-heading">
+          <h2 id="citation-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">Citation Enforcement</h2>
+
+          <div class="rounded-2xl border border-white/10 bg-white/[0.03] p-5">
+            <code class="block font-mono text-xs text-slate-300 whitespace-pre">def enforce_citations(answer, docs):
+    """Verify answer only uses facts from docs."""
+    import re
+
+    # Extract citations from answer
+    citations = re.findall(r'\[Source: (.*?)\]', answer)
+
+    if not citations:
+        return False, "No citations found"
+
+    # Verify cited docs exist
+    doc_ids = {doc.id for doc in docs}
+    for citation in citations:
+        if citation not in doc_ids:
+            return False, f"Citation '{citation}' not found in docs"
+
+    # Use LLM to verify facts are actually in docs
+    for doc_id in citations:
+        doc_text = next(d.text for d in docs if d.id == doc_id)
+        verify_prompt = f"""
+        Does this text support this claim?
+        Text: {doc_text}
+        Claim: {answer}
+        """
+        # Score faithfulness...
+
+    return True, "Citations valid"</code>
+          </div>
+        </section>
+
+        <section class="space-y-5" aria-labelledby="chains-heading">
+          <h2 id="chains-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">Chain Patterns for Long Documents</h2>
+
+          <div class="space-y-4">
+            <div class="rounded-2xl border border-white/10 bg-white/[0.03] p-4">
+              <p class="font-semibold text-white text-sm mb-2">Stuff (Simple)</p>
+              <p class="text-xs text-slate-300">Put all docs in context, ask LLM to answer. Best for &lt;10K tokens.</p>
+            </div>
+
+            <div class="rounded-2xl border border-white/10 bg-white/[0.03] p-4">
+              <p class="font-semibold text-white text-sm mb-2">Map-Reduce (For parallel)</p>
+              <p class="text-xs text-slate-300">Summarize each doc separately, then combine summaries. Works for large datasets.</p>
+            </div>
+
+            <div class="rounded-2xl border border-white/10 bg-white/[0.03] p-4">
+              <p class="font-semibold text-white text-sm mb-2">Refine (Iterative)</p>
+              <p class="text-xs text-slate-300">Start with first doc, iteratively refine with next docs. Best quality but slow.</p>
+            </div>
+          </div>
+
+          <div class="rounded-2xl border border-green-500/20 bg-green-500/5 p-4 mt-4">
+            <p class="text-sm text-slate-300">
+              <strong>Recommendation:</strong> Use "Stuff" for RAG. If docs exceed context, retrieve better quality docs with reranking instead of using chains.
+            </p>
+          </div>
+        </section>
+
+        <section class="space-y-5 border-t border-slate-700/50 pt-8" aria-labelledby="next-heading">
+          <h2 id="next-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">Next: Building Complete System</h2>
+          <a href="{% url 'tutorial_rag_pipeline_complete_system' %}" class="inline-block mt-4 px-6 py-3 rounded-lg bg-violet-600 hover:bg-violet-700 text-white font-medium transition">Continue →</a>
+        </section>
+
+      </article>
+    </div>
+  </div>
+{% endblock %}
