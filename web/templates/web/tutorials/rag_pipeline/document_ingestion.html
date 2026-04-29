@@ -2,7 +2,6 @@
 {% block title %}Document Ingestion — RAG Pipeline Tutorial{% endblock %}
 {% block content %}
   <div class="space-y-10">
-
     {# ── Breadcrumb ── #}
     <div class="flex flex-wrap items-center gap-2 text-sm text-slate-400/90">
       <a href="{% url 'tutorials' %}" class="font-medium text-violet-300/90 transition hover:text-violet-200">Tutorials</a>
@@ -276,11 +275,7 @@ for doc in documents:
               <div class="flex items-start gap-3">
                 <span class="text-violet-300">•</span>
                 <p><strong>Private information</strong> that shouldn't be indexed</p>
-              </div>
-            </div>
-          </div>
         </section>
-
 
       </article>
     </div>
@@ -299,6 +294,7 @@ for doc in documents:
       >
         Next: Chunking Strategies <span aria-hidden>→</span>
       </a>
-    </div>
+      </div>
+
   </div>
 {% endblock %}

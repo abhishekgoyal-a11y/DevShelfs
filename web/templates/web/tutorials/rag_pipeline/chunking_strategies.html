@@ -2,7 +2,6 @@
 {% block title %}Chunking Strategies — RAG Pipeline Tutorial{% endblock %}
 {% block content %}
   <div class="space-y-10">
-
     {# ── Breadcrumb ── #}
     <div class="flex flex-wrap items-center gap-2 text-sm text-slate-400/90">
       <a href="{% url 'tutorials' %}" class="font-medium text-violet-300/90 transition hover:text-violet-200">Tutorials</a>
@@ -275,16 +274,12 @@ Chunk 2: "...charitable donations, and medical expenses. Self-employed..."
     if current:
         chunks.append(current)
     return chunks</code></pre>
-</div>
-          </div>
         </section>
 
       </article>
     </div>
 
-</section>
-
-            {# ── Navigation ── #}
+    {# ── Navigation ── #}
     <div class="flex items-center justify-between">
       <a
         href="{% url 'tutorial_rag_pipeline_document_ingestion' %}"
@@ -298,10 +293,7 @@ Chunk 2: "...charitable donations, and medical expenses. Self-employed..."
       >
         Next: Embeddings <span aria-hidden>→</span>
       </a>
-    </div>
-
-      </article>
-    </div>
+      </div>
 
   </div>
 {% endblock %}

@@ -2,7 +2,6 @@
 {% block title %}Embeddings & Vectors — RAG Pipeline Tutorial{% endblock %}
 {% block content %}
   <div class="space-y-10">
-
     {# ── Breadcrumb ── #}
     <div class="flex flex-wrap items-center gap-2 text-sm text-slate-400/90">
       <a href="{% url 'tutorials' %}" class="font-medium text-violet-300/90 transition hover:text-violet-200">Tutorials</a>
@@ -309,7 +308,6 @@ def get_embedding(text, model="text-embedding-3-small"):
             <p class="text-sm text-slate-300">
               <strong>💾 Better approach:</strong> Store embeddings in your vector DB directly. Once indexed, you never re-embed unless the chunk changes.
             </p>
-          </div>
         </section>
 
       </article>
@@ -329,5 +327,7 @@ def get_embedding(text, model="text-embedding-3-small"):
       >
         Next: Vector Stores <span aria-hidden>→</span>
       </a>
-    </div>
+      </div>
+
+  </div>
 {% endblock %}

@@ -18,7 +18,7 @@
       <div class="relative">
         <div class="flex flex-wrap items-center gap-3">
           <span class="rounded-full border border-violet-500/25 bg-violet-500/10 px-2.5 py-1 text-xs font-medium text-violet-300/90">RAG Pipeline</span>
-          <span class="rounded-full border border-sky-500/25 bg-sky-500/10 px-2.5 py-1 text-xs font-medium text-sky-300/90">Intermediate</span>
+          <span class="rounded-full border border-amber-500/25 bg-amber-500/10 px-2.5 py-1 text-xs font-medium text-amber-300/90">Intermediate</span>
           <span class="text-xs text-slate-400/80">· 15 min read</span>
           <span class="ml-auto text-xs font-medium text-slate-400/80">Page 7 of 23</span>
         </div>
@@ -213,9 +213,10 @@ filtered = [doc for doc in all_results
             if doc.user_id in current_user_permissions
             and doc.category == "tax_guide"
             and doc.date >= "2024-01-01"][:10]</code></pre>
-</div>
-          </div>
         </section>
+
+      </article>
+    </div>
 
     {# ── Navigation ── #}
     <div class="flex items-center justify-between">
@@ -231,6 +232,7 @@ filtered = [doc for doc in all_results
       >
         Next: LLM Integration <span aria-hidden>→</span>
       </a>
-    </div>
+      </div>
+
   </div>
 {% endblock %}

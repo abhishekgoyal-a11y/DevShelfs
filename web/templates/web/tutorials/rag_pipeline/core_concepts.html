@@ -2,7 +2,6 @@
 {% block title %}Core Concepts — RAG Pipeline Tutorial{% endblock %}
 {% block content %}
   <div class="space-y-10">
-
     {# ── Breadcrumb ── #}
     <div class="flex flex-wrap items-center gap-2 text-sm text-slate-400/90">
       <a href="{% url 'tutorials' %}" class="font-medium text-violet-300/90 transition hover:text-violet-200">Tutorials</a>
@@ -290,8 +289,6 @@ Result: Accurate, up-to-date, cited sources.</code>
                 <li>• Cost per query: Embedding + LLM calls add up</li>
                 <li>• Still hallucinates: LLM invents facts despite good docs</li>
               </ul>
-            </div>
-          </div>
         </section>
 
       </article>
@@ -311,7 +308,7 @@ Result: Accurate, up-to-date, cited sources.</code>
       >
         Next: Document Ingestion <span aria-hidden>→</span>
       </a>
-    </div>
+      </div>
 
   </div>
 {% endblock %}

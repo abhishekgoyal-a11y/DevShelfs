@@ -14,15 +14,22 @@
     {# ── Hero ── #}
     <section class="relative overflow-hidden rounded-3xl border border-violet-400/20 bg-white/[0.06] p-6 shadow-[0_0_0_1px_rgba(255,255,255,0.04)] backdrop-blur-2xl sm:p-8">
       <div class="pointer-events-none absolute -right-24 top-0 h-72 w-72 rounded-full bg-violet-500/15 blur-3xl"></div>
+      <div class="pointer-events-none absolute -left-20 bottom-0 h-56 w-56 rounded-full bg-fuchsia-500/10 blur-3xl"></div>
       <div class="relative">
         <div class="flex flex-wrap items-center gap-3">
-          <span class="rounded-full border border-violet-500/25 bg-violet-500/10 px-2.5 py-1 text-xs font-medium text-violet-300/90">Advanced</span>
-          <span class="text-xs text-slate-400/80">Page 21 of 23</span>
+          <span class="rounded-full border border-violet-500/25 bg-violet-500/10 px-2.5 py-1 text-xs font-medium text-violet-300/90">RAG Pipeline</span>
+          <span class="rounded-full border border-rose-500/25 bg-rose-500/10 px-2.5 py-1 text-xs font-medium text-rose-300/90">Advanced</span>
+          <span class="text-xs text-slate-400/80">· 14 min read</span>
+          <span class="ml-auto text-xs font-medium text-slate-400/80">Page 21 of 23</span>
         </div>
         <h1 class="mt-4 text-3xl font-semibold tracking-tight text-white sm:text-4xl lg:text-[2.5rem] lg:leading-tight">Benchmarking RAG Systems</h1>
         <p class="mt-4 max-w-2xl text-sm leading-relaxed text-slate-200/80 sm:text-base">
           Comparing vector DBs, embedding models, chunk sizes, and configurations with real benchmarks.
         </p>
+        <div class="mt-6">
+          <div class="mb-1.5 flex items-center justify-between text-xs text-slate-400/80"><span>Series progress</span><span>21 / 23</span></div>
+          <div class="h-1.5 w-full overflow-hidden rounded-full bg-white/10"><div class="h-full w-[91%] rounded-full bg-violet-400/70"></div></div>
+        </div>
       </div>
     </section>
 
@@ -159,10 +166,12 @@ Cost/1M:     $180  $150  $130  $125  $120
             <p class="text-sm text-slate-300 mb-2"><strong>Setup C (High-quality):</strong></p>
             <p class="text-xs text-slate-400">Claude 3 + Qdrant + fine-tuned embeddings + agentic RAG</p>
             <p class="text-xs text-slate-400 mt-1">Latency: 3.5s | Quality: 0.96 | Cost: $30K/month</p>
-          </div>
         </section>
 
-            {# ── Navigation ── #}
+      </article>
+    </div>
+
+    {# ── Navigation ── #}
     <div class="flex items-center justify-between">
       <a
         href="{% url 'tutorial_rag_pipeline_design_patterns' %}"
@@ -176,12 +185,7 @@ Cost/1M:     $180  $150  $130  $125  $120
       >
         Next: Local RAG Setup <span aria-hidden>→</span>
       </a>
-    </div>
+      </div>
 
-      </article>
-    </div>
-
-</article>
-    </div>
   </div>
 {% endblock %}

@@ -14,15 +14,22 @@
     {# ── Hero ── #}
     <section class="relative overflow-hidden rounded-3xl border border-violet-400/20 bg-white/[0.06] p-6 shadow-[0_0_0_1px_rgba(255,255,255,0.04)] backdrop-blur-2xl sm:p-8">
       <div class="pointer-events-none absolute -right-24 top-0 h-72 w-72 rounded-full bg-violet-500/15 blur-3xl"></div>
+      <div class="pointer-events-none absolute -left-20 bottom-0 h-56 w-56 rounded-full bg-fuchsia-500/10 blur-3xl"></div>
       <div class="relative">
         <div class="flex flex-wrap items-center gap-3">
           <span class="rounded-full border border-violet-500/25 bg-violet-500/10 px-2.5 py-1 text-xs font-medium text-violet-300/90">RAG Pipeline</span>
-          <span class="text-xs text-slate-400/80">Page 9 of 23</span>
+          <span class="rounded-full border border-amber-500/25 bg-amber-500/10 px-2.5 py-1 text-xs font-medium text-amber-300/90">Intermediate</span>
+          <span class="text-xs text-slate-400/80">· 16 min read</span>
+          <span class="ml-auto text-xs font-medium text-slate-400/80">Page 9 of 23</span>
         </div>
         <h1 class="mt-4 text-3xl font-semibold tracking-tight text-white sm:text-4xl lg:text-[2.5rem] lg:leading-tight">Advanced Techniques</h1>
         <p class="mt-4 max-w-2xl text-sm leading-relaxed text-slate-200/80 sm:text-base">
-          Query expansion, recursive retrieval, knowledge graphs, agentic RAG, and self-reflection for production-grade systems.
+          Query expansion, recursive retrieval, knowledge graphs, agentic RAG, and self-reflection for production systems.
         </p>
+        <div class="mt-6">
+          <div class="mb-1.5 flex items-center justify-between text-xs text-slate-400/80"><span>Series progress</span><span>9 / 23</span></div>
+          <div class="h-1.5 w-full overflow-hidden rounded-full bg-white/10"><div class="h-full w-[39%] rounded-full bg-violet-400/70"></div></div>
+        </div>
       </div>
     </section>
 
@@ -176,9 +183,7 @@ return answer</code></pre>
       </article>
     </div>
 
-</article>
-
-{# ── Navigation ── #}
+    {# ── Navigation ── #}
 <div class="flex items-center justify-between">
 <a
 href="{% url 'tutorial_rag_pipeline_llm_integration' %}"
@@ -192,7 +197,7 @@ class="inline-flex items-center gap-2 rounded-xl border border-violet-400/35 bg-
 >
 Next: Complete System <span aria-hidden>→</span>
 </a>
-</div>
-    </div>
+  </div>
+
   </div>
 {% endblock %}

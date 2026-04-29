@@ -2,7 +2,6 @@
 {% block title %}Evaluation Framework — RAG Pipeline Tutorial{% endblock %}
 {% block content %}
   <div class="space-y-10">
-
     {# ── Breadcrumb ── #}
     <div class="flex flex-wrap items-center gap-2 text-sm text-slate-400/90">
       <a href="{% url 'tutorials' %}" class="font-medium text-violet-300/90 transition hover:text-violet-200">Tutorials</a>
@@ -19,7 +18,7 @@
       <div class="relative">
         <div class="flex flex-wrap items-center gap-3">
           <span class="rounded-full border border-violet-500/25 bg-violet-500/10 px-2.5 py-1 text-xs font-medium text-violet-300/90">RAG Pipeline</span>
-          <span class="rounded-full border border-red-500/25 bg-red-500/10 px-2.5 py-1 text-xs font-medium text-red-300/90">CRITICAL</span>
+          <span class="rounded-full border border-amber-500/25 bg-amber-500/10 px-2.5 py-1 text-xs font-medium text-amber-300/90">Intermediate</span>
           <span class="text-xs text-slate-400/80">· 18 min read</span>
           <span class="ml-auto text-xs font-medium text-slate-400/80">Page 11 of 23</span>
         </div>
@@ -309,26 +308,6 @@ Human Rating Scale (example):
 </div>
           </div>
         </section>
-
-            {# ── Navigation ── #}
-    <div class="flex items-center justify-between">
-      <a
-        href="{% url 'tutorial_rag_pipeline_complete_system' %}"
-        class="inline-flex items-center gap-2 rounded-xl border border-violet-400/35 bg-violet-500/10 px-5 py-2.5 text-sm font-semibold text-violet-200 transition hover:border-violet-300/50 hover:bg-violet-500/20 hover:text-white"
-      >
-        <span aria-hidden>←</span> Previous
-      </a>
-      <a
-        href="{% url 'tutorial_rag_pipeline_pitfalls' %}"
-        class="inline-flex items-center gap-2 rounded-xl border border-violet-400/35 bg-violet-500/10 px-5 py-2.5 text-sm font-semibold text-violet-200 transition hover:border-violet-300/50 hover:bg-violet-500/20 hover:text-white"
-      >
-        Next: Common Pitfalls <span aria-hidden>→</span>
-      </a>
-    </div>
-
-      </article>
-    </div>
-
 <div class="flex items-center gap-3">
               <input type="checkbox" checked disabled />
               <p><strong>Retrieval metrics:</strong> Tracking Recall@5, MRR, nDCG@10</p>
@@ -344,11 +323,11 @@ Human Rating Scale (example):
             <div class="flex items-center gap-3">
               <input type="checkbox" checked disabled />
               <p><strong>Production monitoring:</strong> Tracking real user queries and feedback</p>
-            </div>
-          </div>
-        </section>
 
-            {# ── Navigation ── #}
+      </article>
+    </div>
+
+    {# ── Navigation ── #}
     <div class="flex items-center justify-between">
       <a
         href="{% url 'tutorial_rag_pipeline_complete_system' %}"
@@ -362,10 +341,7 @@ Human Rating Scale (example):
       >
         Next: Common Pitfalls <span aria-hidden>→</span>
       </a>
-    </div>
-
-      </article>
-    </div>
+      </div>
 
   </div>
 {% endblock %}
