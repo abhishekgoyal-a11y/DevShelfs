@@ -285,5 +285,29 @@
         });
       })();
     </script>
+    <script>
+      (function () {
+        var toggleBtn = document.getElementById("toggle-series");
+        var toggleText = document.getElementById("toggle-text");
+        var toggleIcon = document.getElementById("toggle-icon");
+        var hiddenItems = document.querySelectorAll(".hidden-series-item");
+        var expanded = false;
+
+        if (!toggleBtn || hiddenItems.length === 0) return;
+
+        toggleBtn.addEventListener("click", function () {
+          expanded = !expanded;
+          hiddenItems.forEach(function (item) {
+            if (expanded) {
+              item.classList.add("visible");
+            } else {
+              item.classList.remove("visible");
+            }
+          });
+          toggleText.textContent = expanded ? "Hide overview" : "Show complete overview";
+          toggleIcon.textContent = expanded ? "↑" : "↓";
+        });
+      })();
+    </script>
   </body>
 </html>

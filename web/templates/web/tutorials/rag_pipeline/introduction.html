@@ -202,7 +202,7 @@
 
         <section class="space-y-6" aria-labelledby="series-heading">
           <h2 id="series-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">Series overview</h2>
-          <div class="space-y-3">
+          <div class="space-y-3" id="series-list">
             <div class="flex items-start gap-4 rounded-2xl border border-violet-400/25 bg-violet-500/[0.07] p-4">
               <span class="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-violet-500/20 text-xs font-bold text-violet-300">1</span>
               <div>
@@ -211,7 +211,7 @@
               </div>
             </div>
             {% for page in series_pages %}
-              <div class="flex items-start gap-4 rounded-2xl border border-white/10 bg-white/[0.02] p-4">
+              <div class="flex items-start gap-4 rounded-2xl border border-white/10 bg-white/[0.02] p-4 series-item {% if forloop.counter > 5 %}hidden-series-item{% endif %}" data-page="{{ page.number }}">
                 <span class="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-white/10 text-xs font-bold text-slate-300">{{ page.number }}</span>
                 <div>
                   <p class="font-semibold text-slate-200">{{ page.title }}</p>
@@ -220,6 +220,10 @@
               </div>
             {% endfor %}
           </div>
+          <button id="toggle-series" class="mt-4 inline-flex items-center gap-2 rounded-lg border border-violet-400/35 bg-violet-500/10 px-4 py-2.5 text-sm font-semibold text-violet-200 transition hover:border-violet-300/50 hover:bg-violet-500/20 hover:text-white">
+            <span id="toggle-text">Show complete overview</span>
+            <span aria-hidden id="toggle-icon">↓</span>
+          </button>
         </section>
 
         <section class="space-y-5" aria-labelledby="when-heading">
