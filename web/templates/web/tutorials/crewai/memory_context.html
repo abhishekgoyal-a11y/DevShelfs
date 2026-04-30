@@ -1,0 +1,165 @@
+{% extends "web/base.html" %}
+{% block title %}Memory & Context — Build with CrewAI{% endblock %}
+{% block content %}
+  <div class="space-y-10">
+    {# ── Breadcrumb ── #}
+    <div class="flex flex-wrap items-center gap-2 text-sm text-slate-400/90">
+      <a href="{% url 'tutorials' %}" class="font-medium text-violet-300/90 transition hover:text-violet-200">Tutorials</a>
+      <span aria-hidden class="text-slate-600">/</span>
+      <a href="{% url 'tutorials' %}?category=ai-agents" class="font-medium text-violet-300/90 transition hover:text-violet-200">AI Agents</a>
+      <span aria-hidden class="text-slate-600">/</span>
+      <span class="text-slate-200/90">Memory & Context</span>
+    </div>
+
+    {# ── Hero ── #}
+    <section class="relative overflow-hidden rounded-3xl border border-violet-400/20 bg-white/[0.06] p-6 shadow-[0_0_0_1px_rgba(255,255,255,0.04)] backdrop-blur-2xl sm:p-8">
+      <div class="pointer-events-none absolute -right-24 top-0 h-72 w-72 rounded-full bg-violet-500/15 blur-3xl"></div>
+      <div class="pointer-events-none absolute -left-20 bottom-0 h-56 w-56 rounded-full bg-fuchsia-500/10 blur-3xl"></div>
+      <div class="relative">
+        <div class="flex flex-wrap items-center gap-3">
+          <span class="rounded-full border border-violet-500/25 bg-violet-500/10 px-2.5 py-1 text-xs font-medium text-violet-300/90">Build with CrewAI</span>
+          <span class="rounded-full border border-amber-500/25 bg-amber-500/10 px-2.5 py-1 text-xs font-medium text-amber-300/90">Intermediate</span>
+          <span class="text-xs text-slate-400/80">· 14 min read</span>
+          <span class="ml-auto text-xs font-medium text-slate-400/80">Page 9 of 15</span>
+        </div>
+        <h1 class="mt-4 text-3xl font-semibold tracking-tight text-white sm:text-4xl lg:text-[2.5rem] lg:leading-tight">Memory & Context</h1>
+        <p class="mt-4 max-w-2xl text-sm leading-relaxed text-slate-200/80 sm:text-base">
+          Short-term, long-term, and entity memory — what they do, when to enable them, and the caveats that bite people in production.
+        </p>
+        <div class="mt-6">
+          <div class="mb-1.5 flex items-center justify-between text-xs text-slate-400/80"><span>Series progress</span><span>9 / 15</span></div>
+          <div class="h-1.5 w-full overflow-hidden rounded-full bg-white/10"><div class="h-full w-[60%] rounded-full bg-violet-400/70"></div></div>
+        </div>
+      </div>
+    </section>
+
+    {# ── Content ── #}
+    <div class="glass rounded-3xl border border-white/10 p-5 sm:p-8">
+      <article class="mx-auto space-y-12 text-base leading-relaxed text-slate-300/95">
+
+        <section class="space-y-5" aria-labelledby="why-heading">
+          <h2 id="why-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">Why Memory?</h2>
+          <p>By default, every <code class="rounded bg-white/[0.06] px-1.5 py-0.5 font-mono text-xs">kickoff</code> starts fresh — agents forget everything between runs. Memory persists facts <em>across</em> runs, so the same crew gets smarter over time without you re-feeding context.</p>
+        </section>
+
+        <section class="space-y-5" aria-labelledby="kinds-heading">
+          <h2 id="kinds-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">The Three Kinds of Memory</h2>
+          <div class="space-y-3">
+            <div class="rounded-2xl border border-sky-500/20 bg-sky-500/5 p-4">
+              <p class="font-semibold text-sky-300 mb-1">Short-term (this run)</p>
+              <p class="text-sm text-slate-300">Recent task outputs and reasoning, available within a single <code class="rounded bg-white/[0.06] px-1.5 py-0.5 font-mono text-xs">kickoff</code>. RAM-based, dies when the run ends.</p>
+            </div>
+            <div class="rounded-2xl border border-amber-500/20 bg-amber-500/5 p-4">
+              <p class="font-semibold text-amber-300 mb-1">Long-term (across runs)</p>
+              <p class="text-sm text-slate-300">Persisted to disk (SQLite by default). Stored as embeddings — agents can semantically recall facts from previous runs.</p>
+            </div>
+            <div class="rounded-2xl border border-rose-500/20 bg-rose-500/5 p-4">
+              <p class="font-semibold text-rose-300 mb-1">Entity memory</p>
+              <p class="text-sm text-slate-300">Tracks specific entities (people, products, projects) and their attributes across runs. Useful for CRMs, support bots.</p>
+            </div>
+          </div>
+        </section>
+
+        <section class="space-y-5" aria-labelledby="enable-heading">
+          <h2 id="enable-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">Enabling Memory</h2>
+          <p>Turn it on at the crew level — CrewAI handles all three kinds for you.</p>
+          <div class="rounded-2xl border border-white/10 bg-white/[0.03] p-5">
+            <p class="font-semibold text-white mb-3">Memory-enabled crew</p>
+            <div class="ds-codeblock overflow-hidden rounded-2xl border border-white/10 bg-slate-950/90">
+  <div class="flex items-center justify-between gap-3 border-b border-white/10 px-3 py-2">
+    <span class="font-mono text-[11px] font-medium uppercase tracking-wide text-slate-400">PYTHON</span>
+    <button type="button" class="ds-codeblock-copy rounded-lg border border-white/10 bg-white/[0.06] px-2.5 py-1 text-xs font-semibold text-slate-200 transition hover:border-sky-400/40 hover:bg-white/[0.1] hover:text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-sky-400/50" data-copy-label="Copy" data-copied-label="Copied" aria-label="Copy code to clipboard">Copy</button>
+  </div>
+  <pre class="ds-codeblock-pre code-block m-0 overflow-x-auto p-4 text-[0.8125rem] leading-[1.55] sm:text-sm language-python" tabindex="0"><code class="whitespace-pre-wrap font-mono ds-codeblock-source language-python">from crewai import Crew, Process
+
+crew = Crew(
+    agents=[researcher, writer],
+    tasks=[research_task, write_task],
+    process=Process.sequential,
+    memory=True,                       # enable short + long + entity
+    verbose=True,
+)
+
+# First run: learns about Acme Corp
+crew.kickoff(inputs={"company": "Acme Corp"})
+
+# Second run, days later: still remembers Acme facts
+crew.kickoff(inputs={"company": "Acme Corp", "question": "What did we learn last time?"})</code></pre>
+</div>
+          </div>
+        </section>
+
+        <section class="space-y-5" aria-labelledby="custom-storage-heading">
+          <h2 id="custom-storage-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">Custom Embedder & Storage</h2>
+          <p>The default uses OpenAI embeddings + a local SQLite store. For production, point at your own infra.</p>
+          <div class="rounded-2xl border border-white/10 bg-white/[0.03] p-5">
+            <p class="font-semibold text-white mb-3">Custom embedder</p>
+            <div class="ds-codeblock overflow-hidden rounded-2xl border border-white/10 bg-slate-950/90">
+  <div class="flex items-center justify-between gap-3 border-b border-white/10 px-3 py-2">
+    <span class="font-mono text-[11px] font-medium uppercase tracking-wide text-slate-400">PYTHON</span>
+    <button type="button" class="ds-codeblock-copy rounded-lg border border-white/10 bg-white/[0.06] px-2.5 py-1 text-xs font-semibold text-slate-200 transition hover:border-sky-400/40 hover:bg-white/[0.1] hover:text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-sky-400/50" data-copy-label="Copy" data-copied-label="Copied" aria-label="Copy code to clipboard">Copy</button>
+  </div>
+  <pre class="ds-codeblock-pre code-block m-0 overflow-x-auto p-4 text-[0.8125rem] leading-[1.55] sm:text-sm language-python" tabindex="0"><code class="whitespace-pre-wrap font-mono ds-codeblock-source language-python">crew = Crew(
+    agents=[...],
+    tasks=[...],
+    memory=True,
+    embedder={
+        "provider": "openai",
+        "config": {"model": "text-embedding-3-small"},
+    },
+)</code></pre>
+</div>
+          </div>
+        </section>
+
+        <section class="space-y-5" aria-labelledby="manual-heading">
+          <h2 id="manual-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">Passing Context Manually</h2>
+          <p>Sometimes you don't want auto-memory — you want to inject specific context per run. Use the <code class="rounded bg-white/[0.06] px-1.5 py-0.5 font-mono text-xs">inputs</code> dict.</p>
+          <div class="rounded-2xl border border-white/10 bg-white/[0.03] p-5">
+            <p class="font-semibold text-white mb-3">Per-run context injection</p>
+            <div class="ds-codeblock overflow-hidden rounded-2xl border border-white/10 bg-slate-950/90">
+  <div class="flex items-center justify-between gap-3 border-b border-white/10 px-3 py-2">
+    <span class="font-mono text-[11px] font-medium uppercase tracking-wide text-slate-400">PYTHON</span>
+    <button type="button" class="ds-codeblock-copy rounded-lg border border-white/10 bg-white/[0.06] px-2.5 py-1 text-xs font-semibold text-slate-200 transition hover:border-sky-400/40 hover:bg-white/[0.1] hover:text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-sky-400/50" data-copy-label="Copy" data-copied-label="Copied" aria-label="Copy code to clipboard">Copy</button>
+  </div>
+  <pre class="ds-codeblock-pre code-block m-0 overflow-x-auto p-4 text-[0.8125rem] leading-[1.55] sm:text-sm language-python" tabindex="0"><code class="whitespace-pre-wrap font-mono ds-codeblock-source language-python">customer_history = load_customer_history(customer_id)
+
+result = crew.kickoff(inputs={
+    "customer_id": customer_id,
+    "history": customer_history,    # appears anywhere {history} is referenced
+    "current_ticket": ticket_body,
+})</code></pre>
+</div>
+          </div>
+        </section>
+
+        <section class="space-y-5" aria-labelledby="caveats-heading">
+          <h2 id="caveats-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">Caveats</h2>
+          <ul class="list-disc space-y-2 pl-5 marker:text-violet-400/80">
+            <li><strong>Memory costs tokens.</strong> Recalled facts are stuffed into the prompt — watch your context usage.</li>
+            <li><strong>Memory can mislead.</strong> Stale facts get recalled too. Add timestamps if that matters.</li>
+            <li><strong>Test with memory off first.</strong> If your crew works deterministically, memory is just a bonus, not a fix.</li>
+          </ul>
+        </section>
+
+      </article>
+    </div>
+
+    {# ── Navigation ── #}
+    <div class="flex items-center justify-between">
+      <a
+        href="{% url 'tutorial_crewai_processes' %}"
+        class="inline-flex items-center gap-2 rounded-xl border border-violet-400/35 bg-violet-500/10 px-5 py-2.5 text-sm font-semibold text-violet-200 transition hover:border-violet-300/50 hover:bg-violet-500/20 hover:text-white"
+      >
+        <span aria-hidden>←</span> Previous
+      </a>
+      <a
+        href="{% url 'tutorial_crewai_collaboration' %}"
+        class="inline-flex items-center gap-2 rounded-xl border border-violet-400/35 bg-violet-500/10 px-5 py-2.5 text-sm font-semibold text-violet-200 transition hover:border-violet-300/50 hover:bg-violet-500/20 hover:text-white"
+      >
+        Next: Multi-Agent Collaboration <span aria-hidden>→</span>
+      </a>
+    </div>
+
+  </div>
+{% endblock %}

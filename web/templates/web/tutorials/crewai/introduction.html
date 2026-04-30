@@ -1,0 +1,291 @@
+{% extends "web/base.html" %}
+{% block title %}Introduction to CrewAI — Build with CrewAI{% endblock %}
+{% block content %}
+  <div class="space-y-10">
+    {# ── Breadcrumb ── #}
+    <div class="flex flex-wrap items-center gap-2 text-sm text-slate-400/90">
+      <a href="{% url 'tutorials' %}" class="font-medium text-violet-300/90 transition hover:text-violet-200">Tutorials</a>
+      <span aria-hidden class="text-slate-600">/</span>
+      <a href="{% url 'tutorials' %}?category=ai-agents" class="font-medium text-violet-300/90 transition hover:text-violet-200">AI Agents</a>
+      <span aria-hidden class="text-slate-600">/</span>
+      <span class="text-slate-200/90">Introduction</span>
+    </div>
+
+    {# ── Hero ── #}
+    <section class="relative overflow-hidden rounded-3xl border border-violet-400/20 bg-white/[0.06] p-6 shadow-[0_0_0_1px_rgba(255,255,255,0.04)] backdrop-blur-2xl sm:p-8">
+      <div class="pointer-events-none absolute -right-24 top-0 h-72 w-72 rounded-full bg-violet-500/15 blur-3xl"></div>
+      <div class="pointer-events-none absolute -left-20 bottom-0 h-56 w-56 rounded-full bg-fuchsia-500/10 blur-3xl"></div>
+      <div class="relative">
+        <div class="flex flex-wrap items-center gap-3">
+          <span class="rounded-full border border-violet-500/25 bg-violet-500/10 px-2.5 py-1 text-xs font-medium text-violet-300/90">Build with CrewAI</span>
+          <span class="rounded-full border border-sky-500/25 bg-sky-500/10 px-2.5 py-1 text-xs font-medium text-sky-300/90">Beginner</span>
+          <span class="text-xs text-slate-400/80">· 8 min read</span>
+          <span class="ml-auto text-xs font-medium text-slate-400/80">Page 1 of 15</span>
+        </div>
+        <h1 class="mt-4 text-3xl font-semibold tracking-tight text-white sm:text-4xl lg:text-[2.5rem] lg:leading-tight">Introduction to CrewAI</h1>
+        <p class="mt-4 max-w-2xl text-sm leading-relaxed text-slate-200/80 sm:text-base">
+          What CrewAI is, why multi-agent systems matter, how it compares to alternatives, and when you should reach for it. Your starting point for building production AI crews.
+        </p>
+        <div class="mt-6">
+          <div class="mb-1.5 flex items-center justify-between text-xs text-slate-400/80"><span>Series progress</span><span>1 / 15</span></div>
+          <div class="h-1.5 w-full overflow-hidden rounded-full bg-white/10"><div class="h-full w-[7%] rounded-full bg-violet-400/70"></div></div>
+        </div>
+      </div>
+    </section>
+
+    {# ── Content ── #}
+    <div class="glass rounded-3xl border border-white/10 p-5 sm:p-8">
+      <article class="mx-auto space-y-12 text-base leading-relaxed text-slate-300/95">
+
+        <section class="space-y-5" aria-labelledby="what-heading">
+          <h2 id="what-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">What is CrewAI?</h2>
+          <p>
+            <strong>CrewAI</strong> is an open-source Python framework for orchestrating <strong>role-playing, autonomous AI agents</strong>. Instead of asking one LLM to do everything, you compose a "crew" of specialized agents — each with its own role, goals, and tools — that collaborate to complete a complex task.
+          </p>
+          <p>
+            Think of it like running a small team: a researcher gathers information, a writer drafts an article, an editor polishes it. Each agent does what it's good at, and the framework handles the handoffs.
+          </p>
+          <div class="rounded-2xl border border-white/10 bg-white/[0.03] p-5">
+            <div class="space-y-3 text-sm">
+              <div class="font-semibold text-violet-300">A CrewAI Workflow:</div>
+              <div class="flex flex-wrap items-center gap-2">
+                <span class="rounded-full bg-violet-500/20 px-3 py-1 text-xs font-medium text-violet-300">User Goal</span>
+                <span class="text-slate-600">→</span>
+                <span class="rounded-full bg-white/10 px-3 py-1 text-xs font-medium text-slate-300">Researcher Agent</span>
+                <span class="text-slate-600">→</span>
+                <span class="rounded-full bg-white/10 px-3 py-1 text-xs font-medium text-slate-300">Writer Agent</span>
+              </div>
+              <div class="flex items-center gap-2 pl-8">
+                <span class="text-slate-600">↓</span>
+              </div>
+              <div class="flex flex-wrap items-center gap-2">
+                <span class="rounded-full bg-white/10 px-3 py-1 text-xs font-medium text-slate-300">Editor Agent</span>
+                <span class="text-slate-600">→</span>
+                <span class="rounded-full bg-violet-500/20 px-3 py-1 text-xs font-medium text-violet-300">Final Output</span>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="space-y-5" aria-labelledby="why-heading">
+          <h2 id="why-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">Why Multi-Agent Systems Matter</h2>
+          <p>Single-agent LLM apps hit a ceiling fast. Multi-agent systems break through it for three reasons:</p>
+          <div class="space-y-3">
+            <div class="rounded-2xl border border-violet-500/20 bg-violet-500/5 p-4">
+              <h3 class="font-semibold text-violet-300 mb-2">🎯 Specialization beats generalization</h3>
+              <p class="text-sm text-slate-300">A focused researcher prompt outperforms a "do everything" prompt. Splitting roles lets each agent excel at one thing.</p>
+            </div>
+            <div class="rounded-2xl border border-sky-500/20 bg-sky-500/5 p-4">
+              <h3 class="font-semibold text-sky-300 mb-2">🧩 Decomposition = better quality</h3>
+              <p class="text-sm text-slate-300">Complex tasks split into smaller sub-tasks produce more reliable, reviewable outputs than one giant chain-of-thought.</p>
+            </div>
+            <div class="rounded-2xl border border-emerald-500/20 bg-emerald-500/5 p-4">
+              <h3 class="font-semibold text-emerald-300 mb-2">🛠️ Tool-use becomes manageable</h3>
+              <p class="text-sm text-slate-300">Each agent owns a small toolset. No more 30-tool prompts where the model picks the wrong one.</p>
+            </div>
+          </div>
+        </section>
+
+        <section class="space-y-5" aria-labelledby="approaches-heading">
+          <h2 id="approaches-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">CrewAI vs LangChain vs AutoGen</h2>
+          <p>CrewAI lives in a crowded space. Here's where it fits:</p>
+
+          <div class="space-y-4">
+            <div class="rounded-2xl border border-white/10 bg-white/[0.03] p-5">
+              <h3 class="font-semibold text-white mb-3">LangChain / LangGraph</h3>
+              <div class="space-y-2 text-sm text-slate-300">
+                <p><strong>Strength:</strong> Massive ecosystem, fine-grained graph control, huge tool library.</p>
+                <p><strong>Weakness:</strong> Steep learning curve. Boilerplate-heavy. Multi-agent feels bolted on.</p>
+                <p class="text-xs text-slate-400">✓ Best for: Custom workflows where you want to wire every edge yourself.</p>
+              </div>
+            </div>
+
+            <div class="rounded-2xl border border-white/10 bg-white/[0.03] p-5">
+              <h3 class="font-semibold text-white mb-3">AutoGen (Microsoft)</h3>
+              <div class="space-y-2 text-sm text-slate-300">
+                <p><strong>Strength:</strong> Strong conversational multi-agent patterns. Good for chat-style coordination.</p>
+                <p><strong>Weakness:</strong> Less opinionated. Heavier setup for simple sequential pipelines.</p>
+                <p class="text-xs text-slate-400">✓ Best for: Research-style agent dialogues, code-execution loops.</p>
+              </div>
+            </div>
+
+            <div class="rounded-2xl border border-violet-500/20 bg-violet-500/5 p-5">
+              <h3 class="font-semibold text-violet-300 mb-3">CrewAI ⭐ Role-First, Opinionated</h3>
+              <div class="space-y-2 text-sm text-slate-300">
+                <p><strong>Strength:</strong> Dead-simple mental model (Agents + Tasks + Crew). Production-ready defaults. Fast prototyping.</p>
+                <p><strong>Weakness:</strong> Less flexible than raw LangGraph for highly custom flows.</p>
+                <p class="text-xs text-slate-400">✓ Best for: Role-based pipelines (research, content, support, ops) you want shipping in days, not months.</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="rounded-2xl border border-sky-500/20 bg-sky-500/5 p-4 mt-4">
+            <p class="text-sm text-slate-300">
+              <strong>💡 Pro tip:</strong> CrewAI is built on top of LangChain — so you get its tool ecosystem for free, with a much cleaner agent abstraction on top.
+            </p>
+          </div>
+        </section>
+
+        <section class="space-y-5" aria-labelledby="usecases-heading">
+          <h2 id="usecases-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">Real-World Use Cases</h2>
+          <div class="space-y-3">
+            <div class="flex gap-4">
+              <div class="text-2xl">🔬</div>
+              <div>
+                <h3 class="font-semibold text-white">Research & Analysis Crews</h3>
+                <p class="text-sm text-slate-300">Researcher gathers sources, analyst synthesizes, writer produces a brief. Replace hours of manual work.</p>
+              </div>
+            </div>
+            <div class="flex gap-4">
+              <div class="text-2xl">✍️</div>
+              <div>
+                <h3 class="font-semibold text-white">Content Factories</h3>
+                <p class="text-sm text-slate-300">Topic researcher → outliner → writer → SEO editor. Scale long-form content without sacrificing quality.</p>
+              </div>
+            </div>
+            <div class="flex gap-4">
+              <div class="text-2xl">📞</div>
+              <div>
+                <h3 class="font-semibold text-white">Customer Support Triage</h3>
+                <p class="text-sm text-slate-300">Classifier routes the ticket, KB-search agent finds answers, drafter composes a response, escalator hands off when stuck.</p>
+              </div>
+            </div>
+            <div class="flex gap-4">
+              <div class="text-2xl">💼</div>
+              <div>
+                <h3 class="font-semibold text-white">Sales SDR Automation</h3>
+                <p class="text-sm text-slate-300">Lead-researcher profiles prospects, copywriter drafts personalized outreach, scheduler proposes meeting slots.</p>
+              </div>
+            </div>
+            <div class="flex gap-4">
+              <div class="text-2xl">🧑‍💻</div>
+              <div>
+                <h3 class="font-semibold text-white">Code Review & PR Bots</h3>
+                <p class="text-sm text-slate-300">Reader summarizes the diff, security agent scans for vulns, style agent flags conventions, reviewer posts the comment.</p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="space-y-5" aria-labelledby="prereqs-heading">
+          <h2 id="prereqs-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">Prerequisites</h2>
+          <ul class="list-disc space-y-2 pl-5 marker:text-violet-400/80">
+            <li>Python 3.10+ and basic Python knowledge (functions, classes, virtual envs)</li>
+            <li>Familiarity with calling an LLM API (OpenAI, Anthropic, or any local model)</li>
+            <li>Comfort reading a stack trace and editing a YAML/JSON config</li>
+            <li>For hands-on examples: an OpenAI API key, or Ollama running locally</li>
+          </ul>
+          <p class="rounded-xl border border-white/10 bg-white/[0.02] px-4 py-3 text-sm">
+            <span class="font-medium text-violet-200">Note:</span> Pages 1–4 are intro + setup. From Page 5 onward you'll be writing real CrewAI code, so make sure your environment is ready.
+          </p>
+        </section>
+
+        <section class="space-y-5" aria-labelledby="learn-heading">
+          <h2 id="learn-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">What you will learn</h2>
+          <ul class="list-disc space-y-2 pl-5 marker:text-violet-400/80">
+            <li>The CrewAI mental model: Agents, Tasks, Crews, Tools, and Processes</li>
+            <li>How to define agents with strong roles, goals, and backstories that actually steer behavior</li>
+            <li>Building tasks with clear descriptions, expected outputs, and context passing</li>
+            <li>Using built-in tools (web search, scraping, file I/O) and writing custom <code class="rounded bg-white/[0.06] px-1.5 py-0.5 font-mono text-xs">@tool</code> functions</li>
+            <li>Sequential vs Hierarchical processes — and when to use each</li>
+            <li>Memory: short-term, long-term, and entity-level persistence across runs</li>
+            <li>Production patterns: deployment, observability, debugging, cost control</li>
+            <li>Five real-world crews you can adapt for your own projects</li>
+          </ul>
+        </section>
+
+        <section class="space-y-6" aria-labelledby="series-heading">
+          <h2 id="series-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">Series overview</h2>
+          <div class="space-y-3" id="series-list">
+            <div class="flex items-start gap-4 rounded-2xl border border-violet-400/25 bg-violet-500/[0.07] p-4">
+              <span class="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-violet-500/20 text-xs font-bold text-violet-300">1</span>
+              <div>
+                <p class="font-semibold text-white">Introduction <span class="ml-2 text-xs font-normal text-violet-300/80">← You are here</span></p>
+                <p class="mt-0.5 text-sm text-slate-400/90">What CrewAI is, why multi-agent matters, comparisons, and series roadmap.</p>
+              </div>
+            </div>
+            {% for page in series_pages %}
+              <div class="flex items-start gap-4 rounded-2xl border border-white/10 bg-white/[0.02] p-4 series-item {% if forloop.counter > 5 %}hidden-series-item{% endif %}" data-page="{{ page.number }}">
+                <span class="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-white/10 text-xs font-bold text-slate-300">{{ page.number }}</span>
+                <div>
+                  <p class="font-semibold text-slate-200">{{ page.title }}</p>
+                  <p class="mt-0.5 text-sm text-slate-400/90">{{ page.summary }}</p>
+                </div>
+              </div>
+            {% endfor %}
+          </div>
+          <button id="toggle-series" class="mt-4 inline-flex items-center gap-2 rounded-lg border border-violet-400/35 bg-violet-500/10 px-4 py-2.5 text-sm font-semibold text-violet-200 transition hover:border-violet-300/50 hover:bg-violet-500/20 hover:text-white">
+            <span id="toggle-text">Show complete overview</span>
+            <span aria-hidden id="toggle-icon">↓</span>
+          </button>
+        </section>
+
+        <section class="space-y-5" aria-labelledby="when-heading">
+          <h2 id="when-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">When Should You Use CrewAI?</h2>
+          <p>Reach for CrewAI when you have:</p>
+          <div class="space-y-2">
+            <div class="flex items-center gap-3">
+              <span class="rounded-full bg-green-500/20 px-3 py-1 text-xs font-medium text-green-300">✓</span>
+              <span class="text-sm text-slate-300"><strong>Multi-step workflows</strong> that map naturally to roles (researcher, writer, reviewer)</span>
+            </div>
+            <div class="flex items-center gap-3">
+              <span class="rounded-full bg-green-500/20 px-3 py-1 text-xs font-medium text-green-300">✓</span>
+              <span class="text-sm text-slate-300"><strong>Repeatable processes</strong> that today consume hours of manual work</span>
+            </div>
+            <div class="flex items-center gap-3">
+              <span class="rounded-full bg-green-500/20 px-3 py-1 text-xs font-medium text-green-300">✓</span>
+              <span class="text-sm text-slate-300"><strong>Tool-using agents</strong> that need to search, scrape, or call APIs</span>
+            </div>
+            <div class="flex items-center gap-3">
+              <span class="rounded-full bg-green-500/20 px-3 py-1 text-xs font-medium text-green-300">✓</span>
+              <span class="text-sm text-slate-300"><strong>Need for fast iteration</strong> on agent behavior without rewiring graphs</span>
+            </div>
+          </div>
+
+          <p class="mt-6 text-sm text-slate-400 border-l-2 border-slate-500 pl-4">
+            <strong>Skip CrewAI if:</strong> You have a single-step prompt (just call the LLM directly), need ultra-low-latency single-agent inference, or require a fully deterministic non-LLM workflow engine.
+          </p>
+        </section>
+
+        <section class="space-y-5" aria-labelledby="roadmap-heading">
+          <h2 id="roadmap-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">What You'll Learn in This Tutorial</h2>
+          <div class="space-y-3">
+            <div class="rounded-2xl border border-white/10 bg-white/[0.03] p-4">
+              <p class="text-sm font-medium text-white">📚 Part 1: Foundations (Pages 1-4)</p>
+              <p class="text-xs text-slate-400 mt-1">Concepts, installation, and your first working crew.</p>
+            </div>
+            <div class="rounded-2xl border border-white/10 bg-white/[0.03] p-4">
+              <p class="text-sm font-medium text-white">🔨 Part 2: Building Blocks (Pages 5-8)</p>
+              <p class="text-xs text-slate-400 mt-1">Agents, tasks, tools, and process types in depth.</p>
+            </div>
+            <div class="rounded-2xl border border-white/10 bg-white/[0.03] p-4">
+              <p class="text-sm font-medium text-white">🧠 Part 3: Coordination (Pages 9-11)</p>
+              <p class="text-xs text-slate-400 mt-1">Memory, multi-agent collaboration, and LLM provider integration.</p>
+            </div>
+            <div class="rounded-2xl border border-white/10 bg-white/[0.03] p-4">
+              <p class="text-sm font-medium text-white">🚀 Part 4: Production (Pages 12-14)</p>
+              <p class="text-xs text-slate-400 mt-1">Deployment, debugging, observability, and pitfalls to avoid.</p>
+            </div>
+            <div class="rounded-2xl border border-white/10 bg-white/[0.03] p-4">
+              <p class="text-sm font-medium text-white">⭐ Part 5: Real Crews (Page 15)</p>
+              <p class="text-xs text-slate-400 mt-1">Five complete reference implementations you can fork.</p>
+            </div>
+          </div>
+        </section>
+
+      </article>
+    </div>
+
+    {# ── Navigation ── #}
+    <div class="flex items-center justify-between">
+      <div></div>
+      <a
+        href="{% url 'tutorial_crewai_core_concepts' %}"
+        class="inline-flex items-center gap-2 rounded-xl border border-violet-400/35 bg-violet-500/10 px-5 py-2.5 text-sm font-semibold text-violet-200 transition hover:border-violet-300/50 hover:bg-violet-500/20 hover:text-white"
+      >
+        Next: Core Concepts <span aria-hidden>→</span>
+      </a>
+    </div>
+
+  </div>
+{% endblock %}

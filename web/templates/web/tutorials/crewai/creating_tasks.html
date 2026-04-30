@@ -1,0 +1,208 @@
+{% extends "web/base.html" %}
+{% block title %}Creating Tasks — Build with CrewAI{% endblock %}
+{% block content %}
+  <div class="space-y-10">
+    {# ── Breadcrumb ── #}
+    <div class="flex flex-wrap items-center gap-2 text-sm text-slate-400/90">
+      <a href="{% url 'tutorials' %}" class="font-medium text-violet-300/90 transition hover:text-violet-200">Tutorials</a>
+      <span aria-hidden class="text-slate-600">/</span>
+      <a href="{% url 'tutorials' %}?category=ai-agents" class="font-medium text-violet-300/90 transition hover:text-violet-200">AI Agents</a>
+      <span aria-hidden class="text-slate-600">/</span>
+      <span class="text-slate-200/90">Creating Tasks</span>
+    </div>
+
+    {# ── Hero ── #}
+    <section class="relative overflow-hidden rounded-3xl border border-violet-400/20 bg-white/[0.06] p-6 shadow-[0_0_0_1px_rgba(255,255,255,0.04)] backdrop-blur-2xl sm:p-8">
+      <div class="pointer-events-none absolute -right-24 top-0 h-72 w-72 rounded-full bg-violet-500/15 blur-3xl"></div>
+      <div class="pointer-events-none absolute -left-20 bottom-0 h-56 w-56 rounded-full bg-fuchsia-500/10 blur-3xl"></div>
+      <div class="relative">
+        <div class="flex flex-wrap items-center gap-3">
+          <span class="rounded-full border border-violet-500/25 bg-violet-500/10 px-2.5 py-1 text-xs font-medium text-violet-300/90">Build with CrewAI</span>
+          <span class="rounded-full border border-amber-500/25 bg-amber-500/10 px-2.5 py-1 text-xs font-medium text-amber-300/90">Intermediate</span>
+          <span class="text-xs text-slate-400/80">· 12 min read</span>
+          <span class="ml-auto text-xs font-medium text-slate-400/80">Page 6 of 15</span>
+        </div>
+        <h1 class="mt-4 text-3xl font-semibold tracking-tight text-white sm:text-4xl lg:text-[2.5rem] lg:leading-tight">Creating Tasks</h1>
+        <p class="mt-4 max-w-2xl text-sm leading-relaxed text-slate-200/80 sm:text-base">
+          Task descriptions, expected_output, context passing, async execution, and structured Pydantic outputs — the full task API in one page.
+        </p>
+        <div class="mt-6">
+          <div class="mb-1.5 flex items-center justify-between text-xs text-slate-400/80"><span>Series progress</span><span>6 / 15</span></div>
+          <div class="h-1.5 w-full overflow-hidden rounded-full bg-white/10"><div class="h-full w-[40%] rounded-full bg-violet-400/70"></div></div>
+        </div>
+      </div>
+    </section>
+
+    {# ── Content ── #}
+    <div class="glass rounded-3xl border border-white/10 p-5 sm:p-8">
+      <article class="mx-auto space-y-12 text-base leading-relaxed text-slate-300/95">
+
+        <section class="space-y-5" aria-labelledby="anatomy-heading">
+          <h2 id="anatomy-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">Anatomy of a Task</h2>
+          <p>Two fields drive output quality more than anything else: <strong>description</strong> and <strong>expected_output</strong>.</p>
+          <div class="rounded-2xl border border-white/10 bg-white/[0.03] p-5">
+            <p class="font-semibold text-white mb-3">Full task definition</p>
+            <div class="ds-codeblock overflow-hidden rounded-2xl border border-white/10 bg-slate-950/90">
+  <div class="flex items-center justify-between gap-3 border-b border-white/10 px-3 py-2">
+    <span class="font-mono text-[11px] font-medium uppercase tracking-wide text-slate-400">PYTHON</span>
+    <button type="button" class="ds-codeblock-copy rounded-lg border border-white/10 bg-white/[0.06] px-2.5 py-1 text-xs font-semibold text-slate-200 transition hover:border-sky-400/40 hover:bg-white/[0.1] hover:text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-sky-400/50" data-copy-label="Copy" data-copied-label="Copied" aria-label="Copy code to clipboard">Copy</button>
+  </div>
+  <pre class="ds-codeblock-pre code-block m-0 overflow-x-auto p-4 text-[0.8125rem] leading-[1.55] sm:text-sm language-python" tabindex="0"><code class="whitespace-pre-wrap font-mono ds-codeblock-source language-python">from crewai import Task
+
+analyze_task = Task(
+    description=(
+        "Analyze the customer churn data in {csv_path}. "
+        "Identify the top 3 segments with churn > 15% and explain why."
+    ),
+    expected_output=(
+        "A markdown table with columns: segment, churn_rate, primary_driver. "
+        "Followed by a 3-sentence explanation per segment."
+    ),
+    agent=data_analyst,
+    context=[],            # outputs of prior tasks to inject
+    output_file="churn_report.md",
+    async_execution=False,
+)</code></pre>
+</div>
+          </div>
+        </section>
+
+        <section class="space-y-5" aria-labelledby="description-heading">
+          <h2 id="description-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">Writing Descriptions</h2>
+          <p>Be specific. Reference the inputs by name with <code class="rounded bg-white/[0.06] px-1.5 py-0.5 font-mono text-xs">{placeholders}</code>. State constraints up front.</p>
+          <div class="space-y-3">
+            <div class="rounded-2xl border border-red-500/20 bg-red-500/5 p-4">
+              <p class="font-semibold text-red-300 mb-1">❌ Vague</p>
+              <code class="text-xs text-slate-300">"Write something about {topic}"</code>
+            </div>
+            <div class="rounded-2xl border border-green-500/20 bg-green-500/5 p-4">
+              <p class="font-semibold text-green-300 mb-1">✓ Specific</p>
+              <code class="text-xs text-slate-300">"Write a 300-word LinkedIn post about {topic} aimed at engineering managers. Include 1 stat, 1 example, and end with a question."</code>
+            </div>
+          </div>
+        </section>
+
+        <section class="space-y-5" aria-labelledby="output-heading">
+          <h2 id="output-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">Expected Output: The Quality Lever</h2>
+          <p><code class="rounded bg-white/[0.06] px-1.5 py-0.5 font-mono text-xs">expected_output</code> tells the agent what "done" looks like. Be concrete about format, length, and structure — agents that know the shape of the answer produce it more reliably.</p>
+          <div class="rounded-2xl border border-white/10 bg-white/[0.03] p-5">
+            <p class="font-semibold text-white mb-3">Bad vs Good expected_output</p>
+            <div class="ds-codeblock overflow-hidden rounded-2xl border border-white/10 bg-slate-950/90">
+  <div class="flex items-center justify-between gap-3 border-b border-white/10 px-3 py-2">
+    <span class="font-mono text-[11px] font-medium uppercase tracking-wide text-slate-400">PYTHON</span>
+    <button type="button" class="ds-codeblock-copy rounded-lg border border-white/10 bg-white/[0.06] px-2.5 py-1 text-xs font-semibold text-slate-200 transition hover:border-sky-400/40 hover:bg-white/[0.1] hover:text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-sky-400/50" data-copy-label="Copy" data-copied-label="Copied" aria-label="Copy code to clipboard">Copy</button>
+  </div>
+  <pre class="ds-codeblock-pre code-block m-0 overflow-x-auto p-4 text-[0.8125rem] leading-[1.55] sm:text-sm language-python" tabindex="0"><code class="whitespace-pre-wrap font-mono ds-codeblock-source language-python"># ❌ Bad — agent guesses the format
+expected_output="Some research notes"
+
+# ✓ Good — leaves nothing to interpretation
+expected_output=(
+    "A markdown bullet list of exactly 5 facts. "
+    "Each bullet: '- **Fact**: explanation (source: URL)'. "
+    "No introduction, no conclusion."
+)</code></pre>
+</div>
+          </div>
+        </section>
+
+        <section class="space-y-5" aria-labelledby="context-heading">
+          <h2 id="context-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">Passing Context Between Tasks</h2>
+          <p>The <code class="rounded bg-white/[0.06] px-1.5 py-0.5 font-mono text-xs">context</code> parameter injects outputs of earlier tasks into the prompt of the current one. This is how a writer "sees" what the researcher found.</p>
+          <div class="rounded-2xl border border-white/10 bg-white/[0.03] p-5">
+            <p class="font-semibold text-white mb-3">Chained tasks</p>
+            <div class="ds-codeblock overflow-hidden rounded-2xl border border-white/10 bg-slate-950/90">
+  <div class="flex items-center justify-between gap-3 border-b border-white/10 px-3 py-2">
+    <span class="font-mono text-[11px] font-medium uppercase tracking-wide text-slate-400">PYTHON</span>
+    <button type="button" class="ds-codeblock-copy rounded-lg border border-white/10 bg-white/[0.06] px-2.5 py-1 text-xs font-semibold text-slate-200 transition hover:border-sky-400/40 hover:bg-white/[0.1] hover:text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-sky-400/50" data-copy-label="Copy" data-copied-label="Copied" aria-label="Copy code to clipboard">Copy</button>
+  </div>
+  <pre class="ds-codeblock-pre code-block m-0 overflow-x-auto p-4 text-[0.8125rem] leading-[1.55] sm:text-sm language-python" tabindex="0"><code class="whitespace-pre-wrap font-mono ds-codeblock-source language-python">research = Task(description="Research X", expected_output="...", agent=researcher)
+outline = Task(description="Outline an article", expected_output="...", agent=outliner, context=[research])
+draft = Task(description="Write the article", expected_output="...", agent=writer, context=[research, outline])
+edit = Task(description="Polish the draft", expected_output="...", agent=editor, context=[draft])</code></pre>
+</div>
+          </div>
+          <div class="rounded-2xl border border-sky-500/20 bg-sky-500/5 p-4">
+            <p class="text-sm text-slate-300"><strong>💡 Tip:</strong> In sequential mode, context is automatic for adjacent tasks. Use explicit <code class="rounded bg-white/[0.06] px-1.5 py-0.5 font-mono text-xs">context=[...]</code> when you need a non-adjacent task's output, or in hierarchical mode.</p>
+          </div>
+        </section>
+
+        <section class="space-y-5" aria-labelledby="async-heading">
+          <h2 id="async-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">Async Tasks for Parallelism</h2>
+          <p>Independent tasks (e.g. researching three sub-topics in parallel) can run concurrently with <code class="rounded bg-white/[0.06] px-1.5 py-0.5 font-mono text-xs">async_execution=True</code>.</p>
+          <div class="rounded-2xl border border-white/10 bg-white/[0.03] p-5">
+            <p class="font-semibold text-white mb-3">Parallel research, sequential synthesis</p>
+            <div class="ds-codeblock overflow-hidden rounded-2xl border border-white/10 bg-slate-950/90">
+  <div class="flex items-center justify-between gap-3 border-b border-white/10 px-3 py-2">
+    <span class="font-mono text-[11px] font-medium uppercase tracking-wide text-slate-400">PYTHON</span>
+    <button type="button" class="ds-codeblock-copy rounded-lg border border-white/10 bg-white/[0.06] px-2.5 py-1 text-xs font-semibold text-slate-200 transition hover:border-sky-400/40 hover:bg-white/[0.1] hover:text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-sky-400/50" data-copy-label="Copy" data-copied-label="Copied" aria-label="Copy code to clipboard">Copy</button>
+  </div>
+  <pre class="ds-codeblock-pre code-block m-0 overflow-x-auto p-4 text-[0.8125rem] leading-[1.55] sm:text-sm language-python" tabindex="0"><code class="whitespace-pre-wrap font-mono ds-codeblock-source language-python">research_a = Task(description="Research topic A", agent=r1, async_execution=True, expected_output="...")
+research_b = Task(description="Research topic B", agent=r2, async_execution=True, expected_output="...")
+research_c = Task(description="Research topic C", agent=r3, async_execution=True, expected_output="...")
+
+synthesize = Task(
+    description="Combine the three research outputs into one report",
+    agent=writer,
+    context=[research_a, research_b, research_c],
+    expected_output="A unified report.",
+)</code></pre>
+</div>
+          </div>
+        </section>
+
+        <section class="space-y-5" aria-labelledby="output-formats-heading">
+          <h2 id="output-formats-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">Structured Outputs (Pydantic)</h2>
+          <p>For programmatic consumption, define a Pydantic model and pass it as <code class="rounded bg-white/[0.06] px-1.5 py-0.5 font-mono text-xs">output_pydantic</code>. CrewAI will coerce the response.</p>
+          <div class="rounded-2xl border border-white/10 bg-white/[0.03] p-5">
+            <p class="font-semibold text-white mb-3">Typed task output</p>
+            <div class="ds-codeblock overflow-hidden rounded-2xl border border-white/10 bg-slate-950/90">
+  <div class="flex items-center justify-between gap-3 border-b border-white/10 px-3 py-2">
+    <span class="font-mono text-[11px] font-medium uppercase tracking-wide text-slate-400">PYTHON</span>
+    <button type="button" class="ds-codeblock-copy rounded-lg border border-white/10 bg-white/[0.06] px-2.5 py-1 text-xs font-semibold text-slate-200 transition hover:border-sky-400/40 hover:bg-white/[0.1] hover:text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-sky-400/50" data-copy-label="Copy" data-copied-label="Copied" aria-label="Copy code to clipboard">Copy</button>
+  </div>
+  <pre class="ds-codeblock-pre code-block m-0 overflow-x-auto p-4 text-[0.8125rem] leading-[1.55] sm:text-sm language-python" tabindex="0"><code class="whitespace-pre-wrap font-mono ds-codeblock-source language-python">from pydantic import BaseModel
+from crewai import Task
+
+class Finding(BaseModel):
+    fact: str
+    source: str
+
+class ResearchOutput(BaseModel):
+    findings: list[Finding]
+
+research_task = Task(
+    description="Research {topic}",
+    expected_output="A ResearchOutput object with 5 findings",
+    agent=researcher,
+    output_pydantic=ResearchOutput,
+)
+
+result = crew.kickoff(inputs={"topic": "RAG"})
+parsed: ResearchOutput = result.pydantic
+for f in parsed.findings:
+    print(f.fact, "→", f.source)</code></pre>
+</div>
+          </div>
+        </section>
+
+      </article>
+    </div>
+
+    {# ── Navigation ── #}
+    <div class="flex items-center justify-between">
+      <a
+        href="{% url 'tutorial_crewai_agents' %}"
+        class="inline-flex items-center gap-2 rounded-xl border border-violet-400/35 bg-violet-500/10 px-5 py-2.5 text-sm font-semibold text-violet-200 transition hover:border-violet-300/50 hover:bg-violet-500/20 hover:text-white"
+      >
+        <span aria-hidden>←</span> Previous
+      </a>
+      <a
+        href="{% url 'tutorial_crewai_tools' %}"
+        class="inline-flex items-center gap-2 rounded-xl border border-violet-400/35 bg-violet-500/10 px-5 py-2.5 text-sm font-semibold text-violet-200 transition hover:border-violet-300/50 hover:bg-violet-500/20 hover:text-white"
+      >
+        Next: Tools & Custom Tools <span aria-hidden>→</span>
+      </a>
+    </div>
+
+  </div>
+{% endblock %}

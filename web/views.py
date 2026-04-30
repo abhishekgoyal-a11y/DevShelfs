@@ -495,7 +495,7 @@ _TUTORIALS = [
         "read_time": 20,
         "icon": "👥",
         "icon_gradient": "from-rose-500/40 via-pink-400/20 to-fuchsia-400/25",
-        "url": "#",
+        "url": "/tutorials/crewai/introduction/",
     },
     {
         "title": "Flowise Crash Course",
@@ -897,6 +897,93 @@ def tutorial_rag_pipeline_local_rag(request):
 
 def tutorial_rag_pipeline_examples(request):
     return render(request, "web/tutorials/rag_pipeline/real_world_examples.html", {"layout": _layout(request.path), "active_nav": "tutorials"})
+
+
+_CREWAI_SERIES = [
+    {"number": 2, "title": "Core Concepts", "summary": "Agents, Tasks, Crews, Tools, and Processes — the building blocks of any CrewAI app.", "url": "tutorial_crewai_core_concepts"},
+    {"number": 3, "title": "Installation & Setup", "summary": "Install CrewAI, configure environment variables, and verify your setup with a hello world.", "url": "tutorial_crewai_installation"},
+    {"number": 4, "title": "Your First Crew", "summary": "Build a working two-agent crew end to end. Researcher + writer collaborating on a topic.", "url": "tutorial_crewai_first_crew"},
+    {"number": 5, "title": "Defining Agents", "summary": "Roles, goals, backstories, verbose mode, allow_delegation, max_iter, and agent personalities.", "url": "tutorial_crewai_agents"},
+    {"number": 6, "title": "Creating Tasks", "summary": "Task descriptions, expected outputs, context passing, async execution, and output formats.", "url": "tutorial_crewai_tasks"},
+    {"number": 7, "title": "Tools & Custom Tools", "summary": "Built-in tools, search, scraping, custom @tool functions, and tool error handling.", "url": "tutorial_crewai_tools"},
+    {"number": 8, "title": "Process Types", "summary": "Sequential vs Hierarchical processes. Manager agents, delegation, and choosing the right flow.", "url": "tutorial_crewai_processes"},
+    {"number": 9, "title": "Memory & Context", "summary": "Short-term, long-term, and entity memory. Persistent state across runs and sharing context.", "url": "tutorial_crewai_memory"},
+    {"number": 10, "title": "Multi-Agent Collaboration", "summary": "Delegation patterns, agent communication, parallel tasks, and coordination strategies.", "url": "tutorial_crewai_collaboration"},
+    {"number": 11, "title": "LLM Integration", "summary": "OpenAI, Anthropic, Ollama, Groq, Azure. Per-agent LLM configuration and cost-aware routing.", "url": "tutorial_crewai_llm_integration"},
+    {"number": 12, "title": "Production Deployment", "summary": "Packaging crews, async APIs, queuing, scaling, secrets management, and Docker patterns.", "url": "tutorial_crewai_production"},
+    {"number": 13, "title": "Debugging & Observability", "summary": "Verbose logs, callbacks, token tracking, tracing with Langfuse, and diagnosing stuck crews.", "url": "tutorial_crewai_debugging"},
+    {"number": 14, "title": "Common Pitfalls & Best Practices", "summary": "Infinite loops, role bleed, brittle prompts, cost overruns — and how to avoid them.", "url": "tutorial_crewai_best_practices"},
+    {"number": 15, "title": "Real-World Examples", "summary": "Five complete crews: research assistant, content factory, code reviewer, sales SDR, support triage.", "url": "tutorial_crewai_examples"},
+]
+
+
+# CrewAI Tutorial Views
+def tutorial_crewai_intro(request):
+    return render(
+        request,
+        "web/tutorials/crewai/introduction.html",
+        {
+            "layout": _layout(request.path),
+            "active_nav": "tutorials",
+            "series_pages": _CREWAI_SERIES,
+        },
+    )
+
+
+def tutorial_crewai_core_concepts(request):
+    return render(request, "web/tutorials/crewai/core_concepts.html", {"layout": _layout(request.path), "active_nav": "tutorials"})
+
+
+def tutorial_crewai_installation(request):
+    return render(request, "web/tutorials/crewai/installation_setup.html", {"layout": _layout(request.path), "active_nav": "tutorials"})
+
+
+def tutorial_crewai_first_crew(request):
+    return render(request, "web/tutorials/crewai/first_crew.html", {"layout": _layout(request.path), "active_nav": "tutorials"})
+
+
+def tutorial_crewai_agents(request):
+    return render(request, "web/tutorials/crewai/defining_agents.html", {"layout": _layout(request.path), "active_nav": "tutorials"})
+
+
+def tutorial_crewai_tasks(request):
+    return render(request, "web/tutorials/crewai/creating_tasks.html", {"layout": _layout(request.path), "active_nav": "tutorials"})
+
+
+def tutorial_crewai_tools(request):
+    return render(request, "web/tutorials/crewai/tools.html", {"layout": _layout(request.path), "active_nav": "tutorials"})
+
+
+def tutorial_crewai_processes(request):
+    return render(request, "web/tutorials/crewai/processes.html", {"layout": _layout(request.path), "active_nav": "tutorials"})
+
+
+def tutorial_crewai_memory(request):
+    return render(request, "web/tutorials/crewai/memory_context.html", {"layout": _layout(request.path), "active_nav": "tutorials"})
+
+
+def tutorial_crewai_collaboration(request):
+    return render(request, "web/tutorials/crewai/collaboration.html", {"layout": _layout(request.path), "active_nav": "tutorials"})
+
+
+def tutorial_crewai_llm_integration(request):
+    return render(request, "web/tutorials/crewai/llm_integration.html", {"layout": _layout(request.path), "active_nav": "tutorials"})
+
+
+def tutorial_crewai_production(request):
+    return render(request, "web/tutorials/crewai/production.html", {"layout": _layout(request.path), "active_nav": "tutorials"})
+
+
+def tutorial_crewai_debugging(request):
+    return render(request, "web/tutorials/crewai/debugging.html", {"layout": _layout(request.path), "active_nav": "tutorials"})
+
+
+def tutorial_crewai_best_practices(request):
+    return render(request, "web/tutorials/crewai/best_practices.html", {"layout": _layout(request.path), "active_nav": "tutorials"})
+
+
+def tutorial_crewai_examples(request):
+    return render(request, "web/tutorials/crewai/real_world_examples.html", {"layout": _layout(request.path), "active_nav": "tutorials"})
 
 
 def tutorials(request):
