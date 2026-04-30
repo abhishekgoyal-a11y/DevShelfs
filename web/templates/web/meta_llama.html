@@ -1,0 +1,180 @@
+{% extends "web/base.html" %}
+{% block title %}Meta Llama — DevShelf{% endblock %}
+{% block content %}
+  <div class="space-y-10">
+    <div class="flex flex-wrap items-center gap-2 text-sm text-slate-400/90">
+      <a href="{% url 'ai_tools' %}" class="font-medium text-emerald-300/90 transition hover:text-emerald-200">AI tools</a>
+      <span aria-hidden class="text-slate-600">/</span>
+      <span class="text-slate-200/90">Meta Llama</span>
+    </div>
+
+    <section class="relative overflow-hidden rounded-3xl border border-emerald-400/20 bg-white/[0.06] p-6 shadow-[0_0_0_1px_rgba(255,255,255,0.04)] backdrop-blur-2xl sm:p-8">
+      <div class="pointer-events-none absolute -right-24 top-0 h-72 w-72 rounded-full bg-emerald-500/15 blur-3xl"></div>
+      <div class="pointer-events-none absolute -left-20 bottom-0 h-56 w-56 rounded-full bg-cyan-500/10 blur-3xl"></div>
+      <div class="relative">
+        <p class="text-xs font-semibold uppercase tracking-[0.22em] text-emerald-300/90">AI tool</p>
+        <h1 class="mt-3 text-3xl font-semibold tracking-tight text-white sm:text-4xl lg:text-[2.5rem] lg:leading-tight">
+          Meta Llama: The Open-Source LLM Family Powering the AI Ecosystem
+        </h1>
+        <p class="mt-4 text-sm leading-relaxed text-slate-200/80 sm:text-base">
+          Meta's Llama family is the most widely used open-weight LLM series in the world—available in sizes from 1B to 405B
+          parameters, free to download, and the foundation for thousands of fine-tuned models and applications.
+        </p>
+        <p class="mt-6 flex flex-wrap items-center gap-3">
+          <a href="https://llama.meta.com" target="_blank" rel="noopener noreferrer"
+            class="inline-flex items-center gap-2 rounded-full border border-emerald-400/35 bg-emerald-500/10 px-4 py-2 text-sm font-medium text-emerald-200 transition hover:border-emerald-300/50 hover:bg-emerald-500/15 hover:text-white">
+            Llama Models <span aria-hidden class="text-emerald-300/80">↗</span>
+          </a>
+          <a href="https://huggingface.co/meta-llama" target="_blank" rel="noopener noreferrer"
+            class="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/[0.04] px-4 py-2 text-sm font-medium text-slate-200/90 transition hover:border-white/25 hover:bg-white/[0.07] hover:text-white">
+            Hugging Face <span aria-hidden class="text-slate-400">↗</span>
+          </a>
+          <a href="https://ollama.com" target="_blank" rel="noopener noreferrer"
+            class="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/[0.04] px-4 py-2 text-sm font-medium text-slate-200/90 transition hover:border-white/25 hover:bg-white/[0.07] hover:text-white">
+            Run with Ollama <span aria-hidden class="text-slate-400">↗</span>
+          </a>
+        </p>
+      </div>
+    </section>
+
+    <div class="glass rounded-3xl border border-white/10 p-5 sm:p-8">
+      <article class="mx-auto space-y-12 text-base leading-relaxed text-slate-300/95">
+
+        <section class="space-y-4" aria-labelledby="what-heading">
+          <h2 id="what-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">What is Meta Llama?</h2>
+          <p>Llama (Large Language Model Meta AI) is Meta's family of open-weight large language models. Released in generations—Llama 1, Llama 2, Llama 3, and Llama 3.1—each iteration has dramatically improved capability while keeping the weights publicly available for download.</p>
+          <p>Because the weights are open, Llama is not just a product—it is an ecosystem. Thousands of fine-tuned variants exist (coding models, medical models, instruction-tuned models), all built on top of the base Llama weights. Running Llama locally on your laptop is possible with tools like Ollama, making it the most accessible way to experiment with a capable LLM without any API fees.</p>
+        </section>
+
+        <section class="space-y-6" aria-labelledby="features-heading">
+          <h2 id="features-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">Key features of Meta Llama</h2>
+          <div class="space-y-3 rounded-2xl border border-white/10 bg-white/[0.03] p-5 sm:p-6">
+            <h3 class="text-lg font-semibold text-white">1. Wide range of model sizes</h3>
+            <p class="text-slate-300/95">Llama 3.1 comes in 8B, 70B, and 405B parameter sizes. The 8B model runs on a modern laptop CPU; the 405B is competitive with GPT-4 and runs on server-grade GPUs.</p>
+          </div>
+          <div class="space-y-3 rounded-2xl border border-white/10 bg-white/[0.03] p-5 sm:p-6">
+            <h3 class="text-lg font-semibold text-white">2. Truly open weights</h3>
+            <p class="text-slate-300/95">Download the weights from Meta's site or Hugging Face and run them anywhere—locally, on your own cloud, or on-premises. No usage fees, no rate limits, no data sharing with Meta.</p>
+          </div>
+          <div class="space-y-3 rounded-2xl border border-white/10 bg-white/[0.03] p-5 sm:p-6">
+            <h3 class="text-lg font-semibold text-white">3. 128K context window (Llama 3.1)</h3>
+            <p class="text-slate-300/95">Llama 3.1 supports a 128,000-token context window—enough to feed in entire codebases, books, or long documents for analysis.</p>
+          </div>
+          <div class="space-y-3 rounded-2xl border border-white/10 bg-white/[0.03] p-5 sm:p-6">
+            <h3 class="text-lg font-semibold text-white">4. Multilingual support</h3>
+            <p class="text-slate-300/95">Llama 3.1 is trained on data in eight languages including English, German, French, Spanish, and more—broadening its utility for international applications.</p>
+          </div>
+          <div class="space-y-3 rounded-2xl border border-white/10 bg-white/[0.03] p-5 sm:p-6">
+            <h3 class="text-lg font-semibold text-white">5. Tool use and function calling</h3>
+            <p class="text-slate-300/95">The instruction-tuned variants of Llama 3.1 support tool use and function calling, making them usable as the backbone of AI agents and structured-output pipelines.</p>
+          </div>
+          <div class="space-y-3 rounded-2xl border border-white/10 bg-white/[0.03] p-5 sm:p-6">
+            <h3 class="text-lg font-semibold text-white">6. Rich fine-tuning ecosystem</h3>
+            <p class="text-slate-300/95">Because the weights are open, the community has produced thousands of fine-tunes—from coding specialists to domain-specific models—all freely available on Hugging Face.</p>
+          </div>
+        </section>
+
+        <section class="space-y-6" aria-labelledby="how-heading">
+          <h2 id="how-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">How to run Meta Llama</h2>
+          <p>You have several options depending on your hardware and use case:</p>
+          <ul class="list-disc space-y-2 pl-5 marker:text-emerald-400/80">
+            <li><strong class="text-slate-200">Ollama (easiest):</strong> one command installs and runs Llama locally — <code class="rounded bg-white/10 px-1.5 py-0.5 text-sm font-mono text-emerald-200">ollama run llama3</code></li>
+            <li><strong class="text-slate-200">Hugging Face Transformers:</strong> load via Python for fine-tuning or custom inference pipelines</li>
+            <li><strong class="text-slate-200">llama.cpp:</strong> run quantised models efficiently on CPU-only machines</li>
+            <li><strong class="text-slate-200">Hosted APIs:</strong> Groq, Together AI, and others offer Llama via fast hosted inference APIs</li>
+          </ul>
+        </section>
+
+        <section class="space-y-6" aria-labelledby="usecases-heading">
+          <h2 id="usecases-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">Real-life use cases of Meta Llama</h2>
+          <div class="space-y-3 rounded-2xl border border-white/10 bg-white/[0.03] p-5 sm:p-6">
+            <h3 class="text-lg font-semibold text-white">Private, on-device AI</h3>
+            <ul class="list-disc space-y-2 pl-5 marker:text-emerald-400/80">
+              <li>Run an LLM on a laptop for sensitive work—legal, medical, financial—where data cannot leave the device</li>
+            </ul>
+          </div>
+          <div class="space-y-3 rounded-2xl border border-white/10 bg-white/[0.03] p-5 sm:p-6">
+            <h3 class="text-lg font-semibold text-white">Fine-tuning for domain-specific tasks</h3>
+            <ul class="list-disc space-y-2 pl-5 marker:text-emerald-400/80">
+              <li>Fine-tune Llama on your company's documentation, codebase, or customer data to create a custom model</li>
+            </ul>
+          </div>
+          <div class="space-y-3 rounded-2xl border border-white/10 bg-white/[0.03] p-5 sm:p-6">
+            <h3 class="text-lg font-semibold text-white">Research and experimentation</h3>
+            <ul class="list-disc space-y-2 pl-5 marker:text-emerald-400/80">
+              <li>Inspect model internals, run ablation studies, and experiment without API cost constraints</li>
+            </ul>
+          </div>
+        </section>
+
+        <section class="space-y-6" aria-labelledby="proscons-heading">
+          <h2 id="proscons-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">Pros and cons of Meta Llama</h2>
+          <div class="grid gap-6 lg:grid-cols-2">
+            <div class="rounded-2xl border border-emerald-500/20 bg-emerald-500/5 p-5 sm:p-6">
+              <h3 class="mb-4 text-lg font-semibold text-emerald-100">Pros</h3>
+              <ul class="list-disc space-y-2 pl-5 text-slate-300/95 marker:text-emerald-400/80">
+                <li>Free to download and self-host</li>
+                <li>Huge ecosystem of fine-tuned variants</li>
+                <li>Can run locally—no internet required</li>
+                <li>128K context on Llama 3.1</li>
+                <li>Backed by Meta's ongoing R&D investment</li>
+              </ul>
+            </div>
+            <div class="rounded-2xl border border-amber-500/20 bg-amber-500/5 p-5 sm:p-6">
+              <h3 class="mb-4 text-lg font-semibold text-amber-100">Cons</h3>
+              <ul class="list-disc space-y-2 pl-5 text-slate-300/95 marker:text-amber-400/80">
+                <li>Large models require significant GPU VRAM</li>
+                <li>Setup overhead compared to a chat API</li>
+                <li>Requires a Meta licence (not fully permissive for all commercial uses)</li>
+                <li>Smaller models still lag behind GPT-4 and Claude on hard tasks</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        <section class="space-y-6" aria-labelledby="pricing-heading">
+          <h2 id="pricing-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">Meta Llama pricing</h2>
+          <ul class="list-disc space-y-2 pl-5 marker:text-emerald-400/80">
+            <li><strong class="text-slate-200">Weights download (free)</strong> — download directly from Meta or Hugging Face at no cost</li>
+            <li><strong class="text-slate-200">Hosted APIs (third-party)</strong> — providers like Groq, Together AI, and Fireworks offer Llama at very low per-token rates</li>
+            <li><strong class="text-slate-200">Meta AI (free)</strong> — Meta's consumer chatbot powered by Llama, accessible on WhatsApp, Instagram, and meta.ai</li>
+          </ul>
+        </section>
+
+        <section class="space-y-6" aria-labelledby="alternatives-heading">
+          <h2 id="alternatives-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">Alternatives to Meta Llama</h2>
+          <ul class="list-disc space-y-2 pl-5 marker:text-emerald-400/80">
+            <li><strong class="text-slate-200">Mistral</strong> — strong open-weight European alternative, excellent efficiency</li>
+            <li><strong class="text-slate-200">DeepSeek</strong> — competitive on reasoning and coding, also open-weight</li>
+            <li><strong class="text-slate-200">GPT-4o</strong> — best closed model, richest tooling ecosystem</li>
+            <li><strong class="text-slate-200">Gemma (Google)</strong> — smaller open models from Google, good on-device performance</li>
+          </ul>
+        </section>
+
+        <section class="space-y-4" aria-labelledby="who-heading">
+          <h2 id="who-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">Who should use Meta Llama?</h2>
+          <ul class="list-disc space-y-2 pl-5 marker:text-emerald-400/80">
+            <li>Developers who want to fine-tune a model on proprietary data</li>
+            <li>Researchers who need full model access for interpretability work</li>
+            <li>Companies with data privacy or air-gapped requirements</li>
+            <li>Hobbyists and students who want to run AI locally at zero cost</li>
+          </ul>
+        </section>
+
+        <section class="space-y-6" aria-labelledby="bonus-heading">
+          <h2 id="bonus-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">Bonus section</h2>
+          <div class="space-y-3 rounded-2xl border border-white/10 bg-white/[0.03] p-5 sm:p-6">
+            <h3 class="text-lg font-semibold text-white">Getting started locally in 2 minutes</h3>
+            <ul class="list-disc space-y-2 pl-5 text-slate-300/95 marker:text-emerald-400/80">
+              <li>Install Ollama from <code class="rounded bg-white/10 px-1.5 py-0.5 text-sm font-mono text-emerald-200">ollama.com</code></li>
+              <li>Run <code class="rounded bg-white/10 px-1.5 py-0.5 text-sm font-mono text-emerald-200">ollama run llama3.1</code> in your terminal</li>
+              <li>Chat directly in the terminal or point any OpenAI-compatible client at <code class="rounded bg-white/10 px-1.5 py-0.5 text-sm font-mono text-emerald-200">localhost:11434</code></li>
+            </ul>
+          </div>
+        </section>
+
+        <p class="text-lg text-slate-200/95">Meta Llama is the bedrock of the open LLM ecosystem—if you want to understand, own, or customise the model you are running, it is the natural starting point.</p>
+      </article>
+    </div>
+  </div>
+{% endblock %}

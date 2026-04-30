@@ -1,0 +1,261 @@
+{% extends "web/base.html" %}
+{% block title %}Bolt.new — DevShelf{% endblock %}
+{% block content %}
+  <div class="space-y-10">
+    <div class="flex flex-wrap items-center gap-2 text-sm text-slate-400/90">
+      <a href="{% url 'ai_tools' %}" class="font-medium text-emerald-300/90 transition hover:text-emerald-200">AI tools</a>
+      <span aria-hidden class="text-slate-600">/</span>
+      <span class="text-slate-200/90">Bolt.new</span>
+    </div>
+
+    <section
+      class="relative overflow-hidden rounded-3xl border border-emerald-400/20 bg-white/[0.06] p-6 shadow-[0_0_0_1px_rgba(255,255,255,0.04)] backdrop-blur-2xl sm:p-8"
+    >
+      <div class="pointer-events-none absolute -right-24 top-0 h-72 w-72 rounded-full bg-emerald-500/15 blur-3xl"></div>
+      <div class="pointer-events-none absolute -left-20 bottom-0 h-56 w-56 rounded-full bg-cyan-500/10 blur-3xl"></div>
+      <div class="relative">
+        <p class="text-xs font-semibold uppercase tracking-[0.22em] text-emerald-300/90">AI tool</p>
+        <h1 class="mt-3 text-3xl font-semibold tracking-tight text-white sm:text-4xl lg:text-[2.5rem] lg:leading-tight">
+          Bolt.new: From Idea to Full-Stack App in Your Browser
+        </h1>
+        <p class="mt-4 text-sm leading-relaxed text-slate-200/80 sm:text-base">
+          Bolt.new by StackBlitz lets you describe an app in plain English and get a fully running full-stack project—complete
+          with a live preview, editable code, and one-click deployment—without installing anything locally.
+        </p>
+        <p class="mt-6 flex flex-wrap items-center gap-3">
+          <a
+            href="https://bolt.new"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="inline-flex items-center gap-2 rounded-full border border-emerald-400/35 bg-emerald-500/10 px-4 py-2 text-sm font-medium text-emerald-200 transition hover:border-emerald-300/50 hover:bg-emerald-500/15 hover:text-white"
+          >
+            Try Bolt.new <span aria-hidden class="text-emerald-300/80">↗</span>
+          </a>
+          <a
+            href="https://bolt.new/pricing"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/[0.04] px-4 py-2 text-sm font-medium text-slate-200/90 transition hover:border-white/25 hover:bg-white/[0.07] hover:text-white"
+          >
+            Pricing <span aria-hidden class="text-slate-400">↗</span>
+          </a>
+          <a
+            href="https://stackblitz.com"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/[0.04] px-4 py-2 text-sm font-medium text-slate-200/90 transition hover:border-white/25 hover:bg-white/[0.07] hover:text-white"
+          >
+            StackBlitz <span aria-hidden class="text-slate-400">↗</span>
+          </a>
+        </p>
+      </div>
+    </section>
+
+    <div class="glass rounded-3xl border border-white/10 p-5 sm:p-8">
+      <article class="mx-auto space-y-12 text-base leading-relaxed text-slate-300/95">
+        <section class="space-y-4" aria-labelledby="what-heading">
+          <h2 id="what-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">What is Bolt.new?</h2>
+          <p>
+            Bolt.new is a browser-based AI app builder made by StackBlitz. You open it in a browser, describe what you want
+            to build, and Bolt generates a full-stack application—frontend, backend, database configuration, and all—right
+            inside an in-browser environment powered by WebContainers.
+          </p>
+          <p>
+            There is no local setup. No terminal. No "npm install" on your machine. You go from a sentence like "Build me a
+            to-do app with user authentication" to a running, editable project in under a minute.
+          </p>
+        </section>
+
+        <section class="space-y-6" aria-labelledby="features-heading">
+          <h2 id="features-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">
+            Key features of Bolt.new
+          </h2>
+          <div class="space-y-3 rounded-2xl border border-white/10 bg-white/[0.03] p-5 sm:p-6">
+            <h3 class="text-lg font-semibold text-white">1. Prompt-to-app generation</h3>
+            <p class="text-slate-300/95">
+              Describe your app in natural language and Bolt writes the entire codebase—React or another framework, a backend
+              API, styling, and basic logic—in one shot.
+            </p>
+          </div>
+          <div class="space-y-3 rounded-2xl border border-white/10 bg-white/[0.03] p-5 sm:p-6">
+            <h3 class="text-lg font-semibold text-white">2. In-browser WebContainers</h3>
+            <p class="text-slate-300/95">
+              Bolt runs Node.js, package managers, and dev servers entirely in the browser tab using StackBlitz's
+              WebContainers technology. No server round-trips for executing code—it is genuinely local-speed in the cloud.
+            </p>
+          </div>
+          <div class="space-y-3 rounded-2xl border border-white/10 bg-white/[0.03] p-5 sm:p-6">
+            <h3 class="text-lg font-semibold text-white">3. Live preview</h3>
+            <p class="text-slate-300/95">
+              A live preview pane sits next to the editor and updates as Bolt generates or edits code. You see the app
+              running before you have read through all the generated files.
+            </p>
+          </div>
+          <div class="space-y-3 rounded-2xl border border-white/10 bg-white/[0.03] p-5 sm:p-6">
+            <h3 class="text-lg font-semibold text-white">4. Iterative chat editing</h3>
+            <p class="text-slate-300/95">
+              After the initial generation, keep refining with follow-up messages: "Add a dark mode toggle," "Make the sidebar
+              collapsible," "Connect this to a Supabase database." Bolt applies targeted edits.
+            </p>
+          </div>
+          <div class="space-y-3 rounded-2xl border border-white/10 bg-white/[0.03] p-5 sm:p-6">
+            <h3 class="text-lg font-semibold text-white">5. One-click deployment</h3>
+            <p class="text-slate-300/95">
+              Deploy directly to Netlify or other supported platforms from inside Bolt—no CLI needed. Your app goes live in
+              seconds.
+            </p>
+          </div>
+          <div class="space-y-3 rounded-2xl border border-white/10 bg-white/[0.03] p-5 sm:p-6">
+            <h3 class="text-lg font-semibold text-white">6. GitHub import and export</h3>
+            <p class="text-slate-300/95">
+              Import an existing GitHub repo into Bolt to continue work in the browser, or push your generated project
+              straight to a new repo when you are ready to take it local.
+            </p>
+          </div>
+        </section>
+
+        <section class="space-y-6" aria-labelledby="how-heading">
+          <h2 id="how-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">How Bolt.new works</h2>
+          <p>The core loop is simple:</p>
+          <ul class="list-disc space-y-2 pl-5 marker:text-emerald-400/80">
+            <li>You type a prompt describing your app</li>
+            <li>Bolt uses an LLM to generate all the code files at once</li>
+            <li>WebContainers installs dependencies and starts the dev server—inside the browser</li>
+            <li>You see a live preview and can chat to refine it further</li>
+            <li>When satisfied, deploy or export to GitHub</li>
+          </ul>
+          <p class="rounded-xl border border-white/10 bg-white/[0.02] px-4 py-3 text-slate-300/95">
+            The magic: <strong class="text-slate-200">no local environment needed at any point</strong>. The whole cycle—
+            generate, run, iterate, deploy—happens in one browser tab.
+          </p>
+        </section>
+
+        <section class="space-y-6" aria-labelledby="usecases-heading">
+          <h2 id="usecases-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">
+            Real-life use cases of Bolt.new
+          </h2>
+          <div class="space-y-3 rounded-2xl border border-white/10 bg-white/[0.03] p-5 sm:p-6">
+            <h3 class="text-lg font-semibold text-white">Rapid prototyping</h3>
+            <ul class="list-disc space-y-2 pl-5 marker:text-emerald-400/80">
+              <li>Spin up a working prototype in minutes to validate an idea before writing production code</li>
+            </ul>
+          </div>
+          <div class="space-y-3 rounded-2xl border border-white/10 bg-white/[0.03] p-5 sm:p-6">
+            <h3 class="text-lg font-semibold text-white">Non-technical founders</h3>
+            <ul class="list-disc space-y-2 pl-5 marker:text-emerald-400/80">
+              <li>Build an MVP without a developer to test product-market fit before hiring</li>
+            </ul>
+          </div>
+          <div class="space-y-3 rounded-2xl border border-white/10 bg-white/[0.03] p-5 sm:p-6">
+            <h3 class="text-lg font-semibold text-white">Hackathons</h3>
+            <ul class="list-disc space-y-2 pl-5 marker:text-emerald-400/80">
+              <li>Skip boilerplate setup and spend all your time on the unique parts of your project</li>
+            </ul>
+          </div>
+          <div class="space-y-3 rounded-2xl border border-white/10 bg-white/[0.03] p-5 sm:p-6">
+            <h3 class="text-lg font-semibold text-white">Learning web development</h3>
+            <ul class="list-disc space-y-2 pl-5 marker:text-emerald-400/80">
+              <li>Generate a working app and study the code to understand how modern stacks fit together</li>
+            </ul>
+          </div>
+        </section>
+
+        <section class="space-y-6" aria-labelledby="proscons-heading">
+          <h2 id="proscons-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">Pros and cons of Bolt.new</h2>
+          <div class="grid gap-6 lg:grid-cols-2">
+            <div class="rounded-2xl border border-emerald-500/20 bg-emerald-500/5 p-5 sm:p-6">
+              <h3 class="mb-4 text-lg font-semibold text-emerald-100">Pros</h3>
+              <ul class="list-disc space-y-2 pl-5 text-slate-300/95 marker:text-emerald-400/80">
+                <li>Zero local setup—works in any browser</li>
+                <li>Full-stack generation in one prompt</li>
+                <li>Live preview updates instantly</li>
+                <li>One-click deploy to Netlify</li>
+                <li>Great for prototypes, demos, and hackathons</li>
+              </ul>
+            </div>
+            <div class="rounded-2xl border border-amber-500/20 bg-amber-500/5 p-5 sm:p-6">
+              <h3 class="mb-4 text-lg font-semibold text-amber-100">Cons</h3>
+              <ul class="list-disc space-y-2 pl-5 text-slate-300/95 marker:text-amber-400/80">
+                <li>Token limits can be hit on large projects</li>
+                <li>Generated code quality varies—review before shipping</li>
+                <li>Less suitable for complex enterprise codebases</li>
+                <li>Paid plans needed for serious usage</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        <section class="space-y-6" aria-labelledby="pricing-heading">
+          <h2 id="pricing-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">Bolt.new pricing</h2>
+          <p>Bolt offers token-based pricing:</p>
+          <ul class="list-disc space-y-2 pl-5 marker:text-emerald-400/80">
+            <li><strong class="text-slate-200">Free</strong> — limited daily tokens to try the product</li>
+            <li><strong class="text-slate-200">Pro (~$25/month)</strong> — substantially more tokens and priority access</li>
+            <li><strong class="text-slate-200">Teams (~30/month)</strong> — shared token pools and admin controls</li>
+          </ul>
+          <p class="rounded-xl border border-white/10 bg-white/[0.02] px-4 py-3 text-slate-300/95">
+            <span class="mr-1.5 font-medium text-emerald-200" aria-hidden>Tip:</span>
+            Token limits depend on the models and features used—check
+            <a
+              class="font-medium text-emerald-300/95 underline decoration-emerald-500/40 underline-offset-4 hover:text-emerald-200"
+              href="https://bolt.new/pricing"
+              target="_blank"
+              rel="noopener noreferrer"
+              >bolt.new/pricing</a
+            > for current numbers.
+          </p>
+        </section>
+
+        <section class="space-y-6" aria-labelledby="alternatives-heading">
+          <h2 id="alternatives-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">
+            Alternatives to Bolt.new
+          </h2>
+          <ul class="list-disc space-y-2 pl-5 marker:text-emerald-400/80">
+            <li><strong class="text-slate-200">v0 by Vercel</strong> — focused on generating React UI components</li>
+            <li><strong class="text-slate-200">Lovable</strong> — similar prompt-to-app approach with a polished UX</li>
+            <li><strong class="text-slate-200">Replit AI</strong> — browser IDE with an AI agent for building apps</li>
+            <li><strong class="text-slate-200">Cursor</strong> — for developers who want agentic AI in a local editor</li>
+          </ul>
+          <p>Bolt.new is unique for running the entire Node.js stack in-browser with no server dependency.</p>
+        </section>
+
+        <section class="space-y-4" aria-labelledby="who-heading">
+          <h2 id="who-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">Who should use Bolt.new?</h2>
+          <ul class="list-disc space-y-2 pl-5 marker:text-emerald-400/80">
+            <li>Non-technical founders who want a working MVP fast</li>
+            <li>Developers who want to prototype without local setup overhead</li>
+            <li>Hackathon participants short on time</li>
+            <li>Students learning full-stack development by example</li>
+            <li>Freelancers demoing ideas to clients before committing to a full build</li>
+          </ul>
+        </section>
+
+        <section class="space-y-6" aria-labelledby="bonus-heading">
+          <h2 id="bonus-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">Bonus section</h2>
+          <div class="space-y-3 rounded-2xl border border-white/10 bg-white/[0.03] p-5 sm:p-6">
+            <h3 class="text-lg font-semibold text-white">Tips for better Bolt.new prompts</h3>
+            <ul class="list-disc space-y-2 pl-5 text-slate-300/95 marker:text-emerald-400/80">
+              <li><strong class="text-slate-200">Specify the stack:</strong> "React + Tailwind + Supabase" avoids surprises</li>
+              <li><strong class="text-slate-200">Describe the pages:</strong> list what screens you need upfront</li>
+              <li><strong class="text-slate-200">Include data shape:</strong> "users have name, email, and role" gives better schemas</li>
+              <li><strong class="text-slate-200">Iterate in small steps:</strong> one change per follow-up message is more reliable than a big rewrite</li>
+            </ul>
+          </div>
+          <div class="space-y-3 rounded-2xl border border-white/10 bg-white/[0.03] p-5 sm:p-6">
+            <h3 class="text-lg font-semibold text-white">Common mistakes to avoid</h3>
+            <ul class="list-disc space-y-2 pl-5 text-slate-300/95 marker:text-amber-400/80">
+              <li><strong class="text-slate-200">Shipping generated code without review</strong> — always check auth logic and data handling</li>
+              <li><strong class="text-slate-200">Expecting production-ready output</strong> — Bolt is a starting point, not a finished product</li>
+              <li><strong class="text-slate-200">Using vague prompts</strong> — the more specific you are, the less back-and-forth you need</li>
+            </ul>
+          </div>
+        </section>
+
+        <p class="text-lg text-slate-200/95">
+          Bolt.new collapses the gap between idea and running app to minutes—use it to validate fast, then graduate to a
+          proper development setup when you are ready to scale.
+        </p>
+      </article>
+    </div>
+  </div>
+{% endblock %}

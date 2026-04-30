@@ -1,0 +1,184 @@
+{% extends "web/base.html" %}
+{% block title %}Grok — DevShelf{% endblock %}
+{% block content %}
+  <div class="space-y-10">
+    <div class="flex flex-wrap items-center gap-2 text-sm text-slate-400/90">
+      <a href="{% url 'ai_tools' %}" class="font-medium text-emerald-300/90 transition hover:text-emerald-200">AI tools</a>
+      <span aria-hidden class="text-slate-600">/</span>
+      <span class="text-slate-200/90">Grok</span>
+    </div>
+
+    <section class="relative overflow-hidden rounded-3xl border border-emerald-400/20 bg-white/[0.06] p-6 shadow-[0_0_0_1px_rgba(255,255,255,0.04)] backdrop-blur-2xl sm:p-8">
+      <div class="pointer-events-none absolute -right-24 top-0 h-72 w-72 rounded-full bg-emerald-500/15 blur-3xl"></div>
+      <div class="pointer-events-none absolute -left-20 bottom-0 h-56 w-56 rounded-full bg-cyan-500/10 blur-3xl"></div>
+      <div class="relative">
+        <p class="text-xs font-semibold uppercase tracking-[0.22em] text-emerald-300/90">AI tool</p>
+        <h1 class="mt-3 text-3xl font-semibold tracking-tight text-white sm:text-4xl lg:text-[2.5rem] lg:leading-tight">
+          Grok: xAI's Real-Time AI Assistant Built into X
+        </h1>
+        <p class="mt-4 text-sm leading-relaxed text-slate-200/80 sm:text-base">
+          Grok is the conversational AI built by Elon Musk's xAI. It has real-time access to posts on X (formerly Twitter),
+          a less restrictive tone than most assistants, and a growing set of multimodal and reasoning capabilities.
+        </p>
+        <p class="mt-6 flex flex-wrap items-center gap-3">
+          <a href="https://grok.com" target="_blank" rel="noopener noreferrer"
+            class="inline-flex items-center gap-2 rounded-full border border-emerald-400/35 bg-emerald-500/10 px-4 py-2 text-sm font-medium text-emerald-200 transition hover:border-emerald-300/50 hover:bg-emerald-500/15 hover:text-white">
+            Try Grok <span aria-hidden class="text-emerald-300/80">↗</span>
+          </a>
+          <a href="https://x.ai/api" target="_blank" rel="noopener noreferrer"
+            class="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/[0.04] px-4 py-2 text-sm font-medium text-slate-200/90 transition hover:border-white/25 hover:bg-white/[0.07] hover:text-white">
+            xAI API <span aria-hidden class="text-slate-400">↗</span>
+          </a>
+          <a href="https://x.ai" target="_blank" rel="noopener noreferrer"
+            class="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/[0.04] px-4 py-2 text-sm font-medium text-slate-200/90 transition hover:border-white/25 hover:bg-white/[0.07] hover:text-white">
+            xAI <span aria-hidden class="text-slate-400">↗</span>
+          </a>
+        </p>
+      </div>
+    </section>
+
+    <div class="glass rounded-3xl border border-white/10 p-5 sm:p-8">
+      <article class="mx-auto space-y-12 text-base leading-relaxed text-slate-300/95">
+
+        <section class="space-y-4" aria-labelledby="what-heading">
+          <h2 id="what-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">What is Grok?</h2>
+          <p>Grok is an AI assistant made by xAI, the AI company founded by Elon Musk. What sets it apart from most assistants is its live connection to X—it can pull real-time posts, trending topics, and breaking news into its answers, something most AI models cannot do without a separate search integration.</p>
+          <p>Grok also takes a noticeably more direct, sometimes irreverent tone compared to other assistants, and it places fewer content restrictions on the kinds of topics it will engage with.</p>
+        </section>
+
+        <section class="space-y-6" aria-labelledby="features-heading">
+          <h2 id="features-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">Key features of Grok</h2>
+          <div class="space-y-3 rounded-2xl border border-white/10 bg-white/[0.03] p-5 sm:p-6">
+            <h3 class="text-lg font-semibold text-white">1. Real-time X integration</h3>
+            <p class="text-slate-300/95">Grok can search and cite posts from X in its responses, giving it access to information published minutes ago—not just its training data.</p>
+          </div>
+          <div class="space-y-3 rounded-2xl border border-white/10 bg-white/[0.03] p-5 sm:p-6">
+            <h3 class="text-lg font-semibold text-white">2. Advanced reasoning (Grok 3)</h3>
+            <p class="text-slate-300/95">Grok 3 introduced "Think" mode—a chain-of-thought reasoning step for hard problems—putting it in the same tier as OpenAI's o-series and Anthropic's extended thinking models.</p>
+          </div>
+          <div class="space-y-3 rounded-2xl border border-white/10 bg-white/[0.03] p-5 sm:p-6">
+            <h3 class="text-lg font-semibold text-white">3. Image understanding and generation</h3>
+            <p class="text-slate-300/95">Grok can analyse images sent in conversation and generate images, making it a multimodal assistant rather than a text-only tool.</p>
+          </div>
+          <div class="space-y-3 rounded-2xl border border-white/10 bg-white/[0.03] p-5 sm:p-6">
+            <h3 class="text-lg font-semibold text-white">4. Less restrictive content policy</h3>
+            <p class="text-slate-300/95">xAI positions Grok as willing to discuss edgier or more controversial topics that other assistants deflect—useful for research, satire, and creative writing.</p>
+          </div>
+          <div class="space-y-3 rounded-2xl border border-white/10 bg-white/[0.03] p-5 sm:p-6">
+            <h3 class="text-lg font-semibold text-white">5. xAI API access</h3>
+            <p class="text-slate-300/95">Developers can access Grok models via the xAI API, which is OpenAI-compatible—making it easy to swap in Grok as the model backend in existing applications.</p>
+          </div>
+          <div class="space-y-3 rounded-2xl border border-white/10 bg-white/[0.03] p-5 sm:p-6">
+            <h3 class="text-lg font-semibold text-white">6. Embedded in X</h3>
+            <p class="text-slate-300/95">For X Premium subscribers, Grok is available directly inside the X app—no separate tab needed. You can ask it to summarise a thread, explain a post, or research a topic without leaving your feed.</p>
+          </div>
+        </section>
+
+        <section class="space-y-6" aria-labelledby="how-heading">
+          <h2 id="how-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">How Grok works</h2>
+          <p>Grok runs on xAI's proprietary model family (Grok-1, Grok-2, Grok-3). The models are trained on a mix of internet text and X data, then fine-tuned for instruction following and reasoning. When you ask a question that benefits from recency, Grok can retrieve live X posts to supplement its training knowledge.</p>
+          <ul class="list-disc space-y-2 pl-5 marker:text-emerald-400/80">
+            <li>You ask a question in chat or on X</li>
+            <li>Grok decides whether to use live X data or its training knowledge</li>
+            <li>It reasons through the answer (optionally showing its thinking in Think mode)</li>
+            <li>It responds with citations when it pulls live information</li>
+          </ul>
+        </section>
+
+        <section class="space-y-6" aria-labelledby="usecases-heading">
+          <h2 id="usecases-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">Real-life use cases of Grok</h2>
+          <div class="space-y-3 rounded-2xl border border-white/10 bg-white/[0.03] p-5 sm:p-6">
+            <h3 class="text-lg font-semibold text-white">Following breaking news</h3>
+            <ul class="list-disc space-y-2 pl-5 marker:text-emerald-400/80">
+              <li>Ask "What is happening with X right now?" and get a summary grounded in live posts</li>
+            </ul>
+          </div>
+          <div class="space-y-3 rounded-2xl border border-white/10 bg-white/[0.03] p-5 sm:p-6">
+            <h3 class="text-lg font-semibold text-white">Research and analysis</h3>
+            <ul class="list-disc space-y-2 pl-5 marker:text-emerald-400/80">
+              <li>Use Think mode for multi-step reasoning on complex technical or analytical questions</li>
+            </ul>
+          </div>
+          <div class="space-y-3 rounded-2xl border border-white/10 bg-white/[0.03] p-5 sm:p-6">
+            <h3 class="text-lg font-semibold text-white">Developer integration</h3>
+            <ul class="list-disc space-y-2 pl-5 marker:text-emerald-400/80">
+              <li>Swap Grok into an OpenAI-compatible app via the xAI API with minimal code changes</li>
+            </ul>
+          </div>
+        </section>
+
+        <section class="space-y-6" aria-labelledby="proscons-heading">
+          <h2 id="proscons-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">Pros and cons of Grok</h2>
+          <div class="grid gap-6 lg:grid-cols-2">
+            <div class="rounded-2xl border border-emerald-500/20 bg-emerald-500/5 p-5 sm:p-6">
+              <h3 class="mb-4 text-lg font-semibold text-emerald-100">Pros</h3>
+              <ul class="list-disc space-y-2 pl-5 text-slate-300/95 marker:text-emerald-400/80">
+                <li>Real-time access to X posts</li>
+                <li>Less restrictive than competing assistants</li>
+                <li>Strong reasoning via Think mode</li>
+                <li>OpenAI-compatible API</li>
+                <li>Built into X for subscribers</li>
+              </ul>
+            </div>
+            <div class="rounded-2xl border border-amber-500/20 bg-amber-500/5 p-5 sm:p-6">
+              <h3 class="mb-4 text-lg font-semibold text-amber-100">Cons</h3>
+              <ul class="list-disc space-y-2 pl-5 text-slate-300/95 marker:text-amber-400/80">
+                <li>Best features require X Premium subscription</li>
+                <li>Smaller third-party integration ecosystem than OpenAI</li>
+                <li>Younger product with less community documentation</li>
+                <li>Real-time X data is only as reliable as X posts</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        <section class="space-y-6" aria-labelledby="pricing-heading">
+          <h2 id="pricing-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">Grok pricing</h2>
+          <ul class="list-disc space-y-2 pl-5 marker:text-emerald-400/80">
+            <li><strong class="text-slate-200">Free (grok.com)</strong> — limited daily messages with a basic model</li>
+            <li><strong class="text-slate-200">X Premium ($8/month)</strong> — Grok access inside X with higher limits</li>
+            <li><strong class="text-slate-200">X Premium+ ($16/month)</strong> — more Grok usage and advanced features</li>
+            <li><strong class="text-slate-200">xAI API</strong> — pay-per-token access to Grok models for developers</li>
+          </ul>
+          <p class="rounded-xl border border-white/10 bg-white/[0.02] px-4 py-3 text-slate-300/95">
+            <span class="mr-1.5 font-medium text-emerald-200" aria-hidden>Tip:</span> Check <a class="font-medium text-emerald-300/95 underline decoration-emerald-500/40 underline-offset-4 hover:text-emerald-200" href="https://x.ai/api" target="_blank" rel="noopener noreferrer">x.ai/api</a> for current API pricing tiers.
+          </p>
+        </section>
+
+        <section class="space-y-6" aria-labelledby="alternatives-heading">
+          <h2 id="alternatives-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">Alternatives to Grok</h2>
+          <ul class="list-disc space-y-2 pl-5 marker:text-emerald-400/80">
+            <li><strong class="text-slate-200">ChatGPT</strong> — broader ecosystem, strong plugins and tools</li>
+            <li><strong class="text-slate-200">Claude</strong> — best for long documents and nuanced analysis</li>
+            <li><strong class="text-slate-200">Perplexity AI</strong> — real-time web search with source citations</li>
+            <li><strong class="text-slate-200">Google Gemini</strong> — integrated into Google Workspace</li>
+          </ul>
+        </section>
+
+        <section class="space-y-4" aria-labelledby="who-heading">
+          <h2 id="who-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">Who should use Grok?</h2>
+          <ul class="list-disc space-y-2 pl-5 marker:text-emerald-400/80">
+            <li>X power users who want AI assistance without leaving the platform</li>
+            <li>Journalists and researchers who need real-time social media intelligence</li>
+            <li>Developers already using OpenAI-compatible tooling who want to try an alternative model</li>
+            <li>Users who find other assistants too cautious or restricted</li>
+          </ul>
+        </section>
+
+        <section class="space-y-6" aria-labelledby="bonus-heading">
+          <h2 id="bonus-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">Bonus section</h2>
+          <div class="space-y-3 rounded-2xl border border-white/10 bg-white/[0.03] p-5 sm:p-6">
+            <h3 class="text-lg font-semibold text-white">Getting the most out of Grok</h3>
+            <ul class="list-disc space-y-2 pl-5 text-slate-300/95 marker:text-emerald-400/80">
+              <li><strong class="text-slate-200">Use Think mode for hard problems:</strong> toggle it on for maths, coding, and multi-step reasoning</li>
+              <li><strong class="text-slate-200">Leverage real-time data:</strong> ask about current events, trends, or recent discussions rather than relying on search engines</li>
+              <li><strong class="text-slate-200">OpenAI SDK users:</strong> swap the base URL and model name to test Grok with minimal code changes</li>
+            </ul>
+          </div>
+        </section>
+
+        <p class="text-lg text-slate-200/95">Grok is at its best when you need an AI that can tell you what people are saying right now—not just what was true six months ago when a model was trained.</p>
+      </article>
+    </div>
+  </div>
+{% endblock %}

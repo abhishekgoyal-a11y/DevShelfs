@@ -423,6 +423,88 @@ def openclaw(request):
     )
 
 
+def windsurf(request):
+    return render(
+        request,
+        "web/windsurf.html",
+        {"layout": _layout(request.path), "active_nav": "ai"},
+    )
+
+
+def bolt_new(request):
+    return render(
+        request,
+        "web/bolt_new.html",
+        {"layout": _layout(request.path), "active_nav": "ai"},
+    )
+
+
+def v0(request):
+    return render(
+        request,
+        "web/v0.html",
+        {"layout": _layout(request.path), "active_nav": "ai"},
+    )
+
+
+def devin(request):
+    return render(
+        request,
+        "web/devin.html",
+        {"layout": _layout(request.path), "active_nav": "ai"},
+    )
+
+
+def grok(request):
+    return render(request, "web/grok.html", {"layout": _layout(request.path), "active_nav": "ai"})
+
+
+def mistral(request):
+    return render(request, "web/mistral.html", {"layout": _layout(request.path), "active_nav": "ai"})
+
+
+def meta_llama(request):
+    return render(request, "web/meta_llama.html", {"layout": _layout(request.path), "active_nav": "ai"})
+
+
+def deepseek(request):
+    return render(request, "web/deepseek.html", {"layout": _layout(request.path), "active_nav": "ai"})
+
+
+def suno(request):
+    return render(request, "web/suno.html", {"layout": _layout(request.path), "active_nav": "ai"})
+
+
+def udio(request):
+    return render(request, "web/udio.html", {"layout": _layout(request.path), "active_nav": "ai"})
+
+
+def heygen(request):
+    return render(request, "web/heygen.html", {"layout": _layout(request.path), "active_nav": "ai"})
+
+
+def pika(request):
+    return render(request, "web/pika.html", {"layout": _layout(request.path), "active_nav": "ai"})
+
+
+def luma_ai(request):
+    return render(request, "web/luma_ai.html", {"layout": _layout(request.path), "active_nav": "ai"})
+
+
+def dify(request):
+    return render(request, "web/dify.html", {"layout": _layout(request.path), "active_nav": "ai"})
+
+
+def flowise(request):
+    return render(request, "web/flowise.html", {"layout": _layout(request.path), "active_nav": "ai"})
+
+
+def phidata(request):
+    return render(request, "web/phidata.html", {"layout": _layout(request.path), "active_nav": "ai"})
+
+
+def openai_swarm(request):
+    return render(request, "web/openai_swarm.html", {"layout": _layout(request.path), "active_nav": "ai"})
 _AI_AGENTS_SERIES = [
     {"number": 2, "title": "What is an AI Agent?", "summary": "Plain-English definition, chatbot vs agent comparison, and real-world analogies.", "url": "tutorial_ai_agents_what_is"},
     {"number": 3, "title": "How AI Agents Work", "summary": "The agent loop — Perceive → Think → Act → Observe → Repeat — broken down step by step.", "url": "tutorial_ai_agents_how_work"},

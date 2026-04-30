@@ -1,0 +1,180 @@
+{% extends "web/base.html" %}
+{% block title %}Udio — DevShelf{% endblock %}
+{% block content %}
+  <div class="space-y-10">
+    <div class="flex flex-wrap items-center gap-2 text-sm text-slate-400/90">
+      <a href="{% url 'ai_tools' %}" class="font-medium text-emerald-300/90 transition hover:text-emerald-200">AI tools</a>
+      <span aria-hidden class="text-slate-600">/</span>
+      <span class="text-slate-200/90">Udio</span>
+    </div>
+
+    <section class="relative overflow-hidden rounded-3xl border border-emerald-400/20 bg-white/[0.06] p-6 shadow-[0_0_0_1px_rgba(255,255,255,0.04)] backdrop-blur-2xl sm:p-8">
+      <div class="pointer-events-none absolute -right-24 top-0 h-72 w-72 rounded-full bg-emerald-500/15 blur-3xl"></div>
+      <div class="pointer-events-none absolute -left-20 bottom-0 h-56 w-56 rounded-full bg-cyan-500/10 blur-3xl"></div>
+      <div class="relative">
+        <p class="text-xs font-semibold uppercase tracking-[0.22em] text-emerald-300/90">AI tool</p>
+        <h1 class="mt-3 text-3xl font-semibold tracking-tight text-white sm:text-4xl lg:text-[2.5rem] lg:leading-tight">
+          Udio: AI Music Generation with Studio-Quality Detail
+        </h1>
+        <p class="mt-4 text-sm leading-relaxed text-slate-200/80 sm:text-base">
+          Udio is an AI music generation platform that creates full songs from text prompts, known for particularly detailed
+          production quality and nuanced handling of complex genres and musical styles.
+        </p>
+        <p class="mt-6 flex flex-wrap items-center gap-3">
+          <a href="https://udio.com" target="_blank" rel="noopener noreferrer"
+            class="inline-flex items-center gap-2 rounded-full border border-emerald-400/35 bg-emerald-500/10 px-4 py-2 text-sm font-medium text-emerald-200 transition hover:border-emerald-300/50 hover:bg-emerald-500/15 hover:text-white">
+            Try Udio <span aria-hidden class="text-emerald-300/80">↗</span>
+          </a>
+          <a href="https://udio.com/pricing" target="_blank" rel="noopener noreferrer"
+            class="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/[0.04] px-4 py-2 text-sm font-medium text-slate-200/90 transition hover:border-white/25 hover:bg-white/[0.07] hover:text-white">
+            Pricing <span aria-hidden class="text-slate-400">↗</span>
+          </a>
+        </p>
+      </div>
+    </section>
+
+    <div class="glass rounded-3xl border border-white/10 p-5 sm:p-8">
+      <article class="mx-auto space-y-12 text-base leading-relaxed text-slate-300/95">
+
+        <section class="space-y-4" aria-labelledby="what-heading">
+          <h2 id="what-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">What is Udio?</h2>
+          <p>Udio is an AI music generation tool built by former Google DeepMind researchers. Like Suno, it creates complete songs from text prompts—but Udio is noted for particularly high-fidelity audio output and more sophisticated handling of intricate genres like jazz, classical, and progressive rock.</p>
+          <p>It launched in April 2024 and quickly gained a reputation for producing music that sounds convincingly professional, with nuanced dynamics and production detail that rivals many independent artists.</p>
+        </section>
+
+        <section class="space-y-6" aria-labelledby="features-heading">
+          <h2 id="features-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">Key features of Udio</h2>
+          <div class="space-y-3 rounded-2xl border border-white/10 bg-white/[0.03] p-5 sm:p-6">
+            <h3 class="text-lg font-semibold text-white">1. High-fidelity audio generation</h3>
+            <p class="text-slate-300/95">Udio generates at high audio quality—the output sounds polished and production-ready rather than lo-fi or synthetic, even on complex arrangements.</p>
+          </div>
+          <div class="space-y-3 rounded-2xl border border-white/10 bg-white/[0.03] p-5 sm:p-6">
+            <h3 class="text-lg font-semibold text-white">2. Genre and style precision</h3>
+            <p class="text-slate-300/95">Udio handles niche and complex genres especially well—you can specify "80s Soviet jazz fusion" or "Afrobeat with West African kora" and get recognisable results.</p>
+          </div>
+          <div class="space-y-3 rounded-2xl border border-white/10 bg-white/[0.03] p-5 sm:p-6">
+            <h3 class="text-lg font-semibold text-white">3. Custom lyrics input</h3>
+            <p class="text-slate-300/95">Provide your own lyrics and Udio will compose a full musical performance around them, choosing instrumentation and vocal style based on your genre prompt.</p>
+          </div>
+          <div class="space-y-3 rounded-2xl border border-white/10 bg-white/[0.03] p-5 sm:p-6">
+            <h3 class="text-lg font-semibold text-white">4. Clip extension</h3>
+            <p class="text-slate-300/95">Extend any generated clip—forwards or backwards—to build out a full song structure while keeping the sonic identity of the original generation.</p>
+          </div>
+          <div class="space-y-3 rounded-2xl border border-white/10 bg-white/[0.03] p-5 sm:p-6">
+            <h3 class="text-lg font-semibold text-white">5. Remixing</h3>
+            <p class="text-slate-300/95">Take an existing generation and remix it with a modified prompt—changing tempo, mood, or style while preserving some continuity with the original.</p>
+          </div>
+          <div class="space-y-3 rounded-2xl border border-white/10 bg-white/[0.03] p-5 sm:p-6">
+            <h3 class="text-lg font-semibold text-white">6. Community discovery</h3>
+            <p class="text-slate-300/95">Browse and react to other users' public creations—useful for discovering effective prompts and getting inspiration for your own generations.</p>
+          </div>
+        </section>
+
+        <section class="space-y-6" aria-labelledby="how-heading">
+          <h2 id="how-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">How Udio works</h2>
+          <ul class="list-disc space-y-2 pl-5 marker:text-emerald-400/80">
+            <li>Enter a prompt describing the style, instruments, mood, and theme</li>
+            <li>Optionally add manual lyrics or let Udio generate them</li>
+            <li>Udio generates short clips (around 30 seconds) that you stitch together or extend</li>
+            <li>Download the final audio for use in your projects</li>
+          </ul>
+          <p class="rounded-xl border border-white/10 bg-white/[0.02] px-4 py-3 text-slate-300/95">
+            <strong class="text-slate-200">Udio vs Suno:</strong> Udio generates shorter base clips (you build up to a full song), while Suno generates a full track immediately. Udio generally rewards more detailed prompts and produces more nuanced sound.
+          </p>
+        </section>
+
+        <section class="space-y-6" aria-labelledby="usecases-heading">
+          <h2 id="usecases-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">Real-life use cases of Udio</h2>
+          <div class="space-y-3 rounded-2xl border border-white/10 bg-white/[0.03] p-5 sm:p-6">
+            <h3 class="text-lg font-semibold text-white">Musicians exploring production styles</h3>
+            <ul class="list-disc space-y-2 pl-5 marker:text-emerald-400/80">
+              <li>Experiment with genres and arrangements you have not worked in before without formal training in that style</li>
+            </ul>
+          </div>
+          <div class="space-y-3 rounded-2xl border border-white/10 bg-white/[0.03] p-5 sm:p-6">
+            <h3 class="text-lg font-semibold text-white">Film, podcast, and video producers</h3>
+            <ul class="list-disc space-y-2 pl-5 marker:text-emerald-400/80">
+              <li>Create custom, mood-matched music for scenes without licensing fees</li>
+            </ul>
+          </div>
+          <div class="space-y-3 rounded-2xl border border-white/10 bg-white/[0.03] p-5 sm:p-6">
+            <h3 class="text-lg font-semibold text-white">Music educators</h3>
+            <ul class="list-disc space-y-2 pl-5 marker:text-emerald-400/80">
+              <li>Generate examples of specific genres or historical periods to illustrate lessons</li>
+            </ul>
+          </div>
+        </section>
+
+        <section class="space-y-6" aria-labelledby="proscons-heading">
+          <h2 id="proscons-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">Pros and cons of Udio</h2>
+          <div class="grid gap-6 lg:grid-cols-2">
+            <div class="rounded-2xl border border-emerald-500/20 bg-emerald-500/5 p-5 sm:p-6">
+              <h3 class="mb-4 text-lg font-semibold text-emerald-100">Pros</h3>
+              <ul class="list-disc space-y-2 pl-5 text-slate-300/95 marker:text-emerald-400/80">
+                <li>Exceptional audio fidelity and production detail</li>
+                <li>Strong at niche and complex genres</li>
+                <li>Good custom lyrics handling</li>
+                <li>Clip extension gives more structural control</li>
+                <li>Free tier available</li>
+              </ul>
+            </div>
+            <div class="rounded-2xl border border-amber-500/20 bg-amber-500/5 p-5 sm:p-6">
+              <h3 class="mb-4 text-lg font-semibold text-amber-100">Cons</h3>
+              <ul class="list-disc space-y-2 pl-5 text-slate-300/95 marker:text-amber-400/80">
+                <li>Shorter base clips require more iterations to build a full song</li>
+                <li>Smaller community than Suno</li>
+                <li>Commercial licensing requires a paid plan</li>
+                <li>Same ongoing legal questions around training data as Suno</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        <section class="space-y-6" aria-labelledby="pricing-heading">
+          <h2 id="pricing-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">Udio pricing</h2>
+          <ul class="list-disc space-y-2 pl-5 marker:text-emerald-400/80">
+            <li><strong class="text-slate-200">Free</strong> — limited monthly credits, non-commercial use</li>
+            <li><strong class="text-slate-200">Standard (~$10/month)</strong> — more credits and commercial rights</li>
+            <li><strong class="text-slate-200">Pro (~$30/month)</strong> — high credit allowance, priority generation</li>
+          </ul>
+          <p class="rounded-xl border border-white/10 bg-white/[0.02] px-4 py-3 text-slate-300/95">
+            <span class="mr-1.5 font-medium text-emerald-200" aria-hidden>Tip:</span> Check <a class="font-medium text-emerald-300/95 underline decoration-emerald-500/40 underline-offset-4 hover:text-emerald-200" href="https://udio.com/pricing" target="_blank" rel="noopener noreferrer">udio.com/pricing</a> for the latest plans.
+          </p>
+        </section>
+
+        <section class="space-y-6" aria-labelledby="alternatives-heading">
+          <h2 id="alternatives-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">Alternatives to Udio</h2>
+          <ul class="list-disc space-y-2 pl-5 marker:text-emerald-400/80">
+            <li><strong class="text-slate-200">Suno</strong> — generates a full song in one shot; better for quick, complete tracks</li>
+            <li><strong class="text-slate-200">Soundraw</strong> — more manual control over arrangement and structure</li>
+            <li><strong class="text-slate-200">Mubert</strong> — continuous generative music for streams and podcasts</li>
+          </ul>
+        </section>
+
+        <section class="space-y-4" aria-labelledby="who-heading">
+          <h2 id="who-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">Who should use Udio?</h2>
+          <ul class="list-disc space-y-2 pl-5 marker:text-emerald-400/80">
+            <li>Producers and musicians who value audio quality over speed</li>
+            <li>Creators working in niche genres who want accurate stylistic detail</li>
+            <li>Media producers who need custom, licensable audio</li>
+            <li>Anyone who prefers to build songs in sections rather than in one shot</li>
+          </ul>
+        </section>
+
+        <section class="space-y-6" aria-labelledby="bonus-heading">
+          <h2 id="bonus-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">Bonus section</h2>
+          <div class="space-y-3 rounded-2xl border border-white/10 bg-white/[0.03] p-5 sm:p-6">
+            <h3 class="text-lg font-semibold text-white">Tips for richer Udio generations</h3>
+            <ul class="list-disc space-y-2 pl-5 text-slate-300/95 marker:text-emerald-400/80">
+              <li><strong class="text-slate-200">Name the instruments explicitly:</strong> "featuring Rhodes piano, upright bass, and brushed snare" adds precision</li>
+              <li><strong class="text-slate-200">Describe the production:</strong> "dry reverb, warm analog tape saturation" shapes the sonic character</li>
+              <li><strong class="text-slate-200">Use the extend feature iteratively:</strong> build your song section by section for more structural control</li>
+            </ul>
+          </div>
+        </section>
+
+        <p class="text-lg text-slate-200/95">Udio rewards detail—the more specific your prompt, the more it sounds like something you actually intended to make rather than something randomly generated.</p>
+      </article>
+    </div>
+  </div>
+{% endblock %}

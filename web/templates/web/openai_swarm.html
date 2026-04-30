@@ -1,0 +1,188 @@
+{% extends "web/base.html" %}
+{% block title %}OpenAI Swarm — DevShelf{% endblock %}
+{% block content %}
+  <div class="space-y-10">
+    <div class="flex flex-wrap items-center gap-2 text-sm text-slate-400/90">
+      <a href="{% url 'ai_tools' %}" class="font-medium text-emerald-300/90 transition hover:text-emerald-200">AI tools</a>
+      <span aria-hidden class="text-slate-600">/</span>
+      <span class="text-slate-200/90">OpenAI Swarm</span>
+    </div>
+
+    <section class="relative overflow-hidden rounded-3xl border border-emerald-400/20 bg-white/[0.06] p-6 shadow-[0_0_0_1px_rgba(255,255,255,0.04)] backdrop-blur-2xl sm:p-8">
+      <div class="pointer-events-none absolute -right-24 top-0 h-72 w-72 rounded-full bg-emerald-500/15 blur-3xl"></div>
+      <div class="pointer-events-none absolute -left-20 bottom-0 h-56 w-56 rounded-full bg-cyan-500/10 blur-3xl"></div>
+      <div class="relative">
+        <p class="text-xs font-semibold uppercase tracking-[0.22em] text-emerald-300/90">AI tool</p>
+        <h1 class="mt-3 text-3xl font-semibold tracking-tight text-white sm:text-4xl lg:text-[2.5rem] lg:leading-tight">
+          OpenAI Swarm: Lightweight Multi-Agent Orchestration by OpenAI
+        </h1>
+        <p class="mt-4 text-sm leading-relaxed text-slate-200/80 sm:text-base">
+          OpenAI Swarm is an experimental, open-source framework for building multi-agent systems—centred on two primitives:
+          agents (with instructions and tools) and handoffs (passing control between agents)—keeping orchestration code
+          minimal and readable.
+        </p>
+        <p class="mt-6 flex flex-wrap items-center gap-3">
+          <a href="https://github.com/openai/swarm" target="_blank" rel="noopener noreferrer"
+            class="inline-flex items-center gap-2 rounded-full border border-emerald-400/35 bg-emerald-500/10 px-4 py-2 text-sm font-medium text-emerald-200 transition hover:border-emerald-300/50 hover:bg-emerald-500/15 hover:text-white">
+            GitHub <span aria-hidden class="text-emerald-300/80">↗</span>
+          </a>
+          <a href="https://openai.com" target="_blank" rel="noopener noreferrer"
+            class="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/[0.04] px-4 py-2 text-sm font-medium text-slate-200/90 transition hover:border-white/25 hover:bg-white/[0.07] hover:text-white">
+            OpenAI <span aria-hidden class="text-slate-400">↗</span>
+          </a>
+        </p>
+      </div>
+    </section>
+
+    <div class="glass rounded-3xl border border-white/10 p-5 sm:p-8">
+      <article class="mx-auto space-y-12 text-base leading-relaxed text-slate-300/95">
+
+        <section class="space-y-4" aria-labelledby="what-heading">
+          <h2 id="what-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">What is OpenAI Swarm?</h2>
+          <p>OpenAI Swarm is an experimental, open-source multi-agent framework released by OpenAI in late 2024. It is deliberately minimal—the entire framework is a single Python file—and exists primarily as an educational reference for building multi-agent systems using patterns that OpenAI considers important: agents that can hand off control to each other.</p>
+          <p>OpenAI explicitly describes Swarm as "educational" and not production-ready. However, its concepts—agents, tools, and handoffs—directly informed OpenAI's production Agents SDK released in early 2025. Understanding Swarm means understanding the mental model behind OpenAI's approach to agents.</p>
+        </section>
+
+        <section class="space-y-6" aria-labelledby="features-heading">
+          <h2 id="features-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">Key features of OpenAI Swarm</h2>
+          <div class="space-y-3 rounded-2xl border border-white/10 bg-white/[0.03] p-5 sm:p-6">
+            <h3 class="text-lg font-semibold text-white">1. Agents</h3>
+            <p class="text-slate-300/95">Each agent has a name, system instructions, and a list of tools it can call. Agents are plain Python objects—no subclassing, no decorators, just configuration.</p>
+          </div>
+          <div class="space-y-3 rounded-2xl border border-white/10 bg-white/[0.03] p-5 sm:p-6">
+            <h3 class="text-lg font-semibold text-white">2. Handoffs</h3>
+            <p class="text-slate-300/95">An agent can hand off the conversation to another agent by returning it as a tool result. This is the central idea: instead of a central router deciding who handles what, agents themselves decide when to pass control—keeping routing logic distributed and easy to reason about.</p>
+          </div>
+          <div class="space-y-3 rounded-2xl border border-white/10 bg-white/[0.03] p-5 sm:p-6">
+            <h3 class="text-lg font-semibold text-white">3. Context variables</h3>
+            <p class="text-slate-300/95">A shared context dictionary persists across agent handoffs—agents can read and write shared state (user ID, order number, session data) without passing it through the conversation.</p>
+          </div>
+          <div class="space-y-3 rounded-2xl border border-white/10 bg-white/[0.03] p-5 sm:p-6">
+            <h3 class="text-lg font-semibold text-white">4. Stateless client loop</h3>
+            <p class="text-slate-300/95">Swarm's client runs a simple loop: call the model, execute tools (or handoffs), repeat. There is no hidden state in the framework itself—what you see is what runs.</p>
+          </div>
+          <div class="space-y-3 rounded-2xl border border-white/10 bg-white/[0.03] p-5 sm:p-6">
+            <h3 class="text-lg font-semibold text-white">5. Native OpenAI function calling</h3>
+            <p class="text-slate-300/95">Swarm uses OpenAI's standard function-calling API under the hood—tools are just Python functions with docstrings. No new abstractions to learn if you already know the OpenAI SDK.</p>
+          </div>
+          <div class="space-y-3 rounded-2xl border border-white/10 bg-white/[0.03] p-5 sm:p-6">
+            <h3 class="text-lg font-semibold text-white">6. Extremely readable codebase</h3>
+            <p class="text-slate-300/95">The entire framework is about 300 lines of Python. Reading it is the best way to understand how a production-grade agent orchestration loop actually works internally.</p>
+          </div>
+        </section>
+
+        <section class="space-y-6" aria-labelledby="how-heading">
+          <h2 id="how-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">How OpenAI Swarm works</h2>
+          <p>A basic Swarm system looks like this:</p>
+          <div class="rounded-xl border border-white/10 bg-white/[0.02] p-4">
+            <pre class="text-sm font-mono text-emerald-200/90 overflow-x-auto"><code>from swarm import Swarm, Agent
+
+client = Swarm()
+
+def transfer_to_billing():
+    return billing_agent
+
+triage = Agent(name="Triage", instructions="Route to billing or support.", tools=[transfer_to_billing])
+billing_agent = Agent(name="Billing", instructions="Handle billing questions.")
+
+response = client.run(agent=triage, messages=[{"role": "user", "content": "I have a billing issue"}])
+print(response.messages[-1]["content"])</code></pre>
+          </div>
+          <p>The triage agent calls <code class="rounded bg-white/10 px-1.5 py-0.5 text-sm font-mono text-emerald-200">transfer_to_billing</code>, which returns the billing agent object—Swarm recognises this as a handoff and continues the conversation with the billing agent.</p>
+        </section>
+
+        <section class="space-y-6" aria-labelledby="usecases-heading">
+          <h2 id="usecases-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">Real-life use cases of OpenAI Swarm</h2>
+          <div class="space-y-3 rounded-2xl border border-white/10 bg-white/[0.03] p-5 sm:p-6">
+            <h3 class="text-lg font-semibold text-white">Customer support routing</h3>
+            <ul class="list-disc space-y-2 pl-5 marker:text-emerald-400/80">
+              <li>A triage agent classifies the issue and hands off to specialist agents for billing, technical, or account issues</li>
+            </ul>
+          </div>
+          <div class="space-y-3 rounded-2xl border border-white/10 bg-white/[0.03] p-5 sm:p-6">
+            <h3 class="text-lg font-semibold text-white">Sales pipelines</h3>
+            <ul class="list-disc space-y-2 pl-5 marker:text-emerald-400/80">
+              <li>Qualify leads with a front-end agent, hand qualified prospects to a demo-booking agent, and pass closed deals to an onboarding agent</li>
+            </ul>
+          </div>
+          <div class="space-y-3 rounded-2xl border border-white/10 bg-white/[0.03] p-5 sm:p-6">
+            <h3 class="text-lg font-semibold text-white">Learning multi-agent architecture</h3>
+            <ul class="list-disc space-y-2 pl-5 marker:text-emerald-400/80">
+              <li>Read and run the Swarm examples to understand agent orchestration before adopting a more complex framework</li>
+            </ul>
+          </div>
+        </section>
+
+        <section class="space-y-6" aria-labelledby="proscons-heading">
+          <h2 id="proscons-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">Pros and cons of OpenAI Swarm</h2>
+          <div class="grid gap-6 lg:grid-cols-2">
+            <div class="rounded-2xl border border-emerald-500/20 bg-emerald-500/5 p-5 sm:p-6">
+              <h3 class="mb-4 text-lg font-semibold text-emerald-100">Pros</h3>
+              <ul class="list-disc space-y-2 pl-5 text-slate-300/95 marker:text-emerald-400/80">
+                <li>Extremely minimal—the whole thing is ~300 lines</li>
+                <li>Handoff pattern is elegant and easy to reason about</li>
+                <li>Great for learning multi-agent patterns</li>
+                <li>No new abstractions beyond standard OpenAI API</li>
+                <li>Free and open-source</li>
+              </ul>
+            </div>
+            <div class="rounded-2xl border border-amber-500/20 bg-amber-500/5 p-5 sm:p-6">
+              <h3 class="mb-4 text-lg font-semibold text-amber-100">Cons</h3>
+              <ul class="list-disc space-y-2 pl-5 text-slate-300/95 marker:text-amber-400/80">
+                <li>Explicitly marked "experimental" by OpenAI—not production-supported</li>
+                <li>OpenAI-only (uses OpenAI's function calling API)</li>
+                <li>No built-in memory, observability, or persistence</li>
+                <li>Superseded by OpenAI's Agents SDK for production use</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        <section class="space-y-6" aria-labelledby="pricing-heading">
+          <h2 id="pricing-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">OpenAI Swarm pricing</h2>
+          <ul class="list-disc space-y-2 pl-5 marker:text-emerald-400/80">
+            <li><strong class="text-slate-200">Framework (free)</strong> — open-source, install with <code class="rounded bg-white/10 px-1.5 py-0.5 text-sm font-mono text-emerald-200">pip install git+https://github.com/openai/swarm</code></li>
+            <li><strong class="text-slate-200">API usage</strong> — you pay standard OpenAI API token rates for each model call made by your agents</li>
+          </ul>
+        </section>
+
+        <section class="space-y-6" aria-labelledby="alternatives-heading">
+          <h2 id="alternatives-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">Alternatives to OpenAI Swarm</h2>
+          <ul class="list-disc space-y-2 pl-5 marker:text-emerald-400/80">
+            <li><strong class="text-slate-200">OpenAI Agents SDK</strong> — OpenAI's production-ready successor to Swarm concepts</li>
+            <li><strong class="text-slate-200">LangGraph</strong> — graph-based agent orchestration with cycles and persistence</li>
+            <li><strong class="text-slate-200">CrewAI</strong> — role-based multi-agent framework with structured task assignment</li>
+            <li><strong class="text-slate-200">Phidata/Agno</strong> — clean Python agents with memory and tool libraries</li>
+          </ul>
+        </section>
+
+        <section class="space-y-4" aria-labelledby="who-heading">
+          <h2 id="who-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">Who should use OpenAI Swarm?</h2>
+          <ul class="list-disc space-y-2 pl-5 marker:text-emerald-400/80">
+            <li>Developers learning multi-agent architecture patterns for the first time</li>
+            <li>Engineers who want to understand what happens inside agent frameworks before adopting one</li>
+            <li>Teams prototyping agent-handoff patterns before moving to a production framework</li>
+          </ul>
+          <p class="rounded-xl border border-amber-500/20 bg-amber-500/5 px-4 py-3 text-slate-300/95">
+            <span class="mr-1.5 font-medium text-amber-200" aria-hidden>Note:</span> For production systems, consider OpenAI's Agents SDK or LangGraph, which provide persistence, observability, and active maintenance.
+          </p>
+        </section>
+
+        <section class="space-y-6" aria-labelledby="bonus-heading">
+          <h2 id="bonus-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">Bonus section</h2>
+          <div class="space-y-3 rounded-2xl border border-white/10 bg-white/[0.03] p-5 sm:p-6">
+            <h3 class="text-lg font-semibold text-white">Key ideas Swarm teaches you</h3>
+            <ul class="list-disc space-y-2 pl-5 text-slate-300/95 marker:text-emerald-400/80">
+              <li><strong class="text-slate-200">Agents are just instructions + tools:</strong> the system prompt and the function list define an agent's entire personality and capability</li>
+              <li><strong class="text-slate-200">Handoffs are just tool calls:</strong> routing between agents is not magic—it is a function that returns another agent</li>
+              <li><strong class="text-slate-200">Context is shared state:</strong> rather than stuffing everything into the conversation, use context variables for structured data</li>
+              <li><strong class="text-slate-200">Loops are simple:</strong> call model → run tools → call model again—that is the entire agent loop</li>
+            </ul>
+          </div>
+        </section>
+
+        <p class="text-lg text-slate-200/95">Swarm's real value is conceptual—read it before adopting any agent framework and you will understand what every other framework is abstracting over.</p>
+      </article>
+    </div>
+  </div>
+{% endblock %}
