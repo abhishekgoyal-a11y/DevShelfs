@@ -515,7 +515,7 @@ if __name__ == "__main__":
               <pre class="ds-codeblock-pre overflow-x-auto p-4 text-sm leading-relaxed m-0"><code class="ds-codeblock-source language-dockerfile">FROM python:3.11-slim
 WORKDIR /app
 COPY requirements.txt .
-RUN pip install --no-cache-dir -r requirements.txt
+RUN pip3 install --no-cache-dir -r requirements.txt
 COPY . .
 CMD ["python", "rag.py"]</code></pre>
             </div>
