@@ -1,0 +1,189 @@
+{% extends "web/base.html" %}
+{% block title %}Core Concepts: Agents, Tasks, Crews — Build with CrewAI{% endblock %}
+{% block content %}
+  <div class="space-y-10">
+    {# ── Breadcrumb ── #}
+    <div class="flex flex-wrap items-center gap-2 text-sm text-slate-400/90">
+      <a href="{% url 'tutorials' %}" class="font-medium text-violet-300/90 transition hover:text-violet-200">Tutorials</a>
+      <span aria-hidden class="text-slate-600">/</span>
+      <a href="{% url 'tutorials' %}?category=ai-agents" class="font-medium text-violet-300/90 transition hover:text-violet-200">AI Agents</a>
+      <span aria-hidden class="text-slate-600">/</span>
+      <span class="text-slate-200/90">Core Concepts</span>
+    </div>
+
+    {# ── Hero ── #}
+    <section class="relative overflow-hidden rounded-3xl border border-violet-400/20 bg-white/[0.06] p-6 shadow-[0_0_0_1px_rgba(255,255,255,0.04)] backdrop-blur-2xl sm:p-8">
+      <div class="pointer-events-none absolute -right-24 top-0 h-72 w-72 rounded-full bg-violet-500/15 blur-3xl"></div>
+      <div class="pointer-events-none absolute -left-20 bottom-0 h-56 w-56 rounded-full bg-fuchsia-500/10 blur-3xl"></div>
+      <div class="relative">
+        <div class="flex flex-wrap items-center gap-3">
+          <span class="rounded-full border border-violet-500/25 bg-violet-500/10 px-2.5 py-1 text-xs font-medium text-violet-300/90">Build with CrewAI</span>
+          <span class="rounded-full border border-sky-500/25 bg-sky-500/10 px-2.5 py-1 text-xs font-medium text-sky-300/90">Beginner</span>
+          <span class="text-xs text-slate-400/80">· 12 min read</span>
+          <span class="ml-auto text-xs font-medium text-slate-400/80">Page 2 of 15</span>
+        </div>
+        <h1 class="mt-4 text-3xl font-semibold tracking-tight text-white sm:text-4xl lg:text-[2.5rem] lg:leading-tight">Core Concepts: Agents, Tasks, Crews</h1>
+        <p class="mt-4 max-w-2xl text-sm leading-relaxed text-slate-200/80 sm:text-base">
+          The five primitives that make up every CrewAI app: Agents, Tasks, Crews, Tools, and Processes — explained with minimal code.
+        </p>
+        <div class="mt-6">
+          <div class="mb-1.5 flex items-center justify-between text-xs text-slate-400/80"><span>Series progress</span><span>2 / 15</span></div>
+          <div class="h-1.5 w-full overflow-hidden rounded-full bg-white/10"><div class="h-full w-[13%] rounded-full bg-violet-400/70"></div></div>
+        </div>
+      </div>
+    </section>
+
+    {# ── Content ── #}
+    <div class="glass rounded-3xl border border-white/10 p-5 sm:p-8">
+      <article class="mx-auto space-y-12 text-base leading-relaxed text-slate-300/95">
+
+        <section class="space-y-5" aria-labelledby="agents-heading">
+          <h2 id="agents-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">1. Agent</h2>
+          <p>An <strong>Agent</strong> is an autonomous AI worker. It has a <strong>role</strong>, a <strong>goal</strong>, and a <strong>backstory</strong> that shape its behavior, plus optional tools it can call.</p>
+          <div class="rounded-2xl border border-white/10 bg-white/[0.03] p-5">
+            <p class="font-semibold text-white mb-3">Minimal Agent</p>
+            <div class="ds-codeblock overflow-hidden rounded-2xl border border-white/10 bg-slate-950/90">
+  <div class="flex items-center justify-between gap-3 border-b border-white/10 px-3 py-2">
+    <span class="font-mono text-[11px] font-medium uppercase tracking-wide text-slate-400">PYTHON</span>
+    <button type="button" class="ds-codeblock-copy rounded-lg border border-white/10 bg-white/[0.06] px-2.5 py-1 text-xs font-semibold text-slate-200 transition hover:border-sky-400/40 hover:bg-white/[0.1] hover:text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-sky-400/50" data-copy-label="Copy" data-copied-label="Copied" aria-label="Copy code to clipboard">Copy</button>
+  </div>
+  <pre class="ds-codeblock-pre code-block m-0 overflow-x-auto p-4 text-[0.8125rem] leading-[1.55] sm:text-sm language-python" tabindex="0"><code class="whitespace-pre-wrap font-mono ds-codeblock-source language-python">from crewai import Agent
+
+researcher = Agent(
+    role="Senior Research Analyst",
+    goal="Find current, accurate information on {topic}",
+    backstory=(
+        "You are a meticulous research analyst with 10 years "
+        "of experience in tech industry trends. You cite sources."
+    ),
+    verbose=True,
+)</code></pre>
+</div>
+          </div>
+          <p class="text-sm text-slate-400">The <code class="rounded bg-white/[0.06] px-1.5 py-0.5 font-mono text-xs">role</code> is the strongest behavioral lever — choose it carefully.</p>
+        </section>
+
+        <section class="space-y-5" aria-labelledby="tasks-heading">
+          <h2 id="tasks-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">2. Task</h2>
+          <p>A <strong>Task</strong> is a unit of work assigned to an agent. It has a <strong>description</strong> (what to do) and an <strong>expected_output</strong> (what success looks like).</p>
+          <div class="rounded-2xl border border-white/10 bg-white/[0.03] p-5">
+            <p class="font-semibold text-white mb-3">Defining a Task</p>
+            <div class="ds-codeblock overflow-hidden rounded-2xl border border-white/10 bg-slate-950/90">
+  <div class="flex items-center justify-between gap-3 border-b border-white/10 px-3 py-2">
+    <span class="font-mono text-[11px] font-medium uppercase tracking-wide text-slate-400">PYTHON</span>
+    <button type="button" class="ds-codeblock-copy rounded-lg border border-white/10 bg-white/[0.06] px-2.5 py-1 text-xs font-semibold text-slate-200 transition hover:border-sky-400/40 hover:bg-white/[0.1] hover:text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-sky-400/50" data-copy-label="Copy" data-copied-label="Copied" aria-label="Copy code to clipboard">Copy</button>
+  </div>
+  <pre class="ds-codeblock-pre code-block m-0 overflow-x-auto p-4 text-[0.8125rem] leading-[1.55] sm:text-sm language-python" tabindex="0"><code class="whitespace-pre-wrap font-mono ds-codeblock-source language-python">from crewai import Task
+
+research_task = Task(
+    description=(
+        "Research the latest developments in {topic}. "
+        "Focus on the past 6 months. Include 3-5 reputable sources."
+    ),
+    expected_output=(
+        "A bullet-point summary of 5 key findings, each with "
+        "a one-sentence explanation and a source URL."
+    ),
+    agent=researcher,
+)</code></pre>
+</div>
+          </div>
+        </section>
+
+        <section class="space-y-5" aria-labelledby="crew-heading">
+          <h2 id="crew-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">3. Crew</h2>
+          <p>A <strong>Crew</strong> ties agents and tasks together with a <strong>process</strong> (sequential or hierarchical) and runs them.</p>
+          <div class="rounded-2xl border border-white/10 bg-white/[0.03] p-5">
+            <p class="font-semibold text-white mb-3">Building & Running a Crew</p>
+            <div class="ds-codeblock overflow-hidden rounded-2xl border border-white/10 bg-slate-950/90">
+  <div class="flex items-center justify-between gap-3 border-b border-white/10 px-3 py-2">
+    <span class="font-mono text-[11px] font-medium uppercase tracking-wide text-slate-400">PYTHON</span>
+    <button type="button" class="ds-codeblock-copy rounded-lg border border-white/10 bg-white/[0.06] px-2.5 py-1 text-xs font-semibold text-slate-200 transition hover:border-sky-400/40 hover:bg-white/[0.1] hover:text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-sky-400/50" data-copy-label="Copy" data-copied-label="Copied" aria-label="Copy code to clipboard">Copy</button>
+  </div>
+  <pre class="ds-codeblock-pre code-block m-0 overflow-x-auto p-4 text-[0.8125rem] leading-[1.55] sm:text-sm language-python" tabindex="0"><code class="whitespace-pre-wrap font-mono ds-codeblock-source language-python">from crewai import Crew, Process
+
+crew = Crew(
+    agents=[researcher, writer],
+    tasks=[research_task, writing_task],
+    process=Process.sequential,
+    verbose=True,
+)
+
+result = crew.kickoff(inputs={"topic": "agentic RAG"})
+print(result)</code></pre>
+</div>
+          </div>
+        </section>
+
+        <section class="space-y-5" aria-labelledby="tools-heading">
+          <h2 id="tools-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">4. Tools</h2>
+          <p><strong>Tools</strong> are functions an agent can call. CrewAI ships with web search, scraping, file I/O, and you can register custom ones with <code class="rounded bg-white/[0.06] px-1.5 py-0.5 font-mono text-xs">@tool</code>.</p>
+          <div class="rounded-2xl border border-white/10 bg-white/[0.03] p-5">
+            <p class="font-semibold text-white mb-3">Attaching a Tool</p>
+            <div class="ds-codeblock overflow-hidden rounded-2xl border border-white/10 bg-slate-950/90">
+  <div class="flex items-center justify-between gap-3 border-b border-white/10 px-3 py-2">
+    <span class="font-mono text-[11px] font-medium uppercase tracking-wide text-slate-400">PYTHON</span>
+    <button type="button" class="ds-codeblock-copy rounded-lg border border-white/10 bg-white/[0.06] px-2.5 py-1 text-xs font-semibold text-slate-200 transition hover:border-sky-400/40 hover:bg-white/[0.1] hover:text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-sky-400/50" data-copy-label="Copy" data-copied-label="Copied" aria-label="Copy code to clipboard">Copy</button>
+  </div>
+  <pre class="ds-codeblock-pre code-block m-0 overflow-x-auto p-4 text-[0.8125rem] leading-[1.55] sm:text-sm language-python" tabindex="0"><code class="whitespace-pre-wrap font-mono ds-codeblock-source language-python">from crewai_tools import SerperDevTool
+
+search_tool = SerperDevTool()
+
+researcher = Agent(
+    role="Research Analyst",
+    goal="Find recent news on {topic}",
+    backstory="...",
+    tools=[search_tool],
+)</code></pre>
+</div>
+          </div>
+        </section>
+
+        <section class="space-y-5" aria-labelledby="process-heading">
+          <h2 id="process-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">5. Process</h2>
+          <p>The <strong>Process</strong> controls how tasks flow.</p>
+          <div class="space-y-3">
+            <div class="rounded-2xl border border-sky-500/20 bg-sky-500/5 p-4">
+              <p class="font-semibold text-sky-300 mb-1">Sequential</p>
+              <p class="text-sm text-slate-300">Tasks run in order. Output of one feeds the next via <code class="rounded bg-white/[0.06] px-1.5 py-0.5 font-mono text-xs">context</code>. Easy to reason about — start here.</p>
+            </div>
+            <div class="rounded-2xl border border-violet-500/20 bg-violet-500/5 p-4">
+              <p class="font-semibold text-violet-300 mb-1">Hierarchical</p>
+              <p class="text-sm text-slate-300">A manager agent delegates tasks to workers, then verifies. Use when work order is dynamic or supervision matters.</p>
+            </div>
+          </div>
+        </section>
+
+        <section class="space-y-5" aria-labelledby="mental-heading">
+          <h2 id="mental-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">The Mental Model</h2>
+          <div class="rounded-2xl border border-white/10 bg-white/[0.03] p-5">
+            <p class="text-sm text-slate-300">
+              Think: <strong class="text-violet-300">"A crew of agents executes tasks under a process, optionally using tools."</strong>
+            </p>
+            <p class="mt-3 text-sm text-slate-400">
+              That's the whole framework. Everything else (memory, callbacks, delegation) is optional polish on top.
+            </p>
+          </div>
+        </section>
+
+      </article>
+    </div>
+
+    {# ── Navigation ── #}
+    <div class="flex items-center justify-between">
+      <a
+        href="{% url 'tutorial_crewai_intro' %}"
+        class="inline-flex items-center gap-2 rounded-xl border border-violet-400/35 bg-violet-500/10 px-5 py-2.5 text-sm font-semibold text-violet-200 transition hover:border-violet-300/50 hover:bg-violet-500/20 hover:text-white"
+      >
+        <span aria-hidden>←</span> Previous
+      </a>
+      <a
+        href="{% url 'tutorial_crewai_installation' %}"
+        class="inline-flex items-center gap-2 rounded-xl border border-violet-400/35 bg-violet-500/10 px-5 py-2.5 text-sm font-semibold text-violet-200 transition hover:border-violet-300/50 hover:bg-violet-500/20 hover:text-white"
+      >
+        Next: Installation & Setup <span aria-hidden>→</span>
+      </a>
+    </div>
+
+  </div>
+{% endblock %}

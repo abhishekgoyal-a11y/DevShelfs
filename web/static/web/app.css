@@ -47,3 +47,51 @@ pre.code-block,
   line-height: inherit;
   background: transparent;
 }
+
+/* Code block styling */
+.ds-codeblock {
+  background-color: rgba(15, 23, 42, 0.9);
+  border-color: rgba(255, 255, 255, 0.1);
+}
+
+.ds-codeblock-pre {
+  background: transparent;
+  margin: 0;
+}
+
+.ds-codeblock-pre code {
+  font-family: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  background: transparent;
+}
+
+/* Copy button styling */
+.ds-codeblock-copy {
+  border-color: rgba(255, 255, 255, 0.1);
+  background-color: rgba(255, 255, 255, 0.06);
+  color: rgba(226, 232, 240, 0.87);
+  cursor: pointer;
+  font-family: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  transition: all 0.2s ease;
+}
+
+.ds-codeblock-copy:hover {
+  border-color: rgba(56, 189, 248, 0.4);
+  background-color: rgba(255, 255, 255, 0.1);
+  color: white;
+}
+
+.ds-codeblock-copy.copied {
+  border-color: rgba(56, 189, 248, 0.4);
+  background-color: rgba(56, 189, 248, 0.1);
+  color: rgb(226, 232, 240);
+}
+
+/* Series overview toggle */
+.hidden-series-item {
+  display: none !important;
+}
+
+.hidden-series-item.visible {
+  display: flex !important;
+  animation: ds-fade-in 300ms ease-out both;
+}

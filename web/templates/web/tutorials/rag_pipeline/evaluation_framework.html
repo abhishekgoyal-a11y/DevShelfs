@@ -1,0 +1,347 @@
+{% extends "web/base.html" %}
+{% block title %}Evaluation Framework — RAG Pipeline Tutorial{% endblock %}
+{% block content %}
+  <div class="space-y-10">
+    {# ── Breadcrumb ── #}
+    <div class="flex flex-wrap items-center gap-2 text-sm text-slate-400/90">
+      <a href="{% url 'tutorials' %}" class="font-medium text-violet-300/90 transition hover:text-violet-200">Tutorials</a>
+      <span aria-hidden class="text-slate-600">/</span>
+      <a href="{% url 'tutorials' %}?category=rag-vector-dbs" class="font-medium text-violet-300/90 transition hover:text-violet-200">RAG & Vector DBs</a>
+      <span aria-hidden class="text-slate-600">/</span>
+      <span class="text-slate-200/90">Evaluation Framework</span>
+    </div>
+
+    {# ── Hero ── #}
+    <section class="relative overflow-hidden rounded-3xl border border-violet-400/20 bg-white/[0.06] p-6 shadow-[0_0_0_1px_rgba(255,255,255,0.04)] backdrop-blur-2xl sm:p-8">
+      <div class="pointer-events-none absolute -right-24 top-0 h-72 w-72 rounded-full bg-violet-500/15 blur-3xl"></div>
+      <div class="pointer-events-none absolute -left-20 bottom-0 h-56 w-56 rounded-full bg-fuchsia-500/10 blur-3xl"></div>
+      <div class="relative">
+        <div class="flex flex-wrap items-center gap-3">
+          <span class="rounded-full border border-violet-500/25 bg-violet-500/10 px-2.5 py-1 text-xs font-medium text-violet-300/90">RAG Pipeline</span>
+          <span class="rounded-full border border-amber-500/25 bg-amber-500/10 px-2.5 py-1 text-xs font-medium text-amber-300/90">Intermediate</span>
+          <span class="text-xs text-slate-400/80">· 18 min read</span>
+          <span class="ml-auto text-xs font-medium text-slate-400/80">Page 11 of 23</span>
+        </div>
+        <h1 class="mt-4 text-3xl font-semibold tracking-tight text-white sm:text-4xl lg:text-[2.5rem] lg:leading-tight">Evaluation Framework</h1>
+        <p class="mt-4 max-w-2xl text-sm leading-relaxed text-slate-200/80 sm:text-base">
+          Measuring retrieval quality, answer faithfulness, building ground truth datasets, using evaluation tools (RAGAS, TruLens, DeepEval), and continuous monitoring.
+        </p>
+        <div class="mt-6">
+          <div class="mb-1.5 flex items-center justify-between text-xs text-slate-400/80"><span>Series progress</span><span>11 / 23</span></div>
+          <div class="h-1.5 w-full overflow-hidden rounded-full bg-white/10"><div class="h-full w-[48%] rounded-full bg-violet-400/70"></div></div>
+        </div>
+      </div>
+    </section>
+
+    {# ── Content ── #}
+    <div class="glass rounded-3xl border border-white/10 p-5 sm:p-8">
+      <article class="mx-auto space-y-12 text-base leading-relaxed text-slate-300/95">
+
+        <section class="space-y-5" aria-labelledby="why-heading">
+          <h2 id="why-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">Why Evaluation is Critical</h2>
+          <p>
+            You can build a RAG system in hours. But how do you know it's actually good? Without evaluation:
+          </p>
+          <div class="space-y-3">
+            <div class="rounded-2xl border border-red-500/20 bg-red-500/5 p-4">
+              <p class="font-semibold text-red-300 mb-2">❌ You ship hallucinations</p>
+              <p class="text-sm text-slate-300">Your LLM confidently invents facts from incomplete retrieval. Users discover the bugs.</p>
+            </div>
+            <div class="rounded-2xl border border-red-500/20 bg-red-500/5 p-4">
+              <p class="font-semibold text-red-300 mb-2">❌ You tune blindly</p>
+              <p class="text-sm text-slate-300">You change chunk size, embedding model, or parameters without knowing if they help or hurt.</p>
+            </div>
+            <div class="rounded-2xl border border-red-500/20 bg-red-500/5 p-4">
+              <p class="font-semibold text-red-300 mb-2">❌ You miss regressions</p>
+              <p class="text-sm text-slate-300">You update documents or embeddings, and quality silently drops until a user complains.</p>
+            </div>
+          </div>
+          <div class="rounded-2xl border border-green-500/20 bg-green-500/5 p-4 mt-4">
+            <p class="text-sm text-slate-300">
+              <strong>✓ Good evaluation means:</strong> You measure quality objectively, catch regressions early, and know exactly which changes improve results.
+            </p>
+          </div>
+        </section>
+
+        <section class="space-y-5" aria-labelledby="groundtruth-heading">
+          <h2 id="groundtruth-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">Building Ground Truth Datasets</h2>
+          <p>
+            Evaluation requires labeled data: queries paired with correct documents and answers.
+          </p>
+
+          <div class="rounded-2xl border border-white/10 bg-white/[0.03] p-5 space-y-3">
+            <p class="font-semibold text-white">Dataset Structure:</p>
+            <div class="ds-codeblock overflow-hidden rounded-2xl border border-white/10 bg-slate-950/90">
+  <div class="flex items-center justify-between gap-3 border-b border-white/10 px-3 py-2">
+    <span class="font-mono text-[11px] font-medium uppercase tracking-wide text-slate-400">Python</span>
+    <button type="button" class="ds-codeblock-copy rounded-lg border border-white/10 bg-white/[0.06] px-2.5 py-1 text-xs font-semibold text-slate-200 transition hover:border-sky-400/40 hover:bg-white/[0.1] hover:text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-sky-400/50" data-copy-label="Copy" data-copied-label="Copied" aria-label="Copy code to clipboard">Copy</button>
+  </div>
+  <pre class="ds-codeblock-pre code-block m-0 overflow-x-auto p-4 text-[0.8125rem] leading-[1.55] sm:text-sm language-python" tabindex="0"><code class="whitespace-pre-wrap font-mono ds-codeblock-source language-python">{
+  "id": "test_001",
+  "query": "How do I file taxes if self-employed?",
+  "relevant_doc_ids": ["tax_guide_p3", "deduction_rules_p1"],
+  "ground_truth_answer": "Self-employed people must...",
+  "difficulty": "medium"
+}</code></pre>
+</div>
+          </div>
+
+          <div class="space-y-3 mt-4">
+            <p class="font-semibold text-white text-sm">How to Build Ground Truth:</p>
+
+            <div class="rounded-2xl border border-white/10 bg-white/[0.03] p-4">
+              <p class="font-semibold text-white text-sm mb-2">1. Manual Annotation</p>
+              <p class="text-sm text-slate-300">Subject matter experts label queries with correct documents and answers. Gold standard but slow ($10-50 per example).</p>
+            </div>
+
+            <div class="rounded-2xl border border-white/10 bg-white/[0.03] p-4">
+              <p class="font-semibold text-white text-sm mb-2">2. Synthetic Generation</p>
+              <p class="text-sm text-slate-300 mb-3">Generate test queries from your documents using an LLM.</p>
+              <code class="block font-mono text-xs text-slate-300 whitespace-pre bg-black/20 p-2 rounded">from llama_index.core.evaluation import generate_question_context_pairs
+from llama_index.llms import OpenAI
+
+# From your indexed documents
+dataset = generate_question_context_pairs(
+    documents,
+    llm=OpenAI(model="gpt-4"),
+    num_questions_per_context=2
+)</code>
+            </div>
+
+            <div class="rounded-2xl border border-white/10 bg-white/[0.03] p-4">
+              <p class="font-semibold text-white text-sm mb-2">3. Hybrid Approach</p>
+              <p class="text-sm text-slate-300">Generate synthetically, then have humans validate/edit a sample. Faster and cheaper than pure manual.</p>
+            </div>
+          </div>
+
+          <div class="rounded-2xl border border-blue-500/20 bg-blue-500/5 p-4 mt-4">
+            <p class="text-sm text-slate-300">
+              <strong>📊 Starting point:</strong> 50-100 test examples for initial evaluation. 500+ for production monitoring.
+            </p>
+          </div>
+        </section>
+
+        <section class="space-y-5" aria-labelledby="retrieval-metrics-heading">
+          <h2 id="retrieval-metrics-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">Retrieval Evaluation Metrics</h2>
+          <p>
+            How many relevant documents did you retrieve? How highly did you rank them?
+          </p>
+
+          <div class="space-y-4">
+            <div class="rounded-2xl border border-white/10 bg-white/[0.03] p-5">
+              <p class="font-semibold text-white mb-3">Recall@K</p>
+              <p class="text-sm text-slate-300 mb-3">Of all relevant documents, how many did you retrieve in the top-K?</p>
+              <code class="block font-mono text-xs text-slate-300 whitespace-pre bg-black/20 p-2 rounded">Recall@5 = (# of relevant docs in top-5) / (total # of relevant docs)
+
+Example:
+Query: "How do I file taxes?"
+Relevant docs: [doc_1, doc_2, doc_3, doc_4, doc_5, doc_6, doc_7]  (7 total)
+Retrieved top-5: [doc_2, doc_4, random_doc, doc_1, another_random]
+
+Recall@5 = 3/7 = 0.43  (missed 4 relevant docs)</code>
+              <p class="text-sm text-slate-300 mt-2">Higher is better. Typical threshold: Recall@5 ≥ 0.8 for good systems.</p>
+            </div>
+
+            <div class="rounded-2xl border border-white/10 bg-white/[0.03] p-5">
+              <p class="font-semibold text-white mb-3">Mean Reciprocal Rank (MRR)</p>
+              <p class="text-sm text-slate-300 mb-3">How high in the ranking is the first relevant document?</p>
+              <code class="block font-mono text-xs text-slate-300 whitespace-pre bg-black/20 p-2 rounded">MRR = average(1/rank of first relevant doc)
+
+Example:
+Query 1: First relevant doc at rank 1  → 1/1 = 1.0
+Query 2: First relevant doc at rank 3  → 1/3 = 0.33
+Query 3: First relevant doc at rank 1  → 1/1 = 1.0
+MRR = (1.0 + 0.33 + 1.0) / 3 = 0.78</code>
+              <p class="text-sm text-slate-300 mt-2">Range: 0-1. Higher is better. Penalizes wrong answers at top.</p>
+            </div>
+
+            <div class="rounded-2xl border border-white/10 bg-white/[0.03] p-5">
+              <p class="font-semibold text-white mb-3">nDCG (Normalized Discounted Cumulative Gain)</p>
+              <p class="text-sm text-slate-300 mb-3">Combines position and relevance. More nuanced than recall/precision.</p>
+              <code class="block font-mono text-xs text-slate-300 whitespace-pre bg-black/20 p-2 rounded">nDCG rewards highly-relevant docs at top, less-relevant docs lower.
+Range: 0-1. nDCG@10 typical threshold: ≥ 0.7 for good systems.</code>
+            </div>
+
+            <div class="rounded-2xl border border-white/10 bg-white/[0.03] p-5">
+              <p class="font-semibold text-white mb-3">Precision@K</p>
+              <p class="text-sm text-slate-300 mb-3">Of the top-K retrieved, how many are actually relevant?</p>
+              <code class="block font-mono text-xs text-slate-300 whitespace-pre bg-black/20 p-2 rounded">Precision@5 = (# relevant in top-5) / 5
+
+Retrieved top-5: [doc_2✓, doc_4✓, doc_random, doc_1✓, doc_other]
+Precision@5 = 3/5 = 0.6  (60% of what you returned is good)</code>
+            </div>
+          </div>
+
+          <div class="rounded-2xl border border-orange-500/20 bg-orange-500/5 p-4 mt-4">
+            <p class="text-sm text-slate-300">
+              <strong>🎯 Quick recommendation:</strong> Monitor Recall@5 and MRR. Start with target Recall@5 ≥ 0.8 and MRR ≥ 0.6.
+            </p>
+          </div>
+        </section>
+
+        <section class="space-y-5" aria-labelledby="answer-metrics-heading">
+          <h2 id="answer-metrics-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">Answer Quality Evaluation</h2>
+          <p>
+            Even if retrieval is perfect, the LLM might still hallucinate. Measure answer quality directly.
+          </p>
+
+          <div class="space-y-3">
+            <div class="rounded-2xl border border-white/10 bg-white/[0.03] p-5">
+              <p class="font-semibold text-white mb-3">Faithfulness</p>
+              <p class="text-sm text-slate-300 mb-3"><strong>Does the answer use only retrieved documents, or does it invent facts?</strong></p>
+              <code class="block font-mono text-xs text-slate-300 whitespace-pre bg-black/20 p-2 rounded">Query: "How do I file taxes if self-employed?"
+
+Retrieved: "Self-employed people must file quarterly estimated taxes..."
+
+Answer: "Self-employed people must file quarterly estimated taxes AND must
+use Form 1234-X which was introduced in 2023."
+                 ↑ "Form 1234-X" not in retrieved docs → hallucination!</code>
+              <p class="text-sm text-slate-300 mt-2">Tools like RAGAS measure this automatically.</p>
+            </div>
+
+            <div class="rounded-2xl border border-white/10 bg-white/[0.03] p-5">
+              <p class="font-semibold text-white mb-3">Relevance</p>
+              <p class="text-sm text-slate-300 mb-3"><strong>Does the answer actually address the question?</strong></p>
+              <p class="text-sm text-slate-300">Query: "How do I deduct medical expenses?"</p>
+              <p class="text-sm text-slate-300">Answer: "Medical expenses are growing..." ← Off-topic, doesn't explain deduction process.</p>
+            </div>
+
+            <div class="rounded-2xl border border-white/10 bg-white/[0.03] p-5">
+              <p class="font-semibold text-white mb-3">Semantic Similarity</p>
+              <p class="text-sm text-slate-300 mb-3"><strong>How similar is the generated answer to the ground truth?</strong></p>
+              <p class="text-sm text-slate-300">Compare embeddings of answer vs ground truth. Score: 0-1.</p>
+            </div>
+          </div>
+        </section>
+
+        <section class="space-y-5" aria-labelledby="tools-heading">
+          <h2 id="tools-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">Evaluation Tools</h2>
+
+          <div class="space-y-4">
+            <div class="rounded-2xl border border-white/10 bg-white/[0.03] p-5">
+              <p class="font-semibold text-white mb-3">RAGAS (Retrieval-Augmented Generation Assessment)</p>
+              <p class="text-sm text-slate-300 mb-3">Purpose: Measure retrieval and answer quality with LLM-based judges. No manual annotations needed.</p>
+              <code class="block font-mono text-xs text-slate-300 whitespace-pre bg-black/20 p-2 rounded">pip install ragas
+
+from ragas import evaluate
+from ragas.metrics import (
+    faithfulness,
+    answer_relevancy,
+    context_recall,
+    context_precision
+)
+
+result = evaluate(
+    dataset=test_dataset,  # [query, ground_truth_answer, context, answer]
+    metrics=[faithfulness, answer_relevancy, context_recall, context_precision]
+)
+
+print(result)  # Shows scores for each metric</code>
+              <p class="text-sm text-slate-300 mt-2">✓ Best for quick evaluation. ⚠️ Depends on LLM quality (uses GPT-4 by default).</p>
+            </div>
+
+            <div class="rounded-2xl border border-white/10 bg-white/[0.03] p-5">
+              <p class="font-semibold text-white mb-3">TruLens</p>
+              <p class="text-sm text-slate-300 mb-3">Purpose: Real-time monitoring of RAG systems in production. Track feedback, quality metrics, costs.</p>
+              <code class="block font-mono text-xs text-slate-300 whitespace-pre bg-black/20 p-2 rounded">pip install trulens-eval
+
+from trulens_eval import TruChain, Feedback, Tru
+
+# Wrap your chain
+chain = TruChain(your_rag_chain, app_id="my-rag")
+
+# Define quality feedback
+from trulens_eval.feedback import Groundedness
+groundedness = Groundedness(...)
+
+# Run and track
+response = chain.invoke(query)
+
+# View dashboard at http://localhost:8501</code>
+              <p class="text-sm text-slate-300 mt-2">✓ Best for production. Tracks metrics over time. Catches regressions.</p>
+            </div>
+
+            <div class="rounded-2xl border border-white/10 bg-white/[0.03] p-5">
+              <p class="font-semibold text-white mb-3">DeepEval</p>
+              <p class="text-sm text-slate-300 mb-3">Purpose: Framework for defining custom LLM evaluation metrics. Great for domain-specific quality.</p>
+              <code class="block font-mono text-xs text-slate-300 whitespace-pre bg-black/20 p-2 rounded">pip install deepeval
+
+from deepeval import evaluate
+from deepeval.metrics import Faithfulness, AnswerRelevancy
+
+test_cases = [
+    {"query": "...", "answer": "...", "context": "..."}
+]
+
+result = evaluate(test_cases, [Faithfulness(), AnswerRelevancy()])
+print(f"Pass rate: {result.pass_rate}")</code>
+              <p class="text-sm text-slate-300 mt-2">✓ Most flexible. Works with any LLM. Great for custom metrics.</p>
+            </div>
+          </div>
+        </section>
+
+        <section class="space-y-5" aria-labelledby="human-heading">
+          <h2 id="human-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">Human Evaluation Workflows</h2>
+          <p>
+            Automated metrics have blindspots. For critical systems, involve humans.
+          </p>
+
+          <div class="rounded-2xl border border-white/10 bg-white/[0.03] p-5">
+            <div class="ds-codeblock overflow-hidden rounded-2xl border border-white/10 bg-slate-950/90">
+  <div class="flex items-center justify-between gap-3 border-b border-white/10 px-3 py-2">
+    <span class="font-mono text-[11px] font-medium uppercase tracking-wide text-slate-400">Python</span>
+    <button type="button" class="ds-codeblock-copy rounded-lg border border-white/10 bg-white/[0.06] px-2.5 py-1 text-xs font-semibold text-slate-200 transition hover:border-sky-400/40 hover:bg-white/[0.1] hover:text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-sky-400/50" data-copy-label="Copy" data-copied-label="Copied" aria-label="Copy code to clipboard">Copy</button>
+  </div>
+  <pre class="ds-codeblock-pre code-block m-0 overflow-x-auto p-4 text-[0.8125rem] leading-[1.55] sm:text-sm language-python" tabindex="0"><code class="whitespace-pre-wrap font-mono ds-codeblock-source language-python">Workflow:
+1. Run batch evaluation (RAGAS, automated metrics)
+2. Flag low-scoring examples
+3. Send to humans for review (Label Studio, Argilla)
+4. Aggregate ratings (multiple reviewers per example)
+5. Update test dataset with corrections
+6. Re-evaluate to establish new baseline
+
+Human Rating Scale (example):
+☑ Excellent - Answer is accurate, complete, well-sourced
+☑ Good - Answer is mostly correct but missing nuance
+☑ Fair - Answer partially correct but has gaps
+☐ Poor - Answer is inaccurate or hallucinated</code></pre>
+</div>
+          </div>
+        </section>
+<div class="flex items-center gap-3">
+              <input type="checkbox" checked disabled />
+              <p><strong>Retrieval metrics:</strong> Tracking Recall@5, MRR, nDCG@10</p>
+            </div>
+            <div class="flex items-center gap-3">
+              <input type="checkbox" checked disabled />
+              <p><strong>Answer quality:</strong> Measuring faithfulness, relevance via RAGAS or TruLens</p>
+            </div>
+            <div class="flex items-center gap-3">
+              <input type="checkbox" checked disabled />
+              <p><strong>Regression testing:</strong> Re-running evaluation after every change</p>
+            </div>
+            <div class="flex items-center gap-3">
+              <input type="checkbox" checked disabled />
+              <p><strong>Production monitoring:</strong> Tracking real user queries and feedback</p>
+
+      </article>
+    </div>
+
+    {# ── Navigation ── #}
+    <div class="flex items-center justify-between">
+      <a
+        href="{% url 'tutorial_rag_pipeline_complete_system' %}"
+        class="inline-flex items-center gap-2 rounded-xl border border-violet-400/35 bg-violet-500/10 px-5 py-2.5 text-sm font-semibold text-violet-200 transition hover:border-violet-300/50 hover:bg-violet-500/20 hover:text-white"
+      >
+        <span aria-hidden>←</span> Previous
+      </a>
+      <a
+        href="{% url 'tutorial_rag_pipeline_pitfalls' %}"
+        class="inline-flex items-center gap-2 rounded-xl border border-violet-400/35 bg-violet-500/10 px-5 py-2.5 text-sm font-semibold text-violet-200 transition hover:border-violet-300/50 hover:bg-violet-500/20 hover:text-white"
+      >
+        Next: Common Pitfalls <span aria-hidden>→</span>
+      </a>
+      </div>
+
+  </div>
+{% endblock %}

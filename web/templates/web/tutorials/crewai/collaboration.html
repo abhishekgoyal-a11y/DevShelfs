@@ -1,0 +1,183 @@
+{% extends "web/base.html" %}
+{% block title %}Multi-Agent Collaboration — Build with CrewAI{% endblock %}
+{% block content %}
+  <div class="space-y-10">
+    {# ── Breadcrumb ── #}
+    <div class="flex flex-wrap items-center gap-2 text-sm text-slate-400/90">
+      <a href="{% url 'tutorials' %}" class="font-medium text-violet-300/90 transition hover:text-violet-200">Tutorials</a>
+      <span aria-hidden class="text-slate-600">/</span>
+      <a href="{% url 'tutorials' %}?category=ai-agents" class="font-medium text-violet-300/90 transition hover:text-violet-200">AI Agents</a>
+      <span aria-hidden class="text-slate-600">/</span>
+      <span class="text-slate-200/90">Multi-Agent Collaboration</span>
+    </div>
+
+    {# ── Hero ── #}
+    <section class="relative overflow-hidden rounded-3xl border border-violet-400/20 bg-white/[0.06] p-6 shadow-[0_0_0_1px_rgba(255,255,255,0.04)] backdrop-blur-2xl sm:p-8">
+      <div class="pointer-events-none absolute -right-24 top-0 h-72 w-72 rounded-full bg-violet-500/15 blur-3xl"></div>
+      <div class="pointer-events-none absolute -left-20 bottom-0 h-56 w-56 rounded-full bg-fuchsia-500/10 blur-3xl"></div>
+      <div class="relative">
+        <div class="flex flex-wrap items-center gap-3">
+          <span class="rounded-full border border-violet-500/25 bg-violet-500/10 px-2.5 py-1 text-xs font-medium text-violet-300/90">Build with CrewAI</span>
+          <span class="rounded-full border border-amber-500/25 bg-amber-500/10 px-2.5 py-1 text-xs font-medium text-amber-300/90">Intermediate</span>
+          <span class="text-xs text-slate-400/80">· 16 min read</span>
+          <span class="ml-auto text-xs font-medium text-slate-400/80">Page 10 of 15</span>
+        </div>
+        <h1 class="mt-4 text-3xl font-semibold tracking-tight text-white sm:text-4xl lg:text-[2.5rem] lg:leading-tight">Multi-Agent Collaboration</h1>
+        <p class="mt-4 max-w-2xl text-sm leading-relaxed text-slate-200/80 sm:text-base">
+          Four collaboration patterns — pipeline, parallel, delegation, reviewer loops — with the rules that keep them from devolving into thrash.
+        </p>
+        <div class="mt-6">
+          <div class="mb-1.5 flex items-center justify-between text-xs text-slate-400/80"><span>Series progress</span><span>10 / 15</span></div>
+          <div class="h-1.5 w-full overflow-hidden rounded-full bg-white/10"><div class="h-full w-[67%] rounded-full bg-violet-400/70"></div></div>
+        </div>
+      </div>
+    </section>
+
+    {# ── Content ── #}
+    <div class="glass rounded-3xl border border-white/10 p-5 sm:p-8">
+      <article class="mx-auto space-y-12 text-base leading-relaxed text-slate-300/95">
+
+        <section class="space-y-5" aria-labelledby="patterns-heading">
+          <h2 id="patterns-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">Four Collaboration Patterns</h2>
+          <p>Most crews fall into one of these shapes. Pick the simplest one that fits.</p>
+        </section>
+
+        <section class="space-y-5" aria-labelledby="pipeline-heading">
+          <h2 id="pipeline-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">1. Pipeline (A → B → C)</h2>
+          <p>Each agent owns a stage. Output flows downstream.</p>
+          <div class="rounded-2xl border border-white/10 bg-white/[0.03] p-5">
+            <p class="font-semibold text-white mb-3">Linear pipeline</p>
+            <div class="ds-codeblock overflow-hidden rounded-2xl border border-white/10 bg-slate-950/90">
+  <div class="flex items-center justify-between gap-3 border-b border-white/10 px-3 py-2">
+    <span class="font-mono text-[11px] font-medium uppercase tracking-wide text-slate-400">PYTHON</span>
+    <button type="button" class="ds-codeblock-copy rounded-lg border border-white/10 bg-white/[0.06] px-2.5 py-1 text-xs font-semibold text-slate-200 transition hover:border-sky-400/40 hover:bg-white/[0.1] hover:text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-sky-400/50" data-copy-label="Copy" data-copied-label="Copied" aria-label="Copy code to clipboard">Copy</button>
+  </div>
+  <pre class="ds-codeblock-pre code-block m-0 overflow-x-auto p-4 text-[0.8125rem] leading-[1.55] sm:text-sm language-python" tabindex="0"><code class="whitespace-pre-wrap font-mono ds-codeblock-source language-python">tasks = [
+    Task(description="Research", agent=researcher, expected_output="..."),
+    Task(description="Outline", agent=outliner, expected_output="..."),
+    Task(description="Draft", agent=writer, expected_output="..."),
+    Task(description="Edit", agent=editor, expected_output="..."),
+]
+crew = Crew(agents=[researcher, outliner, writer, editor], tasks=tasks, process=Process.sequential)</code></pre>
+</div>
+          </div>
+        </section>
+
+        <section class="space-y-5" aria-labelledby="parallel-heading">
+          <h2 id="parallel-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">2. Parallel Fan-Out / Fan-In</h2>
+          <p>Multiple agents work on independent sub-problems concurrently, then a synthesizer merges results.</p>
+          <div class="rounded-2xl border border-white/10 bg-white/[0.03] p-5">
+            <p class="font-semibold text-white mb-3">Parallel research</p>
+            <div class="ds-codeblock overflow-hidden rounded-2xl border border-white/10 bg-slate-950/90">
+  <div class="flex items-center justify-between gap-3 border-b border-white/10 px-3 py-2">
+    <span class="font-mono text-[11px] font-medium uppercase tracking-wide text-slate-400">PYTHON</span>
+    <button type="button" class="ds-codeblock-copy rounded-lg border border-white/10 bg-white/[0.06] px-2.5 py-1 text-xs font-semibold text-slate-200 transition hover:border-sky-400/40 hover:bg-white/[0.1] hover:text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-sky-400/50" data-copy-label="Copy" data-copied-label="Copied" aria-label="Copy code to clipboard">Copy</button>
+  </div>
+  <pre class="ds-codeblock-pre code-block m-0 overflow-x-auto p-4 text-[0.8125rem] leading-[1.55] sm:text-sm language-python" tabindex="0"><code class="whitespace-pre-wrap font-mono ds-codeblock-source language-python">sub_a = Task(description="Research market size", agent=r1, async_execution=True, expected_output="...")
+sub_b = Task(description="Research competitors", agent=r2, async_execution=True, expected_output="...")
+sub_c = Task(description="Research regulation", agent=r3, async_execution=True, expected_output="...")
+
+merge = Task(
+    description="Combine into a single market brief",
+    agent=writer,
+    context=[sub_a, sub_b, sub_c],
+    expected_output="A 1-page market brief.",
+)</code></pre>
+</div>
+          </div>
+        </section>
+
+        <section class="space-y-5" aria-labelledby="delegate-heading">
+          <h2 id="delegate-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">3. Delegation (Manager + Workers)</h2>
+          <p>One agent has <code class="rounded bg-white/[0.06] px-1.5 py-0.5 font-mono text-xs">allow_delegation=True</code> and can hand sub-tasks to peers when stuck. Hierarchical process is delegation taken to its logical end.</p>
+          <div class="rounded-2xl border border-white/10 bg-white/[0.03] p-5">
+            <p class="font-semibold text-white mb-3">Delegation in sequential</p>
+            <div class="ds-codeblock overflow-hidden rounded-2xl border border-white/10 bg-slate-950/90">
+  <div class="flex items-center justify-between gap-3 border-b border-white/10 px-3 py-2">
+    <span class="font-mono text-[11px] font-medium uppercase tracking-wide text-slate-400">PYTHON</span>
+    <button type="button" class="ds-codeblock-copy rounded-lg border border-white/10 bg-white/[0.06] px-2.5 py-1 text-xs font-semibold text-slate-200 transition hover:border-sky-400/40 hover:bg-white/[0.1] hover:text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-sky-400/50" data-copy-label="Copy" data-copied-label="Copied" aria-label="Copy code to clipboard">Copy</button>
+  </div>
+  <pre class="ds-codeblock-pre code-block m-0 overflow-x-auto p-4 text-[0.8125rem] leading-[1.55] sm:text-sm language-python" tabindex="0"><code class="whitespace-pre-wrap font-mono ds-codeblock-source language-python">senior_engineer = Agent(
+    role="Tech Lead",
+    goal="Solve the bug end-to-end",
+    backstory="...",
+    allow_delegation=True,    # can ask the QA agent for help
+)
+
+qa_engineer = Agent(
+    role="QA Engineer",
+    goal="Reproduce and verify bug fixes",
+    backstory="...",
+    allow_delegation=False,
+)
+
+# In sequential mode, the tech_lead can call out to qa_engineer
+# during its task if it needs verification.
+crew = Crew(agents=[senior_engineer, qa_engineer], tasks=[fix_task], process=Process.sequential)</code></pre>
+</div>
+          </div>
+        </section>
+
+        <section class="space-y-5" aria-labelledby="review-heading">
+          <h2 id="review-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">4. Reviewer / Critic Loops</h2>
+          <p>One agent produces, another critiques. Loop until quality is acceptable. Cleanest way: explicit reviewer task.</p>
+          <div class="rounded-2xl border border-white/10 bg-white/[0.03] p-5">
+            <p class="font-semibold text-white mb-3">Producer + critic</p>
+            <div class="ds-codeblock overflow-hidden rounded-2xl border border-white/10 bg-slate-950/90">
+  <div class="flex items-center justify-between gap-3 border-b border-white/10 px-3 py-2">
+    <span class="font-mono text-[11px] font-medium uppercase tracking-wide text-slate-400">PYTHON</span>
+    <button type="button" class="ds-codeblock-copy rounded-lg border border-white/10 bg-white/[0.06] px-2.5 py-1 text-xs font-semibold text-slate-200 transition hover:border-sky-400/40 hover:bg-white/[0.1] hover:text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-sky-400/50" data-copy-label="Copy" data-copied-label="Copied" aria-label="Copy code to clipboard">Copy</button>
+  </div>
+  <pre class="ds-codeblock-pre code-block m-0 overflow-x-auto p-4 text-[0.8125rem] leading-[1.55] sm:text-sm language-python" tabindex="0"><code class="whitespace-pre-wrap font-mono ds-codeblock-source language-python">draft_task = Task(
+    description="Draft the article",
+    agent=writer,
+    expected_output="A 600-word article.",
+)
+
+review_task = Task(
+    description=(
+        "Critique the draft. List up to 5 specific improvements. "
+        "If the draft already meets the spec, say 'Approved.'"
+    ),
+    agent=critic,
+    context=[draft_task],
+    expected_output="Either a list of issues or 'Approved.'",
+)
+
+# For real iteration, wrap kickoff() in a loop and re-run draft_task
+# with the critique injected via inputs.</code></pre>
+</div>
+          </div>
+        </section>
+
+        <section class="space-y-5" aria-labelledby="rules-heading">
+          <h2 id="rules-heading" class="text-xl font-semibold tracking-tight text-white sm:text-2xl">Coordination Rules of Thumb</h2>
+          <ul class="list-disc space-y-2 pl-5 marker:text-violet-400/80">
+            <li><strong>Fewer agents = better.</strong> Three focused agents beat seven mediocre ones.</li>
+            <li><strong>One owner per task.</strong> Two agents on the same task = thrash.</li>
+            <li><strong>Explicit context beats implicit memory.</strong> Pass <code class="rounded bg-white/[0.06] px-1.5 py-0.5 font-mono text-xs">context=[...]</code> when in doubt.</li>
+            <li><strong>Disable delegation in dev.</strong> Turn it on after you've measured the failure modes.</li>
+          </ul>
+        </section>
+
+      </article>
+    </div>
+
+    {# ── Navigation ── #}
+    <div class="flex items-center justify-between">
+      <a
+        href="{% url 'tutorial_crewai_memory' %}"
+        class="inline-flex items-center gap-2 rounded-xl border border-violet-400/35 bg-violet-500/10 px-5 py-2.5 text-sm font-semibold text-violet-200 transition hover:border-violet-300/50 hover:bg-violet-500/20 hover:text-white"
+      >
+        <span aria-hidden>←</span> Previous
+      </a>
+      <a
+        href="{% url 'tutorial_crewai_llm_integration' %}"
+        class="inline-flex items-center gap-2 rounded-xl border border-violet-400/35 bg-violet-500/10 px-5 py-2.5 text-sm font-semibold text-violet-200 transition hover:border-violet-300/50 hover:bg-violet-500/20 hover:text-white"
+      >
+        Next: LLM Integration <span aria-hidden>→</span>
+      </a>
+    </div>
+
+  </div>
+{% endblock %}

@@ -187,6 +187,22 @@
       src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-bash.min.js"
       crossorigin="anonymous"
     ></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-yaml.min.js"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-json.min.js"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-markdown.min.js"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-sql.min.js"
+      crossorigin="anonymous"
+    ></script>
     <script>
       (function () {
         if (typeof Prism === "undefined") return;
@@ -201,7 +217,14 @@
     </script>
     <script>
       (function () {
+        // Handle copy buttons (.ds-codeblock-copy)
         document.querySelectorAll(".ds-codeblock-copy").forEach(function (btn) {
+          // Initialize button text
+          var copyLabel = btn.getAttribute("data-copy-label") || "Copy";
+          if (!btn.textContent.trim()) {
+            btn.textContent = copyLabel;
+          }
+
           btn.addEventListener("click", function () {
             var root = btn.closest(".ds-codeblock");
             if (!root) return;
@@ -230,6 +253,69 @@
               setState(false);
             }
           });
+        });
+
+        // Handle new-style copy buttons (.copy-button)
+        document.querySelectorAll(".copy-button").forEach(function (btn) {
+          // Initialize button text
+          var copyLabel = btn.getAttribute("data-copy-label") || "Copy";
+          btn.textContent = copyLabel;
+
+          btn.addEventListener("click", function () {
+            var root = btn.closest(".code-wrapper");
+            if (!root) return;
+            var codeEl = root.querySelector("pre code.ds-codeblock-source");
+            if (!codeEl) return;
+            var text = (codeEl.textContent || "").replace(/\n$/, "");
+            var copyLabel = btn.getAttribute("data-copy-label") || "Copy";
+            var copiedLabel = btn.getAttribute("data-copied-label") || "Copied";
+
+            function setState(copied) {
+              btn.textContent = copied ? copiedLabel : copyLabel;
+              btn.classList.toggle("copied", copied);
+              btn.setAttribute("aria-label", copied ? "Copied to clipboard" : "Copy code to clipboard");
+            }
+
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+              navigator.clipboard.writeText(text).then(
+                function () {
+                  setState(true);
+                  window.setTimeout(function () {
+                    setState(false);
+                  }, 2000);
+                },
+                function () {
+                  setState(false);
+                }
+              );
+            } else {
+              setState(false);
+            }
+          });
+        });
+      })();
+    </script>
+    <script>
+      (function () {
+        var toggleBtn = document.getElementById("toggle-series");
+        var toggleText = document.getElementById("toggle-text");
+        var toggleIcon = document.getElementById("toggle-icon");
+        var hiddenItems = document.querySelectorAll(".hidden-series-item");
+        var expanded = false;
+
+        if (!toggleBtn || hiddenItems.length === 0) return;
+
+        toggleBtn.addEventListener("click", function () {
+          expanded = !expanded;
+          hiddenItems.forEach(function (item) {
+            if (expanded) {
+              item.classList.add("visible");
+            } else {
+              item.classList.remove("visible");
+            }
+          });
+          toggleText.textContent = expanded ? "Hide overview" : "Show complete overview";
+          toggleIcon.textContent = expanded ? "↑" : "↓";
         });
       })();
     </script>
